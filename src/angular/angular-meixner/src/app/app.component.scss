@@ -1,0 +1,69 @@
+.spacer {
+}
+
+.button{
+  color: white;
+  margin-left: 2em;
+}
+
+.username{
+  margin-right: 1em;
+}
+
+.menuIcon{
+  display: flex;
+  align-items: center;
+}
+
+.mat-toolbar {
+  background-color: rgb(17, 131, 181);
+  color: white;
+}
+
+.mat-toolbar-row{
+  justify-content: space-between;
+}
+
+.navbar-dark {
+  .navbar-nav {
+    .nav-link {
+      color: white;
+    }
+  }
+}
+
+.mat-sidenav-content{
+  background-color: white;
+  align-content: center;
+
+}
+
+.centered-nav {
+  display: flex;
+  align-items: center;
+}
+
+.imgclass {
+  background-color: transparent;
+  max-width: 60px;
+  max-height: 60px;
+}
+
+.maintext {
+  position: relative;
+  bottom: -20px;
+  right: 0px;
+}
+
+.mat-card-content{
+  margin-bottom: 0px;
+}
+
+.mat-card {
+  margin: 1px;
+  padding: 1px;
+}
+
+.menu-spacer {
+  flex: 1 1 auto;
+}
