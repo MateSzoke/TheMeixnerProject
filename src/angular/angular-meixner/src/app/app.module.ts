@@ -10,10 +10,18 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatButtonModule} from '@angular/material/button';
 import {FlexLayoutModule} from '@angular/flex-layout';
+import { ExercisesComponent } from './exercises/exercises.component';
+import { ExamsComponent } from './exams/exams.component';
+import { UsersComponent } from './users/users.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ExercisesComponent,
+    ExamsComponent,
+    UsersComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
