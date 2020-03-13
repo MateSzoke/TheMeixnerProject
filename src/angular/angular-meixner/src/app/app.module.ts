@@ -14,6 +14,11 @@ import { ExercisesComponent } from './exercises/exercises.component';
 import { ExamsComponent } from './exams/exams.component';
 import { UsersComponent } from './users/users.component';
 import { LoginComponent } from './login/login.component';
+import {MatCardModule} from '@angular/material/card';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
+import {MatInputModule} from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -32,7 +37,13 @@ import { LoginComponent } from './login/login.component';
     MatSidenavModule,
     MatListModule,
     MatButtonModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatCardModule,
+    MatFormFieldModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

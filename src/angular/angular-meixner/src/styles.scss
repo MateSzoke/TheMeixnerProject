@@ -2,3 +2,25 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.full-width.mat-form-field-appearance-legacy.mat-focused
+.mat-form-field-underline {
+  color: rgb(17, 131, 181);
+  background-color: rgb(17, 131, 181) !important;
+}
+
+.mat-form-field-ripple {
+  /*change color of underline when focused*/
+  background-color: rgb(17, 131, 181) !important;
+}
+
+.mat-form-field-label {
+  color: rgb(17, 131, 181) !important;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline-thick {
+  color: rgb(17, 131, 181);
+}
+.mat-card-actions, .mat-card-content, .mat-card-subtitle {
+  margin-bottom: 0px;
+}

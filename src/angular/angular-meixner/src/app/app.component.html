@@ -1,6 +1,8 @@
 <div style="height: 80vh;">
   <mat-toolbar color="primary">
     <mat-toolbar-row>
+      <div class="centered-nav">
+      <ng-template [ngIf]="this.logInStatus">
       <button mat-icon-button (click)="sidenav.toggle()" fxShow="true" fxHide.gt-sm>
         <mat-icon>menu</mat-icon>
       </button>
@@ -12,6 +14,14 @@
         <a href="#" mat-button>Feladatsorok</a>
         <a href="#" mat-button>Felhasználók</a>
       </div>
+      </ng-template>
+      </div>
+      <ng-template [ngIf]="this.logInStatus">
+        <div class="flex-center">
+          <div class="username">{{authenticationService.getAuthenticatedUser()}}</div>
+          <i (click)="onLogout()" class="fa fa-sign-out"></i>
+        </div>
+      </ng-template>
     </mat-toolbar-row>
   </mat-toolbar>
 
@@ -23,6 +33,8 @@
         <a href="#" mat-list-item>Felhasználók</a>
       </mat-nav-list>
     </mat-sidenav>
-    <mat-sidenav-content fxFlexFill>Main content</mat-sidenav-content>
+    <mat-sidenav-content align="center" fxFlexFill>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
