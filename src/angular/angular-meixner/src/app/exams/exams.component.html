@@ -1,1 +1,75 @@
-<p>exams works!</p>
+
+<html>
+<body>
+<div class="container">
+  <mat-card class="mat-card-controls">
+    <mat-card-content>
+      <div class="flex-layout">
+        <mat-form-field>
+          <mat-label style="color: black;">Tantárgy</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let tantargy of tantargyak" [value]="tantargy">
+              {{tantargy}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label style="color: black;">Évfolyam</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let evfolyam of evfolyamok" [value]="evfolyam">
+              {{evfolyam}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+<!--        <mat-form-field>
+          <mat-label style="color: black;">Évfolyam</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let osztaly of osztalyok" [value]="osztaly">
+              {{osztaly}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>-->
+        <button (click)="newExam()" class="plusButton" mat-button>
+          <i class="fa fa-plus"></i>
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <br>
+</div>
+<mat-accordion [togglePosition]="'before'">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header class="right-aligned-header">
+      <mat-panel-description>
+        <div fxLayout="row wrap" fxLayout.xs="column-reverse" fxLayoutAlign="space-around center" fxLayoutGap="8px">
+          <mat-card>
+            {{this.today.getFullYear()}}.{{this.today.getMonth().toString().padStart(2, '0')}}.{{this.today.getDay().toString().padStart(2, '0')}}
+          </mat-card>
+          <mat-card>
+            &nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-square"></i>
+            &nbsp;&#8196;<i class="fa fa-trash"></i>&nbsp;&nbsp;
+          </mat-card>
+        </div>
+      </mat-panel-description>
+      <mat-panel-title>
+        Görög irodalom&nbsp;&nbsp;
+        <img class="image1" src="assets/icons/bars_lv1.png">
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <mat-card class="right-aligned-header">
+      <div fxLayout="row" fxLayout.xs="column-reverse" fxLayoutGap="8px">
+        <div class="float-left">
+          Prométeusz&nbsp;
+          <img class="image1" src="assets/icons/bars_lv2.png">
+        </div>
+        <div class="float-right">
+          {{this.today.getFullYear()}}.{{this.today.getMonth().toString().padStart(2, '0')}}.{{this.today.getDay().toString().padStart(2, '0')}}
+          &nbsp;&#8196;<i class="fa fa-trash"></i>&nbsp;
+        </div>
+      </div>
+    </mat-card>
+  </mat-expansion-panel>
+</mat-accordion>
+</body>
+</html>

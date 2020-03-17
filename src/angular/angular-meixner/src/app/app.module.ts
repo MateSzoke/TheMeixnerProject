@@ -19,6 +19,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {MatInputModule} from '@angular/material/input';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -28,23 +31,26 @@ import {MatInputModule} from '@angular/material/input';
     UsersComponent,
     LoginComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatListModule,
-    MatButtonModule,
-    FlexLayoutModule,
-    MatCardModule,
-    MatFormFieldModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    FormsModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatSidenavModule,
+        MatListModule,
+        MatButtonModule,
+        FlexLayoutModule,
+        MatCardModule,
+        MatFormFieldModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        FormsModule,
+        MatGridListModule,
+        MatExpansionModule,
+        MatSelectModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

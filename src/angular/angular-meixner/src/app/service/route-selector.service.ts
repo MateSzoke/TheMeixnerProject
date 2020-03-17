@@ -7,9 +7,9 @@ import {BehaviorSubject, Observable} from 'rxjs';
 })
 export class RouteSelectorService {
 
-  private messageSource = new BehaviorSubject('feladatok');
+  private messageSource = new BehaviorSubject('feladatsorok');
   selectedRoute = this.messageSource.asObservable();
-  private lastRequestedRouteUrl = "";
+  private lastRequestedRouteUrl = "feladatsorok";
 
   constructor() { }
 
