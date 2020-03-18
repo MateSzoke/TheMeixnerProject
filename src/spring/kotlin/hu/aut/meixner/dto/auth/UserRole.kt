@@ -1,4 +1,4 @@
-package hu.aut.meixner.dto
+package hu.aut.meixner.dto.auth
 
 enum class UserRole {
     ADMIN,

@@ -1,4 +1,4 @@
-package hu.aut.meixner.dto
+package hu.aut.meixner.dto.easytask
 
 data class Group<T>(
         val name: String,

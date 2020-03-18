@@ -1,4 +1,4 @@
-package hu.aut.meixner.dto
+package hu.aut.meixner.dto.easytask
 
 data class Sentence(
         val title: String,

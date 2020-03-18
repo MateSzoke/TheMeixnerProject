@@ -1,4 +1,4 @@
-package hu.aut.meixner.dto
+package hu.aut.meixner.dto.auth
 
 data class User(
         val id: Int,
