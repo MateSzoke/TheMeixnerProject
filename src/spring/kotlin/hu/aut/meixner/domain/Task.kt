@@ -7,10 +7,11 @@ import javax.persistence.Id
 import javax.persistence.MappedSuperclass
 
 @MappedSuperclass
-open class Task(
+abstract class Task(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-        val id: Long = 0,
-        val title: String = "",
-        val difficulty: Int = 0,
-        val lastModified: OffsetDateTime = OffsetDateTime.now()
-)
+        val id: Long = 0
+) {
+    abstract val title: String
+    abstract val difficulty: Int
+    abstract val lastModified: OffsetDateTime
+}
