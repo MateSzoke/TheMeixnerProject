@@ -12,7 +12,7 @@ data class Pairing(
         @OneToMany
         @Cascade(CascadeType.ALL)
         val pairs: List<PairElement> = emptyList(),
-        override val title: String,
-        override val difficulty: Int,
-        override val lastModified: OffsetDateTime
+        override val title: String = "",
+        override val difficulty: Int = 0,
+        override val lastModified: OffsetDateTime = OffsetDateTime.now()
 ) : Task()
