@@ -1,6 +1,6 @@
-package hu.aut.meixner.dto.easytask
+package hu.aut.meixner.dto.task.easy
 
-data class Sentence(
+class Sentence(
         val title: String,
         val elements: MutableList<String>
 )
