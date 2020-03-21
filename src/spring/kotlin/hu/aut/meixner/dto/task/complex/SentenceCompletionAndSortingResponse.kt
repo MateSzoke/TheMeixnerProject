@@ -1,6 +1,5 @@
 package hu.aut.meixner.dto.task.complex
 
-import hu.aut.meixner.dto.task.easy.SentenceCreationResponse
 import hu.aut.meixner.dto.task.easy.SortingResponse
 import java.time.OffsetDateTime
 
@@ -9,7 +8,7 @@ class SentenceCompletionAndSortingResponse(
         override val title: String,
         override val difficulty: Int,
         override val lastModified: OffsetDateTime
-) : SortingResponse<SentenceCreationResponse>(
+) : SortingResponse(
         elements = mutableListOf(),
         id = id,
         lastModified = lastModified,
