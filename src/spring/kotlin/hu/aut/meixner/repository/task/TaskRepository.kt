@@ -1,6 +1,6 @@
 package hu.aut.meixner.repository.task
 
-import hu.aut.meixner.domain.Task
+import hu.aut.meixner.domain.TaskEntity
 import org.springframework.data.repository.CrudRepository
 
-interface TaskRepository : CrudRepository<Task, Long>
+interface TaskRepository : CrudRepository<TaskEntity, Long>

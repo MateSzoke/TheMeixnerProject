@@ -1,17 +1,17 @@
 package hu.aut.meixner.extensions
 
 import hu.aut.meixner.domain.easytask.GroupingEntity
-import hu.aut.meixner.domain.easytask.Pairing
-import hu.aut.meixner.domain.easytask.SentenceCompletion
-import hu.aut.meixner.domain.easytask.Sorting
+import hu.aut.meixner.domain.easytask.PairingEntity
+import hu.aut.meixner.domain.easytask.SentenceCompletionEntity
+import hu.aut.meixner.domain.easytask.SortingEntity
 import hu.aut.meixner.dto.task.easy.*
 import java.time.OffsetDateTime
-import hu.aut.meixner.domain.easytask.GroupElement as DBGroup
-import hu.aut.meixner.domain.easytask.PairElement as DBPairElement
+import hu.aut.meixner.domain.easytask.GroupElementEntity as DBGroup
+import hu.aut.meixner.domain.easytask.PairEntity as DBPairElement
 
 //region Pairing
-fun PairingRequest.toDBModel(): Pairing {
-    return Pairing(
+fun PairingRequest.toDBModel(): PairingEntity {
+    return PairingEntity(
             pairs = pairs.map { it.toDBModel() },
             title = title,
             difficulty = 0,
@@ -26,7 +26,7 @@ fun PairElement.toDBModel(): DBPairElement {
     )
 }
 
-fun Pairing.toDTOModel(): PairingResponse {
+fun PairingEntity.toDTOModel(): PairingResponse {
     return PairingResponse(
             id = id,
             lastModified = lastModified,
@@ -80,8 +80,8 @@ fun DBGroup.toDTOModel(): Group {
 //endregion
 
 //region SentenceCompletion
-fun SentenceCompletionRequest.toDBModel(): SentenceCompletion {
-    return SentenceCompletion(
+fun SentenceCompletionRequest.toDBModel(): SentenceCompletionEntity {
+    return SentenceCompletionEntity(
             title = title,
             sentence = sentence,
             options = options,
@@ -90,7 +90,7 @@ fun SentenceCompletionRequest.toDBModel(): SentenceCompletion {
     )
 }
 
-fun SentenceCompletion.toDTOModel(): SentenceCompletionResponse {
+fun SentenceCompletionEntity.toDTOModel(): SentenceCompletionResponse {
     return SentenceCompletionResponse(
             id = id,
             title = title,
@@ -104,8 +104,8 @@ fun SentenceCompletion.toDTOModel(): SentenceCompletionResponse {
 
 
 //region Sorting
-fun SortingRequest.toDBModel(): Sorting {
-    return Sorting(
+fun SortingRequest.toDBModel(): SortingEntity {
+    return SortingEntity(
             title = title,
             elements = elements,
             difficulty = 0,
@@ -113,7 +113,7 @@ fun SortingRequest.toDBModel(): Sorting {
     )
 }
 
-fun Sorting.toDTOModel(): SortingResponse {
+fun SortingEntity.toDTOModel(): SortingResponse {
     return SortingResponse(
             id = id,
             title = title,

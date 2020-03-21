@@ -3,7 +3,7 @@ package hu.aut.meixner.domain.easytask
 import javax.persistence.*
 
 @Entity
-data class GroupElement(
+data class GroupElementEntity(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long = 0,
         val name: String = "",
