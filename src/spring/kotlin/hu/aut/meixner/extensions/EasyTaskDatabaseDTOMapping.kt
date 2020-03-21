@@ -3,6 +3,7 @@ package hu.aut.meixner.extensions
 import hu.aut.meixner.domain.easytask.Grouping
 import hu.aut.meixner.domain.easytask.Pairing
 import hu.aut.meixner.domain.easytask.SentenceCompletion
+import hu.aut.meixner.domain.easytask.Sorting
 import hu.aut.meixner.dto.task.easy.*
 import java.time.OffsetDateTime
 import hu.aut.meixner.domain.easytask.Group as DBGroup
@@ -95,6 +96,28 @@ fun SentenceCompletion.toDTOModel(): SentenceCompletionResponse {
             title = title,
             sentence = sentence,
             options = options,
+            difficulty = 0,
+            lastModified = OffsetDateTime.now()
+    )
+}
+//endregion
+
+
+//region Sorting
+fun SortingRequest.toDBModel(): Sorting {
+    return Sorting(
+            title = title,
+            elements = elements,
+            difficulty = 0,
+            lastModified = OffsetDateTime.now()
+    )
+}
+
+fun Sorting.toDTOModel(): SortingResponse {
+    return SortingResponse(
+            id = id,
+            title = title,
+            elements = elements,
             difficulty = 0,
             lastModified = OffsetDateTime.now()
     )
