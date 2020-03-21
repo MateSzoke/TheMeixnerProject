@@ -23,10 +23,10 @@ class SortingService(
     }
 
     fun updateSorting(id: Long, sortingRequest: SortingRequest): SortingResponse? {
-        val sentenceCompletion = sortingRepository.findById(id).toNullable ?: return null
+        val sorting = sortingRepository.findById(id).toNullable ?: return null
         return sortingRepository.save(
                 sortingRequest.run {
-                    sentenceCompletion.copy(
+                    sorting.copy(
                             title = title,
                             elements = elements,
                             lastModified = OffsetDateTime.now()
@@ -36,8 +36,8 @@ class SortingService(
     }
 
     fun deleteSorting(id: Long) {
-        val deletedSentenceCompletion = sortingRepository.findById(id).toNullable ?: return
-        sortingRepository.delete(deletedSentenceCompletion)
+        val deletedSorting = sortingRepository.findById(id).toNullable ?: return
+        sortingRepository.delete(deletedSorting)
     }
 
 }

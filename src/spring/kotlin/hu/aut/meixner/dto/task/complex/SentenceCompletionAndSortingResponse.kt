@@ -5,12 +5,14 @@ import java.time.OffsetDateTime
 
 class SentenceCompletionAndSortingResponse(
         override val id: Long,
+        override val type: String = "SentenceCompletionAndSorting",
         override val title: String,
         override val difficulty: Int,
         override val lastModified: OffsetDateTime
 ) : SortingResponse(
         elements = mutableListOf(),
         id = id,
+        type = type,
         lastModified = lastModified,
         title = title,
         difficulty = difficulty

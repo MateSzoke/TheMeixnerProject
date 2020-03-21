@@ -6,6 +6,7 @@ import java.time.OffsetDateTime
 class FreeTextResponse(
         val freeTextElements: MutableList<FreeTextElement>,
         override val id: Long,
+        override val type: String = "FreeText",
         override val title: String,
         override val difficulty: Int,
         override val lastModified: OffsetDateTime

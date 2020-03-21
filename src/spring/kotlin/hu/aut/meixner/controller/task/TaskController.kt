@@ -16,6 +16,11 @@ class TaskController(
         private val taskService: TaskService
 ) {
 
+    @GetMapping
+    fun getAllTask(): ResponseEntity<List<TaskResponse>> {
+        return ResponseEntity.ok(taskService.getAllTasks())
+    }
+
     @GetMapping("/{taskId}")
     fun getTaskById(@PathVariable("taskId") taskId: Long): ResponseEntity<TaskResponse> {
         val task = taskService.getTaskById(taskId) ?: return ResponseEntity.notFound().build()

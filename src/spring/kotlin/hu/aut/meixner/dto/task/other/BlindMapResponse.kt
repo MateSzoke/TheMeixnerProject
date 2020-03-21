@@ -7,6 +7,7 @@ class BlindMapResponse(
         val imageResource: String,
         val tags: MutableList<BlindMapTag>,
         override val id: Long,
+        override val type: String = "BlindMap",
         override val title: String,
         override val difficulty: Int,
         override val lastModified: OffsetDateTime
