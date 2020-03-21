@@ -1,13 +1,8 @@
 package hu.aut.meixner.extensions
 
-import hu.aut.meixner.domain.easytask.GroupingEntity
-import hu.aut.meixner.domain.easytask.PairingEntity
-import hu.aut.meixner.domain.easytask.SentenceCompletionEntity
-import hu.aut.meixner.domain.easytask.SortingEntity
+import hu.aut.meixner.domain.easytask.*
 import hu.aut.meixner.dto.task.easy.*
 import java.time.OffsetDateTime
-import hu.aut.meixner.domain.easytask.GroupElementEntity as DBGroup
-import hu.aut.meixner.domain.easytask.PairEntity as DBPairElement
 
 //region Pairing
 fun PairingRequest.toDBModel(): PairingEntity {
@@ -19,8 +14,8 @@ fun PairingRequest.toDBModel(): PairingEntity {
     )
 }
 
-fun PairElement.toDBModel(): DBPairElement {
-    return DBPairElement(
+fun PairElement.toDBModel(): PairEntity {
+    return PairEntity(
             name = name,
             pair = pair
     )
@@ -36,7 +31,7 @@ fun PairingEntity.toDTOModel(): PairingResponse {
     )
 }
 
-fun DBPairElement.toDTOModel(): PairElement {
+fun PairEntity.toDTOModel(): PairElement {
     return PairElement(
             name = name,
             pair = pair
@@ -54,8 +49,8 @@ fun GroupingRequest.toDBModel(): GroupingEntity {
     )
 }
 
-fun Group.toDBModel(): DBGroup {
-    return DBGroup(
+fun Group.toDBModel(): GroupElementEntity {
+    return GroupElementEntity(
             name = name,
             elements = elements
     )
@@ -71,7 +66,7 @@ fun GroupingEntity.toDTOModel(): GroupingResponse {
     )
 }
 
-fun DBGroup.toDTOModel(): Group {
+fun GroupElementEntity.toDTOModel(): Group {
     return Group(
             name = name,
             elements = elements
@@ -102,7 +97,6 @@ fun SentenceCompletionEntity.toDTOModel(): SentenceCompletionResponse {
 }
 //endregion
 
-
 //region Sorting
 fun SortingRequest.toDBModel(): SortingEntity {
     return SortingEntity(
@@ -120,6 +114,41 @@ fun SortingEntity.toDTOModel(): SortingResponse {
             elements = elements,
             difficulty = 0,
             lastModified = OffsetDateTime.now()
+    )
+}
+//endregion
+
+//region Grouping
+fun SentenceCreationRequest.toDBModel(): SentenceCreationEntity {
+    return SentenceCreationEntity(
+            sentences = sentences.map { it.toDBModel() },
+            title = title,
+            difficulty = 0,
+            lastModified = OffsetDateTime.now()
+    )
+}
+
+fun Sentence.toDBModel(): SentenceEntity {
+    return SentenceEntity(
+            sentenceTitle = sentenceTitle,
+            parts = parts
+    )
+}
+
+fun SentenceCreationEntity.toDTOModel(): SentenceCreationResponse {
+    return SentenceCreationResponse(
+            id = id,
+            lastModified = lastModified,
+            difficulty = difficulty,
+            title = title,
+            sentences = sentences.map { it.toDTOModel() }
+    )
+}
+
+fun SentenceEntity.toDTOModel(): Sentence {
+    return Sentence(
+            sentenceTitle = sentenceTitle,
+            parts = parts
     )
 }
 //endregion
