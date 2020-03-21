@@ -8,10 +8,10 @@ import javax.persistence.Entity
 import javax.persistence.OneToMany
 
 @Entity
-data class Grouping(
+data class GroupingEntity(
         @OneToMany
         @Cascade(CascadeType.ALL)
-        val groups: List<Group> = emptyList(),
+        val groups: List<GroupElement> = emptyList(),
         override val title: String = "",
         override val difficulty: Int = 0,
         override val lastModified: OffsetDateTime = OffsetDateTime.now()

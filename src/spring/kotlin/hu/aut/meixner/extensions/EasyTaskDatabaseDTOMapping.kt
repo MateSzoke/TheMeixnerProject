@@ -1,12 +1,12 @@
 package hu.aut.meixner.extensions
 
-import hu.aut.meixner.domain.easytask.Grouping
+import hu.aut.meixner.domain.easytask.GroupingEntity
 import hu.aut.meixner.domain.easytask.Pairing
 import hu.aut.meixner.domain.easytask.SentenceCompletion
 import hu.aut.meixner.domain.easytask.Sorting
 import hu.aut.meixner.dto.task.easy.*
 import java.time.OffsetDateTime
-import hu.aut.meixner.domain.easytask.Group as DBGroup
+import hu.aut.meixner.domain.easytask.GroupElement as DBGroup
 import hu.aut.meixner.domain.easytask.PairElement as DBPairElement
 
 //region Pairing
@@ -45,8 +45,8 @@ fun DBPairElement.toDTOModel(): PairElement {
 //endregion
 
 //region Grouping
-fun GroupingRequest.toDBModel(): Grouping {
-    return Grouping(
+fun GroupingRequest.toDBModel(): GroupingEntity {
+    return GroupingEntity(
             groups = groups.map { it.toDBModel() },
             title = title,
             difficulty = 0,
@@ -61,7 +61,7 @@ fun Group.toDBModel(): DBGroup {
     )
 }
 
-fun Grouping.toDTOModel(): GroupingResponse {
+fun GroupingEntity.toDTOModel(): GroupingResponse {
     return GroupingResponse(
             id = id,
             lastModified = lastModified,
