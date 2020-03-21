@@ -3,10 +3,12 @@ package hu.aut.meixner.controller.task.easy
 import hu.aut.meixner.dto.task.easy.PairingRequest
 import hu.aut.meixner.dto.task.easy.PairingResponse
 import hu.aut.meixner.service.task.easy.PairingService
+import io.swagger.annotations.Api
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
+@Api(tags = ["Pairing"])
 @RestController
 @RequestMapping("/tasks")
 class PairingController(

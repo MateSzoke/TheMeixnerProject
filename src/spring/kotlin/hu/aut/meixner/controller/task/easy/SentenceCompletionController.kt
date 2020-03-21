@@ -3,10 +3,12 @@ package hu.aut.meixner.controller.task.easy
 import hu.aut.meixner.dto.task.easy.SentenceCompletionRequest
 import hu.aut.meixner.dto.task.easy.SentenceCompletionResponse
 import hu.aut.meixner.service.task.easy.SentenceCompletionService
+import io.swagger.annotations.Api
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
+@Api(tags = ["Sentence completion"])
 @RestController
 @RequestMapping("/tasks")
 class SentenceCompletionController(
