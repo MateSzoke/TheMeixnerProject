@@ -1,31 +1,27 @@
 package hu.aut.meixner.service.task
 
 import hu.aut.meixner.dto.task.TaskResponse
-import hu.aut.meixner.dto.task.easy.GroupingRequest
-import hu.aut.meixner.dto.task.easy.GroupingResponse
-import hu.aut.meixner.dto.task.easy.PairingRequest
-import hu.aut.meixner.dto.task.easy.PairingResponse
+import hu.aut.meixner.dto.task.easy.*
 import hu.aut.meixner.extensions.toDBModel
 import hu.aut.meixner.extensions.toDTOModel
 import hu.aut.meixner.extensions.toNullable
-import hu.aut.meixner.repository.task.easytask.GroupRepository
 import hu.aut.meixner.repository.task.easytask.GroupingRepository
-import hu.aut.meixner.repository.task.easytask.PairRepository
 import hu.aut.meixner.repository.task.easytask.PairingRepository
+import hu.aut.meixner.repository.task.easytask.SentenceCompletionRepository
 import org.springframework.stereotype.Service
 import java.time.OffsetDateTime
 
 @Service
 class EasyTaskService(
         private val pairingRepository: PairingRepository,
-        private val pairRepository: PairRepository,
         private val groupingRepository: GroupingRepository,
-        private val groupRepository: GroupRepository
+        private val sentenceCompletionRepository: SentenceCompletionRepository
 ) {
 
     fun getTaskById(taskId: Long): TaskResponse? {
         return pairingRepository.findById(taskId).toNullable?.toDTOModel()
                 ?: groupingRepository.findById(taskId).toNullable?.toDTOModel()
+                ?: sentenceCompletionRepository.findById(taskId).toNullable?.toDTOModel()
     }
 
     //region Pairing
@@ -81,6 +77,35 @@ class EasyTaskService(
     fun deleteGrouping(id: Long) {
         val deletedGrouping = groupingRepository.findById(id).toNullable ?: return
         groupingRepository.delete(deletedGrouping)
+    }
+    //endregion
+
+    //region SentenceCompletion
+    fun createSentenceCompletion(sentenceCompletionRequest: SentenceCompletionRequest): SentenceCompletionResponse {
+        return sentenceCompletionRepository.save(sentenceCompletionRequest.toDBModel()).toDTOModel()
+    }
+
+    fun getSentenceCompletionById(id: Long): SentenceCompletionResponse? {
+        return sentenceCompletionRepository.findById(id).toNullable?.toDTOModel() ?: return null
+    }
+
+    fun updateSentenceCompletion(id: Long, sentenceCompletionRequest: SentenceCompletionRequest): SentenceCompletionResponse? {
+        val sentenceCompletion = sentenceCompletionRepository.findById(id).toNullable ?: return null
+        return sentenceCompletionRepository.save(
+                sentenceCompletionRequest.run {
+                    sentenceCompletion.copy(
+                            title = title,
+                            sentence = sentence,
+                            options = options,
+                            lastModified = OffsetDateTime.now()
+                    )
+                }
+        ).toDTOModel()
+    }
+
+    fun deleteSentenceCompletion(id: Long) {
+        val deletedSentenceCompletion = sentenceCompletionRepository.findById(id).toNullable ?: return
+        sentenceCompletionRepository.delete(deletedSentenceCompletion)
     }
     //endregion
 

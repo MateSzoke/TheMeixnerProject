@@ -1,10 +1,7 @@
 package hu.aut.meixner.controller.task
 
 import hu.aut.meixner.dto.task.TaskResponse
-import hu.aut.meixner.dto.task.easy.GroupingRequest
-import hu.aut.meixner.dto.task.easy.GroupingResponse
-import hu.aut.meixner.dto.task.easy.PairingRequest
-import hu.aut.meixner.dto.task.easy.PairingResponse
+import hu.aut.meixner.dto.task.easy.*
 import hu.aut.meixner.service.task.EasyTaskService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -74,6 +71,35 @@ class TaskController(
     @DeleteMapping("/grouping/{taskId}")
     fun deleteGrouping(@PathVariable("taskId") taskId: Long) {
         easyTaskService.deleteGrouping(taskId)
+    }
+    //endregion
+
+    //region SentenceCompletion
+    @PostMapping("/sentence_completion")
+    fun createSentenceCompletion(@RequestBody @Valid sentenceCompletionRequest: SentenceCompletionRequest): ResponseEntity<SentenceCompletionResponse> {
+        return ResponseEntity.ok(easyTaskService.createSentenceCompletion(sentenceCompletionRequest))
+    }
+
+    @GetMapping("/sentence_completion/{taskId}")
+    fun getSentenceCompletionById(@PathVariable("taskId") taskId: Long): ResponseEntity<SentenceCompletionResponse> {
+        val sentenceCompletion = easyTaskService.getSentenceCompletionById(taskId)
+                ?: return ResponseEntity.notFound().build()
+        return ResponseEntity.ok(sentenceCompletion)
+    }
+
+    @PatchMapping("/sentence_completion/{taskId}")
+    fun updateSentenceCompletionById(
+            @PathVariable("taskId") taskId: Long,
+            @RequestBody @Valid sentenceCompletionRequest: SentenceCompletionRequest
+    ): ResponseEntity<SentenceCompletionResponse> {
+        val sentenceCompletion = easyTaskService.updateSentenceCompletion(taskId, sentenceCompletionRequest)
+                ?: return ResponseEntity.notFound().build()
+        return ResponseEntity.ok(sentenceCompletion)
+    }
+
+    @DeleteMapping("/sentence_completion/{taskId}")
+    fun deleteSentenceCompletion(@PathVariable("taskId") taskId: Long) {
+        easyTaskService.deleteSentenceCompletion(taskId)
     }
     //endregion
 }
