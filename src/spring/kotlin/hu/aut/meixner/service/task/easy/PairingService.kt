@@ -31,7 +31,7 @@ class PairingService(
                             pairs = pairs.map { it.toDBModel() },
                             lastModified = OffsetDateTime.now()
                     )
-                }
+                }.apply { this.id = id }
         ).toDTOModel()
     }
 

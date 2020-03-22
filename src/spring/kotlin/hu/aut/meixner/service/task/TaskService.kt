@@ -24,12 +24,15 @@ class TaskService(
     }
 
     fun getAllTasks(): List<TaskResponse> {
-        return listOf(pairingRepository.findAll().map { it.toDTOModel() },
+        return listOf(
+                pairingRepository.findAll().map { it.toDTOModel() },
                 groupingRepository.findAll().map { it.toDTOModel() },
                 sentenceCompletionRepository.findAll().map { it.toDTOModel() },
                 sentenceCreationRepository.findAll().map { it.toDTOModel() },
                 sortingRepository.findAll().map { it.toDTOModel() }
-        ).flatten()
+        )
+                .flatten()
+                .sortedBy { it.lastModified }
     }
 
 }

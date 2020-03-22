@@ -28,10 +28,10 @@ class GroupingService(
                 groupingRequest.run {
                     grouping.copy(
                             title = title,
-                            groups = groups.map { it.toDBModel() },
+                            groups = groups.map { it.toDBModel() }.toMutableList(),
                             lastModified = OffsetDateTime.now()
                     )
-                }
+                }.apply { this.id = id }
         ).toDTOModel()
     }
 

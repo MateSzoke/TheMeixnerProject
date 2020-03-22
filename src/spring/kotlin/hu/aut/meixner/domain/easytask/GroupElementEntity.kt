@@ -8,5 +8,5 @@ data class GroupElementEntity(
         val id: Long = 0,
         val name: String = "",
         @ElementCollection(targetClass = String::class)
-        val elements: List<String> = emptyList()
+        val elements: MutableList<String> = mutableListOf()
 )

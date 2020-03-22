@@ -8,8 +8,8 @@ import javax.persistence.MappedSuperclass
 
 @MappedSuperclass
 abstract class TaskEntity(
-        @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-        val id: Long = 0
+        @Id @GeneratedValue(strategy = GenerationType.AUTO)
+        var id: Long = 0
 ) {
     abstract val title: String
     abstract val difficulty: Int

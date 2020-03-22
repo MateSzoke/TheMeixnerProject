@@ -31,7 +31,7 @@ class SentenceCreationService(
                             sentences = sentences.map { it.toDBModel() },
                             lastModified = OffsetDateTime.now()
                     )
-                }
+                }.apply { this.id = id }
         ).toDTOModel()
     }
 

@@ -52,7 +52,7 @@ fun GroupingRequest.toDBModel(): GroupingEntity {
 fun Group.toDBModel(): GroupElementEntity {
     return GroupElementEntity(
             name = name,
-            elements = elements
+            elements = elements.toMutableList()
     )
 }
 

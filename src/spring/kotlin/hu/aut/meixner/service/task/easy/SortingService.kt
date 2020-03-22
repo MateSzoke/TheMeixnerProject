@@ -31,7 +31,7 @@ class SortingService(
                             elements = elements,
                             lastModified = OffsetDateTime.now()
                     )
-                }
+                }.apply { this.id = id }
         ).toDTOModel()
     }
 

@@ -32,7 +32,7 @@ class SentenceCompletionService(
                             options = options,
                             lastModified = OffsetDateTime.now()
                     )
-                }
+                }.apply { this.id = id }
         ).toDTOModel()
     }
 
