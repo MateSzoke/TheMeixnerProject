@@ -2,10 +2,10 @@ server:
   port: 3000
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    password: password
-    url: jdbc:mysql://127.0.0.1:3306/database
-    username: database_user
+    driver-class-name: org.postgresql.Driver
+    password: 6e39df869b910018e480ab677b38a67b585a45a2e7f30994cff57487e749ed09
+    url: postgres://sluqunbdiokjov:6e39df869b910018e480ab677b38a67b585a45a2e7f30994cff57487e749ed09@ec2-52-200-119-0.compute-1.amazonaws.com:5432/dfk4crs29g162d
+    username: sluqunbdiokjov
   jpa:
     hibernate:
       ddl-auto: update
