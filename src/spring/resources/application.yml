@@ -1,9 +1,11 @@
+server:
+  port: 3000
 spring:
   datasource:
-    driver-class-name: org.postgresql.Driver
-    password: 6e39df869b910018e480ab677b38a67b585a45a2e7f30994cff57487e749ed09
-    url: jdbc:postgresql:ec2-52-200-119-0.compute-1.amazonaws.com:5432/dfk4crs29g162d
-    username: sluqunbdiokjov
+    driver-class-name: ${SPRING_DATASOURCE_DRIVER-CLASS-NAME:com.mysql.cj.jdbc.Driver}
+    password: ${SPRING_DATASOURCE_PASSWORD:password}
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://127.0.0.1:3306/database}
+    username: ${SPRING_DATASOURCE_USERNAME:database_user}
     tomcat:
       max-active: 10
       max-idle: 5
