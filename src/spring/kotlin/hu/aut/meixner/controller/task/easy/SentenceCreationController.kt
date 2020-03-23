@@ -20,13 +20,6 @@ class SentenceCreationController(
         return ResponseEntity.ok(sentenceCreationService.createSentenceCreation(sentenceCreationRequest))
     }
 
-    @GetMapping("/sentence_creation/{taskId}")
-    fun getSentenceCreationById(@PathVariable("taskId") taskId: Long): ResponseEntity<SentenceCreationResponse> {
-        val sentenceCreation = sentenceCreationService.getSentenceCreationById(taskId)
-                ?: return ResponseEntity.notFound().build()
-        return ResponseEntity.ok(sentenceCreation)
-    }
-
     @PatchMapping("/sentence_creation/{taskId}")
     fun updateSentenceCreationById(
             @PathVariable("taskId") taskId: Long,
@@ -35,11 +28,6 @@ class SentenceCreationController(
         val sentenceCreation = sentenceCreationService.updateSentenceCreation(taskId, sentenceCreationRequest)
                 ?: return ResponseEntity.notFound().build()
         return ResponseEntity.ok(sentenceCreation)
-    }
-
-    @DeleteMapping("/sentence_creation/{taskId}")
-    fun deleteSentenceCreation(@PathVariable("taskId") taskId: Long) {
-        sentenceCreationService.deleteSentenceCreation(taskId)
     }
 
 }

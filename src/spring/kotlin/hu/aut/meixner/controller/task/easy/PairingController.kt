@@ -20,12 +20,6 @@ class PairingController(
         return ResponseEntity.ok(pairingService.createPairing(pairingRequest))
     }
 
-    @GetMapping("/pairing/{taskId}")
-    fun getPairingById(@PathVariable("taskId") taskId: Long): ResponseEntity<PairingResponse> {
-        val pairing = pairingService.getPairingById(taskId) ?: return ResponseEntity.notFound().build()
-        return ResponseEntity.ok(pairing)
-    }
-
     @PatchMapping("/pairing/{taskId}")
     fun updatePairingById(
             @PathVariable("taskId") taskId: Long,
@@ -33,11 +27,6 @@ class PairingController(
     ): ResponseEntity<PairingResponse> {
         val pairing = pairingService.updatePairing(taskId, pairingRequest) ?: return ResponseEntity.notFound().build()
         return ResponseEntity.ok(pairing)
-    }
-
-    @DeleteMapping("/pairing/{taskId}")
-    fun deletePairing(@PathVariable("taskId") taskId: Long) {
-        pairingService.deletePairing(taskId)
     }
 
 }

@@ -18,10 +18,6 @@ class SortingService(
         return sortingRepository.save(sortingRequest.toDBModel()).toDTOModel()
     }
 
-    fun getSortingById(id: Long): SortingResponse? {
-        return sortingRepository.findById(id).toNullable?.toDTOModel() ?: return null
-    }
-
     fun updateSorting(id: Long, sortingRequest: SortingRequest): SortingResponse? {
         val sorting = sortingRepository.findById(id).toNullable ?: return null
         return sortingRepository.save(
@@ -33,11 +29,6 @@ class SortingService(
                     )
                 }.apply { this.id = id }
         ).toDTOModel()
-    }
-
-    fun deleteSorting(id: Long) {
-        val deletedSorting = sortingRepository.findById(id).toNullable ?: return
-        sortingRepository.delete(deletedSorting)
     }
 
 }

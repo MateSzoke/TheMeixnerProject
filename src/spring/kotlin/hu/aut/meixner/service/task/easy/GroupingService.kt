@@ -18,10 +18,6 @@ class GroupingService(
         return groupingRepository.save(groupingRequest.toDBModel()).toDTOModel()
     }
 
-    fun getGroupingById(id: Long): GroupingResponse? {
-        return groupingRepository.findById(id).toNullable?.toDTOModel() ?: return null
-    }
-
     fun updateGrouping(id: Long, groupingRequest: GroupingRequest): GroupingResponse? {
         val grouping = groupingRepository.findById(id).toNullable ?: return null
         return groupingRepository.save(
@@ -33,11 +29,6 @@ class GroupingService(
                     )
                 }.apply { this.id = id }
         ).toDTOModel()
-    }
-
-    fun deleteGrouping(id: Long) {
-        val deletedGrouping = groupingRepository.findById(id).toNullable ?: return
-        groupingRepository.delete(deletedGrouping)
     }
 
 }

@@ -18,10 +18,6 @@ class PairingService(
         return pairingRepository.save(pairing.toDBModel()).toDTOModel()
     }
 
-    fun getPairingById(id: Long): PairingResponse? {
-        return pairingRepository.findById(id).toNullable?.toDTOModel() ?: return null
-    }
-
     fun updatePairing(id: Long, pairingRequest: PairingRequest): PairingResponse? {
         val pairing = pairingRepository.findById(id).toNullable ?: return null
         return pairingRepository.save(
@@ -33,11 +29,6 @@ class PairingService(
                     )
                 }.apply { this.id = id }
         ).toDTOModel()
-    }
-
-    fun deletePairing(id: Long) {
-        val deletedPairing = pairingRepository.findById(id).toNullable ?: return
-        pairingRepository.delete(deletedPairing)
     }
 
 }

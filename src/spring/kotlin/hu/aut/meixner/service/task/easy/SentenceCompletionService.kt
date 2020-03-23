@@ -18,10 +18,6 @@ class SentenceCompletionService(
         return sentenceCompletionRepository.save(sentenceCompletionRequest.toDBModel()).toDTOModel()
     }
 
-    fun getSentenceCompletionById(id: Long): SentenceCompletionResponse? {
-        return sentenceCompletionRepository.findById(id).toNullable?.toDTOModel() ?: return null
-    }
-
     fun updateSentenceCompletion(id: Long, sentenceCompletionRequest: SentenceCompletionRequest): SentenceCompletionResponse? {
         val sentenceCompletion = sentenceCompletionRepository.findById(id).toNullable ?: return null
         return sentenceCompletionRepository.save(
@@ -34,11 +30,6 @@ class SentenceCompletionService(
                     )
                 }.apply { this.id = id }
         ).toDTOModel()
-    }
-
-    fun deleteSentenceCompletion(id: Long) {
-        val deletedSentenceCompletion = sentenceCompletionRepository.findById(id).toNullable ?: return
-        sentenceCompletionRepository.delete(deletedSentenceCompletion)
     }
 
 }

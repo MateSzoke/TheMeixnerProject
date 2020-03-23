@@ -20,12 +20,6 @@ class GroupingController(
         return ResponseEntity.ok(groupingService.createGrouping(groupingRequest))
     }
 
-    @GetMapping("/grouping/{taskId}")
-    fun getGroupingById(@PathVariable("taskId") taskId: Long): ResponseEntity<GroupingResponse> {
-        val grouping = groupingService.getGroupingById(taskId) ?: return ResponseEntity.notFound().build()
-        return ResponseEntity.ok(grouping)
-    }
-
     @PatchMapping("/grouping/{taskId}")
     fun updateGroupingById(
             @PathVariable("taskId") taskId: Long,
@@ -34,11 +28,6 @@ class GroupingController(
         val grouping = groupingService.updateGrouping(taskId, groupingRequest)
                 ?: return ResponseEntity.notFound().build()
         return ResponseEntity.ok(grouping)
-    }
-
-    @DeleteMapping("/grouping/{taskId}")
-    fun deleteGrouping(@PathVariable("taskId") taskId: Long) {
-        groupingService.deleteGrouping(taskId)
     }
 
 }

@@ -20,13 +20,6 @@ class SentenceCompletionController(
         return ResponseEntity.ok(sentenceCompletionService.createSentenceCompletion(sentenceCompletionRequest))
     }
 
-    @GetMapping("/sentence_completion/{taskId}")
-    fun getSentenceCompletionById(@PathVariable("taskId") taskId: Long): ResponseEntity<SentenceCompletionResponse> {
-        val sentenceCompletion = sentenceCompletionService.getSentenceCompletionById(taskId)
-                ?: return ResponseEntity.notFound().build()
-        return ResponseEntity.ok(sentenceCompletion)
-    }
-
     @PatchMapping("/sentence_completion/{taskId}")
     fun updateSentenceCompletionById(
             @PathVariable("taskId") taskId: Long,
@@ -35,11 +28,6 @@ class SentenceCompletionController(
         val sentenceCompletion = sentenceCompletionService.updateSentenceCompletion(taskId, sentenceCompletionRequest)
                 ?: return ResponseEntity.notFound().build()
         return ResponseEntity.ok(sentenceCompletion)
-    }
-
-    @DeleteMapping("/sentence_completion/{taskId}")
-    fun deleteSentenceCompletion(@PathVariable("taskId") taskId: Long) {
-        sentenceCompletionService.deleteSentenceCompletion(taskId)
     }
 
 }

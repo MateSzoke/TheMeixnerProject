@@ -20,12 +20,6 @@ class SortingController(
         return ResponseEntity.ok(sortingService.createSorting(sortingRequest))
     }
 
-    @GetMapping("/sorting/{taskId}")
-    fun getSortingById(@PathVariable("taskId") taskId: Long): ResponseEntity<SortingResponse> {
-        val sorting = sortingService.getSortingById(taskId) ?: return ResponseEntity.notFound().build()
-        return ResponseEntity.ok(sorting)
-    }
-
     @PatchMapping("/sorting/{taskId}")
     fun updateSortingById(
             @PathVariable("taskId") taskId: Long,
@@ -34,11 +28,6 @@ class SortingController(
         val sortingResponse = sortingService.updateSorting(taskId, sortingRequest)
                 ?: return ResponseEntity.notFound().build()
         return ResponseEntity.ok(sortingResponse)
-    }
-
-    @DeleteMapping("/sorting/{taskId}")
-    fun deleteSorting(@PathVariable("taskId") taskId: Long) {
-        sortingService.deleteSorting(taskId)
     }
 
 }
