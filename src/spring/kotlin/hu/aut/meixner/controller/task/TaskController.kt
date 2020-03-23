@@ -4,10 +4,7 @@ import hu.aut.meixner.dto.task.TaskResponse
 import hu.aut.meixner.service.task.TaskService
 import io.swagger.annotations.Api
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @Api(tags = ["Task"])
 @RestController
@@ -25,6 +22,11 @@ class TaskController(
     fun getTaskById(@PathVariable("taskId") taskId: Long): ResponseEntity<TaskResponse> {
         val task = taskService.getTaskById(taskId) ?: return ResponseEntity.notFound().build()
         return ResponseEntity.ok(task)
+    }
+
+    @DeleteMapping("/{taskId}")
+    fun deleteTaskById(@PathVariable("taskId") taskId: Long) {
+        taskService.deleteTaskById(taskId)
     }
 
 }

@@ -4,6 +4,7 @@ import hu.aut.meixner.dto.task.TaskResponse
 import hu.aut.meixner.extensions.toDTOModel
 import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.repository.task.easytask.*
+import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.stereotype.Service
 
 @Service
@@ -33,6 +34,20 @@ class TaskService(
         )
                 .flatten()
                 .sortedBy { it.lastModified }
+    }
+
+    fun deleteTaskById(taskId: Long) {
+        fun tryDelete(delete: () -> Unit) {
+            try {
+                delete()
+            } catch (e: EmptyResultDataAccessException) {
+            }
+        }
+        tryDelete { pairingRepository.deleteById(taskId) }
+        tryDelete { groupingRepository.deleteById(taskId) }
+        tryDelete { sentenceCompletionRepository.deleteById(taskId) }
+        tryDelete { sentenceCreationRepository.deleteById(taskId) }
+        tryDelete { sortingRepository.deleteById(taskId) }
     }
 
 }
