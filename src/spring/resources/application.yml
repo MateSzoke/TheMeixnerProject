@@ -3,9 +3,12 @@ server:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    password: 6e39df869b910018e480ab677b38a67b585a45a2e7f30994cff57487e749ed09
-    url: jdbc:postgresql:ec2-52-200-119-0.compute-1.amazonaws.com:5432/dfk4crs29g162d
-    username: sluqunbdiokjov
+    tomcat:
+      max-active: 10
+      max-idle: 5
+      min-idle: 2
+      initial-size: 5
+      remove-abandoned: true
   jpa:
     hibernate:
       ddl-auto: update
