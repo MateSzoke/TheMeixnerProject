@@ -2,10 +2,16 @@ server:
   port: 3000
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    password: password
-    url: jdbc:mysql://127.0.0.1:3306/database
-    username: database_user
+    driver-class-name: ${SPRING_DATASOURCE_DRIVER-CLASS-NAME:com.mysql.cj.jdbc.Driver}
+    password: ${SPRING_DATASOURCE_PASSWORD:password}
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://127.0.0.1:3306/database}
+    username: ${SPRING_DATASOURCE_USERNAME:database_user}
+    tomcat:
+      max-active: 10
+      max-idle: 5
+      min-idle: 2
+      initial-size: 5
+      remove-abandoned: true
   jpa:
     hibernate:
       ddl-auto: update
