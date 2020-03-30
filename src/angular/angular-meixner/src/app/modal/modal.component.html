@@ -1,0 +1,16 @@
+<div id="modal-container">
+  <header>
+    {{title}}
+  </header>
+  <hr>
+  <section #content>
+  </section>
+  <hr>
+  <footer>
+    <div>
+      <button>Hozzáadom</button>
+      <button (click)="cancel()">Mégsem</button>
+    </div>
+  </footer>
+</div>
+<div id="overlay" (click)="cancel()" ></div>

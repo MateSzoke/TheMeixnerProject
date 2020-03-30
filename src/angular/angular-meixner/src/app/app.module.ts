@@ -22,6 +22,10 @@ import {MatInputModule} from '@angular/material/input';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatSelectModule} from '@angular/material/select';
+import { NewExamComponent } from './new-exam/new-exam.component';
+import { ModalComponent } from './modal/modal.component';
+import {DomService} from './service/dom.service';
+import {ModalService} from './service/modal.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +33,9 @@ import {MatSelectModule} from '@angular/material/select';
     ExercisesComponent,
     ExamsComponent,
     UsersComponent,
-    LoginComponent
+    LoginComponent,
+    NewExamComponent,
+    ModalComponent
   ],
     imports: [
         BrowserModule,
@@ -51,7 +57,8 @@ import {MatSelectModule} from '@angular/material/select';
         MatExpansionModule,
         MatSelectModule
     ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [DomService, ModalService],
+  bootstrap: [AppComponent],
+  entryComponents: [LoginComponent]
 })
 export class AppModule { }

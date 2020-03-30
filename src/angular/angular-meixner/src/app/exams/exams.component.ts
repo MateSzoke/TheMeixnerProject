@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {DomService} from '../service/dom.service';
+import {ModalService} from '../service/modal.service';
+import {LoginComponent} from '../login/login.component';
+import {ModalComponent} from '../modal/modal.component';
 
 @Component({
   selector: 'app-exams',
@@ -13,13 +17,17 @@ export class ExamsComponent implements OnInit {
   public evfolyamok = Array.from({ length: (8 - 5) / 1 + 1}, (_, i) => 5 + (i * 1));
   public osztalyok:Array<String> = ['a', 'b', 'c'];
 
-  constructor() { }
+  constructor(private modal: ModalService, private dom: DomService) { }
 
   ngOnInit(): void {
   }
 
-  public newExam() {
+  public removeModalnewExam() {
+    this.modal.destroy();
+  }
 
+  public newExam() {
+    this.dom.show(LoginComponent);
   }
 
 
