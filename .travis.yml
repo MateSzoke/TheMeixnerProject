@@ -12,25 +12,27 @@ matrix:
           packages:
             - docker-ce
       env:
-        - DOCKER_COMPOSE_VERSION=3
-      script:
-        - mvn test
-      before_script:
-        - docker-compose up -d --build
+        - DOCKER_COMPOSE_VERSION=1.4.2
       before_install:
         - chmod +x mvnw
         - sudo rm /usr/local/bin/docker-compose
         - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
         - chmod +x docker-compose
         - sudo mv docker-compose /usr/local/bin
+      before_script:
+        - docker-compose up -d --build
+      script:
+        - mvn test
+      after_script:
+        - docker-compose down
 
     - language: node_js
       node_js: stable
-      install:
-        - npm install
       before_install:
         - cd ./src/angular/angular-meixner/
         - export DISPLAY=:99.0
         - sh -e /etc/init.d/xvfb start
+      install:
+        - npm install
       script:
         - npm run build
