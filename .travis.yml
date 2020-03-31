@@ -6,6 +6,10 @@ matrix:
     - language: java
       jdk: oraclejdk8
 
+      before_install:
+        - chmod +x mvnw
+
+
 
     - language: node_js
       node_js: stable
