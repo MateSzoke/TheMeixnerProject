@@ -21,6 +21,7 @@ matrix:
         - chmod +x docker-compose
         - sudo mv docker-compose /usr/local/bin
       before_script:
+        - docker volume create meixner-mysq
         - docker-compose up -d
       script:
         - mvn test
