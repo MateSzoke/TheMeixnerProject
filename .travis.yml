@@ -27,6 +27,7 @@ matrix:
         - mvn test
       after_script:
         - docker-compose down
+        - docker volume rm meixner-mysql
 
     - language: node_js
       node_js: stable
