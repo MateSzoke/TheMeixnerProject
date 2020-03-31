@@ -8,7 +8,7 @@ matrix:
       before_install:
         - chmod +x mvnw
       script:
-        - ./mvnw clean install -B
+        - ./mvn clean install -B
       before_script:
         - cd ./src/spring/
 
