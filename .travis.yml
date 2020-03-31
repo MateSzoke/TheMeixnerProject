@@ -7,8 +7,6 @@ matrix:
       jdk: oraclejdk8
       before_install:
         - chmod +x mvnw
-      script:
-        - ./mvn clean install -B
       before_script:
         - cd ./src/spring/
 
