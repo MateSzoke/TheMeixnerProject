@@ -9,7 +9,9 @@ matrix:
         - mysql
       before_install:
         - chmod +x mvnw
-
+        - mysql -e 'CREATE DATABASE database;'
+      script:
+        - mvn clean install
 
 #    - language: node_js
 #      node_js: stable
