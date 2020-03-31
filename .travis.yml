@@ -5,19 +5,23 @@ matrix:
   include:
     - language: java
       jdk: oraclejdk8
-
+      services:
+        - mysql
       before_install:
         - chmod +x mvnw
-
-
-
-    - language: node_js
-      node_js: stable
-      before_install:
-        - cd ./src/angular/angular-meixner/
-        - export DISPLAY=:99.0
-        - sh -e /etc/init.d/xvfb start
-      install:
-        - npm install
+      before_script:
+        - mysql -e 'CREATE DATABASE IF NOT EXISTS database
+        - mysql -e "CREATE USER 'database_user' IDENTIFIED BY 'password'"
       script:
-        - npm run build
+        - mvn test
+
+#    - language: node_js
+#      node_js: stable
+#      before_install:
+#        - cd ./src/angular/angular-meixner/
+#        - export DISPLAY=:99.0
+#        - sh -e /etc/init.d/xvfb start
+#      install:
+#        - npm install
+#      script:
+#        - npm run build
