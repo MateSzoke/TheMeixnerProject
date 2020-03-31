@@ -5,17 +5,20 @@ matrix:
   include:
     - language: java
       jdk: oraclejdk8
+      services:
+        - docker
       script:
         - mvn test
       before_install:
         - chmod +x mvnw
+        - docker-compose up -d
 
     - language: node_js
       node_js: stable
       install:
         - npm install
       before_install:
-        - cd ./src/angular/
+        - cd ./src/angular/angular-meixner/
         - export DISPLAY=:99.0
         - sh -e /etc/init.d/xvfb start
       script:
