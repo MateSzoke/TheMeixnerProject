@@ -10,7 +10,7 @@ matrix:
       before_install:
         - chmod +x mvnw
       before_script:
-        - mysql -e 'CREATE DATABASE IF NOT EXISTS database
+        - mysql -e "CREATE DATABASE IF NOT EXISTS database"
         - mysql -e "CREATE USER 'database_user' IDENTIFIED BY 'password'"
       script:
         - mvn test
