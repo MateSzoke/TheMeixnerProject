@@ -12,7 +12,7 @@ matrix:
           packages:
             - docker-ce
       env:
-        - DOCKER_COMPOSE_VERSION=1.4.2
+        - DOCKER_COMPOSE_VERSION=3
       before_install:
         - chmod +x mvnw
         - sudo rm /usr/local/bin/docker-compose
