@@ -5,10 +5,10 @@ matrix:
   include:
     - language: java
       jdk: oraclejdk8
+      script:
+        - mvn test
       before_install:
         - chmod +x mvnw
-      before_script:
-        - cd ./src/spring/
 
     - language: node_js
       node_js: stable
