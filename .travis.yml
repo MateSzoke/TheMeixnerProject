@@ -8,14 +8,13 @@ matrix:
       before_install:
         - chmod +x mvnw
 
-
-#    - language: node_js
-#      node_js: stable
-#      before_install:
-#        - cd ./src/angular/angular-meixner/
-#        - export DISPLAY=:99.0
-#        - sh -e /etc/init.d/xvfb start
-#      install:
-#        - npm install
-#      script:
-#        - npm run build
+    - language: node_js
+      node_js: stable
+      before_install:
+        - cd ./src/angular/angular-meixner/
+        - export DISPLAY=:99.0
+        - sh -e /etc/init.d/xvfb start
+      install:
+        - npm install
+      script:
+        - npm run build
