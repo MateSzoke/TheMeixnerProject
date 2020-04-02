@@ -127,6 +127,7 @@
         <profile>
             <id>swagger-generate-frontend</id>
             <activation>
+                <!-- To generate frontend api: set it to true and run mvn clean compile -->
                 <activeByDefault>false</activeByDefault>
             </activation>
             <build>
@@ -142,9 +143,9 @@
                                     <goal>generate</goal>
                                 </goals>
                                 <configuration>
-                                    <inputSpec>http://localhost:3000/v2/api-docs</inputSpec>
+                                    <inputSpec>http://meixner.herokuapp.com/v2/api-docs</inputSpec>
                                     <language>typescript-angular</language>
-                                    <output>${project.basedir}/src/angular/swagger</output>
+                                    <output>${project.basedir}/src/angular/angular-meixner/src/swagger-api</output>
                                     <validateSpec>false</validateSpec>
                                     <configOptions>
                                         <ngVersion>8.0</ngVersion>
