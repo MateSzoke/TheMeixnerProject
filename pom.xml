@@ -128,7 +128,7 @@
             <id>swagger-generate-frontend</id>
             <activation>
                 <!-- To generate frontend api: set it to true and run mvn clean compile -->
-                <activeByDefault>true</activeByDefault>
+                <activeByDefault>false</activeByDefault>
             </activation>
             <build>
                 <plugins>
