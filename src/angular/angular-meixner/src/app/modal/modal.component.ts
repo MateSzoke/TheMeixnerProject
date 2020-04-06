@@ -7,10 +7,15 @@ import { DomService } from '../service/dom.service';
 })
 export class ModalComponent implements OnInit {
   @HostBinding('style.display') display = 'none';
-  @ViewChild('content', { read: ViewContainerRef }) containerRef: ViewContainerRef;
+  @ViewChild('content', { read: ViewContainerRef, static: true }) containerRef: ViewContainerRef;
   title = "";
   constructor(private domService: DomService) {
-
+    this.domService.setContainerRef(this.containerRef);
+    this.domService.showContainerElement$.subscribe((value) => {
+      if(value){
+        this.display='block';
+      }
+    })
   }
 
   ngOnInit() {
@@ -23,6 +28,13 @@ export class ModalComponent implements OnInit {
   }
 
   cancel() {
+    this.domService.setContainerRef(this.containerRef);
+    this.domService.cancelComponent();
+    this.display = 'none';
+  }
+
+  savedata() {
+    this.domService.setContainerRef(this.containerRef);
     this.domService.cancelComponent();
     this.display = 'none';
   }

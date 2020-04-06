@@ -17,7 +17,10 @@ export class ExamsComponent implements OnInit {
   public evfolyamok = Array.from({ length: (8 - 5) / 1 + 1}, (_, i) => 5 + (i * 1));
   public osztalyok:Array<String> = ['a', 'b', 'c'];
 
-  constructor(private modal: ModalService, private dom: DomService) { }
+  constructor(private modal: ModalService, private dom: DomService,
+  private modComponent: ModalComponent) {
+    modComponent.ngOnInit();
+  }
 
   ngOnInit(): void {
   }

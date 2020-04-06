@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import {LoginComponent} from '../login/login.component';
+import {ModalService} from '../service/modal.service';
+import {DomService} from '../service/dom.service';
+import {ModalComponent} from '../modal/modal.component';
+import {NewExerciseComponent} from '../new-exercise/new-exercise.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-exercises',
@@ -13,13 +19,22 @@ export class ExercisesComponent implements OnInit {
   public evfolyamok = Array.from({ length: (8 - 5) / 1 + 1}, (_, i) => 5 + (i * 1));
   public osztalyok:Array<String> = ['a', 'b', 'c'];
 
-  constructor() { }
+  constructor(private modal: ModalService, private dom: DomService,
+              private modComponent: ModalComponent,
+              public router: Router) {
+    modComponent.ngOnInit();
+  }
 
   ngOnInit(): void {
   }
 
-  public newTask() {
 
+  public removeModalnewTask() {
+    this.modal.destroy();
+  }
+
+  public newTask() {
+    this.dom.show(NewExerciseComponent);
   }
 
 }
