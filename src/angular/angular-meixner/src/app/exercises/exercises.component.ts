@@ -5,6 +5,7 @@ import {DomService} from '../service/dom.service';
 import {ModalComponent} from '../modal/modal.component';
 import {NewExerciseComponent} from '../new-exercise/new-exercise.component';
 import {Router} from '@angular/router';
+import {TaskService} from '../../swagger-api';
 
 @Component({
   selector: 'app-exercises',
@@ -21,11 +22,21 @@ export class ExercisesComponent implements OnInit {
 
   constructor(private modal: ModalService, private dom: DomService,
               private modComponent: ModalComponent,
-              public router: Router) {
+              public router: Router,
+              private taskService: TaskService) {
     modComponent.ngOnInit();
   }
 
   ngOnInit(): void {
+    this.taskService.getTaskByIdUsingGET(2).subscribe(data => {
+      console.log("data received");
+      console.log(data.type);
+    },
+      error => {
+      console.log("subscribe error");
+      },
+      () => {
+      });
   }
 
 

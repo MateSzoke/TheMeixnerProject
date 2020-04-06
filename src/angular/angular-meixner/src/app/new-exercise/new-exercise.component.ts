@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {TaskService} from '../../swagger-api';
 
 @Component({
   selector: 'app-new-exercise',
