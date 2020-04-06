@@ -16,7 +16,7 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <kotlin.version>1.3.71</kotlin.version>
+        <kotlin.version>1.3.50</kotlin.version>
     </properties>
 
     <dependencies>
@@ -112,7 +112,7 @@
 
     <build>
         <sourceDirectory>src/spring/kotlin</sourceDirectory>
-        <testSourceDirectory>src/test/kotlin</testSourceDirectory>
+        <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -121,23 +121,6 @@
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
-                <version>${kotlin.version}</version>
-                <executions>
-                    <execution>
-                        <id>compile</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>test-compile</id>
-                        <phase>test-compile</phase>
-                        <goals>
-                            <goal>test-compile</goal>
-                        </goals>
-                    </execution>
-                </executions>
                 <configuration>
                     <args>
                         <arg>-Xjsr305=strict</arg>
@@ -145,7 +128,6 @@
                     <compilerPlugins>
                         <plugin>spring</plugin>
                     </compilerPlugins>
-                    <jvmTarget>1.8</jvmTarget>
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -162,5 +144,39 @@
             </plugin>
         </plugins>
     </build>
-
+    <profiles>
+        <profile>
+            <id>swagger-generate-frontend</id>
+            <activation>
+                <!-- To generate frontend api: set it to true and run mvn clean compile -->
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.openapitools</groupId>
+                        <artifactId>openapi-generator-maven-plugin</artifactId>
+                        <version>3.3.4</version>
+                        <executions>
+                            <execution>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+                                <configuration>
+                                    <inputSpec>http://meixner.herokuapp.com/v2/api-docs</inputSpec>
+                                    <language>typescript-angular</language>
+                                    <output>${project.basedir}/src/angular/angular-meixner/src/swagger-api</output>
+                                    <validateSpec>false</validateSpec>
+                                    <configOptions>
+                                        <ngVersion>8.0</ngVersion>
+                                    </configOptions>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
