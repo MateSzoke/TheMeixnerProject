@@ -11,5 +11,9 @@ enum class TypeEnum {
     SentenceCompletionAndSorting,
     SentenceCreationAndGrouping,
     SentenceCreationAndSorting,
-    SortingAndGrouping
+    SortingAndGrouping,
+    BlindMap,
+    FreeText,
+    OddOneOut,
+    TimeLine
 }
