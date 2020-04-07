@@ -5,12 +5,18 @@ import {RouteGuardService} from './service/route-guard.service';
 import {ExamsComponent} from './exams/exams.component';
 import {UsersComponent} from './users/users.component';
 import {LoginComponent} from './login/login.component';
+import {SorrendezesComponent} from './sorrendezes/sorrendezes.component';
 
 
 const routes: Routes = [
   {
     path: '',
     component: LoginComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: 'sorrendezes',
+    component: SorrendezesComponent,
     canActivate: [RouteGuardService]
   },
   {

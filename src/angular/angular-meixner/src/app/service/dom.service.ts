@@ -20,10 +20,16 @@ export class DomService {
     this.containerRef = ref;
   }
 
+  public eagerLoad(component) {
+    const factory = this.componentFactoryResolver.resolveComponentFactory(component);
+    const componentRef = factory.create(this.injector);
+    this.containerRef.insert(componentRef.hostView);
+  }
+
   public show(component) {
     const factory = this.componentFactoryResolver.resolveComponentFactory(component);
     const componentRef = factory.create(this.injector);
-    this.showContainerElement$.next(true)
+    this.showContainerElement$.next(true);
     this.containerRef.insert(componentRef.hostView);
   }
 
@@ -38,7 +44,6 @@ export class DomService {
     this.appRef.attachView(childComponentref.hostView)
     const childDomElement = (childComponentref.hostView as EmbeddedViewRef<any>)
       .rootNodes[0] as HTMLElement;
-    console.log(document.getElementById(parentId));
     document.getElementById(parentId).appendChild(childDomElement);
   }
 
