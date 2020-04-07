@@ -27,7 +27,6 @@ class WebSecurity(
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, REGISTER_URL).permitAll()
                 .antMatchers(*AUTH_WHITELIST).permitAll()
-                .antMatchers("/**/*").denyAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(JWTAuthenticationFilter(authenticationManager()))
