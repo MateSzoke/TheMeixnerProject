@@ -1,6 +1,6 @@
 package hu.aut.meixner.dto.task
 
-enum class TypeEnum {
+enum class TaskTypeEnum {
     Grouping,
     Pairing,
     SentenceCompletion,
