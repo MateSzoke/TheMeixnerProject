@@ -1,9 +1,9 @@
 package hu.aut.meixner.service.task.easy
 
+import hu.aut.meixner.dto.mapping.toDBModel
+import hu.aut.meixner.dto.mapping.toEntity
 import hu.aut.meixner.dto.task.easy.GroupingRequest
 import hu.aut.meixner.dto.task.easy.GroupingResponse
-import hu.aut.meixner.extensions.toDBModel
-import hu.aut.meixner.extensions.toDTOModel
 import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.repository.task.easytask.GroupingRepository
 import org.springframework.stereotype.Service
@@ -15,7 +15,7 @@ class GroupingService(
 ) {
 
     fun createGrouping(groupingRequest: GroupingRequest): GroupingResponse {
-        return groupingRepository.save(groupingRequest.toDBModel()).toDTOModel()
+        return groupingRepository.save(groupingRequest.toDBModel()).toEntity()
     }
 
     fun updateGrouping(id: Long, groupingRequest: GroupingRequest): GroupingResponse? {
@@ -28,7 +28,7 @@ class GroupingService(
                             lastModified = OffsetDateTime.now()
                     )
                 }.apply { this.id = id }
-        ).toDTOModel()
+        ).toEntity()
     }
 
 }

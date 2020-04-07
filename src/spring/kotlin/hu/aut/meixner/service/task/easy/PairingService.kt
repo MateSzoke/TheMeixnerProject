@@ -1,9 +1,9 @@
 package hu.aut.meixner.service.task.easy
 
+import hu.aut.meixner.dto.mapping.toDBModel
+import hu.aut.meixner.dto.mapping.toEntity
 import hu.aut.meixner.dto.task.easy.PairingRequest
 import hu.aut.meixner.dto.task.easy.PairingResponse
-import hu.aut.meixner.extensions.toDBModel
-import hu.aut.meixner.extensions.toDTOModel
 import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.repository.task.easytask.PairingRepository
 import org.springframework.stereotype.Service
@@ -15,7 +15,7 @@ class PairingService(
 ) {
 
     fun createPairing(pairing: PairingRequest): PairingResponse {
-        return pairingRepository.save(pairing.toDBModel()).toDTOModel()
+        return pairingRepository.save(pairing.toDBModel()).toEntity()
     }
 
     fun updatePairing(id: Long, pairingRequest: PairingRequest): PairingResponse? {
@@ -28,7 +28,7 @@ class PairingService(
                             lastModified = OffsetDateTime.now()
                     )
                 }.apply { this.id = id }
-        ).toDTOModel()
+        ).toEntity()
     }
 
 }
