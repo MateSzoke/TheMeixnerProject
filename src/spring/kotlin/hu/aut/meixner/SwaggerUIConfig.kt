@@ -19,7 +19,7 @@ class SwaggerUIConfig {
                 .select()
                 .build()
                 .apiInfo(apiInfo)
-                .securitySchemes(listOf(ApiKey("BearerAuth", "Authorization", "header")))
+                .securitySchemes(listOf(ApiKey("apiKey", "Authorization", "header")))
                 .securityContexts(listOf(securityContext))
     }
 
