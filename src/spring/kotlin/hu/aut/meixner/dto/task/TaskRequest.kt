@@ -2,10 +2,8 @@ package hu.aut.meixner.dto.task
 
 import java.time.OffsetDateTime
 
-abstract class TaskResponse {
-    abstract val id: Long
+abstract class TaskRequest {
     abstract val type: TypeEnum
     abstract val title: String
     abstract val difficulty: Int
-    abstract val lastModified: OffsetDateTime
 }

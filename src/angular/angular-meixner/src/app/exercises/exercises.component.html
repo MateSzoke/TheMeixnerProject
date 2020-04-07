@@ -1,5 +1,8 @@
 <html>
 <body>
+<app-modal></app-modal>
+<div id="modal-container" class="hidden"></div>
+<div id="overlay" (click)="removeModalnewTask()" class="hidden"></div>
 <div class="container">
   <mat-card class="mat-card-controls">
     <mat-card-content>
@@ -47,6 +50,7 @@
         <div class="float-right">
           {{this.today.getFullYear()}}.{{this.today.getMonth().toString().padStart(2, '0')}}.{{this.today.getDay().toString().padStart(2, '0')}}
           &nbsp;&#8196;<i class="fa fa-trash"></i>&nbsp;
+          <i class="fa fa-edit"></i>&nbsp;&nbsp;
         </div>
       </div>
     </mat-card>
@@ -60,6 +64,7 @@
       <div class="float-right">
         {{this.today.getFullYear()}}.{{this.today.getMonth().toString().padStart(2, '0')}}.{{this.today.getDay().toString().padStart(2, '0')}}
         &nbsp;&#8196;<i class="fa fa-trash"></i>&nbsp;
+        <i class="fa fa-edit"></i>&nbsp;&nbsp;
       </div>
     </div>
     </mat-card>
@@ -73,6 +78,7 @@
       <div class="float-right">
         {{this.today.getFullYear()}}.{{this.today.getMonth().toString().padStart(2, '0')}}.{{this.today.getDay().toString().padStart(2, '0')}}
         &nbsp;&#8196;<i class="fa fa-trash"></i>&nbsp;
+        <i [routerLink]="['/sorrendezes']" class="fa fa-edit"></i>&nbsp;&nbsp;
       </div>
     </div>
     </mat-card>

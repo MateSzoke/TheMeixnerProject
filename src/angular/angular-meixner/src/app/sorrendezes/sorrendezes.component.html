@@ -1,0 +1,15 @@
+<div class="flex-layout">
+  <button (click)="removeInput()" class="plusButton" mat-button>
+    <i class="fa fa-minus"></i>
+  </button>
+  <button (click)="newInput()" class="plusButton" mat-button>
+    <i class="fa fa-plus"></i>
+  </button>
+</div>
+<mat-card class="grey-card">
+  <div *ngFor="let input of inputArr">
+    <mat-form-field>
+      <input matInput>
+    </mat-form-field>
+  </div>
+</mat-card>

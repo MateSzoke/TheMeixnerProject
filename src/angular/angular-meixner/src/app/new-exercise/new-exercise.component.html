@@ -1,0 +1,59 @@
+<form class="example-form">
+  <p class="title-left">Feladat hozzáadása</p>
+  <mat-form-field class="example-full-width">
+    <mat-label>Feladat neve</mat-label>
+    <input matInput>
+  </mat-form-field>
+
+  <mat-card>
+
+    <mat-form-field>
+      <mat-label>Típus</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let tipus of tipusok" [value]="tipus">
+          {{tipus}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Nehézség</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let nehezseg of nehezsegek" [value]="nehezseg">
+          {{nehezseg}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-card>
+  <mat-card>
+    <mat-form-field>
+      <mat-label>-tól</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let osztaly of osztalyok" [value]="osztaly">
+          {{osztaly}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>-ig</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let osztaly of osztalyok" [value]="osztaly">
+          {{osztaly}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-card>
+
+  <mat-card>
+    <mat-form-field>
+      <mat-label>Témakör</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let temakor of temakorok" [value]="temakor">
+          {{temakor}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-card>
+
+</form>
