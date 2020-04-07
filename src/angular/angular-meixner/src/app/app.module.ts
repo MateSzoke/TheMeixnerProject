@@ -26,6 +26,8 @@ import { NewExamComponent } from './new-exam/new-exam.component';
 import { ModalComponent } from './modal/modal.component';
 import {DomService} from './service/dom.service';
 import {ModalService} from './service/modal.service';
+import { NewExerciseComponent } from './new-exercise/new-exercise.component';
+import { SorrendezesComponent } from './sorrendezes/sorrendezes.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import {ModalService} from './service/modal.service';
     UsersComponent,
     LoginComponent,
     NewExamComponent,
-    ModalComponent
+    ModalComponent,
+    NewExerciseComponent,
+    SorrendezesComponent
   ],
     imports: [
         BrowserModule,
@@ -57,8 +61,8 @@ import {ModalService} from './service/modal.service';
         MatExpansionModule,
         MatSelectModule
     ],
-  providers: [DomService, ModalService],
+  providers: [DomService, ModalService, ModalComponent,LoginComponent, NewExerciseComponent],
   bootstrap: [AppComponent],
-  entryComponents: [LoginComponent]
+  entryComponents: [NewExerciseComponent, LoginComponent, ModalComponent]
 })
 export class AppModule { }

@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import {LoginComponent} from '../login/login.component';
+import {ModalService} from '../service/modal.service';
+import {DomService} from '../service/dom.service';
+import {ModalComponent} from '../modal/modal.component';
+import {NewExerciseComponent} from '../new-exercise/new-exercise.component';
+import {Router} from '@angular/router';
+import {TaskService} from '../../swagger-api';
 
 @Component({
   selector: 'app-exercises',
@@ -13,13 +20,32 @@ export class ExercisesComponent implements OnInit {
   public evfolyamok = Array.from({ length: (8 - 5) / 1 + 1}, (_, i) => 5 + (i * 1));
   public osztalyok:Array<String> = ['a', 'b', 'c'];
 
-  constructor() { }
+  constructor(private modal: ModalService, private dom: DomService,
+              private modComponent: ModalComponent,
+              public router: Router,
+              private taskService: TaskService) {
+    modComponent.ngOnInit();
+  }
 
   ngOnInit(): void {
+    this.taskService.getTaskByIdUsingGET(2).subscribe(data => {
+      console.log("data received");
+      console.log(data.type);
+    },
+      error => {
+      console.log("subscribe error");
+      },
+      () => {
+      });
+  }
+
+
+  public removeModalnewTask() {
+    this.modal.destroy();
   }
 
   public newTask() {
-
+    this.dom.show(NewExerciseComponent);
   }
 
 }
