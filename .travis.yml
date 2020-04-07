@@ -11,11 +11,11 @@ matrix:
     - language: node_js
       node_js: stable
       before_install:
+        - run mvn clean compile || true
         - cd ./src/angular/angular-meixner/
         - export DISPLAY=:99.0
         - sh -e /etc/init.d/xvfb start
       install:
-        - run mvn clean compile || true
         - npm install
       script:
         - npm run build
