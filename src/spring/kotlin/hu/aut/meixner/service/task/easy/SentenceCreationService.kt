@@ -1,9 +1,9 @@
 package hu.aut.meixner.service.task.easy
 
+import hu.aut.meixner.dto.mapping.toDBModel
+import hu.aut.meixner.dto.mapping.toEntity
 import hu.aut.meixner.dto.task.easy.SentenceCreationRequest
 import hu.aut.meixner.dto.task.easy.SentenceCreationResponse
-import hu.aut.meixner.extensions.toDBModel
-import hu.aut.meixner.extensions.toDTOModel
 import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.repository.task.easytask.SentenceCreationRepository
 import org.springframework.stereotype.Service
@@ -15,7 +15,7 @@ class SentenceCreationService(
 ) {
 
     fun createSentenceCreation(sentenceCreationRequest: SentenceCreationRequest): SentenceCreationResponse {
-        return sentenceCreationRepository.save(sentenceCreationRequest.toDBModel()).toDTOModel()
+        return sentenceCreationRepository.save(sentenceCreationRequest.toDBModel()).toEntity()
     }
 
     fun updateSentenceCreation(id: Long, sentenceCreationRequest: SentenceCreationRequest): SentenceCreationResponse? {
@@ -28,7 +28,7 @@ class SentenceCreationService(
                             lastModified = OffsetDateTime.now()
                     )
                 }.apply { this.id = id }
-        ).toDTOModel()
+        ).toEntity()
     }
 
 }

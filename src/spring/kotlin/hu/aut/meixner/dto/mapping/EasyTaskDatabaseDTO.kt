@@ -1,4 +1,4 @@
-package hu.aut.meixner.extensions
+package hu.aut.meixner.dto.mapping
 
 import hu.aut.meixner.domain.easytask.*
 import hu.aut.meixner.dto.task.easy.*
@@ -21,17 +21,17 @@ fun PairElement.toDBModel(): PairEntity {
     )
 }
 
-fun PairingEntity.toDTOModel(): PairingResponse {
+fun PairingEntity.toEntity(): PairingResponse {
     return PairingResponse(
             id = id,
             lastModified = lastModified,
             difficulty = difficulty,
             title = title,
-            pairs = pairs.map { it.toDTOModel() }
+            pairs = pairs.map { it.toEntity() }
     )
 }
 
-fun PairEntity.toDTOModel(): PairElement {
+fun PairEntity.toEntity(): PairElement {
     return PairElement(
             name = name,
             pair = pair
@@ -56,17 +56,17 @@ fun Group.toDBModel(): GroupElementEntity {
     )
 }
 
-fun GroupingEntity.toDTOModel(): GroupingResponse {
+fun GroupingEntity.toEntity(): GroupingResponse {
     return GroupingResponse(
             id = id,
             lastModified = lastModified,
             difficulty = difficulty,
             title = title,
-            groups = groups.map { it.toDTOModel() }
+            groups = groups.map { it.toEntity() }
     )
 }
 
-fun GroupElementEntity.toDTOModel(): Group {
+fun GroupElementEntity.toEntity(): Group {
     return Group(
             name = name,
             elements = elements
@@ -85,7 +85,7 @@ fun SentenceCompletionRequest.toDBModel(): SentenceCompletionEntity {
     )
 }
 
-fun SentenceCompletionEntity.toDTOModel(): SentenceCompletionResponse {
+fun SentenceCompletionEntity.toEntity(): SentenceCompletionResponse {
     return SentenceCompletionResponse(
             id = id,
             title = title,
@@ -107,7 +107,7 @@ fun SortingRequest.toDBModel(): SortingEntity {
     )
 }
 
-fun SortingEntity.toDTOModel(): SortingResponse {
+fun SortingEntity.toEntity(): SortingResponse {
     return SortingResponse(
             id = id,
             title = title,
@@ -135,17 +135,17 @@ fun Sentence.toDBModel(): SentenceEntity {
     )
 }
 
-fun SentenceCreationEntity.toDTOModel(): SentenceCreationResponse {
+fun SentenceCreationEntity.toEntity(): SentenceCreationResponse {
     return SentenceCreationResponse(
             id = id,
             lastModified = lastModified,
             difficulty = difficulty,
             title = title,
-            sentences = sentences.map { it.toDTOModel() }
+            sentences = sentences.map { it.toEntity() }
     )
 }
 
-fun SentenceEntity.toDTOModel(): Sentence {
+fun SentenceEntity.toEntity(): Sentence {
     return Sentence(
             sentenceTitle = sentenceTitle,
             parts = parts

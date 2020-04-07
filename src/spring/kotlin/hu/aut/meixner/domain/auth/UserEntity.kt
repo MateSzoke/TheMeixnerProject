@@ -11,5 +11,5 @@ data class UserEntity(
         val id: Long = 0,
         val username: String = "",
         val password: String = "",
-        val roleEnum: UserRoleEnum = UserRoleEnum.ADMIN
+        val role: UserRoleEnum = UserRoleEnum.ADMIN
 )
