@@ -1,5 +1,6 @@
 package hu.aut.meixner.security
 
+import hu.aut.meixner.security.SecurityConstants.AUTH_WHITELIST
 import hu.aut.meixner.security.SecurityConstants.REGISTER_URL
 import hu.aut.meixner.service.auth.UserService
 import org.springframework.context.annotation.Bean
@@ -25,6 +26,8 @@ class WebSecurity(
     override fun configure(http: HttpSecurity) {
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, REGISTER_URL).permitAll()
+                .antMatchers(*AUTH_WHITELIST).permitAll()
+                .antMatchers("/**/*").denyAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(JWTAuthenticationFilter(authenticationManager()))
