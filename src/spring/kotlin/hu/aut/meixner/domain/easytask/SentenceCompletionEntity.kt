@@ -11,6 +11,7 @@ data class SentenceCompletionEntity(
         @ElementCollection(targetClass = String::class)
         val options: List<String> = emptyList(),
         override val title: String = "",
+        override val owner: String = "",
         override val difficulty: Int = 0,
         override val lastModified: OffsetDateTime = OffsetDateTime.now()
 ) : TaskEntity()

@@ -9,6 +9,7 @@ open class SortingResponse(
         override val id: Long,
         override val type: TaskTypeEnum = TaskTypeEnum.Sorting,
         override val title: String,
+        override val owner: String,
         override val difficulty: Int,
         override val lastModified: OffsetDateTime
 ) : TaskResponse()

@@ -13,6 +13,7 @@ data class GroupingEntity(
         @Cascade(CascadeType.ALL)
         val groups: List<GroupElementEntity> = emptyList(),
         override val title: String = "",
+        override val owner: String = "",
         override val difficulty: Int = 0,
         override val lastModified: OffsetDateTime = OffsetDateTime.now()
 ) : TaskEntity()

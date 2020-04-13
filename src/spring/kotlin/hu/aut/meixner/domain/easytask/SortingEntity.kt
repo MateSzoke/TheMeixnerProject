@@ -10,6 +10,7 @@ data class SortingEntity(
         @ElementCollection(targetClass = String::class)
         val elements: List<String> = emptyList(),
         override val title: String = "",
+        override val owner: String = "",
         override val difficulty: Int = 0,
         override val lastModified: OffsetDateTime = OffsetDateTime.now()
 ) : TaskEntity()

@@ -8,6 +8,7 @@ class SentenceCompletionAndGroupingResponse(
         override val id: Long,
         override val type: TaskTypeEnum = TaskTypeEnum.SentenceCompletionAndGrouping,
         override val title: String,
+        override val owner: String,
         override val difficulty: Int,
         override val lastModified: OffsetDateTime
 ) : GroupingResponse(
@@ -16,5 +17,6 @@ class SentenceCompletionAndGroupingResponse(
         type = type,
         lastModified = lastModified,
         title = title,
+        owner = owner,
         difficulty = difficulty
 )

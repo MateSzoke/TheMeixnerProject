@@ -27,6 +27,7 @@ fun PairingEntity.toEntity(): PairingResponse {
             lastModified = lastModified,
             difficulty = difficulty,
             title = title,
+            owner = owner,
             pairs = pairs.map { it.toEntity() }
     )
 }
@@ -62,6 +63,7 @@ fun GroupingEntity.toEntity(): GroupingResponse {
             lastModified = lastModified,
             difficulty = difficulty,
             title = title,
+            owner = owner,
             groups = groups.map { it.toEntity() }
     )
 }
@@ -92,6 +94,7 @@ fun SentenceCompletionEntity.toEntity(): SentenceCompletionResponse {
             sentence = sentence,
             options = options,
             difficulty = 0,
+            owner = owner,
             lastModified = OffsetDateTime.now()
     )
 }
@@ -113,6 +116,7 @@ fun SortingEntity.toEntity(): SortingResponse {
             title = title,
             elements = elements,
             difficulty = 0,
+            owner = owner,
             lastModified = OffsetDateTime.now()
     )
 }
@@ -141,6 +145,7 @@ fun SentenceCreationEntity.toEntity(): SentenceCreationResponse {
             lastModified = lastModified,
             difficulty = difficulty,
             title = title,
+            owner = owner,
             sentences = sentences.map { it.toEntity() }
     )
 }
