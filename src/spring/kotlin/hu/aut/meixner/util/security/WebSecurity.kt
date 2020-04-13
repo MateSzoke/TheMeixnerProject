@@ -1,8 +1,8 @@
-package hu.aut.meixner.security
+package hu.aut.meixner.util.security
 
-import hu.aut.meixner.security.SecurityConstants.AUTH_WHITELIST
-import hu.aut.meixner.security.SecurityConstants.REGISTER_URL
 import hu.aut.meixner.service.auth.UserService
+import hu.aut.meixner.util.security.SecurityConstants.AUTH_WHITELIST
+import hu.aut.meixner.util.security.SecurityConstants.REGISTER_URL
 import org.springframework.context.annotation.Bean
 import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
