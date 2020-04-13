@@ -16,7 +16,6 @@ fun PairingRequest.toDBModel(): PairingEntity {
 
 fun PairElement.toDBModel(): PairEntity {
     return PairEntity(
-            name = name,
             pair = pair
     )
 }
@@ -34,7 +33,6 @@ fun PairingEntity.toEntity(): PairingResponse {
 
 fun PairEntity.toEntity(): PairElement {
     return PairElement(
-            name = name,
             pair = pair
     )
 }

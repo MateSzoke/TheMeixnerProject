@@ -9,6 +9,5 @@ import javax.persistence.Id
 data class PairEntity(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long = 0,
-        val name: String = "",
-        val pair: Pair<String, String> = Pair("", "")
+        val pair: List<String> = emptyList()
 )
