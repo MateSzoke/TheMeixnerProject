@@ -9,8 +9,9 @@ import javax.persistence.Entity
 data class SentenceCompletionEntity(
         val sentence: String = "",
         @ElementCollection(targetClass = String::class)
-        val options: List<String> = emptyList(),
+        val options: MutableList<String> = mutableListOf(),
         override val title: String = "",
+        override val owner: String = "",
         override val difficulty: Int = 0,
         override val lastModified: OffsetDateTime = OffsetDateTime.now()
 ) : TaskEntity()

@@ -8,6 +8,7 @@ class SentenceCompletionAndSortingResponse(
         override val id: Long,
         override val type: TaskTypeEnum = TaskTypeEnum.SentenceCompletionAndSorting,
         override val title: String,
+        override val owner: String,
         override val difficulty: Int,
         override val lastModified: OffsetDateTime
 ) : SortingResponse(
@@ -16,5 +17,6 @@ class SentenceCompletionAndSortingResponse(
         type = type,
         lastModified = lastModified,
         title = title,
+        owner = owner,
         difficulty = difficulty
 )

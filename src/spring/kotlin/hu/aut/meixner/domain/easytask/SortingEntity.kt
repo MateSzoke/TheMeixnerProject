@@ -8,8 +8,9 @@ import javax.persistence.Entity
 @Entity
 data class SortingEntity(
         @ElementCollection(targetClass = String::class)
-        val elements: List<String> = emptyList(),
+        val elements: MutableList<String> = mutableListOf(),
         override val title: String = "",
+        override val owner: String = "",
         override val difficulty: Int = 0,
         override val lastModified: OffsetDateTime = OffsetDateTime.now()
 ) : TaskEntity()

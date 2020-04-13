@@ -20,6 +20,12 @@ class TaskController(
         return ResponseEntity.ok(taskService.getAllTasks())
     }
 
+    @GetMapping("/myTasks")
+    @ApiOperation("Returns all tasks of the current user.")
+    fun getMyTask(): ResponseEntity<List<TaskResponse>> {
+        return ResponseEntity.ok(taskService.getMyTasks())
+    }
+
     @GetMapping("/{taskId}")
     @ApiOperation("Returns the specific task by it's taskId.")
     fun getTaskById(@PathVariable("taskId") taskId: Long): ResponseEntity<TaskResponse> {

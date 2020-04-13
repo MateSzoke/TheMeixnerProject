@@ -5,19 +5,19 @@ import hu.aut.meixner.dto.task.easy.*
 import java.time.OffsetDateTime
 
 //region Pairing
-fun PairingRequest.toDBModel(): PairingEntity {
+fun PairingRequest.toDBModel(owner: String): PairingEntity {
     return PairingEntity(
             pairs = pairs.map { it.toDBModel() },
             title = title,
-            difficulty = 0,
+            difficulty = difficulty,
+            owner = owner,
             lastModified = OffsetDateTime.now()
     )
 }
 
 fun PairElement.toDBModel(): PairEntity {
     return PairEntity(
-            name = name,
-            pair = pair
+            pair = pair.toMutableList()
     )
 }
 
@@ -27,24 +27,25 @@ fun PairingEntity.toEntity(): PairingResponse {
             lastModified = lastModified,
             difficulty = difficulty,
             title = title,
+            owner = owner,
             pairs = pairs.map { it.toEntity() }
     )
 }
 
 fun PairEntity.toEntity(): PairElement {
     return PairElement(
-            name = name,
             pair = pair
     )
 }
 //endregion
 
 //region Grouping
-fun GroupingRequest.toDBModel(): GroupingEntity {
+fun GroupingRequest.toDBModel(owner: String): GroupingEntity {
     return GroupingEntity(
             groups = groups.map { it.toDBModel() },
             title = title,
-            difficulty = 0,
+            difficulty = difficulty,
+            owner = owner,
             lastModified = OffsetDateTime.now()
     )
 }
@@ -62,6 +63,7 @@ fun GroupingEntity.toEntity(): GroupingResponse {
             lastModified = lastModified,
             difficulty = difficulty,
             title = title,
+            owner = owner,
             groups = groups.map { it.toEntity() }
     )
 }
@@ -75,12 +77,13 @@ fun GroupElementEntity.toEntity(): Group {
 //endregion
 
 //region SentenceCompletion
-fun SentenceCompletionRequest.toDBModel(): SentenceCompletionEntity {
+fun SentenceCompletionRequest.toDBModel(owner: String): SentenceCompletionEntity {
     return SentenceCompletionEntity(
             title = title,
             sentence = sentence,
-            options = options,
-            difficulty = 0,
+            options = options.toMutableList(),
+            owner = owner,
+            difficulty = difficulty,
             lastModified = OffsetDateTime.now()
     )
 }
@@ -91,18 +94,20 @@ fun SentenceCompletionEntity.toEntity(): SentenceCompletionResponse {
             title = title,
             sentence = sentence,
             options = options,
-            difficulty = 0,
+            difficulty = difficulty,
+            owner = owner,
             lastModified = OffsetDateTime.now()
     )
 }
 //endregion
 
 //region Sorting
-fun SortingRequest.toDBModel(): SortingEntity {
+fun SortingRequest.toDBModel(owner: String): SortingEntity {
     return SortingEntity(
             title = title,
-            elements = elements,
-            difficulty = 0,
+            elements = elements.toMutableList(),
+            owner = owner,
+            difficulty = difficulty,
             lastModified = OffsetDateTime.now()
     )
 }
@@ -112,18 +117,20 @@ fun SortingEntity.toEntity(): SortingResponse {
             id = id,
             title = title,
             elements = elements,
-            difficulty = 0,
+            difficulty = difficulty,
+            owner = owner,
             lastModified = OffsetDateTime.now()
     )
 }
 //endregion
 
 //region Grouping
-fun SentenceCreationRequest.toDBModel(): SentenceCreationEntity {
+fun SentenceCreationRequest.toDBModel(owner: String): SentenceCreationEntity {
     return SentenceCreationEntity(
             sentences = sentences.map { it.toDBModel() },
             title = title,
-            difficulty = 0,
+            owner = owner,
+            difficulty = difficulty,
             lastModified = OffsetDateTime.now()
     )
 }
@@ -131,7 +138,7 @@ fun SentenceCreationRequest.toDBModel(): SentenceCreationEntity {
 fun Sentence.toDBModel(): SentenceEntity {
     return SentenceEntity(
             sentenceTitle = sentenceTitle,
-            parts = parts
+            parts = parts.toMutableList()
     )
 }
 
@@ -141,6 +148,7 @@ fun SentenceCreationEntity.toEntity(): SentenceCreationResponse {
             lastModified = lastModified,
             difficulty = difficulty,
             title = title,
+            owner = owner,
             sentences = sentences.map { it.toEntity() }
     )
 }

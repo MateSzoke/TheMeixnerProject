@@ -8,6 +8,7 @@ data class TrueFalse(
         val value: Boolean,
         override val id: Long,
         override val title: String,
+        override val owner: String,
         override val difficulty: Int,
         override val lastModified: OffsetDateTime
 ) : GroupingResponse(
@@ -17,6 +18,7 @@ data class TrueFalse(
         ),
         id = id,
         title = title,
+        owner = owner,
         lastModified = lastModified,
         difficulty = difficulty
 )
