@@ -2,6 +2,7 @@ package hu.aut.meixner.service.task
 
 import hu.aut.meixner.dto.mapping.toEntity
 import hu.aut.meixner.dto.task.TaskResponse
+import hu.aut.meixner.extensions.currentUser
 import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.repository.task.easytask.*
 import org.springframework.dao.EmptyResultDataAccessException
@@ -36,7 +37,13 @@ class TaskService(
                 .sortedBy { it.lastModified }
     }
 
+    fun getMyTasks(): List<TaskResponse> {
+        return getAllTasks().filter { it.owner == currentUser }
+    }
+
     fun deleteTaskById(taskId: Long) {
+        if (getTaskById(taskId)?.owner != currentUser) return
+
         fun tryDelete(delete: () -> Unit) {
             try {
                 delete()

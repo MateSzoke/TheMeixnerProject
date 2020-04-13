@@ -12,6 +12,7 @@ abstract class TaskEntity(
         var id: Long = 0
 ) {
     abstract val title: String
+    abstract val owner: String
     abstract val difficulty: Int
     abstract val lastModified: OffsetDateTime
 }

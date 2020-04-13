@@ -4,6 +4,8 @@ import hu.aut.meixner.dto.mapping.toDBModel
 import hu.aut.meixner.dto.mapping.toEntity
 import hu.aut.meixner.dto.task.easy.PairingRequest
 import hu.aut.meixner.dto.task.easy.PairingResponse
+import hu.aut.meixner.extensions.currentUser
+import hu.aut.meixner.extensions.ownerIsTheCurrentUser
 import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.repository.task.easytask.PairingRepository
 import org.springframework.stereotype.Service
@@ -15,16 +17,18 @@ class PairingService(
 ) {
 
     fun createPairing(pairing: PairingRequest): PairingResponse {
-        return pairingRepository.save(pairing.toDBModel()).toEntity()
+        return pairingRepository.save(pairing.toDBModel(currentUser)).toEntity()
     }
 
     fun updatePairing(id: Long, pairingRequest: PairingRequest): PairingResponse? {
         val pairing = pairingRepository.findById(id).toNullable ?: return null
+        if (!pairing.ownerIsTheCurrentUser) return null
         return pairingRepository.save(
                 pairingRequest.run {
                     pairing.copy(
                             title = title,
-                            pairs = pairs.map { it.toDBModel() },
+                            pairs = pairs.map { it.toDBModel() }.toMutableList(),
+                            difficulty = difficulty,
                             lastModified = OffsetDateTime.now()
                     )
                 }.apply { this.id = id }

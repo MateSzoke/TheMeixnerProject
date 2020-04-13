@@ -13,6 +13,7 @@ data class SentenceCreationEntity(
         @Cascade(CascadeType.ALL)
         val sentences: List<SentenceEntity> = emptyList(),
         override val title: String = "",
+        override val owner: String = "",
         override val difficulty: Int = 0,
         override val lastModified: OffsetDateTime = OffsetDateTime.now()
 ) : TaskEntity()
