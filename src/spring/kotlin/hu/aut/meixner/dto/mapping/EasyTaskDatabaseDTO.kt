@@ -9,7 +9,7 @@ fun PairingRequest.toDBModel(owner: String): PairingEntity {
     return PairingEntity(
             pairs = pairs.map { it.toDBModel() },
             title = title,
-            difficulty = 0,
+            difficulty = difficulty,
             owner = owner,
             lastModified = OffsetDateTime.now()
     )
@@ -44,7 +44,7 @@ fun GroupingRequest.toDBModel(owner: String): GroupingEntity {
     return GroupingEntity(
             groups = groups.map { it.toDBModel() },
             title = title,
-            difficulty = 0,
+            difficulty = difficulty,
             owner = owner,
             lastModified = OffsetDateTime.now()
     )
@@ -83,7 +83,7 @@ fun SentenceCompletionRequest.toDBModel(owner: String): SentenceCompletionEntity
             sentence = sentence,
             options = options,
             owner = owner,
-            difficulty = 0,
+            difficulty = difficulty,
             lastModified = OffsetDateTime.now()
     )
 }
@@ -94,7 +94,7 @@ fun SentenceCompletionEntity.toEntity(): SentenceCompletionResponse {
             title = title,
             sentence = sentence,
             options = options,
-            difficulty = 0,
+            difficulty = difficulty,
             owner = owner,
             lastModified = OffsetDateTime.now()
     )
@@ -107,7 +107,7 @@ fun SortingRequest.toDBModel(owner: String): SortingEntity {
             title = title,
             elements = elements,
             owner = owner,
-            difficulty = 0,
+            difficulty = difficulty,
             lastModified = OffsetDateTime.now()
     )
 }
@@ -117,7 +117,7 @@ fun SortingEntity.toEntity(): SortingResponse {
             id = id,
             title = title,
             elements = elements,
-            difficulty = 0,
+            difficulty = difficulty,
             owner = owner,
             lastModified = OffsetDateTime.now()
     )
@@ -130,7 +130,7 @@ fun SentenceCreationRequest.toDBModel(owner: String): SentenceCreationEntity {
             sentences = sentences.map { it.toDBModel() },
             title = title,
             owner = owner,
-            difficulty = 0,
+            difficulty = difficulty,
             lastModified = OffsetDateTime.now()
     )
 }
