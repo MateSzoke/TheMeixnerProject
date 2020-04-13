@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewContainerRef, HostBinding } from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef, HostBinding, Output, EventEmitter} from '@angular/core';
 import { DomService } from '../service/dom.service';
 @Component({
   selector: 'app-modal',
@@ -8,6 +8,7 @@ import { DomService } from '../service/dom.service';
 export class ModalComponent implements OnInit {
   @HostBinding('style.display') display = 'none';
   @ViewChild('content', { read: ViewContainerRef, static: true }) containerRef: ViewContainerRef;
+  @Output() static saveBtnPressed = new EventEmitter<ModalComponent>();
   title = "";
   constructor(private domService: DomService) {
     this.domService.setContainerRef(this.containerRef);
@@ -33,9 +34,15 @@ export class ModalComponent implements OnInit {
     this.display = 'none';
   }
 
-  savedata() {
-    this.domService.setContainerRef(this.containerRef);
-    this.domService.cancelComponent();
-    this.display = 'none';
+  public savedata() {
+    console.log("savedata called");
+    ModalComponent.saveBtnPressed.emit(this);
   }
+
+  public static closeAfterSave(data) {
+    data.domService.setContainerRef(data.containerRef);
+    data.domService.cancelComponent();
+    data.display = 'none';
+  }
+
 }
