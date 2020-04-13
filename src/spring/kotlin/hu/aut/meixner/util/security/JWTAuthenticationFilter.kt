@@ -1,13 +1,13 @@
-package hu.aut.meixner.security
+package hu.aut.meixner.util.security
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm.HMAC512
 import com.fasterxml.jackson.databind.ObjectMapper
 import hu.aut.meixner.domain.auth.UserEntity
-import hu.aut.meixner.security.SecurityConstants.EXPIRATION_TIME
-import hu.aut.meixner.security.SecurityConstants.HEADER_STRING
-import hu.aut.meixner.security.SecurityConstants.SECRET
-import hu.aut.meixner.security.SecurityConstants.TOKEN_PREFIX
+import hu.aut.meixner.util.security.SecurityConstants.EXPIRATION_TIME
+import hu.aut.meixner.util.security.SecurityConstants.HEADER_STRING
+import hu.aut.meixner.util.security.SecurityConstants.SECRET
+import hu.aut.meixner.util.security.SecurityConstants.TOKEN_PREFIX
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication

@@ -1,4 +1,4 @@
-package hu.aut.meixner.security
+package hu.aut.meixner.util.security
 
 object SecurityConstants {
     const val SECRET = "SecretKeyToGenJWTs"
