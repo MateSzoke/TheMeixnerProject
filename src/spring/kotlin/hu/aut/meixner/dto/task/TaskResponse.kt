@@ -4,7 +4,7 @@ import java.time.OffsetDateTime
 
 abstract class TaskResponse {
     abstract val id: Long
-    abstract val type: TypeEnum
+    abstract val type: TaskTypeEnum
     abstract val title: String
     abstract val difficulty: Int
     abstract val lastModified: OffsetDateTime

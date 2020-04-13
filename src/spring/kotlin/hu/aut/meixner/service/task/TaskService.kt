@@ -1,7 +1,7 @@
 package hu.aut.meixner.service.task
 
+import hu.aut.meixner.dto.mapping.toEntity
 import hu.aut.meixner.dto.task.TaskResponse
-import hu.aut.meixner.extensions.toDTOModel
 import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.repository.task.easytask.*
 import org.springframework.dao.EmptyResultDataAccessException
@@ -17,20 +17,20 @@ class TaskService(
 ) {
 
     fun getTaskById(taskId: Long): TaskResponse? {
-        return pairingRepository.findById(taskId).toNullable?.toDTOModel()
-                ?: groupingRepository.findById(taskId).toNullable?.toDTOModel()
-                ?: sentenceCompletionRepository.findById(taskId).toNullable?.toDTOModel()
-                ?: sentenceCreationRepository.findById(taskId).toNullable?.toDTOModel()
-                ?: sortingRepository.findById(taskId).toNullable?.toDTOModel()
+        return pairingRepository.findById(taskId).toNullable?.toEntity()
+                ?: groupingRepository.findById(taskId).toNullable?.toEntity()
+                ?: sentenceCompletionRepository.findById(taskId).toNullable?.toEntity()
+                ?: sentenceCreationRepository.findById(taskId).toNullable?.toEntity()
+                ?: sortingRepository.findById(taskId).toNullable?.toEntity()
     }
 
     fun getAllTasks(): List<TaskResponse> {
         return listOf(
-                pairingRepository.findAll().map { it.toDTOModel() },
-                groupingRepository.findAll().map { it.toDTOModel() },
-                sentenceCompletionRepository.findAll().map { it.toDTOModel() },
-                sentenceCreationRepository.findAll().map { it.toDTOModel() },
-                sortingRepository.findAll().map { it.toDTOModel() }
+                pairingRepository.findAll().map { it.toEntity() },
+                groupingRepository.findAll().map { it.toEntity() },
+                sentenceCompletionRepository.findAll().map { it.toEntity() },
+                sentenceCreationRepository.findAll().map { it.toEntity() },
+                sortingRepository.findAll().map { it.toEntity() }
         )
                 .flatten()
                 .sortedBy { it.lastModified }
