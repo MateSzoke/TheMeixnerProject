@@ -39,6 +39,7 @@ class FormLoginOperations @Autowired constructor(
                         .build()))
                 .summary("Log in") //
                 .notes("Here you can log in. Please use browser developer tools for getting Authorization token from header response.")
+                .tags(mutableSetOf("Account"))
                 .build())
         val apis = listOf(ApiDescription("Account", "/login", "Authentication documentation", operations, false))
         def.put("authentication", ApiListingBuilder(context.documentationContext.apiDescriptionOrdering)
