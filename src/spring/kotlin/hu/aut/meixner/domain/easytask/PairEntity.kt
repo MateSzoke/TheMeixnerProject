@@ -7,5 +7,5 @@ data class PairEntity(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long = 0,
         @ElementCollection(targetClass = String::class)
-        val pair: List<String> = emptyList()
+        val pair: MutableList<String> = mutableListOf()
 )

@@ -2,15 +2,14 @@ package hu.aut.meixner.service.task
 
 import hu.aut.meixner.dto.mapping.toEntity
 import hu.aut.meixner.dto.task.TaskResponse
+import hu.aut.meixner.extensions.currentUser
 import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.repository.task.easytask.*
-import hu.aut.meixner.service.auth.UserService
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.stereotype.Service
 
 @Service
 class TaskService(
-        private val userService: UserService,
         private val pairingRepository: PairingRepository,
         private val groupingRepository: GroupingRepository,
         private val sentenceCompletionRepository: SentenceCompletionRepository,
@@ -39,10 +38,12 @@ class TaskService(
     }
 
     fun getMyTasks(): List<TaskResponse> {
-        return getAllTasks().filter { it.owner == userService.getCurrentUsername() }
+        return getAllTasks().filter { it.owner == currentUser }
     }
 
     fun deleteTaskById(taskId: Long) {
+        if (getTaskById(taskId)?.owner != currentUser) return
+
         fun tryDelete(delete: () -> Unit) {
             try {
                 delete()

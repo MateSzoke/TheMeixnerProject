@@ -5,9 +5,6 @@ import hu.aut.meixner.dto.auth.UserResponse
 import hu.aut.meixner.dto.mapping.toDTO
 import hu.aut.meixner.dto.mapping.toEntity
 import hu.aut.meixner.repository.auth.UserRepository
-import org.springframework.security.authentication.AnonymousAuthenticationToken
-import org.springframework.security.core.Authentication
-import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -30,11 +27,6 @@ class UserService(
     override fun loadUserByUsername(userName: String): UserDetails {
         val user = userRepository.findByUsername(userName)
         return User(user.username, user.password, emptyList())
-    }
-
-    fun getCurrentUsername(): String {
-        val authentication: Authentication = SecurityContextHolder.getContext().authentication
-        return if (authentication !is AnonymousAuthenticationToken) authentication.name else ""
     }
 
 }

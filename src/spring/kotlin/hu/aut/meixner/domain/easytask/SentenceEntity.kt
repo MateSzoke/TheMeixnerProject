@@ -8,5 +8,5 @@ data class SentenceEntity(
         val id: Long = 0,
         val sentenceTitle: String = "",
         @ElementCollection(targetClass = String::class)
-        val parts: List<String> = emptyList()
+        val parts: MutableList<String> = mutableListOf()
 )

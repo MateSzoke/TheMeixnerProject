@@ -17,7 +17,7 @@ fun PairingRequest.toDBModel(owner: String): PairingEntity {
 
 fun PairElement.toDBModel(): PairEntity {
     return PairEntity(
-            pair = pair
+            pair = pair.toMutableList()
     )
 }
 
@@ -81,7 +81,7 @@ fun SentenceCompletionRequest.toDBModel(owner: String): SentenceCompletionEntity
     return SentenceCompletionEntity(
             title = title,
             sentence = sentence,
-            options = options,
+            options = options.toMutableList(),
             owner = owner,
             difficulty = difficulty,
             lastModified = OffsetDateTime.now()
@@ -105,7 +105,7 @@ fun SentenceCompletionEntity.toEntity(): SentenceCompletionResponse {
 fun SortingRequest.toDBModel(owner: String): SortingEntity {
     return SortingEntity(
             title = title,
-            elements = elements,
+            elements = elements.toMutableList(),
             owner = owner,
             difficulty = difficulty,
             lastModified = OffsetDateTime.now()
@@ -138,7 +138,7 @@ fun SentenceCreationRequest.toDBModel(owner: String): SentenceCreationEntity {
 fun Sentence.toDBModel(): SentenceEntity {
     return SentenceEntity(
             sentenceTitle = sentenceTitle,
-            parts = parts
+            parts = parts.toMutableList()
     )
 }
 
