@@ -27,7 +27,18 @@ import { ModalComponent } from './modal/modal.component';
 import {DomService} from './service/dom.service';
 import {ModalService} from './service/modal.service';
 import { NewExerciseComponent } from './new-exercise/new-exercise.component';
-import { SorrendezesComponent } from './sorrendezes/sorrendezes.component';
+import { SorrendezesComponent } from './exercise_types/sorrendezes/sorrendezes.component';
+import { GroupingComponent } from './exercise_types/grouping/grouping.component';
+import { PairingComponent } from './exercise_types/pairing/pairing.component';
+import { SentenceCompletionComponent } from './exercise_types/sentence-completion/sentence-completion.component';
+import { SentenceCreationComponent } from './exercise_types/sentence-creation/sentence-creation.component';
+import { SortingComponent } from './exercise_types/sorting/sorting.component';
+import { GroupingSortingComponent } from './exercise_types/grouping-sorting/grouping-sorting.component';
+import { SentencecompletionGroupingComponent } from './exercise_types/sentencecompletion-grouping/sentencecompletion-grouping.component';
+import { SentencecompletionSortingComponent } from './exercise_types/sentencecompletion-sorting/sentencecompletion-sorting.component';
+import { SentencecreationGroupingComponent } from './exercise_types/sentencecreation-grouping/sentencecreation-grouping.component';
+import { SentencecreationSortingComponent } from './exercise_types/sentencecreation-sorting/sentencecreation-sorting.component';
+import { SortingGroupingComponent } from './exercise_types/sorting-grouping/sorting-grouping.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +50,18 @@ import { SorrendezesComponent } from './sorrendezes/sorrendezes.component';
     NewExamComponent,
     ModalComponent,
     NewExerciseComponent,
-    SorrendezesComponent
+    SorrendezesComponent,
+    GroupingComponent,
+    PairingComponent,
+    SentenceCompletionComponent,
+    SentenceCreationComponent,
+    SortingComponent,
+    GroupingSortingComponent,
+    SentencecompletionGroupingComponent,
+    SentencecompletionSortingComponent,
+    SentencecreationGroupingComponent,
+    SentencecreationSortingComponent,
+    SortingGroupingComponent
   ],
     imports: [
         BrowserModule,

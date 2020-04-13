@@ -24,14 +24,6 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-<!--          <mat-form-field>
-            <mat-label style="color: black;">Évfolyam</mat-label>
-            <mat-select>
-              <mat-option *ngFor="let osztaly of osztalyok" [value]="osztaly">
-                {{osztaly}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>-->
         </div>
         <button (click)="newTask()" class="plusButton" mat-button>
           <i class="fa fa-plus"></i>
@@ -44,13 +36,13 @@
     <mat-card class="right-aligned-header">
       <div fxLayout="row" fxLayout.xs="column-reverse" fxLayoutGap="8px">
         <div class="float-left">
-          Körmozgás&nbsp;
-          <img class="image1" src="assets/icons/bars_lv2.png">
+          Körmozgás - csoportosítás
+          <img class="image1" src="{{this.diffImServ.convertNumToPath(1)}}">
         </div>
         <div class="float-right">
           {{this.today.getFullYear()}}.{{this.today.getMonth().toString().padStart(2, '0')}}.{{this.today.getDay().toString().padStart(2, '0')}}
           &nbsp;&#8196;<i class="fa fa-trash"></i>&nbsp;
-          <i class="fa fa-edit"></i>&nbsp;&nbsp;
+          <i [routerLink]="['/csoportositas']" class="fa fa-edit"></i>&nbsp;&nbsp;
         </div>
       </div>
     </mat-card>
@@ -58,13 +50,13 @@
     <mat-card class="right-aligned-header">
     <div fxLayout="row" fxLayout.xs="column-reverse" fxLayoutGap="8px">
       <div class="float-left">
-        Newton I.&nbsp;&nbsp;
-        <img class="image1" src="assets/icons/bars_lv4.png">
+        Newton I. - párosítás
+        <img class="image1" src="{{this.diffImServ.convertNumToPath(4)}}">
       </div>
       <div class="float-right">
         {{this.today.getFullYear()}}.{{this.today.getMonth().toString().padStart(2, '0')}}.{{this.today.getDay().toString().padStart(2, '0')}}
         &nbsp;&#8196;<i class="fa fa-trash"></i>&nbsp;
-        <i class="fa fa-edit"></i>&nbsp;&nbsp;
+        <i [routerLink]="['/parositas']" class="fa fa-edit"></i>&nbsp;&nbsp;
       </div>
     </div>
     </mat-card>
@@ -72,8 +64,8 @@
     <mat-card class="right-aligned-header">
     <div fxLayout="row" fxLayout.xs="column-reverse" fxLayoutGap="8px">
       <div class="float-left">
-        Ferde hajítás&nbsp;
-        <img class="image1" src="assets/icons/bars_lv3.png">
+        Ferde hajítás&nbsp;- sorrendezés
+        <img class="image1" src="{{this.diffImServ.convertNumToPath(3)}}">
       </div>
       <div class="float-right">
         {{this.today.getFullYear()}}.{{this.today.getMonth().toString().padStart(2, '0')}}.{{this.today.getDay().toString().padStart(2, '0')}}

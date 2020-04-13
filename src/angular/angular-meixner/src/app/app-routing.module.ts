@@ -5,7 +5,9 @@ import {RouteGuardService} from './service/route-guard.service';
 import {ExamsComponent} from './exams/exams.component';
 import {UsersComponent} from './users/users.component';
 import {LoginComponent} from './login/login.component';
-import {SorrendezesComponent} from './sorrendezes/sorrendezes.component';
+import {SorrendezesComponent} from './exercise_types/sorrendezes/sorrendezes.component';
+import {PairingComponent} from './exercise_types/pairing/pairing.component';
+import {GroupingComponent} from './exercise_types/grouping/grouping.component';
 
 
 const routes: Routes = [
@@ -17,6 +19,16 @@ const routes: Routes = [
   {
     path: 'sorrendezes',
     component: SorrendezesComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: 'parositas',
+    component: PairingComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: 'csoportositas',
+    component: GroupingComponent,
     canActivate: [RouteGuardService]
   },
   {

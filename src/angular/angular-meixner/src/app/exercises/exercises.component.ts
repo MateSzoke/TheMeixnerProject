@@ -6,6 +6,7 @@ import {ModalComponent} from '../modal/modal.component';
 import {NewExerciseComponent} from '../new-exercise/new-exercise.component';
 import {Router} from '@angular/router';
 import {TaskService} from '../../swagger-api';
+import {DiffimageService} from '../service/diffimage.service';
 
 @Component({
   selector: 'app-exercises',
@@ -23,7 +24,8 @@ export class ExercisesComponent implements OnInit {
   constructor(private modal: ModalService, private dom: DomService,
               private modComponent: ModalComponent,
               public router: Router,
-              private taskService: TaskService) {
+              private taskService: TaskService,
+              public diffImServ: DiffimageService) {
     modComponent.ngOnInit();
   }
 
@@ -33,7 +35,7 @@ export class ExercisesComponent implements OnInit {
       console.log(data.type);
     },
       error => {
-      console.log("subscribe error");
+        console.log("subscribe error");
       },
       () => {
       });
