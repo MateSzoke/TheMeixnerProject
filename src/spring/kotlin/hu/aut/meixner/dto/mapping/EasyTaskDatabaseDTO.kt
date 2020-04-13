@@ -5,11 +5,12 @@ import hu.aut.meixner.dto.task.easy.*
 import java.time.OffsetDateTime
 
 //region Pairing
-fun PairingRequest.toDBModel(): PairingEntity {
+fun PairingRequest.toDBModel(owner: String): PairingEntity {
     return PairingEntity(
             pairs = pairs.map { it.toDBModel() },
             title = title,
             difficulty = 0,
+            owner = owner,
             lastModified = OffsetDateTime.now()
     )
 }
@@ -39,11 +40,12 @@ fun PairEntity.toEntity(): PairElement {
 //endregion
 
 //region Grouping
-fun GroupingRequest.toDBModel(): GroupingEntity {
+fun GroupingRequest.toDBModel(owner: String): GroupingEntity {
     return GroupingEntity(
             groups = groups.map { it.toDBModel() },
             title = title,
             difficulty = 0,
+            owner = owner,
             lastModified = OffsetDateTime.now()
     )
 }
@@ -75,11 +77,12 @@ fun GroupElementEntity.toEntity(): Group {
 //endregion
 
 //region SentenceCompletion
-fun SentenceCompletionRequest.toDBModel(): SentenceCompletionEntity {
+fun SentenceCompletionRequest.toDBModel(owner: String): SentenceCompletionEntity {
     return SentenceCompletionEntity(
             title = title,
             sentence = sentence,
             options = options,
+            owner = owner,
             difficulty = 0,
             lastModified = OffsetDateTime.now()
     )
@@ -99,10 +102,11 @@ fun SentenceCompletionEntity.toEntity(): SentenceCompletionResponse {
 //endregion
 
 //region Sorting
-fun SortingRequest.toDBModel(): SortingEntity {
+fun SortingRequest.toDBModel(owner: String): SortingEntity {
     return SortingEntity(
             title = title,
             elements = elements,
+            owner = owner,
             difficulty = 0,
             lastModified = OffsetDateTime.now()
     )
@@ -121,10 +125,11 @@ fun SortingEntity.toEntity(): SortingResponse {
 //endregion
 
 //region Grouping
-fun SentenceCreationRequest.toDBModel(): SentenceCreationEntity {
+fun SentenceCreationRequest.toDBModel(owner: String): SentenceCreationEntity {
     return SentenceCreationEntity(
             sentences = sentences.map { it.toDBModel() },
             title = title,
+            owner = owner,
             difficulty = 0,
             lastModified = OffsetDateTime.now()
     )

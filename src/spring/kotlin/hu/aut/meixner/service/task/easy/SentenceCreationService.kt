@@ -6,16 +6,18 @@ import hu.aut.meixner.dto.task.easy.SentenceCreationRequest
 import hu.aut.meixner.dto.task.easy.SentenceCreationResponse
 import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.repository.task.easytask.SentenceCreationRepository
+import hu.aut.meixner.service.auth.UserService
 import org.springframework.stereotype.Service
 import java.time.OffsetDateTime
 
 @Service
 class SentenceCreationService(
-        internal val sentenceCreationRepository: SentenceCreationRepository
+        internal val sentenceCreationRepository: SentenceCreationRepository,
+        private val userService: UserService
 ) {
 
     fun createSentenceCreation(sentenceCreationRequest: SentenceCreationRequest): SentenceCreationResponse {
-        return sentenceCreationRepository.save(sentenceCreationRequest.toDBModel()).toEntity()
+        return sentenceCreationRepository.save(sentenceCreationRequest.toDBModel(userService.getCurrentUsername())).toEntity()
     }
 
     fun updateSentenceCreation(id: Long, sentenceCreationRequest: SentenceCreationRequest): SentenceCreationResponse? {

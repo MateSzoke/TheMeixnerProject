@@ -6,16 +6,18 @@ import hu.aut.meixner.dto.task.easy.PairingRequest
 import hu.aut.meixner.dto.task.easy.PairingResponse
 import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.repository.task.easytask.PairingRepository
+import hu.aut.meixner.service.auth.UserService
 import org.springframework.stereotype.Service
 import java.time.OffsetDateTime
 
 @Service
 class PairingService(
-        private val pairingRepository: PairingRepository
+        private val pairingRepository: PairingRepository,
+        private val userService: UserService
 ) {
 
     fun createPairing(pairing: PairingRequest): PairingResponse {
-        return pairingRepository.save(pairing.toDBModel()).toEntity()
+        return pairingRepository.save(pairing.toDBModel(userService.getCurrentUsername())).toEntity()
     }
 
     fun updatePairing(id: Long, pairingRequest: PairingRequest): PairingResponse? {
