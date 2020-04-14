@@ -5,8 +5,10 @@ import {DomService} from '../service/dom.service';
 import {ModalComponent} from '../modal/modal.component';
 import {NewExerciseComponent} from '../new-exercise/new-exercise.component';
 import {Router} from '@angular/router';
-import {TaskService} from '../../swagger-api';
+import {TaskResponse, TaskService} from '../../swagger-api';
 import {DiffimageService} from '../service/diffimage.service';
+import {Task} from 'protractor/built/taskScheduler';
+import {ConvertEnumToHun} from '../model/ConvertEnumToHun';
 
 @Component({
   selector: 'app-exercises',
@@ -20,6 +22,7 @@ export class ExercisesComponent implements OnInit {
   public tantargyak:Array<String> = ['történelem', "matematika"];
   public evfolyamok = Array.from({ length: (8 - 5) / 1 + 1}, (_, i) => 5 + (i * 1));
   public osztalyok:Array<String> = ['a', 'b', 'c'];
+  public feladatok : Array<TaskResponse> = new Array<TaskResponse>();
 
   constructor(private modal: ModalService, private dom: DomService,
               private modComponent: ModalComponent,
@@ -33,7 +36,13 @@ export class ExercisesComponent implements OnInit {
     this.taskService.getAllTaskUsingGET().subscribe(data => {
       console.log("data received");
         data.forEach(element => {
-          console.log(element.title);
+          this.feladatok.push({difficulty: element.difficulty,
+          id: element.id,
+          lastModified: element.lastModified,
+          owner: element.owner,
+          title: element.title,
+          type: element.type} as TaskResponse);
+          console.log(element);
         });
     },
       error => {
@@ -50,6 +59,10 @@ export class ExercisesComponent implements OnInit {
 
   public newTask() {
     this.dom.show(NewExerciseComponent);
+  }
+
+  public convertEnum(input: string) {
+    ConvertEnumToHun.convert(input);
   }
 
 }
