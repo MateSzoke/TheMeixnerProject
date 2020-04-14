@@ -39,6 +39,7 @@ import { SentencecompletionSortingComponent } from './exercise_types/sentencecom
 import { SentencecreationGroupingComponent } from './exercise_types/sentencecreation-grouping/sentencecreation-grouping.component';
 import { SentencecreationSortingComponent } from './exercise_types/sentencecreation-sorting/sentencecreation-sorting.component';
 import { SortingGroupingComponent } from './exercise_types/sorting-grouping/sorting-grouping.component';
+import {MatSliderModule} from '@angular/material/slider';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import { SortingGroupingComponent } from './exercise_types/sorting-grouping/sort
         FormsModule,
         MatGridListModule,
         MatExpansionModule,
-        MatSelectModule
+        MatSelectModule,
+        MatSliderModule
     ],
   providers: [DomService, ModalService, ModalComponent,LoginComponent, NewExerciseComponent],
   bootstrap: [AppComponent],

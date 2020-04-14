@@ -48,7 +48,8 @@ export class NewExerciseComponent implements OnInit {
   }
 
   public difficultySelected(event) {
-    console.log("difficultySelected called");
+    console.log("difficultySelected called ");
+    console.log(event);
     this.difficulty = event.value;
     console.log(event.value);
   }

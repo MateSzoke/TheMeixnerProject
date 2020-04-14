@@ -16,14 +16,14 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field>
+
       <mat-label>Nehézség</mat-label>
-      <mat-select (selectionChange)="this.difficultySelected($event)">
-        <mat-option *ngFor="let difficulty of difficulties" [value]="difficulty">
-          {{difficulty}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+      <mat-slider (change)="this.difficultySelected($event)" class="mat-slide-1"
+                  thumbLabel
+                  tickInterval="1"
+                  min="1"
+                  max="100"></mat-slider>
+
   </mat-card>
   <mat-card>
     <mat-form-field>
