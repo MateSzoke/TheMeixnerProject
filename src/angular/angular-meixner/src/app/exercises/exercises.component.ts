@@ -23,16 +23,18 @@ export class ExercisesComponent implements OnInit {
 
   constructor(private modal: ModalService, private dom: DomService,
               private modComponent: ModalComponent,
-              public router: Router,
               private taskService: TaskService,
+              public router: Router,
               public diffImServ: DiffimageService) {
     modComponent.ngOnInit();
   }
 
   ngOnInit(): void {
-    this.taskService.getTaskByIdUsingGET(2).subscribe(data => {
+    this.taskService.getAllTaskUsingGET().subscribe(data => {
       console.log("data received");
-      console.log(data.type);
+        data.forEach(element => {
+          console.log(element.title);
+        });
     },
       error => {
         console.log("subscribe error");

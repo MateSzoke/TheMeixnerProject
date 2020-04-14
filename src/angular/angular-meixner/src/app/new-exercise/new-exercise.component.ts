@@ -1,7 +1,6 @@
-import {Component, OnInit, SimpleChanges} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {TaskService} from '../../swagger-api';
 import {GroupingResponse} from '../../swagger-api/model/groupingResponse';
-import {newArray} from '@angular/compiler/src/util';
 import {ConvertEnumToHun} from '../model/ConvertEnumToHun';
 import {ModalComponent} from '../modal/modal.component';
 
@@ -33,11 +32,10 @@ export class NewExerciseComponent implements OnInit {
 
   constructor(private modalC: ModalComponent) {
     ModalComponent.saveBtnPressed.subscribe(data => {
-      console.log("save button pressed");
       if(this.name == null || this.type == -1 || this.difficulty == -1 || this.classFrom == -1 || this.classTo == -1 || this.topic == -1) {
         console.log("szempontok: " + this.type + this.difficulty +
         this.classFrom + this.classTo + this.topic);
-        
+
         alert("Kérem adja meg az összes szempontot!");
         return;
       } else {
