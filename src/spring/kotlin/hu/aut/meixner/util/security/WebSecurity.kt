@@ -27,7 +27,8 @@ class WebSecurity(
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, REGISTER_URL).permitAll()
                 .antMatchers(*AUTH_WHITELIST).permitAll()
-                .anyRequest().authenticated()
+                // .anyRequest().authenticated() //TODO uncomment it after test phase
+                .antMatchers(HttpMethod.GET, "/tasks/myTasks").authenticated() //TODO delete it after test phase
                 .and()
                 .addFilter(JWTAuthenticationFilter(authenticationManager()))
                 .addFilter(JWTAuthorizationFilter(authenticationManager())) // this disables session creation on Spring Security
