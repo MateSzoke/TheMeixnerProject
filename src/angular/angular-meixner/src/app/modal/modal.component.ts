@@ -12,6 +12,7 @@ export class ModalComponent implements OnInit {
   title = "";
   constructor(private domService: DomService) {
     this.domService.setContainerRef(this.containerRef);
+    console.log("modal constructor called");
     this.domService.showContainerElement$.subscribe((value) => {
       if(value){
         this.display='block';
@@ -43,6 +44,7 @@ export class ModalComponent implements OnInit {
     data.domService.setContainerRef(data.containerRef);
     data.domService.cancelComponent();
     data.display = 'none';
+    ModalComponent.saveBtnPressed.unsubscribe();
   }
 
 }

@@ -2,7 +2,7 @@
   <p class="title-left">Feladat hozzáadása</p>
   <mat-form-field class="example-full-width">
     <mat-label>Feladat neve</mat-label>
-    <input matInput>
+    <input matInput type="text" (keyup)="this.setName($event.target.value)">
   </mat-form-field>
 
   <mat-card>
@@ -38,7 +38,7 @@
     <mat-form-field>
       <mat-label>-ig</mat-label>
       <mat-select (selectionChange)="this.classToSelected($event)">
-        <mat-option *ngFor="let classTo of classes" [value]="classTo">
+        <mat-option *ngFor="let classTo of classesTo" [value]="classTo">
           {{classTo}}
         </mat-option>
       </mat-select>
