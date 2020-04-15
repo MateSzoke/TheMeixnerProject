@@ -1,12 +1,12 @@
-package hu.aut.meixner.domain.easytask
+package hu.aut.meixner.domain.task.easytask
 
 import javax.persistence.*
 
 @Entity
-data class SentenceEntity(
+data class GroupElementEntity(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long = 0,
-        val sentenceTitle: String = "",
+        val name: String = "",
         @ElementCollection(targetClass = String::class)
-        val parts: MutableList<String> = mutableListOf()
+        val elements: MutableList<String> = mutableListOf()
 )

@@ -1,6 +1,6 @@
 package hu.aut.meixner.dto.mapping
 
-import hu.aut.meixner.domain.easytask.*
+import hu.aut.meixner.domain.task.easytask.*
 import hu.aut.meixner.dto.task.easy.*
 import java.time.OffsetDateTime
 

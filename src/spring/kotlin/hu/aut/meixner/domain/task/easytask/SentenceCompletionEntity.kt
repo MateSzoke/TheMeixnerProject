@@ -1,6 +1,6 @@
-package hu.aut.meixner.domain.easytask
+package hu.aut.meixner.domain.task.easytask
 
-import hu.aut.meixner.domain.TaskEntity
+import hu.aut.meixner.domain.task.TaskEntity
 import java.time.OffsetDateTime
 import javax.persistence.ElementCollection
 import javax.persistence.Entity
