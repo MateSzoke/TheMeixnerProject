@@ -32,7 +32,7 @@ class FileService(
         return mediaItemRepository.findById(id).toNullable?.toDomainModel()
     }
 
-    fun getDownloadedFile(id: Long): MediaItemEntity? {
+    fun getMediaItemEntity(id: Long): MediaItemEntity? {
         return mediaItemRepository.findById(id).toNullable
     }
 }

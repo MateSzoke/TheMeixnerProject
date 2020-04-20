@@ -33,11 +33,11 @@ class FileController(
 
     @GetMapping("$DOWNLOAD_FILE_PATH/{fileId}")
     @ApiOperation("Test download file")
-    fun downloadFile(@PathVariable("fileId") fileId: Long): ResponseEntity<Any> {
-        val mediaItem = fileService.getDownloadedFile(fileId) ?: return ResponseEntity.notFound().build()
+    fun downloadFile(@PathVariable("fileId") fileId: Long): ResponseEntity<ByteArray> {
+        val mediaItem = fileService.getMediaItemEntity(fileId) ?: return ResponseEntity.notFound().build()
         val fileName = "${mediaItem.id}.${mediaItem.fileExtension}"
         return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                .contentType(MediaType.parseMediaType(mediaItem.contentType ?: "application/octet-stream"))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"$fileName\"")
                 .body(mediaItem.file)
     }
