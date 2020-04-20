@@ -3,7 +3,6 @@ package hu.aut.meixner.service.file
 import hu.aut.meixner.domain.task.MediaItemEntity
 import hu.aut.meixner.domain.task.MediaItemType
 import hu.aut.meixner.dto.mapping.toDomainModel
-import hu.aut.meixner.dto.mapping.toEntity
 import hu.aut.meixner.dto.task.common.MediaItemRequest
 import hu.aut.meixner.dto.task.common.MediaItemResponse
 import hu.aut.meixner.extensions.toNullable
@@ -20,19 +19,32 @@ class FileService(
     }
 
     fun uploadFile(file: MultipartFile): MediaItemResponse {
-        val request = MediaItemRequest(
-                content = "",
-                type = MediaItemType.IMAGE,
-                file = file
-        )
-        return mediaItemRepository.save(request.toEntity()).toDomainModel()
+        return mediaItemRepository.save(
+                MediaItemEntity(
+                        type = MediaItemType.IMAGE,
+                        content = "",
+                        file = file.bytes,
+                        fileExtension = file.originalFilename?.split(".")?.get(1),
+                        contentType = file.contentType
+                )).toDomainModel()
     }
 
-    fun getFileById(id: Long): MediaItemResponse? {
+    fun getMediaItemById(id: Long): MediaItemResponse? {
         return mediaItemRepository.findById(id).toNullable?.toDomainModel()
     }
 
     fun getMediaItemEntity(id: Long): MediaItemEntity? {
         return mediaItemRepository.findById(id).toNullable
+    }
+
+    fun mediaItemRequestToEntity(mediaItemRequest: MediaItemRequest): MediaItemEntity? {
+        return if (mediaItemRequest.mediaItemId == null) {
+            MediaItemEntity(
+                    type = MediaItemType.TEXT,
+                    content = mediaItemRequest.content ?: ""
+            )
+        } else {
+            getMediaItemEntity(mediaItemRequest.mediaItemId) ?: return null
+        }
     }
 }

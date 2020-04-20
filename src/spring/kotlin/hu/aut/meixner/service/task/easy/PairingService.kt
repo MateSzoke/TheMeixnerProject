@@ -1,5 +1,6 @@
 package hu.aut.meixner.service.task.easy
 
+import hu.aut.meixner.domain.task.easytask.PairEntity
 import hu.aut.meixner.dto.mapping.toDomainModel
 import hu.aut.meixner.dto.mapping.toEntity
 import hu.aut.meixner.dto.task.easy.PairingRequest
@@ -8,17 +9,23 @@ import hu.aut.meixner.extensions.currentUser
 import hu.aut.meixner.extensions.ownerIsTheCurrentUser
 import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.repository.task.easytask.PairingRepository
+import hu.aut.meixner.service.file.FileService
 import org.springframework.stereotype.Service
 import java.time.OffsetDateTime
 
 @Service
 class PairingService(
-        private val pairingRepository: PairingRepository
+        private val pairingRepository: PairingRepository,
+        private val fileService: FileService
 ) {
 
-    fun createPairing(pairing: PairingRequest): PairingResponse {
-        val pairingEntity = pairing.toEntity(currentUser)
-        return pairingRepository.save(pairingEntity).toDomainModel()
+    fun createPairing(pairing: PairingRequest): PairingResponse? {
+        val result = pairing.toEntity(owner = currentUser, pairs = pairing.pairs.map { pair ->
+            PairEntity(
+                    pair = pair.pair.map { fileService.mediaItemRequestToEntity(it) ?: return null }.toMutableList()
+            )
+        })
+        return pairingRepository.save(result).toDomainModel()
     }
 
     fun updatePairing(id: Long, pairingRequest: PairingRequest): PairingResponse? {
@@ -28,7 +35,11 @@ class PairingService(
                 pairingRequest.run {
                     pairing.copy(
                             title = title,
-                            pairs = pairs.map { it.toEntity() }.toMutableList(),
+                            pairs = pairs.map { pair ->
+                                PairEntity(pair = pair.pair.map {
+                                    fileService.mediaItemRequestToEntity(it) ?: return null
+                                }.toMutableList())
+                            },
                             difficulty = difficulty,
                             lastModified = OffsetDateTime.now()
                     )

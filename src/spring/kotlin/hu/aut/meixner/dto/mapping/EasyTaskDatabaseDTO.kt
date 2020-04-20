@@ -5,19 +5,13 @@ import hu.aut.meixner.dto.task.easy.*
 import java.time.OffsetDateTime
 
 //region Pairing
-fun PairingRequest.toEntity(owner: String): PairingEntity {
+fun PairingRequest.toEntity(owner: String, pairs: List<PairEntity>): PairingEntity {
     return PairingEntity(
-            pairs = pairs.map { it.toEntity() },
+            pairs = pairs,
             title = title,
             difficulty = difficulty,
             owner = owner,
             lastModified = OffsetDateTime.now()
-    )
-}
-
-fun PairElementRequest.toEntity(): PairEntity {
-    return PairEntity(
-            pair = pair.map { it.toEntity() }.toMutableList()
     )
 }
 

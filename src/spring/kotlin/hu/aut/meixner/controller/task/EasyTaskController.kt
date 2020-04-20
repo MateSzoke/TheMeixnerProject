@@ -23,7 +23,8 @@ class EasyTaskController(
     @PostMapping("/pairing")
     @ApiOperation("Creates a new Pairing task.")
     fun createPairing(@RequestBody @Valid pairingRequest: PairingRequest): ResponseEntity<PairingResponse> {
-        return ResponseEntity.ok(pairingService.createPairing(pairingRequest))
+        val response = pairingService.createPairing(pairingRequest) ?: return ResponseEntity.badRequest().build()
+        return ResponseEntity.ok(response)
     }
 
     @PatchMapping("/pairing/{taskId}")

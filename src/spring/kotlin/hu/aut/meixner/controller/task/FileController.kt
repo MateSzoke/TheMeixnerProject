@@ -27,8 +27,8 @@ class FileController(
     @GetMapping("/{fileId}")
     @ApiOperation("Test get file")
     fun getFile(@PathVariable("fileId") fileId: Long): ResponseEntity<MediaItemResponse> {
-        val file = fileService.getFileById(fileId) ?: return ResponseEntity.notFound().build()
-        return ResponseEntity.ok(file)
+        val mediaItem = fileService.getMediaItemById(fileId) ?: return ResponseEntity.notFound().build()
+        return ResponseEntity.ok(mediaItem)
     }
 
     @GetMapping("$DOWNLOAD_FILE_PATH/{fileId}")
