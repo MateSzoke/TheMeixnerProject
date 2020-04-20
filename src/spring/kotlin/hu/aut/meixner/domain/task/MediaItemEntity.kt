@@ -9,6 +9,7 @@ data class MediaItemEntity(
         val id: Long = 0,
         val type: MediaItemType = MediaItemType.TEXT,
         val content: String = "",
+        val fileExtension: String? = null,
         @Lob
         val file: ByteArray? = null
 )
