@@ -17,7 +17,8 @@ class PairingService(
 ) {
 
     fun createPairing(pairing: PairingRequest): PairingResponse {
-        return pairingRepository.save(pairing.toEntity(currentUser)).toDomainModel()
+        val pairingEntity = pairing.toEntity(currentUser)
+        return pairingRepository.save(pairingEntity).toDomainModel()
     }
 
     fun updatePairing(id: Long, pairingRequest: PairingRequest): PairingResponse? {
