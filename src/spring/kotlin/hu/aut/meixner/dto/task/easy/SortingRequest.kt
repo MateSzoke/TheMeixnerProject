@@ -1,6 +1,6 @@
 package hu.aut.meixner.dto.task.easy
 
-import hu.aut.meixner.dto.task.TaskRequest
+import hu.aut.meixner.dto.task.common.TaskRequest
 
 class SortingRequest(
         override val title: String,

@@ -1,6 +1,6 @@
 package hu.aut.meixner.service.task.easy
 
-import hu.aut.meixner.dto.mapping.toDBModel
+import hu.aut.meixner.dto.mapping.toDomainModel
 import hu.aut.meixner.dto.mapping.toEntity
 import hu.aut.meixner.dto.task.easy.SortingRequest
 import hu.aut.meixner.dto.task.easy.SortingResponse
@@ -17,7 +17,7 @@ class SortingService(
 ) {
 
     fun createSorting(sortingRequest: SortingRequest): SortingResponse {
-        return sortingRepository.save(sortingRequest.toDBModel(currentUser)).toEntity()
+        return sortingRepository.save(sortingRequest.toEntity(currentUser)).toDomainModel()
     }
 
     fun updateSorting(id: Long, sortingRequest: SortingRequest): SortingResponse? {
@@ -32,7 +32,7 @@ class SortingService(
                             lastModified = OffsetDateTime.now()
                     )
                 }.apply { this.id = id }
-        ).toEntity()
+        ).toDomainModel()
     }
 
 }

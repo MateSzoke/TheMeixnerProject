@@ -1,6 +1,6 @@
 package hu.aut.meixner.dto
 
-import hu.aut.meixner.dto.task.TaskResponse
+import hu.aut.meixner.dto.task.common.TaskResponse
 
 data class ExerciseGroups(
         val id: Int,

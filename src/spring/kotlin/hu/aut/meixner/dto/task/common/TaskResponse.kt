@@ -1,4 +1,4 @@
-package hu.aut.meixner.dto.task
+package hu.aut.meixner.dto.task.common
 
 import java.time.OffsetDateTime
 

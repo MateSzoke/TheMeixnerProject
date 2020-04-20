@@ -1,6 +1,6 @@
 package hu.aut.meixner.service.task.easy
 
-import hu.aut.meixner.dto.mapping.toDBModel
+import hu.aut.meixner.dto.mapping.toDomainModel
 import hu.aut.meixner.dto.mapping.toEntity
 import hu.aut.meixner.dto.task.easy.PairingRequest
 import hu.aut.meixner.dto.task.easy.PairingResponse
@@ -17,7 +17,7 @@ class PairingService(
 ) {
 
     fun createPairing(pairing: PairingRequest): PairingResponse {
-        return pairingRepository.save(pairing.toDBModel(currentUser)).toEntity()
+        return pairingRepository.save(pairing.toEntity(currentUser)).toDomainModel()
     }
 
     fun updatePairing(id: Long, pairingRequest: PairingRequest): PairingResponse? {
@@ -27,12 +27,12 @@ class PairingService(
                 pairingRequest.run {
                     pairing.copy(
                             title = title,
-                            pairs = pairs.map { it.toDBModel() }.toMutableList(),
+                            pairs = pairs.map { it.toEntity() }.toMutableList(),
                             difficulty = difficulty,
                             lastModified = OffsetDateTime.now()
                     )
                 }.apply { this.id = id }
-        ).toEntity()
+        ).toDomainModel()
     }
 
 }

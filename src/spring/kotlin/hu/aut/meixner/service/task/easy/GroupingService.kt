@@ -1,6 +1,6 @@
 package hu.aut.meixner.service.task.easy
 
-import hu.aut.meixner.dto.mapping.toDBModel
+import hu.aut.meixner.dto.mapping.toDomainModel
 import hu.aut.meixner.dto.mapping.toEntity
 import hu.aut.meixner.dto.task.easy.GroupingRequest
 import hu.aut.meixner.dto.task.easy.GroupingResponse
@@ -17,7 +17,7 @@ class GroupingService(
 ) {
 
     fun createGrouping(groupingRequest: GroupingRequest): GroupingResponse {
-        return groupingRepository.save(groupingRequest.toDBModel(currentUser)).toEntity()
+        return groupingRepository.save(groupingRequest.toEntity(currentUser)).toDomainModel()
     }
 
     fun updateGrouping(id: Long, groupingRequest: GroupingRequest): GroupingResponse? {
@@ -27,12 +27,12 @@ class GroupingService(
                 groupingRequest.run {
                     grouping.copy(
                             title = title,
-                            groups = groups.map { it.toDBModel() }.toMutableList(),
+                            groups = groups.map { it.toEntity() }.toMutableList(),
                             difficulty = difficulty,
                             lastModified = OffsetDateTime.now()
                     )
                 }.apply { this.id = id }
-        ).toEntity()
+        ).toDomainModel()
     }
 
 }

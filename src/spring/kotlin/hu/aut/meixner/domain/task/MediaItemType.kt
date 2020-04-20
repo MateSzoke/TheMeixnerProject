@@ -1,5 +1,5 @@
 package hu.aut.meixner.domain.task
 
-enum class MediaTypeEntity {
+enum class MediaItemType {
     TEXT, IMAGE, VIDEO, SOUND
 }

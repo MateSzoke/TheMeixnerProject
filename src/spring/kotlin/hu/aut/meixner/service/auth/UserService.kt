@@ -3,7 +3,7 @@ package hu.aut.meixner.service.auth
 import hu.aut.meixner.dto.auth.UserRequest
 import hu.aut.meixner.dto.auth.UserResponse
 import hu.aut.meixner.dto.mapping.toDTO
-import hu.aut.meixner.dto.mapping.toEntity
+import hu.aut.meixner.dto.mapping.toDomainModel
 import hu.aut.meixner.repository.auth.UserRepository
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
@@ -20,7 +20,7 @@ class UserService(
 
     fun registerUser(userRequest: UserRequest): UserResponse {
         return userRepository.save(
-                userRequest.copy(password = bCryptPasswordEncoder.encode(userRequest.password)).toEntity()
+                userRequest.copy(password = bCryptPasswordEncoder.encode(userRequest.password)).toDomainModel()
         ).toDTO()
     }
 

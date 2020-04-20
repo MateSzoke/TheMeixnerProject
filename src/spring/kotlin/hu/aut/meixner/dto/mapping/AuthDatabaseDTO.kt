@@ -6,11 +6,11 @@ import hu.aut.meixner.dto.auth.UserRequest
 import hu.aut.meixner.dto.auth.UserResponse
 import hu.aut.meixner.dto.auth.UserRole
 
-fun UserRequest.toEntity(): UserEntity {
+fun UserRequest.toDomainModel(): UserEntity {
     return UserEntity(
             username = username,
             password = password,
-            role = role.toEntity()
+            role = role.toDomainModel()
     )
 }
 
@@ -21,7 +21,7 @@ fun UserEntity.toDTO(): UserResponse {
     )
 }
 
-fun UserRole.toEntity(): UserRoleEnum {
+fun UserRole.toDomainModel(): UserRoleEnum {
     return when (this) {
         UserRole.STUDENT -> UserRoleEnum.STUDENT
         UserRole.ADMIN -> UserRoleEnum.ADMIN
