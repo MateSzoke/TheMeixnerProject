@@ -34,6 +34,10 @@ class ExerciseService(
         return setTaskFromExercises(exercisesId = exercisesId, taskId = taskId, isAdd = false)
     }
 
+    fun deleteExercises(exercisesId: Long) {
+        exerciseRepository.deleteById(exercisesId)
+    }
+
     fun updateExercises(exercisesId: Long, exerciseRequest: ExerciseRequest): ExercisesResponse? {
         val exercise = exerciseRepository.findById(exercisesId).toNullable ?: return null
         return exerciseRepository.save(exercise.copy(

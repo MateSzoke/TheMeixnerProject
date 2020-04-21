@@ -62,4 +62,10 @@ class ExerciseController(
         return ResponseEntity.ok(result)
     }
 
+    @DeleteMapping("/delete/{exercisesId}")
+    @ApiOperation("Delete exercise group by id")
+    fun deleteExercises(@PathVariable("exercisesId") exercisesId: Long) {
+        exerciseService.deleteExercises(exercisesId)
+    }
+
 }
