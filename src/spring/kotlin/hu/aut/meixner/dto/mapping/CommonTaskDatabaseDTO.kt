@@ -4,7 +4,7 @@ import hu.aut.meixner.domain.task.MediaItemEntity
 import hu.aut.meixner.domain.task.MediaItemType.FILE
 import hu.aut.meixner.domain.task.MediaItemType.TEXT
 import hu.aut.meixner.dto.task.common.MediaItemResponse
-import hu.aut.meixner.service.file.FileService.Companion.DOWNLOAD_FILE_PATH
+import hu.aut.meixner.service.file.MediaItemService.Companion.DOWNLOAD_FILE_PATH
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 
 

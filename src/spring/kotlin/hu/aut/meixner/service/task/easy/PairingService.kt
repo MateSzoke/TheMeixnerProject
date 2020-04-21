@@ -9,20 +9,22 @@ import hu.aut.meixner.extensions.currentUser
 import hu.aut.meixner.extensions.ownerIsTheCurrentUser
 import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.repository.task.easytask.PairingRepository
-import hu.aut.meixner.service.file.FileService
+import hu.aut.meixner.service.file.MediaItemService
 import org.springframework.stereotype.Service
 import java.time.OffsetDateTime
 
 @Service
 class PairingService(
         private val pairingRepository: PairingRepository,
-        private val fileService: FileService
+        private val mediaItemService: MediaItemService
 ) {
 
     fun createPairing(pairing: PairingRequest): PairingResponse? {
         val result = pairing.toEntity(owner = currentUser, pairs = pairing.pairs.map { pair ->
             PairEntity(
-                    pair = pair.pair.map { fileService.mediaItemRequestToEntity(it) ?: return null }.toMutableList()
+                    pair = pair.pair.map {
+                        mediaItemService.mediaItemRequestToEntity(it) ?: return null
+                    }.toMutableList()
             )
         })
         return pairingRepository.save(result).toDomainModel()
@@ -37,7 +39,7 @@ class PairingService(
                             title = title,
                             pairs = pairs.map { pair ->
                                 PairEntity(pair = pair.pair.map {
-                                    fileService.mediaItemRequestToEntity(it) ?: return null
+                                    mediaItemService.mediaItemRequestToEntity(it) ?: return null
                                 }.toMutableList())
                             },
                             difficulty = difficulty,

@@ -9,14 +9,14 @@ import hu.aut.meixner.extensions.currentUser
 import hu.aut.meixner.extensions.ownerIsTheCurrentUser
 import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.repository.task.easytask.GroupingRepository
-import hu.aut.meixner.service.file.FileService
+import hu.aut.meixner.service.file.MediaItemService
 import org.springframework.stereotype.Service
 import java.time.OffsetDateTime
 
 @Service
 class GroupingService(
         private val groupingRepository: GroupingRepository,
-        private val fileService: FileService
+        private val mediaItemService: MediaItemService
 ) {
 
     fun createGrouping(groupingRequest: GroupingRequest): GroupingResponse? {
@@ -24,7 +24,7 @@ class GroupingService(
             GroupElementEntity(
                     name = grouping.name,
                     elements = grouping.elements.map {
-                        fileService.mediaItemRequestToEntity(it) ?: return null
+                        mediaItemService.mediaItemRequestToEntity(it) ?: return null
                     }.toMutableList()
             )
         })).toDomainModel()
@@ -41,7 +41,7 @@ class GroupingService(
                                 GroupElementEntity(
                                         name = group.name,
                                         elements = group.elements.map { element ->
-                                            fileService.mediaItemRequestToEntity(element) ?: return null
+                                            mediaItemService.mediaItemRequestToEntity(element) ?: return null
                                         }.toMutableList()
                                 )
                             },
