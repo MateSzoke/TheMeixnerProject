@@ -1,14 +1,18 @@
 package hu.aut.meixner.domain.task.easytask
 
+import hu.aut.meixner.domain.task.MediaItemEntity
 import hu.aut.meixner.domain.task.TaskEntity
+import org.hibernate.annotations.Cascade
+import org.hibernate.annotations.CascadeType
 import java.time.OffsetDateTime
-import javax.persistence.ElementCollection
 import javax.persistence.Entity
+import javax.persistence.OneToMany
 
 @Entity
 data class SortingEntity(
-        @ElementCollection(targetClass = String::class)
-        val elements: MutableList<String> = mutableListOf(),
+        @OneToMany
+        @Cascade(CascadeType.ALL)
+        val elements: MutableList<MediaItemEntity> = mutableListOf(),
         override val title: String = "",
         override val owner: String = "",
         override val difficulty: Int = 0,

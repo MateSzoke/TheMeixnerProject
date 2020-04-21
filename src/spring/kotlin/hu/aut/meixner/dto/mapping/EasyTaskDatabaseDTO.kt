@@ -1,5 +1,6 @@
 package hu.aut.meixner.dto.mapping
 
+import hu.aut.meixner.domain.task.MediaItemEntity
 import hu.aut.meixner.domain.task.easytask.*
 import hu.aut.meixner.dto.task.easy.*
 import java.time.OffsetDateTime
@@ -89,7 +90,7 @@ fun SentenceCompletionEntity.toDomainModel(): SentenceCompletionResponse {
 //endregion
 
 //region Sorting
-fun SortingRequest.toEntity(owner: String): SortingEntity {
+fun SortingRequest.toEntity(owner: String, elements: List<MediaItemEntity>): SortingEntity {
     return SortingEntity(
             title = title,
             elements = elements.toMutableList(),
@@ -103,7 +104,7 @@ fun SortingEntity.toDomainModel(): SortingResponse {
     return SortingResponse(
             id = id,
             title = title,
-            elements = elements,
+            elements = elements.map { it.toDomainModel() },
             difficulty = difficulty,
             owner = owner,
             lastModified = OffsetDateTime.now()

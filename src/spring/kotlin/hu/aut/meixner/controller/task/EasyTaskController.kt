@@ -101,7 +101,8 @@ class EasyTaskController(
     @PostMapping("/sorting")
     @ApiOperation("Creates a new Sorting task.")
     fun createSorting(@RequestBody @Valid sortingRequest: SortingRequest): ResponseEntity<SortingResponse> {
-        return ResponseEntity.ok(sortingService.createSorting(sortingRequest))
+        val result = sortingService.createSorting(sortingRequest) ?: return ResponseEntity.badRequest().build()
+        return ResponseEntity.ok(result)
     }
 
     @PatchMapping("/sorting/{taskId}")

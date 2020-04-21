@@ -8,16 +8,20 @@ import hu.aut.meixner.extensions.currentUser
 import hu.aut.meixner.extensions.ownerIsTheCurrentUser
 import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.repository.task.easytask.SortingRepository
+import hu.aut.meixner.service.file.FileService
 import org.springframework.stereotype.Service
 import java.time.OffsetDateTime
 
 @Service
 class SortingService(
-        private val sortingRepository: SortingRepository
+        private val sortingRepository: SortingRepository,
+        private val fileService: FileService
 ) {
 
-    fun createSorting(sortingRequest: SortingRequest): SortingResponse {
-        return sortingRepository.save(sortingRequest.toEntity(currentUser)).toDomainModel()
+    fun createSorting(sortingRequest: SortingRequest): SortingResponse? {
+        return sortingRepository.save(sortingRequest.toEntity(owner = currentUser, elements = sortingRequest.elements.map {
+            fileService.mediaItemRequestToEntity(it) ?: return null
+        })).toDomainModel()
     }
 
     fun updateSorting(id: Long, sortingRequest: SortingRequest): SortingResponse? {
@@ -27,7 +31,9 @@ class SortingService(
                 sortingRequest.run {
                     sorting.copy(
                             title = title,
-                            elements = elements.toMutableList(),
+                            elements = elements.map {
+                                fileService.mediaItemRequestToEntity(it) ?: return null
+                            }.toMutableList(),
                             difficulty = difficulty,
                             lastModified = OffsetDateTime.now()
                     )
