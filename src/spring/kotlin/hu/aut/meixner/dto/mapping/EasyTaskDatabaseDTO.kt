@@ -34,20 +34,13 @@ fun PairEntity.toDomainModel(): PairElementResponse {
 //endregion
 
 //region Grouping
-fun GroupingRequest.toEntity(owner: String): GroupingEntity {
+fun GroupingRequest.toEntity(owner: String, groups: List<GroupElementEntity>): GroupingEntity {
     return GroupingEntity(
-            groups = groups.map { it.toEntity() },
+            groups = groups,
             title = title,
             difficulty = difficulty,
             owner = owner,
             lastModified = OffsetDateTime.now()
-    )
-}
-
-fun Group.toEntity(): GroupElementEntity {
-    return GroupElementEntity(
-            name = name,
-            elements = elements.toMutableList()
     )
 }
 
@@ -62,10 +55,10 @@ fun GroupingEntity.toDomainModel(): GroupingResponse {
     )
 }
 
-fun GroupElementEntity.toDomainModel(): Group {
-    return Group(
+fun GroupElementEntity.toDomainModel(): GroupResponse {
+    return GroupResponse(
             name = name,
-            elements = elements
+            elements = elements.map { it.toDomainModel() }
     )
 }
 //endregion

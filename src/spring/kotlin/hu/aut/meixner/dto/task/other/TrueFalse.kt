@@ -1,6 +1,6 @@
 package hu.aut.meixner.dto.task.other
 
-import hu.aut.meixner.dto.task.easy.Group
+import hu.aut.meixner.dto.task.easy.GroupResponse
 import hu.aut.meixner.dto.task.easy.GroupingResponse
 import java.time.OffsetDateTime
 
@@ -13,8 +13,8 @@ data class TrueFalse(
         override val lastModified: OffsetDateTime
 ) : GroupingResponse(
         listOf(
-                Group(name = if (value) "true" else "false", elements = mutableListOf()),
-                Group(name = if (value) "false" else "true", elements = mutableListOf())
+                GroupResponse(name = if (value) "true" else "false", elements = mutableListOf()),
+                GroupResponse(name = if (value) "false" else "true", elements = mutableListOf())
         ),
         id = id,
         title = title,
