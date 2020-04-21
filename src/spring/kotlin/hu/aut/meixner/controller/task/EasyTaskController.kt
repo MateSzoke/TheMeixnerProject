@@ -42,7 +42,8 @@ class EasyTaskController(
     @PostMapping("/grouping")
     @ApiOperation("Creates a new Grouping task.")
     fun createGrouping(@RequestBody @Valid groupingRequest: GroupingRequest): ResponseEntity<GroupingResponse> {
-        return ResponseEntity.ok(groupingService.createGrouping(groupingRequest))
+        val result = groupingService.createGrouping(groupingRequest) ?: return ResponseEntity.badRequest().build()
+        return ResponseEntity.ok(result)
     }
 
     @PatchMapping("/grouping/{taskId}")
