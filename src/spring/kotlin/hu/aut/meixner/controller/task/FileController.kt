@@ -19,20 +19,13 @@ class FileController(
 ) {
 
     @PostMapping("/upload")
-    @ApiOperation("Test uploading file")
+    @ApiOperation("You can upload file here")
     fun upload(@RequestParam("file") file: MultipartFile): ResponseEntity<MediaItemResponse> {
         return ResponseEntity.ok(mediaItemService.uploadFile(file))
     }
 
-    @GetMapping("/{fileId}")
-    @ApiOperation("Test get file")
-    fun getFile(@PathVariable("fileId") fileId: Long): ResponseEntity<MediaItemResponse> {
-        val mediaItem = mediaItemService.getMediaItemById(fileId) ?: return ResponseEntity.notFound().build()
-        return ResponseEntity.ok(mediaItem)
-    }
-
     @GetMapping("$DOWNLOAD_FILE_PATH/{fileId}")
-    @ApiOperation("Test download file")
+    @ApiOperation("Download file by fileId")
     fun downloadFile(@PathVariable("fileId") fileId: Long): ResponseEntity<ByteArray> {
         val mediaItem = mediaItemService.getMediaItemEntity(fileId) ?: return ResponseEntity.notFound().build()
         val fileName = "${mediaItem.id}.${mediaItem.fileExtension}"
