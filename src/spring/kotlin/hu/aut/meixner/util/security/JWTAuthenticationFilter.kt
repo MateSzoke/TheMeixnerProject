@@ -3,7 +3,7 @@ package hu.aut.meixner.util.security
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm.HMAC512
 import com.fasterxml.jackson.databind.ObjectMapper
-import hu.aut.meixner.domain.auth.UserEntity
+import hu.aut.meixner.entity.auth.UserEntity
 import hu.aut.meixner.util.security.SecurityConstants.EXPIRATION_TIME
 import hu.aut.meixner.util.security.SecurityConstants.HEADER_STRING
 import hu.aut.meixner.util.security.SecurityConstants.SECRET

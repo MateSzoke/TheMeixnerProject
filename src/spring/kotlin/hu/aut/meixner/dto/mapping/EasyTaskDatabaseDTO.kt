@@ -1,8 +1,8 @@
 package hu.aut.meixner.dto.mapping
 
-import hu.aut.meixner.domain.task.MediaItemEntity
-import hu.aut.meixner.domain.task.easytask.*
 import hu.aut.meixner.dto.task.easy.*
+import hu.aut.meixner.entity.task.MediaItemEntity
+import hu.aut.meixner.entity.task.easytask.*
 import java.time.OffsetDateTime
 
 //region Pairing
@@ -12,6 +12,8 @@ fun PairingRequest.toEntity(owner: String, pairs: List<PairEntity>): PairingEnti
             title = title,
             difficulty = difficulty,
             owner = owner,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass,
             lastModified = OffsetDateTime.now()
     )
 }
@@ -23,6 +25,9 @@ fun PairingEntity.toDomainModel(): PairingResponse {
             difficulty = difficulty,
             title = title,
             owner = owner,
+            subject = subject,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass,
             pairs = pairs.map { it.toDomainModel() }
     )
 }
@@ -41,6 +46,9 @@ fun GroupingRequest.toEntity(owner: String, groups: List<GroupElementEntity>): G
             title = title,
             difficulty = difficulty,
             owner = owner,
+            subject = subject,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass,
             lastModified = OffsetDateTime.now()
     )
 }
@@ -52,6 +60,9 @@ fun GroupingEntity.toDomainModel(): GroupingResponse {
             difficulty = difficulty,
             title = title,
             owner = owner,
+            subject = subject,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass,
             groups = groups.map { it.toDomainModel() }
     )
 }
@@ -72,6 +83,9 @@ fun SentenceCompletionRequest.toEntity(owner: String): SentenceCompletionEntity 
             options = options.toMutableList(),
             owner = owner,
             difficulty = difficulty,
+            subject = subject,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass,
             lastModified = OffsetDateTime.now()
     )
 }
@@ -84,6 +98,9 @@ fun SentenceCompletionEntity.toDomainModel(): SentenceCompletionResponse {
             options = options,
             difficulty = difficulty,
             owner = owner,
+            subject = subject,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass,
             lastModified = OffsetDateTime.now()
     )
 }
@@ -96,6 +113,9 @@ fun SortingRequest.toEntity(owner: String, elements: List<MediaItemEntity>): Sor
             elements = elements.toMutableList(),
             owner = owner,
             difficulty = difficulty,
+            subject = subject,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass,
             lastModified = OffsetDateTime.now()
     )
 }
@@ -107,6 +127,9 @@ fun SortingEntity.toDomainModel(): SortingResponse {
             elements = elements.map { it.toDomainModel() },
             difficulty = difficulty,
             owner = owner,
+            subject = subject,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass,
             lastModified = OffsetDateTime.now()
     )
 }
@@ -119,6 +142,9 @@ fun SentenceCreationRequest.toEntity(owner: String): SentenceCreationEntity {
             title = title,
             owner = owner,
             difficulty = difficulty,
+            subject = subject,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass,
             lastModified = OffsetDateTime.now()
     )
 }
@@ -137,6 +163,9 @@ fun SentenceCreationEntity.toDomainModel(): SentenceCreationResponse {
             difficulty = difficulty,
             title = title,
             owner = owner,
+            subject = subject,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass,
             sentences = sentences.map { it.toDomainModel() }
     )
 }

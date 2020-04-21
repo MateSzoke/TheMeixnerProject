@@ -1,5 +1,6 @@
-package hu.aut.meixner.domain.task
+package hu.aut.meixner.entity.task
 
+import hu.aut.meixner.dto.SubjectEnum
 import java.time.OffsetDateTime
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -14,5 +15,8 @@ abstract class TaskEntity(
     abstract val title: String
     abstract val owner: String
     abstract val difficulty: Int
+    abstract val subject: SubjectEnum
+    abstract val recommendedMinClass: Int
+    abstract val recommendedMaxClass: Int
     abstract val lastModified: OffsetDateTime
 }

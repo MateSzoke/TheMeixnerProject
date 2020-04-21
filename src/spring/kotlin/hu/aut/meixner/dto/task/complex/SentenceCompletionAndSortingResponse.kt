@@ -1,5 +1,6 @@
 package hu.aut.meixner.dto.task.complex
 
+import hu.aut.meixner.dto.SubjectEnum
 import hu.aut.meixner.dto.task.common.TaskTypeEnum
 import hu.aut.meixner.dto.task.easy.SortingResponse
 import java.time.OffsetDateTime
@@ -10,6 +11,9 @@ class SentenceCompletionAndSortingResponse(
         override val title: String,
         override val owner: String,
         override val difficulty: Int,
+        override val subject: SubjectEnum,
+        override val recommendedMinClass: Int,
+        override val recommendedMaxClass: Int,
         override val lastModified: OffsetDateTime
 ) : SortingResponse(
         elements = mutableListOf(),
@@ -18,5 +22,8 @@ class SentenceCompletionAndSortingResponse(
         lastModified = lastModified,
         title = title,
         owner = owner,
+        subject = subject,
+        recommendedMinClass = recommendedMinClass,
+        recommendedMaxClass = recommendedMaxClass,
         difficulty = difficulty
 )

@@ -1,6 +1,7 @@
 package hu.aut.meixner.dto
 
 enum class SubjectEnum {
+    None,
     Hungarian_grammar_and_literature,
     Foreign_language,
     Mathematics,
@@ -12,4 +13,5 @@ enum class SubjectEnum {
     Sport,
     History,
     Biology,
+    Physics
 }

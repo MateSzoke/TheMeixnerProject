@@ -1,4 +1,4 @@
-package hu.aut.meixner.domain.auth
+package hu.aut.meixner.entity.auth
 
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
