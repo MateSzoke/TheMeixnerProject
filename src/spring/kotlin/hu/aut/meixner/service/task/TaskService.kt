@@ -1,7 +1,7 @@
 package hu.aut.meixner.service.task
 
-import hu.aut.meixner.dto.mapping.toEntity
-import hu.aut.meixner.dto.task.TaskResponse
+import hu.aut.meixner.dto.mapping.toDomainModel
+import hu.aut.meixner.dto.task.common.TaskResponse
 import hu.aut.meixner.extensions.currentUser
 import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.repository.task.easytask.*
@@ -18,20 +18,20 @@ class TaskService(
 ) {
 
     fun getTaskById(taskId: Long): TaskResponse? {
-        return pairingRepository.findById(taskId).toNullable?.toEntity()
-                ?: groupingRepository.findById(taskId).toNullable?.toEntity()
-                ?: sentenceCompletionRepository.findById(taskId).toNullable?.toEntity()
-                ?: sentenceCreationRepository.findById(taskId).toNullable?.toEntity()
-                ?: sortingRepository.findById(taskId).toNullable?.toEntity()
+        return pairingRepository.findById(taskId).toNullable?.toDomainModel()
+                ?: groupingRepository.findById(taskId).toNullable?.toDomainModel()
+                ?: sentenceCompletionRepository.findById(taskId).toNullable?.toDomainModel()
+                ?: sentenceCreationRepository.findById(taskId).toNullable?.toDomainModel()
+                ?: sortingRepository.findById(taskId).toNullable?.toDomainModel()
     }
 
     fun getAllTasks(): List<TaskResponse> {
         return listOf(
-                pairingRepository.findAll().map { it.toEntity() },
-                groupingRepository.findAll().map { it.toEntity() },
-                sentenceCompletionRepository.findAll().map { it.toEntity() },
-                sentenceCreationRepository.findAll().map { it.toEntity() },
-                sortingRepository.findAll().map { it.toEntity() }
+                pairingRepository.findAll().map { it.toDomainModel() },
+                groupingRepository.findAll().map { it.toDomainModel() },
+                sentenceCompletionRepository.findAll().map { it.toDomainModel() },
+                sentenceCreationRepository.findAll().map { it.toDomainModel() },
+                sortingRepository.findAll().map { it.toDomainModel() }
         )
                 .flatten()
                 .sortedBy { it.lastModified }

@@ -23,7 +23,8 @@ class EasyTaskController(
     @PostMapping("/pairing")
     @ApiOperation("Creates a new Pairing task.")
     fun createPairing(@RequestBody @Valid pairingRequest: PairingRequest): ResponseEntity<PairingResponse> {
-        return ResponseEntity.ok(pairingService.createPairing(pairingRequest))
+        val response = pairingService.createPairing(pairingRequest) ?: return ResponseEntity.badRequest().build()
+        return ResponseEntity.ok(response)
     }
 
     @PatchMapping("/pairing/{taskId}")
@@ -41,7 +42,8 @@ class EasyTaskController(
     @PostMapping("/grouping")
     @ApiOperation("Creates a new Grouping task.")
     fun createGrouping(@RequestBody @Valid groupingRequest: GroupingRequest): ResponseEntity<GroupingResponse> {
-        return ResponseEntity.ok(groupingService.createGrouping(groupingRequest))
+        val result = groupingService.createGrouping(groupingRequest) ?: return ResponseEntity.badRequest().build()
+        return ResponseEntity.ok(result)
     }
 
     @PatchMapping("/grouping/{taskId}")
@@ -99,7 +101,8 @@ class EasyTaskController(
     @PostMapping("/sorting")
     @ApiOperation("Creates a new Sorting task.")
     fun createSorting(@RequestBody @Valid sortingRequest: SortingRequest): ResponseEntity<SortingResponse> {
-        return ResponseEntity.ok(sortingService.createSorting(sortingRequest))
+        val result = sortingService.createSorting(sortingRequest) ?: return ResponseEntity.badRequest().build()
+        return ResponseEntity.ok(result)
     }
 
     @PatchMapping("/sorting/{taskId}")

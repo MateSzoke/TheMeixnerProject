@@ -1,6 +1,6 @@
 package hu.aut.meixner.service.task.easy
 
-import hu.aut.meixner.dto.mapping.toDBModel
+import hu.aut.meixner.dto.mapping.toDomainModel
 import hu.aut.meixner.dto.mapping.toEntity
 import hu.aut.meixner.dto.task.easy.SentenceCreationRequest
 import hu.aut.meixner.dto.task.easy.SentenceCreationResponse
@@ -17,7 +17,7 @@ class SentenceCreationService(
 ) {
 
     fun createSentenceCreation(sentenceCreationRequest: SentenceCreationRequest): SentenceCreationResponse {
-        return sentenceCreationRepository.save(sentenceCreationRequest.toDBModel(currentUser)).toEntity()
+        return sentenceCreationRepository.save(sentenceCreationRequest.toEntity(currentUser)).toDomainModel()
     }
 
     fun updateSentenceCreation(id: Long, sentenceCreationRequest: SentenceCreationRequest): SentenceCreationResponse? {
@@ -27,12 +27,12 @@ class SentenceCreationService(
                 sentenceCreationRequest.run {
                     sentenceCreation.copy(
                             title = title,
-                            sentences = sentences.map { it.toDBModel() },
+                            sentences = sentences.map { it.toEntity() },
                             difficulty = difficulty,
                             lastModified = OffsetDateTime.now()
                     )
                 }.apply { this.id = id }
-        ).toEntity()
+        ).toDomainModel()
     }
 
 }

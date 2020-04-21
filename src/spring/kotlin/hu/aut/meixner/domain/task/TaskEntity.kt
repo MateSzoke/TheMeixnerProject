@@ -1,4 +1,4 @@
-package hu.aut.meixner.domain
+package hu.aut.meixner.domain.task
 
 import java.time.OffsetDateTime
 import javax.persistence.GeneratedValue

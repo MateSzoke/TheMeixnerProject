@@ -1,11 +1,11 @@
 package hu.aut.meixner.dto.task.easy
 
-import hu.aut.meixner.dto.task.TaskResponse
-import hu.aut.meixner.dto.task.TaskTypeEnum
+import hu.aut.meixner.dto.task.common.TaskResponse
+import hu.aut.meixner.dto.task.common.TaskTypeEnum
 import java.time.OffsetDateTime
 
 open class GroupingResponse(
-        val groups: List<Group>,
+        val groups: List<GroupResponse>,
         override val id: Long,
         override val type: TaskTypeEnum = TaskTypeEnum.Grouping,
         override val title: String,

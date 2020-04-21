@@ -1,6 +1,6 @@
 package hu.aut.meixner.dto.task.complex
 
-import hu.aut.meixner.dto.task.TaskTypeEnum
+import hu.aut.meixner.dto.task.common.TaskTypeEnum
 import hu.aut.meixner.dto.task.easy.SortingResponse
 import java.time.OffsetDateTime
 
