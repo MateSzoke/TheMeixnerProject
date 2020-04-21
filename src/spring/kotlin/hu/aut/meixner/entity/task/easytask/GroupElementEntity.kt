@@ -1,6 +1,6 @@
-package hu.aut.meixner.domain.task.easytask
+package hu.aut.meixner.entity.task.easytask
 
-import hu.aut.meixner.domain.task.MediaItemEntity
+import hu.aut.meixner.entity.task.MediaItemEntity
 import org.hibernate.annotations.Cascade
 import org.hibernate.annotations.CascadeType
 import javax.persistence.*

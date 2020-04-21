@@ -1,10 +1,10 @@
 package hu.aut.meixner.dto.mapping
 
-import hu.aut.meixner.domain.auth.UserEntity
-import hu.aut.meixner.domain.auth.UserRoleEnum
 import hu.aut.meixner.dto.auth.UserRequest
 import hu.aut.meixner.dto.auth.UserResponse
 import hu.aut.meixner.dto.auth.UserRole
+import hu.aut.meixner.entity.auth.UserEntity
+import hu.aut.meixner.entity.auth.UserRoleEnum
 
 fun UserRequest.toDomainModel(): UserEntity {
     return UserEntity(

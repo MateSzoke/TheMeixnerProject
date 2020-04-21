@@ -1,10 +1,10 @@
 package hu.aut.meixner.service.task.easy
 
-import hu.aut.meixner.domain.task.easytask.PairEntity
 import hu.aut.meixner.dto.mapping.toDomainModel
 import hu.aut.meixner.dto.mapping.toEntity
 import hu.aut.meixner.dto.task.easy.PairingRequest
 import hu.aut.meixner.dto.task.easy.PairingResponse
+import hu.aut.meixner.entity.task.easytask.PairEntity
 import hu.aut.meixner.extensions.currentUser
 import hu.aut.meixner.extensions.ownerIsTheCurrentUser
 import hu.aut.meixner.extensions.toNullable

@@ -1,6 +1,6 @@
 package hu.aut.meixner.extensions
 
-import hu.aut.meixner.domain.task.TaskEntity
+import hu.aut.meixner.entity.task.TaskEntity
 import org.springframework.security.authentication.AnonymousAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
 

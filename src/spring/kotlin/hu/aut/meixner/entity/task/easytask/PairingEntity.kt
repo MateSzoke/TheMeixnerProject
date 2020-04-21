@@ -1,7 +1,7 @@
-package hu.aut.meixner.domain.task.easytask
+package hu.aut.meixner.entity.task.easytask
 
-import hu.aut.meixner.domain.task.TaskEntity
 import hu.aut.meixner.dto.SubjectEnum
+import hu.aut.meixner.entity.task.TaskEntity
 import org.hibernate.annotations.Cascade
 import org.hibernate.annotations.CascadeType
 import java.time.OffsetDateTime

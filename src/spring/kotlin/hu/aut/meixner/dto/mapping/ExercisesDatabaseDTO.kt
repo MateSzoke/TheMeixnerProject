@@ -1,9 +1,9 @@
 package hu.aut.meixner.dto.mapping
 
-import hu.aut.meixner.domain.exercises.ExercisesEntity
 import hu.aut.meixner.dto.exercises.ExerciseRequest
 import hu.aut.meixner.dto.exercises.ExercisesResponse
 import hu.aut.meixner.dto.task.common.TaskResponse
+import hu.aut.meixner.entity.exercises.ExercisesEntity
 import kotlin.math.roundToInt
 
 fun ExerciseRequest.toEntity(): ExercisesEntity {
