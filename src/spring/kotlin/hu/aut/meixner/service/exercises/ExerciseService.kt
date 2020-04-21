@@ -8,15 +8,13 @@ import hu.aut.meixner.dto.task.common.TaskResponse
 import hu.aut.meixner.entity.exercises.ExercisesEntity
 import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.repository.exercise.ExerciseRepository
-import hu.aut.meixner.repository.task.TaskRepository
 import hu.aut.meixner.service.task.TaskService
 import org.springframework.stereotype.Service
 
 @Service
 class ExerciseService(
         private val exerciseRepository: ExerciseRepository,
-        private val taskService: TaskService,
-        private val taskRepository: TaskRepository
+        private val taskService: TaskService
 ) {
 
     fun createExercises(exerciseRequest: ExerciseRequest): ExercisesResponse {
@@ -46,15 +44,15 @@ class ExerciseService(
     }
 
     private fun getTaskEntitiesFromExercises(exercise: ExercisesEntity): List<TaskResponse>? {
-        return exercise.tasks.map { taskEntity ->
-            taskService.getTaskById(taskEntity.id) ?: return null
+        return exercise.taskIds.map { taskId ->
+            taskService.getTaskById(taskId) ?: return null
         }
     }
 
     private fun setTaskFromExercises(exercisesId: Long, taskId: Long, isAdd: Boolean): ExercisesResponse? {
-        val task = taskRepository.findById(taskId).toNullable ?: return null
+        val task = taskService.getTaskById(taskId) ?: return null
         val exercise = exerciseRepository.findById(exercisesId).toNullable ?: return null
-        if (isAdd) exercise.tasks += task else exercise.tasks -= task
+        if (isAdd) exercise.taskIds += task.id else exercise.taskIds -= task.id
         return exerciseRepository.save(exercise)
                 .toDomainModel(tasks = getTaskEntitiesFromExercises(exercise) ?: return null)
     }

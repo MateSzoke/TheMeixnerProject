@@ -8,6 +8,6 @@ data class ExercisesEntity(
         val id: Long = 0,
         val name: String = "",
         val comment: String = "",
-        @OneToMany
+        @ElementCollection(targetClass = Long::class)
         val taskIds: MutableList<Long> = mutableListOf()
 )

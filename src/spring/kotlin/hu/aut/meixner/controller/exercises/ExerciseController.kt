@@ -52,7 +52,7 @@ class ExerciseController(
     }
 
     @DeleteMapping("/{exercisesId}/{taskId}")
-    @ApiOperation("Add task to an exercises by id")
+    @ApiOperation("Remove task from an exercises by id")
     fun removeTaskFromExercises(
             @PathVariable("exercisesId") exercisesId: Long,
             @PathVariable("taskId") taskId: Long

@@ -19,7 +19,7 @@ fun ExercisesEntity.toDomainModel(tasks: List<TaskResponse>): ExercisesResponse 
             name = name,
             comment = comment,
             tasks = tasks,
-            averageDifficulty = tasks.map { it.difficulty }.average().roundToInt(),
+            averageDifficulty = if (tasks.isNotEmpty()) tasks.map { it.difficulty }.average().roundToInt() else 0,
             lastModified = tasks.map { it.lastModified }.max()
     )
 }
