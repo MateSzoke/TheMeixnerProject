@@ -1,6 +1,7 @@
 package hu.aut.meixner.domain.task.easytask
 
 import hu.aut.meixner.domain.task.TaskEntity
+import hu.aut.meixner.dto.SubjectEnum
 import org.hibernate.annotations.Cascade
 import org.hibernate.annotations.CascadeType
 import java.time.OffsetDateTime
@@ -15,5 +16,6 @@ data class PairingEntity(
         override val title: String = "",
         override val owner: String = "",
         override val difficulty: Int = 0,
+        override val subject: SubjectEnum = SubjectEnum.None,
         override val lastModified: OffsetDateTime = OffsetDateTime.now()
 ) : TaskEntity()

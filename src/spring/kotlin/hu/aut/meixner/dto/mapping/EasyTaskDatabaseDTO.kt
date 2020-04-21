@@ -23,6 +23,7 @@ fun PairingEntity.toDomainModel(): PairingResponse {
             difficulty = difficulty,
             title = title,
             owner = owner,
+            subject = subject,
             pairs = pairs.map { it.toDomainModel() }
     )
 }
@@ -41,6 +42,7 @@ fun GroupingRequest.toEntity(owner: String, groups: List<GroupElementEntity>): G
             title = title,
             difficulty = difficulty,
             owner = owner,
+            subject = subject,
             lastModified = OffsetDateTime.now()
     )
 }
@@ -52,6 +54,7 @@ fun GroupingEntity.toDomainModel(): GroupingResponse {
             difficulty = difficulty,
             title = title,
             owner = owner,
+            subject = subject,
             groups = groups.map { it.toDomainModel() }
     )
 }
@@ -72,6 +75,7 @@ fun SentenceCompletionRequest.toEntity(owner: String): SentenceCompletionEntity 
             options = options.toMutableList(),
             owner = owner,
             difficulty = difficulty,
+            subject = subject,
             lastModified = OffsetDateTime.now()
     )
 }
@@ -84,6 +88,7 @@ fun SentenceCompletionEntity.toDomainModel(): SentenceCompletionResponse {
             options = options,
             difficulty = difficulty,
             owner = owner,
+            subject = subject,
             lastModified = OffsetDateTime.now()
     )
 }
@@ -96,6 +101,7 @@ fun SortingRequest.toEntity(owner: String, elements: List<MediaItemEntity>): Sor
             elements = elements.toMutableList(),
             owner = owner,
             difficulty = difficulty,
+            subject = subject,
             lastModified = OffsetDateTime.now()
     )
 }
@@ -107,6 +113,7 @@ fun SortingEntity.toDomainModel(): SortingResponse {
             elements = elements.map { it.toDomainModel() },
             difficulty = difficulty,
             owner = owner,
+            subject = subject,
             lastModified = OffsetDateTime.now()
     )
 }
@@ -119,6 +126,7 @@ fun SentenceCreationRequest.toEntity(owner: String): SentenceCreationEntity {
             title = title,
             owner = owner,
             difficulty = difficulty,
+            subject = subject,
             lastModified = OffsetDateTime.now()
     )
 }
@@ -137,6 +145,7 @@ fun SentenceCreationEntity.toDomainModel(): SentenceCreationResponse {
             difficulty = difficulty,
             title = title,
             owner = owner,
+            subject = subject,
             sentences = sentences.map { it.toDomainModel() }
     )
 }

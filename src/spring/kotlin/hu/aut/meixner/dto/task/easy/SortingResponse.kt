@@ -1,5 +1,6 @@
 package hu.aut.meixner.dto.task.easy
 
+import hu.aut.meixner.dto.SubjectEnum
 import hu.aut.meixner.dto.task.common.MediaItemResponse
 import hu.aut.meixner.dto.task.common.TaskResponse
 import hu.aut.meixner.dto.task.common.TaskTypeEnum
@@ -11,6 +12,7 @@ open class SortingResponse(
         override val type: TaskTypeEnum = TaskTypeEnum.Sorting,
         override val title: String,
         override val owner: String,
+        override val subject: SubjectEnum,
         override val difficulty: Int,
         override val lastModified: OffsetDateTime
 ) : TaskResponse()
