@@ -8,5 +8,7 @@ class SortingRequest(
         override val title: String,
         override val difficulty: Int,
         override val subject: SubjectEnum,
+        override val recommendedMinClass: Int,
+        override val recommendedMaxClass: Int,
         val elements: List<MediaItemRequest>
 ) : TaskRequest()

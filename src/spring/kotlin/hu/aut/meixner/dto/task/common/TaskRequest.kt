@@ -6,4 +6,6 @@ abstract class TaskRequest {
     abstract val title: String
     abstract val difficulty: Int
     abstract val subject: SubjectEnum
+    abstract val recommendedMinClass: Int
+    abstract val recommendedMaxClass: Int
 }

@@ -12,6 +12,8 @@ class GroupingAndSortingResponse(
         override val owner: String,
         override val subject: SubjectEnum,
         override val difficulty: Int,
+        override val recommendedMinClass: Int,
+        override val recommendedMaxClass: Int,
         override val lastModified: OffsetDateTime
 ) : SortingResponse(
         elements = mutableListOf(),
@@ -21,5 +23,7 @@ class GroupingAndSortingResponse(
         title = title,
         owner = owner,
         subject = subject,
+        recommendedMinClass = recommendedMinClass,
+        recommendedMaxClass = recommendedMaxClass,
         difficulty = difficulty
 )

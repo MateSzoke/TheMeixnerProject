@@ -18,5 +18,7 @@ data class SortingEntity(
         override val owner: String = "",
         override val difficulty: Int = 0,
         override val subject: SubjectEnum = SubjectEnum.None,
+        override val recommendedMinClass: Int = 1,
+        override val recommendedMaxClass: Int = 8,
         override val lastModified: OffsetDateTime = OffsetDateTime.now()
 ) : TaskEntity()

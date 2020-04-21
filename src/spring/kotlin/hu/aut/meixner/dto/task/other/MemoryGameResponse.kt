@@ -10,6 +10,8 @@ class MemoryGameResponse(
         override val owner: String,
         override val subject: SubjectEnum,
         override val difficulty: Int,
+        override val recommendedMinClass: Int,
+        override val recommendedMaxClass: Int,
         override val lastModified: OffsetDateTime
 ) : PairingResponse(
         title = title,
@@ -17,6 +19,8 @@ class MemoryGameResponse(
         id = id,
         owner = owner,
         subject = subject,
+        recommendedMinClass = recommendedMinClass,
+        recommendedMaxClass = recommendedMaxClass,
         lastModified = lastModified,
         difficulty = difficulty
 )

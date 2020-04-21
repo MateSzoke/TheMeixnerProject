@@ -12,6 +12,8 @@ open class GroupingResponse(
         override val title: String,
         override val owner: String,
         override val subject: SubjectEnum,
+        override val recommendedMinClass: Int,
+        override val recommendedMaxClass: Int,
         override val difficulty: Int,
         override val lastModified: OffsetDateTime
 ) : TaskResponse()

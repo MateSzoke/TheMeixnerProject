@@ -16,5 +16,7 @@ abstract class TaskEntity(
     abstract val owner: String
     abstract val difficulty: Int
     abstract val subject: SubjectEnum
+    abstract val recommendedMinClass: Int
+    abstract val recommendedMaxClass: Int
     abstract val lastModified: OffsetDateTime
 }

@@ -12,6 +12,8 @@ class SentenceCreationAndGroupingResponse(
         override val owner: String,
         override val subject: SubjectEnum,
         override val difficulty: Int,
+        override val recommendedMinClass: Int,
+        override val recommendedMaxClass: Int,
         override val lastModified: OffsetDateTime
 ) : GroupingResponse(
         groups = mutableListOf(),
@@ -21,5 +23,7 @@ class SentenceCreationAndGroupingResponse(
         title = title,
         owner = owner,
         subject = subject,
+        recommendedMinClass = recommendedMinClass,
+        recommendedMaxClass = recommendedMaxClass,
         difficulty = difficulty
 )

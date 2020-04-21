@@ -12,6 +12,8 @@ fun PairingRequest.toEntity(owner: String, pairs: List<PairEntity>): PairingEnti
             title = title,
             difficulty = difficulty,
             owner = owner,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass,
             lastModified = OffsetDateTime.now()
     )
 }
@@ -24,6 +26,8 @@ fun PairingEntity.toDomainModel(): PairingResponse {
             title = title,
             owner = owner,
             subject = subject,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass,
             pairs = pairs.map { it.toDomainModel() }
     )
 }
@@ -43,6 +47,8 @@ fun GroupingRequest.toEntity(owner: String, groups: List<GroupElementEntity>): G
             difficulty = difficulty,
             owner = owner,
             subject = subject,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass,
             lastModified = OffsetDateTime.now()
     )
 }
@@ -55,6 +61,8 @@ fun GroupingEntity.toDomainModel(): GroupingResponse {
             title = title,
             owner = owner,
             subject = subject,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass,
             groups = groups.map { it.toDomainModel() }
     )
 }
@@ -76,6 +84,8 @@ fun SentenceCompletionRequest.toEntity(owner: String): SentenceCompletionEntity 
             owner = owner,
             difficulty = difficulty,
             subject = subject,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass,
             lastModified = OffsetDateTime.now()
     )
 }
@@ -89,6 +99,8 @@ fun SentenceCompletionEntity.toDomainModel(): SentenceCompletionResponse {
             difficulty = difficulty,
             owner = owner,
             subject = subject,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass,
             lastModified = OffsetDateTime.now()
     )
 }
@@ -102,6 +114,8 @@ fun SortingRequest.toEntity(owner: String, elements: List<MediaItemEntity>): Sor
             owner = owner,
             difficulty = difficulty,
             subject = subject,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass,
             lastModified = OffsetDateTime.now()
     )
 }
@@ -114,6 +128,8 @@ fun SortingEntity.toDomainModel(): SortingResponse {
             difficulty = difficulty,
             owner = owner,
             subject = subject,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass,
             lastModified = OffsetDateTime.now()
     )
 }
@@ -127,6 +143,8 @@ fun SentenceCreationRequest.toEntity(owner: String): SentenceCreationEntity {
             owner = owner,
             difficulty = difficulty,
             subject = subject,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass,
             lastModified = OffsetDateTime.now()
     )
 }
@@ -146,6 +164,8 @@ fun SentenceCreationEntity.toDomainModel(): SentenceCreationResponse {
             title = title,
             owner = owner,
             subject = subject,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass,
             sentences = sentences.map { it.toDomainModel() }
     )
 }

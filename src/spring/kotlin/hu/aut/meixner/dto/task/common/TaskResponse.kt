@@ -9,6 +9,8 @@ abstract class TaskResponse {
     abstract val title: String
     abstract val owner: String
     abstract val subject: SubjectEnum
+    abstract val recommendedMinClass: Int
+    abstract val recommendedMaxClass: Int
     abstract val difficulty: Int
     abstract val lastModified: OffsetDateTime
 }
