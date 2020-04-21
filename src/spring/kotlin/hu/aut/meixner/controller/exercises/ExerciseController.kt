@@ -23,7 +23,7 @@ class ExerciseController(
     }
 
     @GetMapping("/{exercisesId}")
-    @ApiOperation("Get exercises by exercisesId")
+    @ApiOperation("Get the exercises group by exercisesId")
     fun getExercisesById(@PathVariable("exercisesId") exercisesId: Long): ResponseEntity<ExercisesResponse> {
         val result = exerciseService.getExercisesById(exercisesId) ?: return ResponseEntity.notFound().build()
         return ResponseEntity.ok(result)
@@ -41,7 +41,7 @@ class ExerciseController(
     }
 
     @PostMapping("/{exercisesId}/{taskId}")
-    @ApiOperation("Add task to an exercises by id")
+    @ApiOperation("Add task to an exercises group by id")
     fun addTaskToExercises(
             @PathVariable("exercisesId") exercisesId: Long,
             @PathVariable("taskId") taskId: Long
@@ -52,7 +52,7 @@ class ExerciseController(
     }
 
     @DeleteMapping("/{exercisesId}/{taskId}")
-    @ApiOperation("Remove task from an exercises by id")
+    @ApiOperation("Remove task from an exercises group by id")
     fun removeTaskFromExercises(
             @PathVariable("exercisesId") exercisesId: Long,
             @PathVariable("taskId") taskId: Long
