@@ -21,7 +21,7 @@ class FileService(
     fun uploadFile(file: MultipartFile): MediaItemResponse {
         return mediaItemRepository.save(
                 MediaItemEntity(
-                        type = MediaItemType.IMAGE,
+                        type = MediaItemType.FILE,
                         content = "",
                         file = file.bytes,
                         fileExtension = file.originalFilename?.split(".")?.get(1),

@@ -1,7 +1,8 @@
 package hu.aut.meixner.dto.mapping
 
 import hu.aut.meixner.domain.task.MediaItemEntity
-import hu.aut.meixner.domain.task.MediaItemType.*
+import hu.aut.meixner.domain.task.MediaItemType.FILE
+import hu.aut.meixner.domain.task.MediaItemType.TEXT
 import hu.aut.meixner.dto.task.common.MediaItemResponse
 import hu.aut.meixner.service.file.FileService.Companion.DOWNLOAD_FILE_PATH
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
@@ -13,9 +14,7 @@ fun MediaItemEntity.toDomainModel(): MediaItemResponse {
             type = type,
             content = when (type) {
                 TEXT -> content
-                IMAGE -> file.toContent(id)
-                VIDEO -> file.toContent(id)
-                SOUND -> file.toContent(id)
+                FILE -> file.toContent(id)
             }
     )
 }
