@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewChild, ViewContainerRef, HostBinding, Output, EventEmitter} from '@angular/core';
 import { DomService } from '../service/dom.service';
+import {ExercisesComponent} from '../exercises/exercises.component';
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
@@ -9,6 +10,7 @@ export class ModalComponent implements OnInit {
   @HostBinding('style.display') display = 'none';
   @ViewChild('content', { read: ViewContainerRef, static: true }) containerRef: ViewContainerRef;
   @Output() static saveBtnPressed = new EventEmitter<ModalComponent>();
+  @Output() static closeBtnPressed = new EventEmitter<ModalComponent>();
   title = "";
   constructor(private domService: DomService) {
     this.domService.setContainerRef(this.containerRef);
@@ -41,6 +43,7 @@ export class ModalComponent implements OnInit {
   }
 
   public static closeAfterSave(data) {
+    ModalComponent.closeBtnPressed.emit();
     data.domService.setContainerRef(data.containerRef);
     data.domService.cancelComponent();
     data.display = 'none';

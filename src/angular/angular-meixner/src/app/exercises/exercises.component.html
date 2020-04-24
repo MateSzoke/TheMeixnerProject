@@ -37,7 +37,7 @@
     <mat-card class="right-aligned-header" *ngFor="let feladat of feladatok">
       <div fxLayout="row" fxLayout.xs="column-reverse" fxLayoutGap="8px">
         <div class="float-left">
-          {{feladat.title}} - csoportosítás
+          {{feladat.title}} - {{this.convertEnum(feladat.type)}}
           <img class="image1" src="{{this.diffImServ.convertNumToPath(1)}}">
         </div>
         <div class="float-right">

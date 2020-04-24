@@ -8,7 +8,7 @@ import {Router} from '@angular/router';
 import {TaskResponse, TaskService} from '../../swagger-api';
 import {DiffimageService} from '../service/diffimage.service';
 import {Task} from 'protractor/built/taskScheduler';
-import {ConvertEnumToHun} from '../model/ConvertEnumToHun';
+import {ConvertEnum} from '../model/ConvertEnum';
 
 @Component({
   selector: 'app-exercises',
@@ -50,10 +50,54 @@ export class ExercisesComponent implements OnInit {
       },
       () => {
       });
+    ModalComponent.closeBtnPressed.subscribe(
+      data => {
+        this.taskService.getAllTaskUsingGET().subscribe(data => {
+            console.log("closeBtnPressed data received");
+            this.feladatok = new Array<TaskResponse>();
+            data.forEach(element => {
+              this.feladatok.push({difficulty: element.difficulty,
+                id: element.id,
+                lastModified: element.lastModified,
+                owner: element.owner,
+                title: element.title,
+                type: element.type} as TaskResponse);
+              console.log(element);
+            });
+          },
+          error => {
+            console.log("subscribe error");
+          },
+          () => {
+          });
+      },
+      error => {
+        console.log("subscribe error");
+      },
+      () => {
+      })
   }
 
 
   public removeModalnewTask() {
+    this.taskService.getAllTaskUsingGET().subscribe(data => {
+        console.log("getAllTaskUsingGET data received");
+        this.feladatok = new Array<TaskResponse>();
+        data.forEach(element => {
+          this.feladatok.push({difficulty: element.difficulty,
+            id: element.id,
+            lastModified: element.lastModified,
+            owner: element.owner,
+            title: element.title,
+            type: element.type} as TaskResponse);
+          console.log(element);
+        });
+      },
+      error => {
+        console.log("subscribe error");
+      },
+      () => {
+      });
     this.modal.destroy();
   }
 
@@ -62,7 +106,10 @@ export class ExercisesComponent implements OnInit {
   }
 
   public convertEnum(input: string) {
-    ConvertEnumToHun.convert(input);
+    ConvertEnum.convert(input);
   }
 
+  public convertToLink(input: string) {
+    ConvertEnum.convertToRouterLink(input);
+  }
 }

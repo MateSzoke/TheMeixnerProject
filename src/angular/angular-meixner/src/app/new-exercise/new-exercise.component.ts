@@ -1,8 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import {TaskService} from '../../swagger-api';
+import {
+  Group,
+  GroupingRequest,
+  PairElement,
+  PairingRequest, PairingResponse, Sentence,
+  SentenceCompletionRequest, SentenceCreationRequest, SortingRequest,
+  TaskService,
+  TheEasyTasksService
+} from '../../swagger-api';
 import {GroupingResponse} from '../../swagger-api/model/groupingResponse';
-import {ConvertEnumToHun} from '../model/ConvertEnumToHun';
+import {ConvertEnum} from '../model/ConvertEnum';
 import {ModalComponent} from '../modal/modal.component';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-new-exercise',
@@ -26,11 +35,14 @@ export class NewExerciseComponent implements OnInit {
   ngOnInit(): void {
     this.types = new Array<string>();
     for(let i in GroupingResponse.TypeEnum) {
-      this.types.push(ConvertEnumToHun.convert(i));
+      this.types.push(ConvertEnum.convert(i));
     }
   }
 
-  constructor(private modalC: ModalComponent) {
+  constructor(private modalC: ModalComponent,
+              private theEasyTasksService: TheEasyTasksService) {
+
+
     ModalComponent.saveBtnPressed.subscribe(data => {
       if(this.name == null || this.type == -1 || this.difficulty == -1 || this.classFrom == -1 || this.classTo == -1 || this.topic == -1) {
         console.log("szempontok: " + this.type + this.difficulty +
@@ -39,10 +51,114 @@ export class NewExerciseComponent implements OnInit {
         alert("Kérem adja meg az összes szempontot!");
         return;
       } else {
+        console.log("type is " + this.type);
+        const g1 : GroupingRequest = {title: this.name, difficulty: this.difficulty, groups: new Array<Group>()};
+        console.log(this.type + " type");
+        let j = 0;
+        for(let i in GroupingResponse.TypeEnum) {
+          if(j == this.type) {
+            console.log("j equals");
+            this.postTaskDataByType(i).subscribe(
+              data => {
+                console.log("data sent");
+              },
+              error => {
+                console.log("subscribe error");
+              },
+              () => {
+
+              }
+            );
+          }
+          j++;
+        }
         ModalComponent.closeAfterSave(data);
       }
     });
   }
+
+  private testInsideFunction(input: string) : String {
+    console.log("testInsideFunction called" + input.toString());
+    return "this is what was returned";
+  }
+
+
+  private postTaskDataByType(input: string) : Observable<any> {
+    console.log("postTaskDataByType called");
+    switch (input) {
+      case GroupingResponse.TypeEnum.Grouping.toString(): {
+        console.log("csoportositas POST called");
+        const g1 : GroupingRequest = {title: this.name, difficulty: this.difficulty, groups: new Array<Group>()};
+        return this.theEasyTasksService.createGroupingUsingPOST(g1);
+        break;
+      }
+      case GroupingResponse.TypeEnum.Pairing.toString(): {
+        console.log("parositas POST called");
+        const g1 : PairingRequest = {title: this.name, difficulty: this.difficulty, pairs: new Array<PairElement>()};
+        return this.theEasyTasksService.createPairingUsingPOST(g1);
+        break;
+      }
+      case GroupingResponse.TypeEnum.SentenceCompletion.toString(): {
+        console.log("mondatkieg POST called");
+        const g1 : SentenceCompletionRequest = {title: this.name, difficulty: this.difficulty,sentence: null, options: new Array<string>()};
+        return this.theEasyTasksService.createSentenceCompletionUsingPOST(g1);
+        break;
+      }
+      case GroupingResponse.TypeEnum.SentenceCreation.toString(): {
+        console.log("mondatkeszites POST called");
+        const g1 : SentenceCreationRequest = {title: this.name, difficulty: this.difficulty, sentences: new Array<Sentence>()};
+        return this.theEasyTasksService.createSentenceCreationUsingPOST(g1);
+        break;
+      }
+      case GroupingResponse.TypeEnum.Sorting.toString(): {
+        console.log("sorrendezes POST called");
+        const g1 : SortingRequest = {title: this.name, difficulty: this.difficulty, elements: new Array<string>()};
+        return this.theEasyTasksService.createSortingUsingPOST(g1);
+        break;
+      }
+      case GroupingResponse.TypeEnum.GroupingAndSorting.toString(): {
+        return;
+        break;
+      }
+      case GroupingResponse.TypeEnum.SentenceCompletionAndGrouping.toString(): {
+        return;
+        break;
+      }
+      case GroupingResponse.TypeEnum.SentenceCompletionAndSorting.toString(): {
+        return;
+        break;
+      }
+      case GroupingResponse.TypeEnum.SentenceCreationAndGrouping.toString(): {
+        return;
+        break;
+      }
+      case GroupingResponse.TypeEnum.SentenceCreationAndSorting.toString(): {
+        return;
+        break;
+      }
+      case GroupingResponse.TypeEnum.SortingAndGrouping.toString(): {
+        return;
+        break;
+      }
+      case GroupingResponse.TypeEnum.BlindMap.toString(): {
+        return;
+        break;
+      }
+      case GroupingResponse.TypeEnum.FreeText.toString(): {
+        return;
+        break;
+      }
+      case GroupingResponse.TypeEnum.OddOneOut.toString(): {
+        return;
+        break;
+      }
+      case GroupingResponse.TypeEnum.TimeLine.toString(): {
+        return;
+        break;
+      }
+    }
+  }
+
 
   public setName(event) {
     this.name = event;
