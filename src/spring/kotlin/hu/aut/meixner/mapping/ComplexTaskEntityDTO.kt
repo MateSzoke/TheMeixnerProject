@@ -1,11 +1,9 @@
 package hu.aut.meixner.mapping
 
 import hu.aut.meixner.dto.task.complex.*
-import hu.aut.meixner.entity.task.complex.GroupingAndSortingEntity
-import hu.aut.meixner.entity.task.complex.SentenceCreationAndGroupingEntity
-import hu.aut.meixner.entity.task.complex.SentenceCreationAndSortingEntity
-import hu.aut.meixner.entity.task.complex.SentenceListEntity
+import hu.aut.meixner.entity.task.complex.*
 import hu.aut.meixner.entity.task.easy.GroupElementEntity
+import hu.aut.meixner.entity.task.easy.SentenceEntity
 import java.time.OffsetDateTime
 
 //region GroupingAndSorting
@@ -110,3 +108,47 @@ fun SentenceListEntity.toDomainModel(): SentenceListResponse {
     )
 }
 //endregion
+
+//region SentenceCompletionAndSorting
+fun SentenceCompletionAndSortingRequest.toEntity(owner: String): SentenceCompletionAndSortingEntity {
+    return SentenceCompletionAndSortingEntity(
+            title = title,
+            sentences = sentences.map { it.toEntity() },
+            owner = owner,
+            difficulty = difficulty,
+            subject = subject,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass,
+            lastModified = OffsetDateTime.now()
+    )
+}
+
+fun SentenceCompletionAndSortingEntity.toDomainModel(): SentenceCompletionAndSortingResponse {
+    return SentenceCompletionAndSortingResponse(
+            id = id,
+            title = title,
+            sentences = sentences.map { it.toSentenceCompletionItem() },
+            difficulty = difficulty,
+            owner = owner,
+            subject = subject,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass,
+            lastModified = OffsetDateTime.now()
+    )
+}
+
+fun SentenceCompletionItem.toEntity(): SentenceEntity {
+    return SentenceEntity(
+            sentenceTitle = sentence,
+            parts = options.toMutableList()
+    )
+}
+
+fun SentenceEntity.toSentenceCompletionItem(): SentenceCompletionItem {
+    return SentenceCompletionItem(
+            sentence = sentenceTitle,
+            options = parts
+    )
+}
+//endregion
+
