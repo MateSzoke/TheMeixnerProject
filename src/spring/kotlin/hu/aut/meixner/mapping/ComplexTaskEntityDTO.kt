@@ -93,16 +93,15 @@ fun SentenceCreationAndGroupingEntity.toDomainModel(): SentenceCreationAndGroupi
     )
 }
 
-fun SentenceListRequest.toEntity(): SentenceListEntity {
+fun SentenceCreationList.toEntity(): SentenceListEntity {
     return SentenceListEntity(
             groupTitle = groupTitle,
             sentences = sentences.map { it.toEntity() }
     )
 }
 
-fun SentenceListEntity.toDomainModel(): SentenceListResponse {
-    return SentenceListResponse(
-            id = id,
+fun SentenceListEntity.toDomainModel(): SentenceCreationList {
+    return SentenceCreationList(
             groupTitle = groupTitle,
             sentences = sentences.map { it.toDomainModel() }
     )
@@ -152,3 +151,45 @@ fun SentenceEntity.toSentenceCompletionItem(): SentenceCompletionItem {
 }
 //endregion
 
+//region SentenceCreationAndGrouping
+fun SentenceCompletionAndGroupingRequest.toEntity(owner: String): SentenceCompletionAndGroupingEntity {
+    return SentenceCompletionAndGroupingEntity(
+            title = title,
+            sentenceGroups = sentenceGroups.map { it.toEntity() },
+            owner = owner,
+            difficulty = difficulty,
+            subject = subject,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass,
+            lastModified = OffsetDateTime.now()
+    )
+}
+
+fun SentenceCompletionAndGroupingEntity.toDomainModel(): SentenceCompletionAndGroupingResponse {
+    return SentenceCompletionAndGroupingResponse(
+            id = id,
+            title = title,
+            sentenceGroups = sentenceGroups.map { it.toSentenceCompletionList() },
+            difficulty = difficulty,
+            owner = owner,
+            subject = subject,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass,
+            lastModified = OffsetDateTime.now()
+    )
+}
+
+fun SentenceCompletionList.toEntity(): SentenceListEntity {
+    return SentenceListEntity(
+            groupTitle = groupTitle,
+            sentences = sentences.map { it.toEntity() }
+    )
+}
+
+fun SentenceListEntity.toSentenceCompletionList(): SentenceCompletionList {
+    return SentenceCompletionList(
+            groupTitle = groupTitle,
+            sentences = sentences.map { it.toDomainModel() }
+    )
+}
+//endregion
