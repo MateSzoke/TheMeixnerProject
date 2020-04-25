@@ -1,4 +1,4 @@
-package hu.aut.meixner.entity.task.easytask
+package hu.aut.meixner.entity.task.easy
 
 import hu.aut.meixner.entity.task.MediaItemEntity
 import org.hibernate.annotations.Cascade
@@ -6,10 +6,11 @@ import org.hibernate.annotations.CascadeType
 import javax.persistence.*
 
 @Entity
-data class PairEntity(
+data class GroupElementEntity(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long = 0,
+        val name: String = "",
         @OneToMany
         @Cascade(CascadeType.ALL)
-        val pair: MutableList<MediaItemEntity> = mutableListOf()
+        val elements: MutableList<MediaItemEntity> = mutableListOf()
 )

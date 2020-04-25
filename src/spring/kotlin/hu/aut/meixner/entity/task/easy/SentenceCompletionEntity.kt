@@ -1,4 +1,4 @@
-package hu.aut.meixner.entity.task.easytask
+package hu.aut.meixner.entity.task.easy
 
 import hu.aut.meixner.dto.SubjectEnum
 import hu.aut.meixner.entity.task.TaskEntity

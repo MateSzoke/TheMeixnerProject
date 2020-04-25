@@ -1,7 +1,6 @@
-package hu.aut.meixner.entity.task.easytask
+package hu.aut.meixner.entity.task.easy
 
 import hu.aut.meixner.dto.SubjectEnum
-import hu.aut.meixner.entity.task.MediaItemEntity
 import hu.aut.meixner.entity.task.TaskEntity
 import org.hibernate.annotations.Cascade
 import org.hibernate.annotations.CascadeType
@@ -10,10 +9,10 @@ import javax.persistence.Entity
 import javax.persistence.OneToMany
 
 @Entity
-data class SortingEntity(
+data class GroupingEntity(
         @OneToMany
         @Cascade(CascadeType.ALL)
-        val elements: MutableList<MediaItemEntity> = mutableListOf(),
+        val groups: List<GroupElementEntity> = emptyList(),
         override val title: String = "",
         override val owner: String = "",
         override val difficulty: Int = 0,

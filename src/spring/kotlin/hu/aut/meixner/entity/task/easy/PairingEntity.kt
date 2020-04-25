@@ -1,4 +1,4 @@
-package hu.aut.meixner.entity.task.easytask
+package hu.aut.meixner.entity.task.easy
 
 import hu.aut.meixner.dto.SubjectEnum
 import hu.aut.meixner.entity.task.TaskEntity
@@ -9,10 +9,10 @@ import javax.persistence.Entity
 import javax.persistence.OneToMany
 
 @Entity
-data class GroupingEntity(
+data class PairingEntity(
         @OneToMany
         @Cascade(CascadeType.ALL)
-        val groups: List<GroupElementEntity> = emptyList(),
+        val pairs: List<PairEntity> = emptyList(),
         override val title: String = "",
         override val owner: String = "",
         override val difficulty: Int = 0,

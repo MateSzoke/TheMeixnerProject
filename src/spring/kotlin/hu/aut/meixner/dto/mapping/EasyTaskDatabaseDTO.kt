@@ -2,7 +2,7 @@ package hu.aut.meixner.dto.mapping
 
 import hu.aut.meixner.dto.task.easy.*
 import hu.aut.meixner.entity.task.MediaItemEntity
-import hu.aut.meixner.entity.task.easytask.*
+import hu.aut.meixner.entity.task.easy.*
 import java.time.OffsetDateTime
 
 //region Pairing

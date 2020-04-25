@@ -4,7 +4,7 @@ import hu.aut.meixner.dto.mapping.toDomainModel
 import hu.aut.meixner.dto.mapping.toEntity
 import hu.aut.meixner.dto.task.easy.GroupingRequest
 import hu.aut.meixner.dto.task.easy.GroupingResponse
-import hu.aut.meixner.entity.task.easytask.GroupElementEntity
+import hu.aut.meixner.entity.task.easy.GroupElementEntity
 import hu.aut.meixner.extensions.currentUser
 import hu.aut.meixner.extensions.ownerIsTheCurrentUser
 import hu.aut.meixner.extensions.toNullable

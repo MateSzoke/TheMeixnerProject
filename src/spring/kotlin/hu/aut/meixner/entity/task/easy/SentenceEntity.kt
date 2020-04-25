@@ -1,4 +1,4 @@
-package hu.aut.meixner.entity.task.easytask
+package hu.aut.meixner.entity.task.easy
 
 import javax.persistence.*
 
