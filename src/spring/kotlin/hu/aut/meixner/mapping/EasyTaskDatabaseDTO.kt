@@ -1,4 +1,4 @@
-package hu.aut.meixner.dto.mapping
+package hu.aut.meixner.mapping
 
 import hu.aut.meixner.dto.task.easy.*
 import hu.aut.meixner.entity.task.MediaItemEntity

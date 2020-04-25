@@ -1,11 +1,11 @@
 package hu.aut.meixner.service.file
 
-import hu.aut.meixner.dto.mapping.toDomainModel
 import hu.aut.meixner.dto.task.common.MediaItemRequest
 import hu.aut.meixner.dto.task.common.MediaItemResponse
 import hu.aut.meixner.entity.task.MediaItemEntity
 import hu.aut.meixner.entity.task.MediaItemType
 import hu.aut.meixner.extensions.toNullable
+import hu.aut.meixner.mapping.toDomainModel
 import hu.aut.meixner.repository.task.MediaItemRepository
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile

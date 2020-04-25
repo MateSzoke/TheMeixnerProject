@@ -2,11 +2,11 @@ package hu.aut.meixner.service.exercises
 
 import hu.aut.meixner.dto.exercises.ExerciseRequest
 import hu.aut.meixner.dto.exercises.ExercisesResponse
-import hu.aut.meixner.dto.mapping.toDomainModel
-import hu.aut.meixner.dto.mapping.toEntity
 import hu.aut.meixner.dto.task.common.TaskResponse
 import hu.aut.meixner.entity.exercises.ExercisesEntity
 import hu.aut.meixner.extensions.toNullable
+import hu.aut.meixner.mapping.toDomainModel
+import hu.aut.meixner.mapping.toEntity
 import hu.aut.meixner.repository.exercise.ExerciseRepository
 import hu.aut.meixner.service.task.TaskService
 import org.springframework.stereotype.Service

@@ -1,13 +1,13 @@
 package hu.aut.meixner.service.task.easy
 
-import hu.aut.meixner.dto.mapping.toDomainModel
-import hu.aut.meixner.dto.mapping.toEntity
 import hu.aut.meixner.dto.task.easy.PairingRequest
 import hu.aut.meixner.dto.task.easy.PairingResponse
 import hu.aut.meixner.entity.task.easy.PairEntity
 import hu.aut.meixner.extensions.currentUser
 import hu.aut.meixner.extensions.ownerIsTheCurrentUser
 import hu.aut.meixner.extensions.toNullable
+import hu.aut.meixner.mapping.toDomainModel
+import hu.aut.meixner.mapping.toEntity
 import hu.aut.meixner.repository.task.easytask.PairingRepository
 import hu.aut.meixner.service.file.MediaItemService
 import org.springframework.stereotype.Service

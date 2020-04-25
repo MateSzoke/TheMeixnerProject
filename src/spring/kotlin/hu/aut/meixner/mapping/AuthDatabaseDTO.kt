@@ -1,4 +1,4 @@
-package hu.aut.meixner.dto.mapping
+package hu.aut.meixner.mapping
 
 import hu.aut.meixner.dto.auth.UserRequest
 import hu.aut.meixner.dto.auth.UserResponse

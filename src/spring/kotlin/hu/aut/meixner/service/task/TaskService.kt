@@ -1,9 +1,9 @@
 package hu.aut.meixner.service.task
 
-import hu.aut.meixner.dto.mapping.toDomainModel
 import hu.aut.meixner.dto.task.common.TaskResponse
 import hu.aut.meixner.extensions.currentUser
 import hu.aut.meixner.extensions.toNullable
+import hu.aut.meixner.mapping.toDomainModel
 import hu.aut.meixner.repository.task.easytask.*
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.stereotype.Service
