@@ -11,7 +11,7 @@
           <mat-form-field>
             <mat-label style="color: black;">Tantárgy</mat-label>
             <mat-select>
-              <mat-option *ngFor="let tantargy of tantargyak" [value]="tantargy">
+              <mat-option *ngFor="let tantargy of subjects" [value]="tantargy">
                 {{tantargy}}
               </mat-option>
             </mat-select>
@@ -19,7 +19,7 @@
           <mat-form-field>
             <mat-label style="color: black;">Évfolyam</mat-label>
             <mat-select>
-              <mat-option *ngFor="let evfolyam of evfolyamok" [value]="evfolyam">
+              <mat-option *ngFor="let evfolyam of classYears" [value]="evfolyam">
                 {{evfolyam}}
               </mat-option>
             </mat-select>
@@ -34,60 +34,30 @@
   <br>
 </div>
 
-    <mat-card class="right-aligned-header" *ngFor="let feladat of feladatok">
-      <div fxLayout="row" fxLayout.xs="column-reverse" fxLayoutGap="8px">
-        <div class="float-left">
-          {{feladat.title}} - {{this.convertEnum(feladat.type)}}
-          <img class="image1" src="{{this.diffImServ.convertNumToPath(1)}}">
-        </div>
-        <div class="float-right">
-          {{this.today.getFullYear()}}.{{this.today.getMonth().toString().padStart(2, '0')}}.{{this.today.getDay().toString().padStart(2, '0')}}
-          &nbsp;&#8196;<i class="fa fa-trash"></i>&nbsp;
-          <i [routerLink]="['/csoportositas']" class="fa fa-edit"></i>&nbsp;&nbsp;
-        </div>
-      </div>
-    </mat-card>
+<div *ngIf="this.exercisesLoaded==false" >
+  <div class="wrapper">
+    <div class="inner">
+      <mat-spinner></mat-spinner>
+    </div>
+  </div>
+</div>
 
-    <mat-card class="right-aligned-header">
-      <div fxLayout="row" fxLayout.xs="column-reverse" fxLayoutGap="8px">
-        <div class="float-left">
-          Körmozgás - csoportosítás
-          <img class="image1" src="{{this.diffImServ.convertNumToPath(1)}}">
-        </div>
-        <div class="float-right">
-          {{this.today.getFullYear()}}.{{this.today.getMonth().toString().padStart(2, '0')}}.{{this.today.getDay().toString().padStart(2, '0')}}
-          &nbsp;&#8196;<i class="fa fa-trash"></i>&nbsp;
-          <i [routerLink]="['/csoportositas']" class="fa fa-edit"></i>&nbsp;&nbsp;
-        </div>
-      </div>
-    </mat-card>
 
-    <mat-card class="right-aligned-header">
+<div *ngIf="this.exercisesLoaded">
+  <mat-card class="right-aligned-header" *ngFor="let feladat of exercises; index as i">
     <div fxLayout="row" fxLayout.xs="column-reverse" fxLayoutGap="8px">
       <div class="float-left">
-        Newton I. - párosítás
-        <img class="image1" src="{{this.diffImServ.convertNumToPath(4)}}">
+        {{feladat.title}} - {{this.convertEnum(feladat.type)}}
+        <img class="image1" src="{{this.diffImServ.convertNumToPath(1)}}">
       </div>
       <div class="float-right">
         {{this.today.getFullYear()}}.{{this.today.getMonth().toString().padStart(2, '0')}}.{{this.today.getDay().toString().padStart(2, '0')}}
-        &nbsp;&#8196;<i class="fa fa-trash"></i>&nbsp;
-        <i [routerLink]="['/parositas']" class="fa fa-edit"></i>&nbsp;&nbsp;
+        &nbsp;&#8196;<i class="fa fa-trash" (click)="this.deleteTask(i)"></i>&nbsp;
+        <i [routerLink]="['/csoportositas']" class="fa fa-edit"></i>&nbsp;&nbsp;
       </div>
     </div>
-    </mat-card>
+  </mat-card>
+</div>
 
-    <mat-card class="right-aligned-header">
-    <div fxLayout="row" fxLayout.xs="column-reverse" fxLayoutGap="8px">
-      <div class="float-left">
-        Ferde hajítás&nbsp;- sorrendezés
-        <img class="image1" src="{{this.diffImServ.convertNumToPath(3)}}">
-      </div>
-      <div class="float-right">
-        {{this.today.getFullYear()}}.{{this.today.getMonth().toString().padStart(2, '0')}}.{{this.today.getDay().toString().padStart(2, '0')}}
-        &nbsp;&#8196;<i class="fa fa-trash"></i>&nbsp;
-        <i [routerLink]="['/sorrendezes']" class="fa fa-edit"></i>&nbsp;&nbsp;
-      </div>
-    </div>
-    </mat-card>
 </body>
 </html>

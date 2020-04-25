@@ -40,6 +40,7 @@ import { SentencecreationGroupingComponent } from './exercise_types/sentencecrea
 import { SentencecreationSortingComponent } from './exercise_types/sentencecreation-sorting/sentencecreation-sorting.component';
 import { SortingGroupingComponent } from './exercise_types/sorting-grouping/sorting-grouping.component';
 import {MatSliderModule} from '@angular/material/slider';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -83,7 +84,8 @@ import {MatSliderModule} from '@angular/material/slider';
         MatGridListModule,
         MatExpansionModule,
         MatSelectModule,
-        MatSliderModule
+        MatSliderModule,
+        MatProgressSpinnerModule
     ],
   providers: [DomService, ModalService, ModalComponent,LoginComponent, NewExerciseComponent],
   bootstrap: [AppComponent],

@@ -19,10 +19,11 @@ export class ExercisesComponent implements OnInit {
 
   public today = new Date();
   public actualMonth = this.today.getMonth().toString().padStart(2, '0');
-  public tantargyak:Array<String> = ['történelem', "matematika"];
-  public evfolyamok = Array.from({ length: (8 - 5) / 1 + 1}, (_, i) => 5 + (i * 1));
-  public osztalyok:Array<String> = ['a', 'b', 'c'];
-  public feladatok : Array<TaskResponse> = new Array<TaskResponse>();
+  public subjects:Array<String> = ['történelem', "matematika"];
+  public classYears = Array.from({ length: (8 - 5) / 1 + 1}, (_, i) => 5 + (i * 1));
+  public classes:Array<String> = ['a', 'b', 'c'];
+  public exercises : Array<TaskResponse> = new Array<TaskResponse>();
+  public exercisesLoaded = false;
 
   constructor(private modal: ModalService, private dom: DomService,
               private modComponent: ModalComponent,
@@ -36,14 +37,14 @@ export class ExercisesComponent implements OnInit {
     this.taskService.getAllTaskUsingGET().subscribe(data => {
       console.log("data received");
         data.forEach(element => {
-          this.feladatok.push({difficulty: element.difficulty,
+          this.exercises.push({difficulty: element.difficulty,
           id: element.id,
           lastModified: element.lastModified,
           owner: element.owner,
           title: element.title,
           type: element.type} as TaskResponse);
-          console.log(element);
         });
+        this.exercisesLoaded = true;
     },
       error => {
         console.log("subscribe error");
@@ -54,9 +55,9 @@ export class ExercisesComponent implements OnInit {
       data => {
         this.taskService.getAllTaskUsingGET().subscribe(data => {
             console.log("closeBtnPressed data received");
-            this.feladatok = new Array<TaskResponse>();
+            this.exercises = new Array<TaskResponse>();
             data.forEach(element => {
-              this.feladatok.push({difficulty: element.difficulty,
+              this.exercises.push({difficulty: element.difficulty,
                 id: element.id,
                 lastModified: element.lastModified,
                 owner: element.owner,
@@ -64,6 +65,7 @@ export class ExercisesComponent implements OnInit {
                 type: element.type} as TaskResponse);
               console.log(element);
             });
+
           },
           error => {
             console.log("subscribe error");
@@ -78,13 +80,47 @@ export class ExercisesComponent implements OnInit {
       })
   }
 
+  public deleteTask(input: number) {
+    this.exercisesLoaded = false;
+    this.taskService.deleteTaskByIdUsingDELETE(input).subscribe(
+      data => {
+        this.taskService.getAllTaskUsingGET().subscribe(data => {
+            console.log("closeBtnPressed data received");
+            this.exercises = new Array<TaskResponse>();
+            data.forEach(element => {
+              this.exercises.push({difficulty: element.difficulty,
+                id: element.id,
+                lastModified: element.lastModified,
+                owner: element.owner,
+                title: element.title,
+                type: element.type} as TaskResponse);
+              console.log(element);
+            });
+            this.exercisesLoaded = true;
+
+          },
+          error => {
+            console.log("subscribe error");
+          },
+          () => {
+          });
+      },
+      err => {
+
+      },
+      () => {
+
+      }
+    )
+  }
+
 
   public removeModalnewTask() {
     this.taskService.getAllTaskUsingGET().subscribe(data => {
         console.log("getAllTaskUsingGET data received");
-        this.feladatok = new Array<TaskResponse>();
+        this.exercises = new Array<TaskResponse>();
         data.forEach(element => {
-          this.feladatok.push({difficulty: element.difficulty,
+          this.exercises.push({difficulty: element.difficulty,
             id: element.id,
             lastModified: element.lastModified,
             owner: element.owner,
