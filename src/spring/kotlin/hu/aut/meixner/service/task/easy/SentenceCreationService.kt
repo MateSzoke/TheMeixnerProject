@@ -7,7 +7,7 @@ import hu.aut.meixner.extensions.ownerIsTheCurrentUser
 import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.mapping.toDomainModel
 import hu.aut.meixner.mapping.toEntity
-import hu.aut.meixner.repository.task.easytask.SentenceCreationRepository
+import hu.aut.meixner.repository.task.easy.SentenceCreationRepository
 import org.springframework.stereotype.Service
 import java.time.OffsetDateTime
 

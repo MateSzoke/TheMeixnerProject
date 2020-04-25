@@ -4,12 +4,11 @@ import hu.aut.meixner.dto.task.complex.GroupingAndSortingRequest
 import hu.aut.meixner.dto.task.complex.GroupingAndSortingResponse
 import hu.aut.meixner.entity.task.complex.GroupingAndSortingEntity
 import hu.aut.meixner.entity.task.easy.GroupElementEntity
-import hu.aut.meixner.entity.task.easy.GroupingEntity
 import java.time.OffsetDateTime
 
 //region GroupingAndSorting
-fun GroupingAndSortingRequest.toEntity(owner: String, groups: List<GroupElementEntity>): GroupingEntity {
-    return GroupingEntity(
+fun GroupingAndSortingRequest.toEntity(owner: String, groups: List<GroupElementEntity>): GroupingAndSortingEntity {
+    return GroupingAndSortingEntity(
             groups = groups,
             title = title,
             difficulty = difficulty,

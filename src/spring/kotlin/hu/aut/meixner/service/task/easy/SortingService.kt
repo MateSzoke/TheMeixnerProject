@@ -7,7 +7,7 @@ import hu.aut.meixner.extensions.ownerIsTheCurrentUser
 import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.mapping.toDomainModel
 import hu.aut.meixner.mapping.toEntity
-import hu.aut.meixner.repository.task.easytask.SortingRepository
+import hu.aut.meixner.repository.task.easy.SortingRepository
 import hu.aut.meixner.service.file.MediaItemService
 import org.springframework.stereotype.Service
 import java.time.OffsetDateTime

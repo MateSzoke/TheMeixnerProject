@@ -4,7 +4,8 @@ import hu.aut.meixner.dto.task.common.TaskResponse
 import hu.aut.meixner.extensions.currentUser
 import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.mapping.toDomainModel
-import hu.aut.meixner.repository.task.easytask.*
+import hu.aut.meixner.repository.task.complex.GroupingAndSortingRepository
+import hu.aut.meixner.repository.task.easy.*
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.stereotype.Service
 
@@ -14,7 +15,8 @@ class TaskService(
         private val groupingRepository: GroupingRepository,
         private val sentenceCompletionRepository: SentenceCompletionRepository,
         private val sentenceCreationRepository: SentenceCreationRepository,
-        private val sortingRepository: SortingRepository
+        private val sortingRepository: SortingRepository,
+        private val groupingAndSortingRepository: GroupingAndSortingRepository
 ) {
 
     fun getTaskById(taskId: Long): TaskResponse? {
@@ -23,6 +25,7 @@ class TaskService(
                 ?: sentenceCompletionRepository.findById(taskId).toNullable?.toDomainModel()
                 ?: sentenceCreationRepository.findById(taskId).toNullable?.toDomainModel()
                 ?: sortingRepository.findById(taskId).toNullable?.toDomainModel()
+                ?: groupingAndSortingRepository.findById(taskId).toNullable?.toDomainModel()
     }
 
     fun getAllTasks(): List<TaskResponse> {
@@ -31,7 +34,8 @@ class TaskService(
                 groupingRepository.findAll().map { it.toDomainModel() },
                 sentenceCompletionRepository.findAll().map { it.toDomainModel() },
                 sentenceCreationRepository.findAll().map { it.toDomainModel() },
-                sortingRepository.findAll().map { it.toDomainModel() }
+                sortingRepository.findAll().map { it.toDomainModel() },
+                groupingAndSortingRepository.findAll().map { it.toDomainModel() }
         )
                 .flatten()
                 .sortedBy { it.lastModified }
@@ -55,6 +59,7 @@ class TaskService(
         tryDelete { sentenceCompletionRepository.deleteById(taskId) }
         tryDelete { sentenceCreationRepository.deleteById(taskId) }
         tryDelete { sortingRepository.deleteById(taskId) }
+        tryDelete { groupingAndSortingRepository.deleteById(taskId) }
     }
 
 }
