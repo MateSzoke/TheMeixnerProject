@@ -135,7 +135,7 @@ fun SortingEntity.toDomainModel(): SortingResponse {
 }
 //endregion
 
-//region Grouping
+//region SentenceCreation
 fun SentenceCreationRequest.toEntity(owner: String): SentenceCreationEntity {
     return SentenceCreationEntity(
             sentences = sentences.map { it.toEntity() },
