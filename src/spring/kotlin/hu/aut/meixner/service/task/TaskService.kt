@@ -5,6 +5,7 @@ import hu.aut.meixner.extensions.currentUser
 import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.mapping.toDomainModel
 import hu.aut.meixner.repository.task.complex.GroupingAndSortingRepository
+import hu.aut.meixner.repository.task.complex.SentenceCreationAndSortingRepository
 import hu.aut.meixner.repository.task.easy.*
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.stereotype.Service
@@ -16,7 +17,8 @@ class TaskService(
         private val sentenceCompletionRepository: SentenceCompletionRepository,
         private val sentenceCreationRepository: SentenceCreationRepository,
         private val sortingRepository: SortingRepository,
-        private val groupingAndSortingRepository: GroupingAndSortingRepository
+        private val groupingAndSortingRepository: GroupingAndSortingRepository,
+        private val sentenceCreationAndSortingRepository: SentenceCreationAndSortingRepository
 ) {
 
     fun getTaskById(taskId: Long): TaskResponse? {
@@ -26,6 +28,7 @@ class TaskService(
                 ?: sentenceCreationRepository.findById(taskId).toNullable?.toDomainModel()
                 ?: sortingRepository.findById(taskId).toNullable?.toDomainModel()
                 ?: groupingAndSortingRepository.findById(taskId).toNullable?.toDomainModel()
+                ?: sentenceCreationAndSortingRepository.findById(taskId).toNullable?.toDomainModel()
     }
 
     fun getAllTasks(): List<TaskResponse> {
@@ -35,7 +38,8 @@ class TaskService(
                 sentenceCompletionRepository.findAll().map { it.toDomainModel() },
                 sentenceCreationRepository.findAll().map { it.toDomainModel() },
                 sortingRepository.findAll().map { it.toDomainModel() },
-                groupingAndSortingRepository.findAll().map { it.toDomainModel() }
+                groupingAndSortingRepository.findAll().map { it.toDomainModel() },
+                sentenceCreationAndSortingRepository.findAll().map { it.toDomainModel() }
         )
                 .flatten()
                 .sortedBy { it.lastModified }
@@ -60,6 +64,7 @@ class TaskService(
         tryDelete { sentenceCreationRepository.deleteById(taskId) }
         tryDelete { sortingRepository.deleteById(taskId) }
         tryDelete { groupingAndSortingRepository.deleteById(taskId) }
+        tryDelete { sentenceCreationAndSortingRepository.deleteById(taskId) }
     }
 
 }
