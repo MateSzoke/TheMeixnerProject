@@ -1,11 +1,8 @@
 package hu.aut.meixner.mapping
 
-import hu.aut.meixner.dto.task.other.BlindMapRequest
-import hu.aut.meixner.dto.task.other.BlindMapResponse
-import hu.aut.meixner.dto.task.other.BlindMapTag
+import hu.aut.meixner.dto.task.other.*
 import hu.aut.meixner.entity.task.MediaItemEntity
-import hu.aut.meixner.entity.task.other.BlindMapEntity
-import hu.aut.meixner.entity.task.other.BlindMapTagEntity
+import hu.aut.meixner.entity.task.other.*
 
 //region BlindMap
 fun BlindMapRequest.toEntity(owner: String, image: MediaItemEntity): BlindMapEntity {
@@ -50,6 +47,69 @@ fun BlindMapTagEntity.toDomainModel(): BlindMapTag {
             text = text,
             x = x,
             y = y
+    )
+}
+//endregion
+
+//region Timeline
+fun TimelineRequest.toEntity(owner: String): TimelineEntity {
+    return TimelineEntity(
+            timelineType = timelineType,
+            minimumDate = if (timelineType == TimelineType.DATE) minimumDate else null,
+            maximumDate = if (timelineType == TimelineType.DATE) maximumDate else null,
+            minimumDouble = if (timelineType == TimelineType.DOUBLE) minimumDouble else null,
+            maximumDouble = if (timelineType == TimelineType.DOUBLE) maximumDouble else null,
+            minimumInt = if (timelineType == TimelineType.INTEGER) minimumInt else null,
+            maximumInt = if (timelineType == TimelineType.INTEGER) maximumInt else null,
+            tags = timelineTags.map { it.toEntity(timelineType) }.toMutableList(),
+            title = title,
+            difficulty = difficulty,
+            owner = owner,
+            subject = subject,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass,
+            lastModified = java.time.OffsetDateTime.now()
+    )
+}
+
+fun TimelineEntity.toDomainModel(): TimelineResponse {
+    return TimelineResponse(
+            id = id,
+            timelineType = timelineType,
+            minimumDate = minimumDate,
+            maximumDate = maximumDate,
+            minimumDouble = minimumDouble,
+            maximumDouble = maximumDouble,
+            minimumInt = minimumInt,
+            maximumInt = maximumInt,
+            timelineTags = tags.map { it.toDomainModel() },
+            lastModified = lastModified,
+            difficulty = difficulty,
+            title = title,
+            owner = owner,
+            subject = subject,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass
+    )
+}
+
+fun TimelineTag.toEntity(timelineType: TimelineType): TimelineTagEntity {
+    return TimelineTagEntity(
+            name = name,
+            valueDate = if (timelineType == TimelineType.DATE) valueDate else null,
+            valueDouble = if (timelineType == TimelineType.DOUBLE) valueDouble else null,
+            valueInt = if (timelineType == TimelineType.INTEGER) valueInt else null,
+            tolerance = tolerance
+    )
+}
+
+fun TimelineTagEntity.toDomainModel(): TimelineTag {
+    return TimelineTag(
+            name = name,
+            valueDate = valueDate,
+            valueDouble = valueDouble,
+            valueInt = valueInt,
+            tolerance = tolerance
     )
 }
 //endregion

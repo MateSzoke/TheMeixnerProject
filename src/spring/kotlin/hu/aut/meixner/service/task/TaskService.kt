@@ -7,6 +7,7 @@ import hu.aut.meixner.mapping.toDomainModel
 import hu.aut.meixner.repository.task.complex.*
 import hu.aut.meixner.repository.task.easy.*
 import hu.aut.meixner.repository.task.other.BlindMapRepository
+import hu.aut.meixner.repository.task.other.TimelineRepository
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.stereotype.Service
 
@@ -23,7 +24,8 @@ class TaskService(
         private val sentenceCompletionAndSortingRepository: SentenceCompletionAndGroupingRepository,
         private val sentenceCompletionAndGroupingRepository: SentenceCompletionAndSortingRepository,
         private val sortingAndGroupingRepository: SortingAndGroupingRepository,
-        private val blindMapRepository: BlindMapRepository
+        private val blindMapRepository: BlindMapRepository,
+        private val timelineRepository: TimelineRepository
 ) {
 
     fun getTaskById(taskId: Long): TaskResponse? {
@@ -39,6 +41,7 @@ class TaskService(
                 ?: sentenceCompletionAndGroupingRepository.findById(taskId).toNullable?.toDomainModel()
                 ?: sortingAndGroupingRepository.findById(taskId).toNullable?.toDomainModel()
                 ?: blindMapRepository.findById(taskId).toNullable?.toDomainModel()
+                ?: timelineRepository.findById(taskId).toNullable?.toDomainModel()
     }
 
     fun getAllTasks(): List<TaskResponse> {
@@ -54,7 +57,8 @@ class TaskService(
                 sentenceCompletionAndSortingRepository.findAll().map { it.toDomainModel() },
                 sentenceCompletionAndGroupingRepository.findAll().map { it.toDomainModel() },
                 sortingAndGroupingRepository.findAll().map { it.toDomainModel() },
-                blindMapRepository.findAll().map { it.toDomainModel() }
+                blindMapRepository.findAll().map { it.toDomainModel() },
+                timelineRepository.findAll().map { it.toDomainModel() }
         )
                 .flatten()
                 .sortedBy { it.lastModified }
@@ -85,6 +89,7 @@ class TaskService(
         tryDelete { sentenceCompletionAndGroupingRepository.deleteById(taskId) }
         tryDelete { sortingAndGroupingRepository.deleteById(taskId) }
         tryDelete { blindMapRepository.deleteById(taskId) }
+        tryDelete { timelineRepository.deleteById(taskId) }
     }
 
 }
