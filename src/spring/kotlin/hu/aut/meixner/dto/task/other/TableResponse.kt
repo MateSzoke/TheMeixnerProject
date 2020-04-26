@@ -6,11 +6,10 @@ import hu.aut.meixner.dto.task.common.TaskResponse
 import hu.aut.meixner.dto.task.common.TaskTypeEnum
 import java.time.OffsetDateTime
 
-class FreeTextResponse(
-        val question: MediaItemResponse,
-        val correctAnswer: String,
+class TableResponse(
+        val table: List<List<MediaItemResponse>>,
         override val id: Long,
-        override val type: TaskTypeEnum = TaskTypeEnum.FreeText,
+        override val type: TaskTypeEnum = TaskTypeEnum.Table,
         override val title: String,
         override val owner: String,
         override val subject: SubjectEnum,

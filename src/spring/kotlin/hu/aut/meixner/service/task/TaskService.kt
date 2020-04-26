@@ -6,6 +6,7 @@ import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.mapping.toDomainModel
 import hu.aut.meixner.repository.task.complex.*
 import hu.aut.meixner.repository.task.easy.*
+import hu.aut.meixner.repository.task.other.*
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.stereotype.Service
 
@@ -21,7 +22,12 @@ class TaskService(
         private val sentenceCreationAndGroupingRepository: SentenceCreationAndGroupingRepository,
         private val sentenceCompletionAndSortingRepository: SentenceCompletionAndGroupingRepository,
         private val sentenceCompletionAndGroupingRepository: SentenceCompletionAndSortingRepository,
-        private val sortingAndGroupingRepository: SortingAndGroupingRepository
+        private val sortingAndGroupingRepository: SortingAndGroupingRepository,
+        private val blindMapRepository: BlindMapRepository,
+        private val timelineRepository: TimelineRepository,
+        private val oddOneOutRepository: OddOneOutRepository,
+        private val freeTextRepository: FreeTextRepository,
+        private val tableRepository: TableRepository
 ) {
 
     fun getTaskById(taskId: Long): TaskResponse? {
@@ -36,6 +42,11 @@ class TaskService(
                 ?: sentenceCompletionAndSortingRepository.findById(taskId).toNullable?.toDomainModel()
                 ?: sentenceCompletionAndGroupingRepository.findById(taskId).toNullable?.toDomainModel()
                 ?: sortingAndGroupingRepository.findById(taskId).toNullable?.toDomainModel()
+                ?: blindMapRepository.findById(taskId).toNullable?.toDomainModel()
+                ?: timelineRepository.findById(taskId).toNullable?.toDomainModel()
+                ?: oddOneOutRepository.findById(taskId).toNullable?.toDomainModel()
+                ?: freeTextRepository.findById(taskId).toNullable?.toDomainModel()
+                ?: tableRepository.findById(taskId).toNullable?.toDomainModel()
     }
 
     fun getAllTasks(): List<TaskResponse> {
@@ -50,7 +61,12 @@ class TaskService(
                 sentenceCreationAndGroupingRepository.findAll().map { it.toDomainModel() },
                 sentenceCompletionAndSortingRepository.findAll().map { it.toDomainModel() },
                 sentenceCompletionAndGroupingRepository.findAll().map { it.toDomainModel() },
-                sortingAndGroupingRepository.findAll().map { it.toDomainModel() }
+                sortingAndGroupingRepository.findAll().map { it.toDomainModel() },
+                blindMapRepository.findAll().map { it.toDomainModel() },
+                timelineRepository.findAll().map { it.toDomainModel() },
+                oddOneOutRepository.findAll().map { it.toDomainModel() },
+                freeTextRepository.findAll().map { it.toDomainModel() },
+                tableRepository.findAll().map { it.toDomainModel() }
         )
                 .flatten()
                 .sortedBy { it.lastModified }
@@ -80,6 +96,11 @@ class TaskService(
         tryDelete { sentenceCompletionAndSortingRepository.deleteById(taskId) }
         tryDelete { sentenceCompletionAndGroupingRepository.deleteById(taskId) }
         tryDelete { sortingAndGroupingRepository.deleteById(taskId) }
+        tryDelete { blindMapRepository.deleteById(taskId) }
+        tryDelete { timelineRepository.deleteById(taskId) }
+        tryDelete { oddOneOutRepository.deleteById(taskId) }
+        tryDelete { freeTextRepository.deleteById(taskId) }
+        tryDelete { tableRepository.deleteById(taskId) }
     }
 
 }
