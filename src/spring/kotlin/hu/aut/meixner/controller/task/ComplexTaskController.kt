@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
-@Api(tags = ["The complex tasks"], description = "Add and update Grouping and sorting, Sentence completion and grouping, Sentence completion and sorting, Sentence creation and grouping, Sentence creation and sorting, Sorting and grouping")
+@Api(tags = ["Complex tasks"], description = "Add and update Grouping and sorting, Sentence completion and grouping, Sentence completion and sorting, Sentence creation and grouping, Sentence creation and sorting, Sorting and grouping")
 @RestController
 @RequestMapping("/tasks")
 class ComplexTaskController(
@@ -16,7 +16,8 @@ class ComplexTaskController(
         private val sentenceCreationAndSortingService: SentenceCreationAndSortingService,
         private val sentenceCreationAndGroupingService: SentenceCreationAndGroupingService,
         private val sentenceCompletionAndSortingService: SentenceCompletionAndSortingService,
-        private val sentenceCompletionAndGroupingService: SentenceCompletionAndGroupingService
+        private val sentenceCompletionAndGroupingService: SentenceCompletionAndGroupingService,
+        private val sortingAndGroupingService: SortingAndGroupingService
 ) {
     //region GroupingAndSorting
     @PostMapping("/groupingAndSorting")
@@ -116,6 +117,27 @@ class ComplexTaskController(
         val result = sentenceCompletionAndGroupingService.updateSentenceCompletionAndGrouping(taskId, request)
                 ?: return ResponseEntity.notFound().build()
         return ResponseEntity.ok(result)
+    }
+    //endregion
+
+    //region SortingAndGrouping
+    @PostMapping("/sortingAndGrouping")
+    @ApiOperation("Creates a new Sorting and Grouping task.")
+    fun createSortingAndGrouping(@RequestBody @Valid request: SortingAndGroupingRequest): ResponseEntity<SortingAndGroupingResponse> {
+        val result = sortingAndGroupingService.createSortingAndGrouping(request)
+                ?: return ResponseEntity.badRequest().build()
+        return ResponseEntity.ok(result)
+    }
+
+    @PatchMapping("/sortingAndGrouping/{taskId}")
+    @ApiOperation("Updates existing Sorting and Grouping task by taskId.")
+    fun updateSortingAndGroupingById(
+            @PathVariable("taskId") taskId: Long,
+            @RequestBody @Valid request: SortingAndGroupingRequest
+    ): ResponseEntity<SortingAndGroupingResponse> {
+        val grouping = sortingAndGroupingService.updateSortingAndGrouping(taskId, request)
+                ?: return ResponseEntity.notFound().build()
+        return ResponseEntity.ok(grouping)
     }
     //endregion
 }

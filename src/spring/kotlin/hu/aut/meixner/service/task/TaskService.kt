@@ -20,7 +20,8 @@ class TaskService(
         private val sentenceCreationAndSortingRepository: SentenceCreationAndSortingRepository,
         private val sentenceCreationAndGroupingRepository: SentenceCreationAndGroupingRepository,
         private val sentenceCompletionAndSortingRepository: SentenceCompletionAndGroupingRepository,
-        private val sentenceCompletionAndGroupingRepository: SentenceCompletionAndSortingRepository
+        private val sentenceCompletionAndGroupingRepository: SentenceCompletionAndSortingRepository,
+        private val sortingAndGroupingRepository: SortingAndGroupingRepository
 ) {
 
     fun getTaskById(taskId: Long): TaskResponse? {
@@ -34,6 +35,7 @@ class TaskService(
                 ?: sentenceCreationAndGroupingRepository.findById(taskId).toNullable?.toDomainModel()
                 ?: sentenceCompletionAndSortingRepository.findById(taskId).toNullable?.toDomainModel()
                 ?: sentenceCompletionAndGroupingRepository.findById(taskId).toNullable?.toDomainModel()
+                ?: sortingAndGroupingRepository.findById(taskId).toNullable?.toDomainModel()
     }
 
     fun getAllTasks(): List<TaskResponse> {
@@ -47,7 +49,8 @@ class TaskService(
                 sentenceCreationAndSortingRepository.findAll().map { it.toDomainModel() },
                 sentenceCreationAndGroupingRepository.findAll().map { it.toDomainModel() },
                 sentenceCompletionAndSortingRepository.findAll().map { it.toDomainModel() },
-                sentenceCompletionAndGroupingRepository.findAll().map { it.toDomainModel() }
+                sentenceCompletionAndGroupingRepository.findAll().map { it.toDomainModel() },
+                sortingAndGroupingRepository.findAll().map { it.toDomainModel() }
         )
                 .flatten()
                 .sortedBy { it.lastModified }
@@ -76,6 +79,7 @@ class TaskService(
         tryDelete { sentenceCreationAndGroupingRepository.deleteById(taskId) }
         tryDelete { sentenceCompletionAndSortingRepository.deleteById(taskId) }
         tryDelete { sentenceCompletionAndGroupingRepository.deleteById(taskId) }
+        tryDelete { sortingAndGroupingRepository.deleteById(taskId) }
     }
 
 }

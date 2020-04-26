@@ -193,3 +193,38 @@ fun SentenceListEntity.toSentenceCompletionList(): SentenceCompletionList {
     )
 }
 //endregion
+
+//region SortingAndGrouping
+fun SortingAndGroupingRequest.toEntity(owner: String, groups: List<GroupElementEntity>): SortingAndGroupingEntity {
+    return SortingAndGroupingEntity(
+            groups = groups,
+            title = title,
+            difficulty = difficulty,
+            owner = owner,
+            subject = subject,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass,
+            lastModified = OffsetDateTime.now()
+    )
+}
+
+fun SortingAndGroupingEntity.toDomainModel(): SortingAndGroupingResponse {
+    return SortingAndGroupingResponse(
+            id = id,
+            lastModified = lastModified,
+            difficulty = difficulty,
+            title = title,
+            owner = owner,
+            subject = subject,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass,
+            groups = groups.map { it.toGroupListItem() }
+    )
+}
+
+fun GroupElementEntity.toGroupListItem(): GroupListItemResponse {
+    return GroupListItemResponse(
+            elements = elements.map { it.toDomainModel() }
+    )
+}
+//endregion

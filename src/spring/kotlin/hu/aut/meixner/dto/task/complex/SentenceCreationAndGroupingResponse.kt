@@ -6,7 +6,7 @@ import hu.aut.meixner.dto.task.common.TaskTypeEnum
 import java.time.OffsetDateTime
 
 class SentenceCreationAndGroupingResponse(
-        val sentenceGroups: List<SentenceListResponse>,
+        val sentenceGroups: List<SentenceCreationList>,
         override val id: Long,
         override val type: TaskTypeEnum = TaskTypeEnum.SentenceCreationAndGrouping,
         override val title: String,
