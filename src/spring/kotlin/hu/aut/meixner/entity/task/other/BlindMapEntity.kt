@@ -8,12 +8,15 @@ import org.hibernate.annotations.CascadeType
 import java.time.OffsetDateTime
 import javax.persistence.Entity
 import javax.persistence.OneToMany
+import javax.persistence.OneToOne
 
 @Entity
 data class BlindMapEntity(
         @OneToMany
         @Cascade(CascadeType.ALL)
         val tags: MutableList<BlindMapTagEntity> = mutableListOf(),
+        @OneToOne
+        @Cascade(CascadeType.ALL)
         val image: MediaItemEntity = MediaItemEntity(),
         override val title: String = "",
         override val owner: String = "",
