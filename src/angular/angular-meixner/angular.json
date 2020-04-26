@@ -129,5 +129,8 @@
       }
     }
   },
-  "defaultProject": "angular-meixner"
+  "defaultProject": "angular-meixner",
+  "cli": {
+    "analytics": "8d77628b-a5c4-4700-abe4-e8584fe77bc8"
+  }
 }

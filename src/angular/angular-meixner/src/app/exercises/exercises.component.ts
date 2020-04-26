@@ -23,6 +23,7 @@ export class ExercisesComponent implements OnInit {
   public classYears = Array.from({ length: (8 - 5) / 1 + 1}, (_, i) => 5 + (i * 1));
   public classes:Array<String> = ['a', 'b', 'c'];
   public exercises : Array<TaskResponse> = new Array<TaskResponse>();
+  public exercisesUI : Array<TaskResponse> = new Array<TaskResponse>();
   public exercisesLoaded = false;
 
   constructor(private modal: ModalService, private dom: DomService,
@@ -43,6 +44,12 @@ export class ExercisesComponent implements OnInit {
           owner: element.owner,
           title: element.title,
           type: element.type} as TaskResponse);
+          this.exercisesUI.push({difficulty: element.difficulty,
+            id: element.id,
+            lastModified: element.lastModified,
+            owner: element.owner,
+            title: element.title,
+            type: element.type} as TaskResponse);
         });
         this.exercisesLoaded = true;
     },
@@ -56,6 +63,7 @@ export class ExercisesComponent implements OnInit {
         this.taskService.getAllTaskUsingGET().subscribe(data => {
             console.log("closeBtnPressed data received");
             this.exercises = new Array<TaskResponse>();
+            this.exercisesUI = new Array<TaskResponse>();
             data.forEach(element => {
               this.exercises.push({difficulty: element.difficulty,
                 id: element.id,
@@ -63,7 +71,12 @@ export class ExercisesComponent implements OnInit {
                 owner: element.owner,
                 title: element.title,
                 type: element.type} as TaskResponse);
-              console.log(element);
+              this.exercisesUI.push({difficulty: element.difficulty,
+                id: element.id,
+                lastModified: element.lastModified,
+                owner: element.owner,
+                title: element.title,
+                type: element.type} as TaskResponse);
             });
 
           },
@@ -82,11 +95,14 @@ export class ExercisesComponent implements OnInit {
 
   public deleteTask(input: number) {
     this.exercisesLoaded = false;
+    console.log("calling delete");
     this.taskService.deleteTaskByIdUsingDELETE(input).subscribe(
       data => {
+        console.log("calling delete get...");
         this.taskService.getAllTaskUsingGET().subscribe(data => {
-            console.log("closeBtnPressed data received");
+            console.log("delete get data received");
             this.exercises = new Array<TaskResponse>();
+            this.exercisesUI = new Array<TaskResponse>();
             data.forEach(element => {
               this.exercises.push({difficulty: element.difficulty,
                 id: element.id,
@@ -94,10 +110,14 @@ export class ExercisesComponent implements OnInit {
                 owner: element.owner,
                 title: element.title,
                 type: element.type} as TaskResponse);
-              console.log(element);
+              this.exercisesUI.push({difficulty: element.difficulty,
+                id: element.id,
+                lastModified: element.lastModified,
+                owner: element.owner,
+                title: element.title,
+                type: element.type} as TaskResponse);
             });
             this.exercisesLoaded = true;
-
           },
           error => {
             console.log("subscribe error");
@@ -119,8 +139,15 @@ export class ExercisesComponent implements OnInit {
     this.taskService.getAllTaskUsingGET().subscribe(data => {
         console.log("getAllTaskUsingGET data received");
         this.exercises = new Array<TaskResponse>();
+        this.exercisesUI = new Array<TaskResponse>();
         data.forEach(element => {
           this.exercises.push({difficulty: element.difficulty,
+            id: element.id,
+            lastModified: element.lastModified,
+            owner: element.owner,
+            title: element.title,
+            type: element.type} as TaskResponse);
+          this.exercisesUI.push({difficulty: element.difficulty,
             id: element.id,
             lastModified: element.lastModified,
             owner: element.owner,
@@ -148,4 +175,13 @@ export class ExercisesComponent implements OnInit {
   public convertToLink(input: string) {
     ConvertEnum.convertToRouterLink(input);
   }
+
+  public subjectChange(input) {
+    console.log(input.value);
+  }
+
+  public classYearsChange(input) {
+    console.log(input.value);
+  }
+
 }
