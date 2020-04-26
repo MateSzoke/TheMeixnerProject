@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
-@Api(tags = ["The easy tasks"], description = "Add and update Pairing, Grouping, Sorting, Sentence completion, Sentence creation tasks")
+@Api(tags = ["Easy tasks"], description = "Add and update Pairing, Grouping, Sorting, Sentence completion, Sentence creation tasks")
 @RestController
 @RequestMapping("/tasks")
 class EasyTaskController(
