@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
-@Api(tags = ["Other tasks"], description = "Add and update Blind map, Memory game, Odd one out, true false, Timeline, Free text")
+@Api(tags = ["Other tasks"], description = "Add and update Blind map, Odd one out, Timeline, Free text")
 @RestController
 @RequestMapping("/tasks")
 class OtherTaskController(
