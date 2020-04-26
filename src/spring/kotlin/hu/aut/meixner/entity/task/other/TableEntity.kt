@@ -5,8 +5,10 @@ import hu.aut.meixner.entity.task.TaskEntity
 import org.hibernate.annotations.Cascade
 import org.hibernate.annotations.CascadeType
 import java.time.OffsetDateTime
+import javax.persistence.Entity
 import javax.persistence.OneToMany
 
+@Entity
 class TableEntity(
         @OneToMany
         @Cascade(CascadeType.ALL)

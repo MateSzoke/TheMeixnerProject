@@ -1,10 +1,7 @@
 package hu.aut.meixner.controller.task
 
 import hu.aut.meixner.dto.task.other.*
-import hu.aut.meixner.service.task.other.BlindMapService
-import hu.aut.meixner.service.task.other.FreeTextService
-import hu.aut.meixner.service.task.other.OddOneOutService
-import hu.aut.meixner.service.task.other.TimelineService
+import hu.aut.meixner.service.task.other.*
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import org.springframework.http.ResponseEntity
@@ -18,7 +15,8 @@ class OtherTaskController(
         private val blindMapService: BlindMapService,
         private val timelineService: TimelineService,
         private val oddOneOutService: OddOneOutService,
-        private val freeTextService: FreeTextService
+        private val freeTextService: FreeTextService,
+        private val tableService: TableService
 ) {
     //region BlindMap
     @PostMapping("/blindMap")
@@ -92,6 +90,25 @@ class OtherTaskController(
             @RequestBody @Valid request: FreeTextRequest
     ): ResponseEntity<FreeTextResponse> {
         val result = freeTextService.updateFreeText(taskId, request) ?: return ResponseEntity.notFound().build()
+        return ResponseEntity.ok(result)
+    }
+    //endregion
+
+    //region Table
+    @PostMapping("/table")
+    @ApiOperation("Creates a new Table task.")
+    fun createTable(@RequestBody @Valid request: TableRequest): ResponseEntity<TableResponse> {
+        val response = tableService.createTable(request) ?: return ResponseEntity.badRequest().build()
+        return ResponseEntity.ok(response)
+    }
+
+    @PatchMapping("/table/{taskId}")
+    @ApiOperation("Updates existing Table task by taskId.")
+    fun updateTableById(
+            @PathVariable("taskId") taskId: Long,
+            @RequestBody @Valid request: TableRequest
+    ): ResponseEntity<TableResponse> {
+        val result = tableService.updateTable(taskId, request) ?: return ResponseEntity.notFound().build()
         return ResponseEntity.ok(result)
     }
     //endregion
