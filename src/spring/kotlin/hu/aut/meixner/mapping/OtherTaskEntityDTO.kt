@@ -177,3 +177,39 @@ fun FreeTextEntity.toDomainModel(): FreeTextResponse {
     )
 }
 //endregion
+
+//region Table
+fun TableRequest.toEntity(owner: String, table: List<List<MediaItemEntity>>): TableEntity {
+    val cols = table.map { row ->
+        TableRowEntity(
+                rows = row
+        )
+    }
+    return TableEntity(
+            cols = cols,
+            title = title,
+            difficulty = difficulty,
+            owner = owner,
+            subject = subject,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass,
+            lastModified = OffsetDateTime.now()
+    )
+}
+
+fun TableEntity.toDomainModel(): TableResponse {
+    return TableResponse(
+            id = id,
+            table = cols.map { tableRowEntity ->
+                tableRowEntity.rows.map { mediaItemEntity -> mediaItemEntity.toDomainModel() }
+            },
+            lastModified = lastModified,
+            difficulty = difficulty,
+            title = title,
+            owner = owner,
+            subject = subject,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass
+    )
+}
+//endregion

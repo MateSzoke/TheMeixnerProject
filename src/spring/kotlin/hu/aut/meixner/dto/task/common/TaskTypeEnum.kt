@@ -15,5 +15,6 @@ enum class TaskTypeEnum {
     BlindMap,
     FreeText,
     OddOneOut,
-    TimeLine
+    TimeLine,
+    Table
 }
