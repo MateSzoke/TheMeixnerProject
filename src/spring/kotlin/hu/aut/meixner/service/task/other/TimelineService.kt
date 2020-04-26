@@ -3,6 +3,7 @@ package hu.aut.meixner.service.task.other
 import hu.aut.meixner.dto.task.other.TimelineRequest
 import hu.aut.meixner.dto.task.other.TimelineResponse
 import hu.aut.meixner.extensions.currentUser
+import hu.aut.meixner.extensions.ownerIsTheCurrentUser
 import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.mapping.toDomainModel
 import hu.aut.meixner.mapping.toEntity
@@ -18,8 +19,8 @@ class TimelineService(
     }
 
     fun updateTimeline(id: Long, request: TimelineRequest): TimelineResponse? {
-        repository.findById(id).toNullable ?: return null
-        //if (!timelineEntity.ownerIsTheCurrentUser) return null TODO JUST FOR TEST, UNCOMMENT IT BEFORE PUSH! :O
+        val timelineEntity = repository.findById(id).toNullable ?: return null
+        if (!timelineEntity.ownerIsTheCurrentUser) return null
         return repository.save(
                 request.toEntity(owner = currentUser).apply { this.id = id }
         ).toDomainModel()

@@ -1,10 +1,8 @@
 package hu.aut.meixner.controller.task
 
-import hu.aut.meixner.dto.task.other.BlindMapRequest
-import hu.aut.meixner.dto.task.other.BlindMapResponse
-import hu.aut.meixner.dto.task.other.TimelineRequest
-import hu.aut.meixner.dto.task.other.TimelineResponse
+import hu.aut.meixner.dto.task.other.*
 import hu.aut.meixner.service.task.other.BlindMapService
+import hu.aut.meixner.service.task.other.OddOneOutService
 import hu.aut.meixner.service.task.other.TimelineService
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
@@ -17,7 +15,8 @@ import javax.validation.Valid
 @RequestMapping("/tasks")
 class OtherTaskController(
         private val blindMapService: BlindMapService,
-        private val timelineService: TimelineService
+        private val timelineService: TimelineService,
+        private val oddOneOutService: OddOneOutService
 ) {
     //region BlindMap
     @PostMapping("/blindMap")
@@ -53,6 +52,25 @@ class OtherTaskController(
             @RequestBody @Valid request: TimelineRequest
     ): ResponseEntity<TimelineResponse> {
         val result = timelineService.updateTimeline(taskId, request) ?: return ResponseEntity.notFound().build()
+        return ResponseEntity.ok(result)
+    }
+    //endregion
+
+    //region OddOneOut
+    @PostMapping("/oddOneOut")
+    @ApiOperation("Creates a new Odd One Out task.")
+    fun createOddOneOut(@RequestBody @Valid request: OddOneOutRequest): ResponseEntity<OddOneOutResponse> {
+        val response = oddOneOutService.createOddOneOut(request) ?: return ResponseEntity.badRequest().build()
+        return ResponseEntity.ok(response)
+    }
+
+    @PatchMapping("/oddOneOut/{taskId}")
+    @ApiOperation("Updates existing Odd One Out task by taskId.")
+    fun updateBlindMapById(
+            @PathVariable("taskId") taskId: Long,
+            @RequestBody @Valid request: OddOneOutRequest
+    ): ResponseEntity<OddOneOutResponse> {
+        val result = oddOneOutService.updateOddOneOut(taskId, request) ?: return ResponseEntity.notFound().build()
         return ResponseEntity.ok(result)
     }
     //endregion

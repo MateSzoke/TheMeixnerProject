@@ -3,6 +3,7 @@ package hu.aut.meixner.mapping
 import hu.aut.meixner.dto.task.other.*
 import hu.aut.meixner.entity.task.MediaItemEntity
 import hu.aut.meixner.entity.task.other.*
+import java.time.OffsetDateTime
 
 //region BlindMap
 fun BlindMapRequest.toEntity(owner: String, image: MediaItemEntity): BlindMapEntity {
@@ -15,7 +16,7 @@ fun BlindMapRequest.toEntity(owner: String, image: MediaItemEntity): BlindMapEnt
             subject = subject,
             recommendedMinClass = recommendedMinClass,
             recommendedMaxClass = recommendedMaxClass,
-            lastModified = java.time.OffsetDateTime.now()
+            lastModified = OffsetDateTime.now()
     )
 }
 
@@ -68,7 +69,7 @@ fun TimelineRequest.toEntity(owner: String): TimelineEntity {
             subject = subject,
             recommendedMinClass = recommendedMinClass,
             recommendedMaxClass = recommendedMaxClass,
-            lastModified = java.time.OffsetDateTime.now()
+            lastModified = OffsetDateTime.now()
     )
 }
 
@@ -110,6 +111,38 @@ fun TimelineTagEntity.toDomainModel(): TimelineTag {
             valueDouble = valueDouble,
             valueInt = valueInt,
             tolerance = tolerance
+    )
+}
+//endregion
+
+
+//region OddOneOut
+fun OddOneOutRequest.toEntity(owner: String, options: List<MediaItemEntity>): OddOneOutEntity {
+    return OddOneOutEntity(
+            correctAnswerIndex = correctAnswerIndex,
+            options = options.toMutableList(),
+            title = title,
+            difficulty = difficulty,
+            owner = owner,
+            subject = subject,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass,
+            lastModified = OffsetDateTime.now()
+    )
+}
+
+fun OddOneOutEntity.toDomainModel(): OddOneOutResponse {
+    return OddOneOutResponse(
+            id = id,
+            correctAnswerIndex = correctAnswerIndex,
+            options = options.map { it.toDomainModel() },
+            lastModified = lastModified,
+            difficulty = difficulty,
+            title = title,
+            owner = owner,
+            subject = subject,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass
     )
 }
 //endregion
