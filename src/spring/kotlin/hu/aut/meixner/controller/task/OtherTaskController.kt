@@ -2,6 +2,7 @@ package hu.aut.meixner.controller.task
 
 import hu.aut.meixner.dto.task.other.*
 import hu.aut.meixner.service.task.other.BlindMapService
+import hu.aut.meixner.service.task.other.FreeTextService
 import hu.aut.meixner.service.task.other.OddOneOutService
 import hu.aut.meixner.service.task.other.TimelineService
 import io.swagger.annotations.Api
@@ -16,7 +17,8 @@ import javax.validation.Valid
 class OtherTaskController(
         private val blindMapService: BlindMapService,
         private val timelineService: TimelineService,
-        private val oddOneOutService: OddOneOutService
+        private val oddOneOutService: OddOneOutService,
+        private val freeTextService: FreeTextService
 ) {
     //region BlindMap
     @PostMapping("/blindMap")
@@ -71,6 +73,25 @@ class OtherTaskController(
             @RequestBody @Valid request: OddOneOutRequest
     ): ResponseEntity<OddOneOutResponse> {
         val result = oddOneOutService.updateOddOneOut(taskId, request) ?: return ResponseEntity.notFound().build()
+        return ResponseEntity.ok(result)
+    }
+    //endregion
+
+    //region FreeText
+    @PostMapping("/freeText")
+    @ApiOperation("Creates a new Free Text task.")
+    fun createFreeText(@RequestBody @Valid request: FreeTextRequest): ResponseEntity<FreeTextResponse> {
+        val response = freeTextService.createFreeText(request) ?: return ResponseEntity.badRequest().build()
+        return ResponseEntity.ok(response)
+    }
+
+    @PatchMapping("/freeText/{taskId}")
+    @ApiOperation("Updates existing Free Text task by taskId.")
+    fun updateFreeTextById(
+            @PathVariable("taskId") taskId: Long,
+            @RequestBody @Valid request: FreeTextRequest
+    ): ResponseEntity<FreeTextResponse> {
+        val result = freeTextService.updateFreeText(taskId, request) ?: return ResponseEntity.notFound().build()
         return ResponseEntity.ok(result)
     }
     //endregion

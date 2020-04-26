@@ -146,3 +146,34 @@ fun OddOneOutEntity.toDomainModel(): OddOneOutResponse {
     )
 }
 //endregion
+
+//region FreeText
+fun FreeTextRequest.toEntity(owner: String, question: MediaItemEntity): FreeTextEntity {
+    return FreeTextEntity(
+            question = question,
+            correctAnswer = correctAnswer,
+            title = title,
+            difficulty = difficulty,
+            owner = owner,
+            subject = subject,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass,
+            lastModified = OffsetDateTime.now()
+    )
+}
+
+fun FreeTextEntity.toDomainModel(): FreeTextResponse {
+    return FreeTextResponse(
+            id = id,
+            question = question.toDomainModel(),
+            correctAnswer = correctAnswer,
+            lastModified = lastModified,
+            difficulty = difficulty,
+            title = title,
+            owner = owner,
+            subject = subject,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass
+    )
+}
+//endregion
