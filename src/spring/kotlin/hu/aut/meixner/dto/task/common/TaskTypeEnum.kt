@@ -6,6 +6,8 @@ enum class TaskTypeEnum {
     SentenceCompletion,
     SentenceCreation,
     Sorting,
+    TrueFalse,
+    MemoryGame,
     GroupingAndSorting,
     SentenceCompletionAndGrouping,
     SentenceCompletionAndSorting,
