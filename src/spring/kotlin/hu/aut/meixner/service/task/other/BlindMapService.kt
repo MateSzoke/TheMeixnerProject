@@ -10,7 +10,6 @@ import hu.aut.meixner.mapping.toEntity
 import hu.aut.meixner.repository.task.other.BlindMapRepository
 import hu.aut.meixner.service.file.MediaItemService
 import org.springframework.stereotype.Service
-import java.time.OffsetDateTime
 
 @Service
 class BlindMapService(
@@ -26,15 +25,8 @@ class BlindMapService(
         val blindMapEntity = repository.findById(id).toNullable ?: return null
         if (!blindMapEntity.ownerIsTheCurrentUser) return null
         return repository.save(
-                request.run {
-                    blindMapEntity.copy(
-                            title = title,
-                            tags = tags.map { it.toEntity() }.toMutableList(),
-                            image = mediaItemService.mediaItemRequestToEntity(request.image) ?: return null,
-                            difficulty = difficulty,
-                            lastModified = OffsetDateTime.now()
-                    )
-                }.apply { this.id = id }
+                request.toEntity(owner = currentUser, image = mediaItemService.mediaItemRequestToEntity(request.image)
+                        ?: return null).apply { this.id = id }
         ).toDomainModel()
     }
 }

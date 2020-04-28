@@ -11,7 +11,6 @@ import hu.aut.meixner.mapping.toEntity
 import hu.aut.meixner.repository.task.easy.GroupingRepository
 import hu.aut.meixner.service.file.MediaItemService
 import org.springframework.stereotype.Service
-import java.time.OffsetDateTime
 
 @Service
 class GroupingService(
@@ -31,24 +30,16 @@ class GroupingService(
     }
 
     fun updateGrouping(id: Long, groupingRequest: GroupingRequest): GroupingResponse? {
-        val grouping = groupingRepository.findById(id).toNullable ?: return null
-        if (!grouping.ownerIsTheCurrentUser) return null
-        return groupingRepository.save(
-                groupingRequest.run {
-                    grouping.copy(
-                            title = title,
-                            groups = groups.map { group ->
-                                GroupElementEntity(
-                                        name = group.name,
-                                        elements = group.elements.map { element ->
-                                            mediaItemService.mediaItemRequestToEntity(element) ?: return null
-                                        }.toMutableList()
-                                )
-                            },
-                            difficulty = difficulty,
-                            lastModified = OffsetDateTime.now()
-                    )
-                }.apply { this.id = id }
+        val result = groupingRepository.findById(id).toNullable ?: return null
+        if (!result.ownerIsTheCurrentUser) return null
+        return groupingRepository.save(groupingRequest.toEntity(owner = currentUser, groups = groupingRequest.groups.map { grouping ->
+            GroupElementEntity(
+                    name = grouping.name,
+                    elements = grouping.elements.map {
+                        mediaItemService.mediaItemRequestToEntity(it) ?: return null
+                    }.toMutableList()
+            )
+        }).apply { this.id = id }
         ).toDomainModel()
     }
 

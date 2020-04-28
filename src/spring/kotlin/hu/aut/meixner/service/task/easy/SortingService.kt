@@ -10,7 +10,6 @@ import hu.aut.meixner.mapping.toEntity
 import hu.aut.meixner.repository.task.easy.SortingRepository
 import hu.aut.meixner.service.file.MediaItemService
 import org.springframework.stereotype.Service
-import java.time.OffsetDateTime
 
 @Service
 class SortingService(
@@ -28,16 +27,9 @@ class SortingService(
         val sorting = sortingRepository.findById(id).toNullable ?: return null
         if (!sorting.ownerIsTheCurrentUser) return null
         return sortingRepository.save(
-                sortingRequest.run {
-                    sorting.copy(
-                            title = title,
-                            elements = elements.map {
-                                mediaItemService.mediaItemRequestToEntity(it) ?: return null
-                            }.toMutableList(),
-                            difficulty = difficulty,
-                            lastModified = OffsetDateTime.now()
-                    )
-                }.apply { this.id = id }
+                sortingRequest.toEntity(owner = currentUser, elements = sortingRequest.elements.map {
+                    mediaItemService.mediaItemRequestToEntity(it) ?: return null
+                }).apply { this.id = id }
         ).toDomainModel()
     }
 
