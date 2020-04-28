@@ -14,5 +14,5 @@ data class TimelineTagEntity(
         val valueDate: OffsetDateTime? = null,
         val valueInt: Int? = null,
         val valueDouble: Double? = null,
-        val tolerance: Double
+        val tolerance: Double = 0.0
 )

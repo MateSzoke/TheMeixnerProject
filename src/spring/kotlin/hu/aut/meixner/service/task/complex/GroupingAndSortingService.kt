@@ -11,7 +11,6 @@ import hu.aut.meixner.mapping.toEntity
 import hu.aut.meixner.repository.task.complex.GroupingAndSortingRepository
 import hu.aut.meixner.service.file.MediaItemService
 import org.springframework.stereotype.Service
-import java.time.OffsetDateTime
 
 @Service
 class GroupingAndSortingService(
@@ -30,24 +29,17 @@ class GroupingAndSortingService(
     }
 
     fun updateGroupingAndSorting(id: Long, groupingAndSortingRequest: GroupingAndSortingRequest): GroupingAndSortingResponse? {
-        val grouping = repository.findById(id).toNullable ?: return null
-        if (!grouping.ownerIsTheCurrentUser) return null
+        val result = repository.findById(id).toNullable ?: return null
+        if (!result.ownerIsTheCurrentUser) return null
         return repository.save(
-                groupingAndSortingRequest.run {
-                    grouping.copy(
-                            title = title,
-                            groups = groups.map { group ->
-                                GroupElementEntity(
-                                        name = group.name,
-                                        elements = group.elements.map { element ->
-                                            mediaItemService.mediaItemRequestToEntity(element) ?: return null
-                                        }.toMutableList()
-                                )
-                            },
-                            difficulty = difficulty,
-                            lastModified = OffsetDateTime.now()
+                groupingAndSortingRequest.toEntity(owner = currentUser, groups = groupingAndSortingRequest.groups.map { grouping ->
+                    GroupElementEntity(
+                            name = grouping.name,
+                            elements = grouping.elements.map {
+                                mediaItemService.mediaItemRequestToEntity(it) ?: return null
+                            }.toMutableList()
                     )
-                }.apply { this.id = id }
+                }).apply { this.id = id }
         ).toDomainModel()
     }
 }

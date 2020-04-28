@@ -11,7 +11,6 @@ import hu.aut.meixner.mapping.toEntity
 import hu.aut.meixner.repository.task.easy.PairingRepository
 import hu.aut.meixner.service.file.MediaItemService
 import org.springframework.stereotype.Service
-import java.time.OffsetDateTime
 
 @Service
 class PairingService(
@@ -34,18 +33,13 @@ class PairingService(
         val pairing = pairingRepository.findById(id).toNullable ?: return null
         if (!pairing.ownerIsTheCurrentUser) return null
         return pairingRepository.save(
-                pairingRequest.run {
-                    pairing.copy(
-                            title = title,
-                            pairs = pairs.map { pair ->
-                                PairEntity(pair = pair.pair.map {
-                                    mediaItemService.mediaItemRequestToEntity(it) ?: return null
-                                }.toMutableList())
-                            },
-                            difficulty = difficulty,
-                            lastModified = OffsetDateTime.now()
+                pairingRequest.toEntity(owner = currentUser, pairs = pairingRequest.pairs.map { pair ->
+                    PairEntity(
+                            pair = pair.pair.map {
+                                mediaItemService.mediaItemRequestToEntity(it) ?: return null
+                            }.toMutableList()
                     )
-                }.apply { this.id = id }
+                }).apply { this.id = id }
         ).toDomainModel()
     }
 

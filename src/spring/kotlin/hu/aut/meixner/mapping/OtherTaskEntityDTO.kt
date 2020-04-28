@@ -180,11 +180,11 @@ fun FreeTextEntity.toDomainModel(): FreeTextResponse {
 
 //region Table
 fun TableRequest.toEntity(owner: String, table: List<List<MediaItemEntity>>): TableEntity {
-    val cols = table.map { row ->
+    val cols = table.map { rows ->
         TableRowEntity(
-                rows = row
+                rows = rows.toMutableList()
         )
-    }
+    }.toMutableList()
     return TableEntity(
             cols = cols,
             title = title,

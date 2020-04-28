@@ -9,7 +9,6 @@ import hu.aut.meixner.mapping.toDomainModel
 import hu.aut.meixner.mapping.toEntity
 import hu.aut.meixner.repository.task.complex.SentenceCompletionAndGroupingRepository
 import org.springframework.stereotype.Service
-import java.time.OffsetDateTime
 
 @Service
 class SentenceCompletionAndGroupingService(
@@ -22,15 +21,6 @@ class SentenceCompletionAndGroupingService(
     fun updateSentenceCompletionAndGrouping(id: Long, request: SentenceCompletionAndGroupingRequest): SentenceCompletionAndGroupingResponse? {
         val sentenceCompletion = repository.findById(id).toNullable ?: return null
         if (!sentenceCompletion.ownerIsTheCurrentUser) return null
-        return repository.save(
-                request.run {
-                    sentenceCompletion.copy(
-                            title = title,
-                            sentenceGroups = sentenceGroups.map { it.toEntity() },
-                            difficulty = difficulty,
-                            lastModified = OffsetDateTime.now()
-                    )
-                }.apply { this.id = id }
-        ).toDomainModel()
+        return repository.save(request.toEntity(currentUser).apply { this.id = id }).toDomainModel()
     }
 }

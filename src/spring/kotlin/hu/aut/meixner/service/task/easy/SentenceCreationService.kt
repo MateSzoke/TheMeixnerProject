@@ -9,7 +9,6 @@ import hu.aut.meixner.mapping.toDomainModel
 import hu.aut.meixner.mapping.toEntity
 import hu.aut.meixner.repository.task.easy.SentenceCreationRepository
 import org.springframework.stereotype.Service
-import java.time.OffsetDateTime
 
 @Service
 class SentenceCreationService(
@@ -24,14 +23,7 @@ class SentenceCreationService(
         val sentenceCreation = sentenceCreationRepository.findById(id).toNullable ?: return null
         if (!sentenceCreation.ownerIsTheCurrentUser) return null
         return sentenceCreationRepository.save(
-                sentenceCreationRequest.run {
-                    sentenceCreation.copy(
-                            title = title,
-                            sentences = sentences.map { it.toEntity() },
-                            difficulty = difficulty,
-                            lastModified = OffsetDateTime.now()
-                    )
-                }.apply { this.id = id }
+                sentenceCreationRequest.toEntity(currentUser).apply { this.id = id }
         ).toDomainModel()
     }
 

@@ -5,7 +5,7 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
 
 val TaskEntity.ownerIsTheCurrentUser: Boolean
-    get() = SecurityContextHolder.getContext().authentication.name == owner
+    get() = currentUser == owner
 
 var currentUser: String = ""
     get() = calculateCurrentUser()

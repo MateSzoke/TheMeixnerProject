@@ -9,7 +9,6 @@ import hu.aut.meixner.mapping.toDomainModel
 import hu.aut.meixner.mapping.toEntity
 import hu.aut.meixner.repository.task.complex.SentenceCreationAndSortingRepository
 import org.springframework.stereotype.Service
-import java.time.OffsetDateTime
 
 @Service
 class SentenceCreationAndSortingService(
@@ -23,15 +22,6 @@ class SentenceCreationAndSortingService(
     fun updateSentenceCreationAndSorting(id: Long, request: SentenceCreationAndSortingRequest): SentenceCreationAndSortingResponse? {
         val sentenceCreation = repository.findById(id).toNullable ?: return null
         if (!sentenceCreation.ownerIsTheCurrentUser) return null
-        return repository.save(
-                request.run {
-                    sentenceCreation.copy(
-                            title = title,
-                            sentences = sentences.map { it.toEntity() },
-                            difficulty = difficulty,
-                            lastModified = OffsetDateTime.now()
-                    )
-                }.apply { this.id = id }
-        ).toDomainModel()
+        return repository.save(request.toEntity(currentUser).apply { this.id = id }).toDomainModel()
     }
 }
