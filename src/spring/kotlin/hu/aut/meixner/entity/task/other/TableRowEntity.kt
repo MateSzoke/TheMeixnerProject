@@ -11,5 +11,5 @@ data class TableRowEntity(
         val id: Long = 0,
         @OneToMany
         @Cascade(CascadeType.ALL)
-        val rows: List<MediaItemEntity>
+        val rows: MutableList<MediaItemEntity> = mutableListOf()
 )

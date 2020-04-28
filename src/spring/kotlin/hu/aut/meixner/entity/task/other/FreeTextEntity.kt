@@ -14,7 +14,7 @@ data class FreeTextEntity(
         @OneToOne
         @Cascade(CascadeType.ALL)
         val question: MediaItemEntity = MediaItemEntity(),
-        val correctAnswer: String,
+        val correctAnswer: String = "",
         override val title: String = "",
         override val owner: String = "",
         override val difficulty: Int = 0,

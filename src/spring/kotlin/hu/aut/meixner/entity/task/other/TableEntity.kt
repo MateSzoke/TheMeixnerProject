@@ -12,7 +12,7 @@ import javax.persistence.OneToMany
 class TableEntity(
         @OneToMany
         @Cascade(CascadeType.ALL)
-        val cols: List<TableRowEntity>,
+        val cols: MutableList<TableRowEntity> = mutableListOf(),
         override val title: String = "",
         override val owner: String = "",
         override val difficulty: Int = 0,
