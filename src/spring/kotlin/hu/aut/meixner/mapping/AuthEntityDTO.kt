@@ -6,7 +6,7 @@ import hu.aut.meixner.dto.auth.UserRole
 import hu.aut.meixner.entity.auth.UserEntity
 import hu.aut.meixner.entity.auth.UserRoleEnum
 
-fun UserRequest.toDomainModel(): UserEntity {
+fun UserRequest.toEntity(): UserEntity {
     return UserEntity(
             username = username,
             password = password,
@@ -14,10 +14,11 @@ fun UserRequest.toDomainModel(): UserEntity {
     )
 }
 
-fun UserEntity.toDTO(): UserResponse {
+fun UserEntity.toDomainModel(): UserResponse {
     return UserResponse(
             id = id,
-            username = username
+            username = username,
+            role = role
     )
 }
 
