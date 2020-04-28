@@ -6,7 +6,7 @@ import hu.aut.meixner.dto.task.common.TaskResponse
 import hu.aut.meixner.dto.task.common.TaskTypeEnum
 import java.time.OffsetDateTime
 
-open class SortingResponse(
+class SortingResponse(
         val elements: List<MediaItemResponse>,
         override val id: Long,
         override val type: TaskTypeEnum = TaskTypeEnum.Sorting,

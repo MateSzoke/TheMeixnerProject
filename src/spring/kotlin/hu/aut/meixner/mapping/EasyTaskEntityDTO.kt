@@ -177,3 +177,38 @@ fun SentenceEntity.toDomainModel(): Sentence {
     )
 }
 //endregion
+
+//region Grouping
+const val TRUE = "true"
+const val FALSE = "false"
+fun TrueFalseRequest.toEntity(owner: String, trueItems: List<MediaItemEntity>, falseItems: List<MediaItemEntity>): TrueFalseEntity {
+    return TrueFalseEntity(
+            groups = listOf(
+                    GroupElementEntity(name = TRUE, elements = trueItems.toMutableList()),
+                    GroupElementEntity(name = FALSE, elements = falseItems.toMutableList())
+            ),
+            title = title,
+            difficulty = difficulty,
+            owner = owner,
+            subject = subject,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass,
+            lastModified = OffsetDateTime.now()
+    )
+}
+
+fun TrueFalseEntity.toDomainModel(): TrueFalseResponse {
+    return TrueFalseResponse(
+            id = id,
+            lastModified = lastModified,
+            difficulty = difficulty,
+            title = title,
+            owner = owner,
+            subject = subject,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass,
+            trueItems = groups.first { it.name == TRUE }.elements.map { it.toDomainModel() },
+            falseItems = groups.first { it.name == FALSE }.elements.map { it.toDomainModel() }
+    )
+}
+//endregion

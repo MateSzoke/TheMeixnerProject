@@ -5,7 +5,7 @@ import hu.aut.meixner.dto.task.common.TaskResponse
 import hu.aut.meixner.dto.task.common.TaskTypeEnum
 import java.time.OffsetDateTime
 
-open class PairingResponse(
+class PairingResponse(
         val pairs: List<PairElementResponse>,
         override val id: Long,
         override val type: TaskTypeEnum = TaskTypeEnum.Pairing,
