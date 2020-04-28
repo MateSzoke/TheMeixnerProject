@@ -17,7 +17,8 @@ class EasyTaskController(
         private val sentenceCompletionService: SentenceCompletionService,
         private val sentenceCreationService: SentenceCreationService,
         private val sortingService: SortingService,
-        private val trueFalseService: TrueFalseService
+        private val trueFalseService: TrueFalseService,
+        private val memoryGameService: MemoryGameService
 ) {
 
     //region Pairing
@@ -133,6 +134,25 @@ class EasyTaskController(
             @RequestBody @Valid request: TrueFalseRequest
     ): ResponseEntity<TrueFalseResponse> {
         val result = trueFalseService.updateTrueFalse(taskId, request) ?: return ResponseEntity.notFound().build()
+        return ResponseEntity.ok(result)
+    }
+    //endregion
+
+    //region MemoryGame
+    @PostMapping("/memoryGame")
+    @ApiOperation("Creates a new Memory game task.")
+    fun createMemoryGame(@RequestBody @Valid request: MemoryGameRequest): ResponseEntity<MemoryGameResponse> {
+        val response = memoryGameService.createMemoryGame(request) ?: return ResponseEntity.badRequest().build()
+        return ResponseEntity.ok(response)
+    }
+
+    @PatchMapping("/memoryGame/{taskId}")
+    @ApiOperation("Updates existing Memory game task by taskId.")
+    fun updateMemoryGamed(
+            @PathVariable("taskId") taskId: Long,
+            @RequestBody @Valid request: MemoryGameRequest
+    ): ResponseEntity<MemoryGameResponse> {
+        val result = memoryGameService.updateMemoryGame(taskId, request) ?: return ResponseEntity.notFound().build()
         return ResponseEntity.ok(result)
     }
     //endregion

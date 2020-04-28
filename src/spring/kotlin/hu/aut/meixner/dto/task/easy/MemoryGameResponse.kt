@@ -1,4 +1,4 @@
-package hu.aut.meixner.dto.task.other
+package hu.aut.meixner.dto.task.easy
 
 import hu.aut.meixner.dto.SubjectEnum
 import hu.aut.meixner.dto.task.common.TaskResponse
@@ -6,6 +6,7 @@ import hu.aut.meixner.dto.task.common.TaskTypeEnum
 import java.time.OffsetDateTime
 
 class MemoryGameResponse(
+        val pairs: List<PairElementResponse>,
         override val id: Long,
         override val title: String,
         override val owner: String,

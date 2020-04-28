@@ -212,3 +212,31 @@ fun TrueFalseEntity.toDomainModel(): TrueFalseResponse {
     )
 }
 //endregion
+
+//region Pairing
+fun MemoryGameRequest.toEntity(owner: String, pairs: List<PairEntity>): MemoryGameEntity {
+    return MemoryGameEntity(
+            pairs = pairs,
+            title = title,
+            difficulty = difficulty,
+            owner = owner,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass,
+            lastModified = OffsetDateTime.now()
+    )
+}
+
+fun MemoryGameEntity.toDomainModel(): MemoryGameResponse {
+    return MemoryGameResponse(
+            id = id,
+            lastModified = lastModified,
+            difficulty = difficulty,
+            title = title,
+            owner = owner,
+            subject = subject,
+            recommendedMinClass = recommendedMinClass,
+            recommendedMaxClass = recommendedMaxClass,
+            pairs = pairs.map { it.toDomainModel() }
+    )
+}
+//endregion
