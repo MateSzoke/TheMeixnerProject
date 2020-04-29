@@ -35,7 +35,7 @@ export class NewExerciseComponent implements OnInit {
   ngOnInit(): void {
     this.types = new Array<string>();
     for(let i in GroupingResponse.TypeEnum) {
-      this.types.push(ConvertEnum.convert(i));
+      this.types.push(ConvertEnum.convertType(i));
     }
   }
 
@@ -168,7 +168,6 @@ export class NewExerciseComponent implements OnInit {
   public typeSelected(event) {
     console.log("typeselected called");
     this.type = event.value;
-    console.log(event.value);
   }
 
   public difficultySelected(event) {

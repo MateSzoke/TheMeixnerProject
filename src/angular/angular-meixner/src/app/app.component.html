@@ -10,9 +10,10 @@
       <span class="menu-spacer"></span>
       <div fxShow="true" fxHide.lt-md>
         <!-- The following menu items will be hidden on both SM and XS screen sizes -->
-        <a href="#" routerLink="feladatok" mat-button>Feladatok</a>
+        <a href="#" routerLink="feladatok/feladataim" mat-button>Feladataim</a>
         <a href="#" routerLink="feladatsorok" mat-button>Feladatsorok</a>
         <a href="#" routerLink="felhasznalok" mat-button>Felhasználók</a>
+        <a href="#" routerLink="feladatok/feladatok" mat-button>Minden feladat</a>
       </div>
       </ng-template>
       </div>
@@ -28,9 +29,10 @@
   <mat-sidenav-container fxFlexFill>
     <mat-sidenav #sidenav>
       <mat-nav-list>
-        <a href="#" routerLink="feladatok" mat-list-item>Feladatok</a>
+        <a href="#" routerLink="feladatok/feladataim" mat-list-item>Feladataim</a>
         <a href="#" routerLink="feladatsorok" mat-list-item>Feladatsorok</a>
         <a href="#" routerLink="felhasznalok" mat-list-item>Felhasználók</a>
+        <a href="#" routerLink="feladatok/feladatok" mat-list-item>Minden feladat</a>
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content align="center" fxFlexFill>

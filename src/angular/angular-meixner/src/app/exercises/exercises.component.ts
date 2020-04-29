@@ -4,7 +4,7 @@ import {ModalService} from '../service/modal.service';
 import {DomService} from '../service/dom.service';
 import {ModalComponent} from '../modal/modal.component';
 import {NewExerciseComponent} from '../new-exercise/new-exercise.component';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {TaskResponse, TaskService} from '../../swagger-api';
 import {DiffimageService} from '../service/diffimage.service';
 import {Task} from 'protractor/built/taskScheduler';
@@ -25,72 +25,50 @@ export class ExercisesComponent implements OnInit {
   public exercises : Array<TaskResponse> = new Array<TaskResponse>();
   public exercisesUI : Array<TaskResponse> = new Array<TaskResponse>();
   public exercisesLoaded = false;
+  public getAllTasks = false;
 
   constructor(private modal: ModalService, private dom: DomService,
               private modComponent: ModalComponent,
               private taskService: TaskService,
               public router: Router,
+              private route: ActivatedRoute,
               public diffImServ: DiffimageService) {
     modComponent.ngOnInit();
   }
 
   ngOnInit(): void {
-    this.taskService.getAllTaskUsingGET().subscribe(data => {
-      console.log("data received");
-        data.forEach(element => {
-          this.exercises.push({difficulty: element.difficulty,
-          id: element.id,
-          lastModified: element.lastModified,
-          owner: element.owner,
-          title: element.title,
-          type: element.type} as TaskResponse);
-          this.exercisesUI.push({difficulty: element.difficulty,
-            id: element.id,
-            lastModified: element.lastModified,
-            owner: element.owner,
-            title: element.title,
-            type: element.type} as TaskResponse);
-        });
-        this.exercisesLoaded = true;
-    },
-      error => {
-        console.log("subscribe error");
-      },
-      () => {
-      });
-    ModalComponent.closeBtnPressed.subscribe(
-      data => {
-        this.taskService.getAllTaskUsingGET().subscribe(data => {
-            console.log("closeBtnPressed data received");
-            this.exercises = new Array<TaskResponse>();
-            this.exercisesUI = new Array<TaskResponse>();
-            data.forEach(element => {
-              this.exercises.push({difficulty: element.difficulty,
-                id: element.id,
-                lastModified: element.lastModified,
-                owner: element.owner,
-                title: element.title,
-                type: element.type} as TaskResponse);
-              this.exercisesUI.push({difficulty: element.difficulty,
-                id: element.id,
-                lastModified: element.lastModified,
-                owner: element.owner,
-                title: element.title,
-                type: element.type} as TaskResponse);
+    console.log("Init called");
+    this.route.params.subscribe((params: Params) => {
+      console.log("route params received");
+      console.log(JSON.stringify(params.viewtype));
+        if (JSON.stringify(params.viewtype) === JSON.stringify(String('feladatok'))) {
+          this.getAllTasks = true;
+          this.getAllTasksFunction();
+          ModalComponent.closeBtnPressed.subscribe(
+            data => {
+              this.getAllTasksFunction();
+            },
+            error => {
+              console.log("subscribe error");
+            },
+            () => {
             });
 
-          },
-          error => {
-            console.log("subscribe error");
-          },
-          () => {
-          });
-      },
-      error => {
-        console.log("subscribe error");
-      },
-      () => {
-      })
+        } else {
+          this.getAllTasks = false;
+          this.getMyTasksFunction();
+          ModalComponent.closeBtnPressed.subscribe(
+            data => {
+              this.getMyTasksFunction();
+            },
+            error => {
+              console.log("subscribe error");
+            },
+            () => {
+            });
+        }
+    });
+
   }
 
   public deleteTask(input: number) {
@@ -99,31 +77,11 @@ export class ExercisesComponent implements OnInit {
     this.taskService.deleteTaskByIdUsingDELETE(input).subscribe(
       data => {
         console.log("calling delete get...");
-        this.taskService.getAllTaskUsingGET().subscribe(data => {
-            console.log("delete get data received");
-            this.exercises = new Array<TaskResponse>();
-            this.exercisesUI = new Array<TaskResponse>();
-            data.forEach(element => {
-              this.exercises.push({difficulty: element.difficulty,
-                id: element.id,
-                lastModified: element.lastModified,
-                owner: element.owner,
-                title: element.title,
-                type: element.type} as TaskResponse);
-              this.exercisesUI.push({difficulty: element.difficulty,
-                id: element.id,
-                lastModified: element.lastModified,
-                owner: element.owner,
-                title: element.title,
-                type: element.type} as TaskResponse);
-            });
-            this.exercisesLoaded = true;
-          },
-          error => {
-            console.log("subscribe error");
-          },
-          () => {
-          });
+        if(this.getAllTasks === true) {
+          this.getAllTasksFunction();
+        } else {
+          this.getMyTasksFunction();
+        }
       },
       err => {
 
@@ -136,8 +94,16 @@ export class ExercisesComponent implements OnInit {
 
 
   public removeModalnewTask() {
+    if(this.getAllTasks === true) {
+      this.getAllTasksFunction();
+    } else {
+      this.getMyTasksFunction();
+    }
+    this.modal.destroy();
+  }
+
+  private getAllTasksFunction() {
     this.taskService.getAllTaskUsingGET().subscribe(data => {
-        console.log("getAllTaskUsingGET data received");
         this.exercises = new Array<TaskResponse>();
         this.exercisesUI = new Array<TaskResponse>();
         data.forEach(element => {
@@ -153,15 +119,41 @@ export class ExercisesComponent implements OnInit {
             owner: element.owner,
             title: element.title,
             type: element.type} as TaskResponse);
-          console.log(element);
         });
+        this.exercisesLoaded = true;
       },
       error => {
         console.log("subscribe error");
       },
       () => {
       });
-    this.modal.destroy();
+  }
+
+  private getMyTasksFunction() {
+    this.taskService.getMyTaskUsingGET().subscribe(data => {
+        this.exercises = new Array<TaskResponse>();
+        this.exercisesUI = new Array<TaskResponse>();
+        data.forEach(element => {
+          this.exercises.push({difficulty: element.difficulty,
+            id: element.id,
+            lastModified: element.lastModified,
+            owner: element.owner,
+            title: element.title,
+            type: element.type} as TaskResponse);
+          this.exercisesUI.push({difficulty: element.difficulty,
+            id: element.id,
+            lastModified: element.lastModified,
+            owner: element.owner,
+            title: element.title,
+            type: element.type} as TaskResponse);
+        });
+        this.exercisesLoaded = true;
+      },
+      error => {
+        console.log("subscribe error");
+      },
+      () => {
+      });
   }
 
   public newTask() {
@@ -169,11 +161,12 @@ export class ExercisesComponent implements OnInit {
   }
 
   public convertEnum(input: string) {
-    ConvertEnum.convert(input);
+    ConvertEnum.convertType(input);
   }
 
-  public convertToLink(input: string) {
-    ConvertEnum.convertToRouterLink(input);
+
+  public redirect(input: string) {
+    this.router.navigate([ConvertEnum.convertTypeToRouterLink(input)]);
   }
 
   public subjectChange(input) {

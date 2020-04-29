@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {PairingServiceService} from '../../backend_temp/pairing-service.service';
+import {PairElement, PairingRequest, TaskResponse, TheEasyTasksService} from "../../../swagger-api";
 
 @Component({
   selector: 'app-pairing',
@@ -8,32 +9,33 @@ import {PairingServiceService} from '../../backend_temp/pairing-service.service'
 })
 export class PairingComponent implements OnInit {
 
-  public members: {title: string, content1: string, content2: string}[];
+  public members: PairingRequest;
 
-  constructor(public pairingService :PairingServiceService) {
-    this.members = pairingService.members;
-  }
+  constructor(public pairingService: PairingServiceService,
+              public theEasyTasksService: TheEasyTasksService) {
 
-  public onModelChange1(newValue, index) {
-    this.members[index].content1 = newValue;
-    this.pairingService.members = this.members;
-  }
-
-  public onModelChange2(newValue, index) {
-    this.members[index].content2 = newValue;
-    this.pairingService.members = this.members;
-  }
-
-  public deleteItem(index) {
-    this.members.splice(index,1);
-    this.pairingService.members = this.members;
-  }
-
-  public newPair() {
-    this.members.push({title: 'Title', content1: 'Subtitle', content2: 'Content here'});
   }
 
   ngOnInit(): void {
+    
   }
+
+  public onModelChange(newValue, indexService, indexPair) {
+    this.members[indexService].content1 = newValue;
+
+  }
+
+  public deleteItem(indexService) {
+
+  }
+
+  public addPairElement(indexService) {
+
+  }
+
+  public newPairing() {
+
+  }
+
 
 }
