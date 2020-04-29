@@ -17,6 +17,8 @@ class TaskService(
         private val sentenceCompletionRepository: SentenceCompletionRepository,
         private val sentenceCreationRepository: SentenceCreationRepository,
         private val sortingRepository: SortingRepository,
+        private val trueFalseRepository: TrueFalseRepository,
+        private val memoryGameRepository: MemoryGameRepository,
         private val groupingAndSortingRepository: GroupingAndSortingRepository,
         private val sentenceCreationAndSortingRepository: SentenceCreationAndSortingRepository,
         private val sentenceCreationAndGroupingRepository: SentenceCreationAndGroupingRepository,
@@ -36,6 +38,8 @@ class TaskService(
                 ?: sentenceCompletionRepository.findById(taskId).toNullable?.toDomainModel()
                 ?: sentenceCreationRepository.findById(taskId).toNullable?.toDomainModel()
                 ?: sortingRepository.findById(taskId).toNullable?.toDomainModel()
+                ?: trueFalseRepository.findById(taskId).toNullable?.toDomainModel()
+                ?: memoryGameRepository.findById(taskId).toNullable?.toDomainModel()
                 ?: groupingAndSortingRepository.findById(taskId).toNullable?.toDomainModel()
                 ?: sentenceCreationAndSortingRepository.findById(taskId).toNullable?.toDomainModel()
                 ?: sentenceCreationAndGroupingRepository.findById(taskId).toNullable?.toDomainModel()
@@ -56,6 +60,8 @@ class TaskService(
                 sentenceCompletionRepository.findAll().map { it.toDomainModel() },
                 sentenceCreationRepository.findAll().map { it.toDomainModel() },
                 sortingRepository.findAll().map { it.toDomainModel() },
+                trueFalseRepository.findAll().map { it.toDomainModel() },
+                memoryGameRepository.findAll().map { it.toDomainModel() },
                 groupingAndSortingRepository.findAll().map { it.toDomainModel() },
                 sentenceCreationAndSortingRepository.findAll().map { it.toDomainModel() },
                 sentenceCreationAndGroupingRepository.findAll().map { it.toDomainModel() },
@@ -90,6 +96,8 @@ class TaskService(
         tryDelete { sentenceCompletionRepository.deleteById(taskId) }
         tryDelete { sentenceCreationRepository.deleteById(taskId) }
         tryDelete { sortingRepository.deleteById(taskId) }
+        tryDelete { trueFalseRepository.deleteById(taskId) }
+        tryDelete { memoryGameRepository.deleteById(taskId) }
         tryDelete { groupingAndSortingRepository.deleteById(taskId) }
         tryDelete { sentenceCreationAndSortingRepository.deleteById(taskId) }
         tryDelete { sentenceCreationAndGroupingRepository.deleteById(taskId) }

@@ -5,7 +5,7 @@ import hu.aut.meixner.dto.task.common.TaskResponse
 import hu.aut.meixner.dto.task.common.TaskTypeEnum
 import java.time.OffsetDateTime
 
-open class GroupingResponse(
+class GroupingResponse(
         val groups: List<GroupResponse>,
         override val id: Long,
         override val type: TaskTypeEnum = TaskTypeEnum.Grouping,

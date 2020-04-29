@@ -5,15 +5,15 @@ import hu.aut.meixner.dto.task.common.TaskResponse
 import hu.aut.meixner.dto.task.common.TaskTypeEnum
 import java.time.OffsetDateTime
 
-class PairingResponse(
+class MemoryGameResponse(
         val pairs: List<PairElementResponse>,
         override val id: Long,
-        override val type: TaskTypeEnum = TaskTypeEnum.Pairing,
         override val title: String,
         override val owner: String,
         override val subject: SubjectEnum,
+        override val difficulty: Int,
         override val recommendedMinClass: Int,
         override val recommendedMaxClass: Int,
-        override val difficulty: Int,
-        override val lastModified: OffsetDateTime
+        override val lastModified: OffsetDateTime,
+        override val type: TaskTypeEnum = TaskTypeEnum.MemoryGame
 ) : TaskResponse()
