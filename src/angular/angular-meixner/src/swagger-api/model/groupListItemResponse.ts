@@ -9,9 +9,9 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import {MediaItemResponse} from './mediaItemResponse';
+import { MediaItemResponse } from './mediaItemResponse';
 
 
-export interface GroupListItemResponse {
-  elements: Array<MediaItemResponse>;
+export interface GroupListItemResponse { 
+    elements: Array<MediaItemResponse>;
 }

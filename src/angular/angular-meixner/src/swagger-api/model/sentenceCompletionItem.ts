@@ -11,7 +11,7 @@
  */
 
 
-export interface SentenceCompletionItem {
-  sentence: string;
-  options: Array<string>;
+export interface SentenceCompletionItem { 
+    sentence: string;
+    options: Array<string>;
 }

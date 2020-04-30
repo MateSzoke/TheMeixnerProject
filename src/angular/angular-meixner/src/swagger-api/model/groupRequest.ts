@@ -9,10 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import {MediaItemRequest} from './mediaItemRequest';
+import { MediaItemRequest } from './mediaItemRequest';
 
 
-export interface GroupRequest {
-  name: string;
-  elements: Array<MediaItemRequest>;
+export interface GroupRequest { 
+    name: string;
+    elements: Array<MediaItemRequest>;
 }

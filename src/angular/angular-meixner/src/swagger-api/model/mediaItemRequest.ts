@@ -11,7 +11,7 @@
  */
 
 
-export interface MediaItemRequest {
-  mediaItemId?: number;
-  content?: string;
+export interface MediaItemRequest { 
+    mediaItemId?: number;
+    content?: string;
 }

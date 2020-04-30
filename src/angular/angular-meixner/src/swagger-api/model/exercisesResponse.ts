@@ -9,14 +9,14 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import {TaskResponse} from './taskResponse';
+import { TaskResponse } from './taskResponse';
 
 
-export interface ExercisesResponse {
-  averageDifficulty: number;
-  comment: string;
-  id: number;
-  lastModified?: Date;
-  name: string;
-  tasks: Array<TaskResponse>;
+export interface ExercisesResponse { 
+    averageDifficulty: number;
+    comment: string;
+    id: number;
+    lastModified?: Date;
+    name: string;
+    tasks: Array<TaskResponse>;
 }

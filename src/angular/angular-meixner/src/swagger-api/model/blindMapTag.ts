@@ -11,8 +11,8 @@
  */
 
 
-export interface BlindMapTag {
-  text: string;
-  x?: number;
-  y?: number;
+export interface BlindMapTag { 
+    text: string;
+    x?: number;
+    y?: number;
 }

@@ -11,7 +11,7 @@
  */
 
 
-export interface ExerciseRequest {
-  name: string;
-  comment: string;
+export interface ExerciseRequest { 
+    name: string;
+    comment: string;
 }

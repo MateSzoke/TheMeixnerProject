@@ -11,10 +11,10 @@
  */
 
 
-export interface TimelineTag {
-  name: string;
-  tolerance: number;
-  valueDate?: Date;
-  valueDouble?: number;
-  valueInt?: number;
+export interface TimelineTag { 
+    name: string;
+    tolerance: number;
+    valueDate?: Date;
+    valueDouble?: number;
+    valueInt?: number;
 }
