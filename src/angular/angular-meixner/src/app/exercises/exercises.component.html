@@ -10,28 +10,22 @@
         <div class="fit-parent">
           <mat-form-field>
             <mat-label style="color: black;">Tantárgy</mat-label>
-            <mat-select>
-              <mat-option *ngFor="let tantargy of tantargyak" [value]="tantargy">
-                {{tantargy}}
+            <mat-select (selectionChange)="this.subjectChange($event)">
+              <mat-option *ngFor="let subject of subjects" [value]="subject">
+                {{subject}}
               </mat-option>
+              <mat-option>vissza</mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field>
             <mat-label style="color: black;">Évfolyam</mat-label>
-            <mat-select>
-              <mat-option *ngFor="let evfolyam of evfolyamok" [value]="evfolyam">
-                {{evfolyam}}
+            <mat-select (selectionChange)="this.classYearsChange($event)">
+              <mat-option *ngFor="let classYear of classYears" [value]="classYear">
+                {{classYear}}
               </mat-option>
+              <mat-option>vissza</mat-option>
             </mat-select>
           </mat-form-field>
-<!--          <mat-form-field>
-            <mat-label style="color: black;">Évfolyam</mat-label>
-            <mat-select>
-              <mat-option *ngFor="let osztaly of osztalyok" [value]="osztaly">
-                {{osztaly}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>-->
         </div>
         <button (click)="newTask()" class="plusButton" mat-button>
           <i class="fa fa-plus"></i>
@@ -41,46 +35,31 @@
   </mat-card>
   <br>
 </div>
-    <mat-card class="right-aligned-header">
-      <div fxLayout="row" fxLayout.xs="column-reverse" fxLayoutGap="8px">
-        <div class="float-left">
-          Körmozgás&nbsp;
-          <img class="image1" src="assets/icons/bars_lv2.png">
-        </div>
-        <div class="float-right">
-          {{this.today.getFullYear()}}.{{this.today.getMonth().toString().padStart(2, '0')}}.{{this.today.getDay().toString().padStart(2, '0')}}
-          &nbsp;&#8196;<i class="fa fa-trash"></i>&nbsp;
-          <i class="fa fa-edit"></i>&nbsp;&nbsp;
-        </div>
-      </div>
-    </mat-card>
 
-    <mat-card class="right-aligned-header">
+<div *ngIf="this.exercisesLoaded==false" >
+  <div class="wrapper">
+    <div class="inner">
+      <mat-spinner diameter="70"></mat-spinner>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="this.exercisesLoaded">
+  <mat-card class="right-aligned-header" *ngFor="let feladat of exercises; index as i">
     <div fxLayout="row" fxLayout.xs="column-reverse" fxLayoutGap="8px">
       <div class="float-left">
-        Newton I.&nbsp;&nbsp;
-        <img class="image1" src="assets/icons/bars_lv4.png">
+        {{feladat.title}} {{this.convertEnum(feladat.type)}}
+        <img class="image1" src="{{this.diffImServ.convertNumToPath100(feladat.difficulty)}}">
       </div>
       <div class="float-right">
         {{this.today.getFullYear()}}.{{this.today.getMonth().toString().padStart(2, '0')}}.{{this.today.getDay().toString().padStart(2, '0')}}
-        &nbsp;&#8196;<i class="fa fa-trash"></i>&nbsp;
-        <i class="fa fa-edit"></i>&nbsp;&nbsp;
+        &nbsp;&#8196;<i class="fa fa-trash" (click)="this.deleteTask(feladat.id)"></i>&nbsp;
+        <i (click)="this.redirect(feladat.type)" class="fa fa-edit"></i>&nbsp;&nbsp;
       </div>
     </div>
-    </mat-card>
+  </mat-card>
+</div>
 
-    <mat-card class="right-aligned-header">
-    <div fxLayout="row" fxLayout.xs="column-reverse" fxLayoutGap="8px">
-      <div class="float-left">
-        Ferde hajítás&nbsp;
-        <img class="image1" src="assets/icons/bars_lv3.png">
-      </div>
-      <div class="float-right">
-        {{this.today.getFullYear()}}.{{this.today.getMonth().toString().padStart(2, '0')}}.{{this.today.getDay().toString().padStart(2, '0')}}
-        &nbsp;&#8196;<i class="fa fa-trash"></i>&nbsp;
-        <i [routerLink]="['/sorrendezes']" class="fa fa-edit"></i>&nbsp;&nbsp;
-      </div>
-    </div>
-    </mat-card>
 </body>
 </html>

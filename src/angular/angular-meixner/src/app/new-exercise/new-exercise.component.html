@@ -1,45 +1,45 @@
-<form class="example-form">
+<form class="exercise-form">
   <p class="title-left">Feladat hozzáadása</p>
   <mat-form-field class="example-full-width">
     <mat-label>Feladat neve</mat-label>
-    <input matInput>
+    <input matInput type="text" (keyup)="this.setName($event.target.value)">
   </mat-form-field>
 
   <mat-card>
 
     <mat-form-field>
       <mat-label>Típus</mat-label>
-      <mat-select>
-        <mat-option *ngFor="let tipus of tipusok" [value]="tipus">
-          {{tipus}}
+      <mat-select (selectionChange)="this.typeSelected($event)">
+        <mat-option *ngFor="let type of types; let typeIndex=index" [value]="typeIndex" >
+          {{type}}
         </mat-option>
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field>
+
       <mat-label>Nehézség</mat-label>
-      <mat-select>
-        <mat-option *ngFor="let nehezseg of nehezsegek" [value]="nehezseg">
-          {{nehezseg}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+      <mat-slider (change)="this.difficultySelected($event)" class="mat-slide-1"
+                  thumbLabel
+                  tickInterval="1"
+                  min="1"
+                  max="100"></mat-slider>
+
   </mat-card>
   <mat-card>
     <mat-form-field>
       <mat-label>-tól</mat-label>
-      <mat-select>
-        <mat-option *ngFor="let osztaly of osztalyok" [value]="osztaly">
-          {{osztaly}}
+      <mat-select  (selectionChange)="this.classFromSelected($event)">
+        <mat-option *ngFor="let classFrom of classes" [value]="classFrom">
+          {{classFrom}}
         </mat-option>
       </mat-select>
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>-ig</mat-label>
-      <mat-select>
-        <mat-option *ngFor="let osztaly of osztalyok" [value]="osztaly">
-          {{osztaly}}
+      <mat-select (selectionChange)="this.classToSelected($event)">
+        <mat-option *ngFor="let classTo of classesTo" [value]="classTo">
+          {{classTo}}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -48,9 +48,9 @@
   <mat-card>
     <mat-form-field>
       <mat-label>Témakör</mat-label>
-      <mat-select>
-        <mat-option *ngFor="let temakor of temakorok" [value]="temakor">
-          {{temakor}}
+      <mat-select  (selectionChange)="this.topicSelected($event)">
+        <mat-option *ngFor="let topic of topics" [value]="topic">
+          {{topic}}
         </mat-option>
       </mat-select>
     </mat-form-field>
