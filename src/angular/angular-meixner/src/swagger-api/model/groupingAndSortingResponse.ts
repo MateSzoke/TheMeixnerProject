@@ -12,7 +12,7 @@
 import { GroupResponse } from './groupResponse';
 
 
-export interface GroupingResponse { 
+export interface GroupingAndSortingResponse { 
     difficulty: number;
     groups: Array<GroupResponse>;
     id: number;
@@ -20,11 +20,11 @@ export interface GroupingResponse {
     owner: string;
     recommendedMaxClass: number;
     recommendedMinClass: number;
-    subject: GroupingResponse.SubjectEnum;
+    subject: GroupingAndSortingResponse.SubjectEnum;
     title: string;
-    type: GroupingResponse.TypeEnum;
+    type: GroupingAndSortingResponse.TypeEnum;
 }
-export namespace GroupingResponse {
+export namespace GroupingAndSortingResponse {
     export type SubjectEnum = 'None' | 'Hungarian_grammar_and_literature' | 'Foreign_language' | 'Mathematics' | 'Ethics_religion' | 'Knowledge_environment' | 'Music' | 'Visual_culture' | 'Technique' | 'Sport' | 'History' | 'Biology' | 'Physics';
     export const SubjectEnum = {
         None: 'None' as SubjectEnum,

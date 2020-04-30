@@ -9,18 +9,20 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { BlindMapTag } from './blindMapTag';
 import { MediaItemRequest } from './mediaItemRequest';
 
 
-export interface SortingRequest { 
+export interface BlindMapRequest { 
+    image: MediaItemRequest;
+    tags: Array<BlindMapTag>;
     title: string;
     difficulty?: number;
-    subject: SortingRequest.SubjectEnum;
+    subject: BlindMapRequest.SubjectEnum;
     recommendedMinClass?: number;
     recommendedMaxClass?: number;
-    elements: Array<MediaItemRequest>;
 }
-export namespace SortingRequest {
+export namespace BlindMapRequest {
     export type SubjectEnum = 'None' | 'Hungarian_grammar_and_literature' | 'Foreign_language' | 'Mathematics' | 'Ethics_religion' | 'Knowledge_environment' | 'Music' | 'Visual_culture' | 'Technique' | 'Sport' | 'History' | 'Biology' | 'Physics';
     export const SubjectEnum = {
         None: 'None' as SubjectEnum,

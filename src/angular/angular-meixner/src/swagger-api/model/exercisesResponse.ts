@@ -9,17 +9,14 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { TaskResponse } from './taskResponse';
 
 
-export interface UserResponse { 
+export interface ExercisesResponse { 
+    averageDifficulty: number;
+    comment: string;
     id: number;
-    role: UserResponse.RoleEnum;
-    username: string;
-}
-export namespace UserResponse {
-    export type RoleEnum = 'ADMIN' | 'STUDENT';
-    export const RoleEnum = {
-        ADMIN: 'ADMIN' as RoleEnum,
-        STUDENT: 'STUDENT' as RoleEnum
-    };
+    lastModified?: Date;
+    name: string;
+    tasks: Array<TaskResponse>;
 }

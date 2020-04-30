@@ -9,22 +9,29 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { GroupResponse } from './groupResponse';
+import { TimelineTag } from './timelineTag';
 
 
-export interface GroupingResponse { 
+export interface TimelineResponse { 
     difficulty: number;
-    groups: Array<GroupResponse>;
     id: number;
     lastModified: Date;
+    maximumDate?: Date;
+    maximumDouble?: number;
+    maximumInt?: number;
+    minimumDate?: Date;
+    minimumDouble?: number;
+    minimumInt?: number;
     owner: string;
     recommendedMaxClass: number;
     recommendedMinClass: number;
-    subject: GroupingResponse.SubjectEnum;
+    subject: TimelineResponse.SubjectEnum;
+    timelineTags: Array<TimelineTag>;
+    timelineType: TimelineResponse.TimelineTypeEnum;
     title: string;
-    type: GroupingResponse.TypeEnum;
+    type: TimelineResponse.TypeEnum;
 }
-export namespace GroupingResponse {
+export namespace TimelineResponse {
     export type SubjectEnum = 'None' | 'Hungarian_grammar_and_literature' | 'Foreign_language' | 'Mathematics' | 'Ethics_religion' | 'Knowledge_environment' | 'Music' | 'Visual_culture' | 'Technique' | 'Sport' | 'History' | 'Biology' | 'Physics';
     export const SubjectEnum = {
         None: 'None' as SubjectEnum,
@@ -40,6 +47,12 @@ export namespace GroupingResponse {
         History: 'History' as SubjectEnum,
         Biology: 'Biology' as SubjectEnum,
         Physics: 'Physics' as SubjectEnum
+    };
+    export type TimelineTypeEnum = 'DATE' | 'INTEGER' | 'DOUBLE';
+    export const TimelineTypeEnum = {
+        DATE: 'DATE' as TimelineTypeEnum,
+        INTEGER: 'INTEGER' as TimelineTypeEnum,
+        DOUBLE: 'DOUBLE' as TimelineTypeEnum
     };
     export type TypeEnum = 'Grouping' | 'Pairing' | 'SentenceCompletion' | 'SentenceCreation' | 'Sorting' | 'TrueFalse' | 'MemoryGame' | 'GroupingAndSorting' | 'SentenceCompletionAndGrouping' | 'SentenceCompletionAndSorting' | 'SentenceCreationAndGrouping' | 'SentenceCreationAndSorting' | 'SortingAndGrouping' | 'BlindMap' | 'FreeText' | 'OddOneOut' | 'TimeLine' | 'Table';
     export const TypeEnum = {

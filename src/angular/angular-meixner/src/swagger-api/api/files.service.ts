@@ -18,8 +18,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
-import { UserRequest } from '../model/userRequest';
-import { UserResponse } from '../model/userResponse';
+import { MediaItemResponse } from '../model/mediaItemResponse';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -28,7 +27,7 @@ import { Configuration }                                     from '../configurat
 @Injectable({
   providedIn: 'root'
 })
-export class AccountService {
+export class FilesService {
 
     protected basePath = 'http://meixner.herokuapp.com';
     public defaultHeaders = new HttpHeaders();
@@ -61,15 +60,19 @@ export class AccountService {
 
 
     /**
-     * Get current logged in user
+     * Download file by fileId
      * 
+     * @param fileId fileId
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getCurrentUserUsingGET(observe?: 'body', reportProgress?: boolean): Observable<UserResponse>;
-    public getCurrentUserUsingGET(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserResponse>>;
-    public getCurrentUserUsingGET(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserResponse>>;
-    public getCurrentUserUsingGET(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public downloadFileUsingGET(fileId: number, observe?: 'body', reportProgress?: boolean): Observable<string>;
+    public downloadFileUsingGET(fileId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
+    public downloadFileUsingGET(fileId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
+    public downloadFileUsingGET(fileId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (fileId === null || fileId === undefined) {
+            throw new Error('Required parameter fileId was null or undefined when calling downloadFileUsingGET.');
+        }
 
         let headers = this.defaultHeaders;
 
@@ -91,7 +94,7 @@ export class AccountService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<UserResponse>(`${this.configuration.basePath}/account/currentUser`,
+        return this.httpClient.get<string>(`${this.configuration.basePath}/files/download/${encodeURIComponent(String(fileId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -102,62 +105,18 @@ export class AccountService {
     }
 
     /**
-     * Log in
-     * Here you can log in. Please use browser developer tools for getting Authorization token from header response.
-     * @param body The body of request. Example: {\&quot;username\&quot;:\&quot;admin\&quot;,\&quot;password\&quot;:\&quot;admin\&quot;}
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public loginUsingPOST(body: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public loginUsingPOST(body: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public loginUsingPOST(body: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public loginUsingPOST(body: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-        if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling loginUsingPOST.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected !== undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
-
-        return this.httpClient.post<any>(`${this.configuration.basePath}/login`,
-            body,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * Registers a new user who can then use the Meixner application
+     * You can upload file here
      * 
-     * @param userRequest userRequest
+     * @param file file
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public registerUsingPOST(userRequest: UserRequest, observe?: 'body', reportProgress?: boolean): Observable<UserResponse>;
-    public registerUsingPOST(userRequest: UserRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserResponse>>;
-    public registerUsingPOST(userRequest: UserRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserResponse>>;
-    public registerUsingPOST(userRequest: UserRequest, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-        if (userRequest === null || userRequest === undefined) {
-            throw new Error('Required parameter userRequest was null or undefined when calling registerUsingPOST.');
+    public uploadUsingPOST(file: Blob, observe?: 'body', reportProgress?: boolean): Observable<MediaItemResponse>;
+    public uploadUsingPOST(file: Blob, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<MediaItemResponse>>;
+    public uploadUsingPOST(file: Blob, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<MediaItemResponse>>;
+    public uploadUsingPOST(file: Blob, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (file === null || file === undefined) {
+            throw new Error('Required parameter file was null or undefined when calling uploadUsingPOST.');
         }
 
         let headers = this.defaultHeaders;
@@ -178,15 +137,29 @@ export class AccountService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
-            'application/json'
+            'multipart/form-data'
         ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected !== undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
+
+        const canConsumeForm = this.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): any; };
+        let useForm = false;
+        let convertFormParamsToString = false;
+        // use FormData to transmit files using content-type "multipart/form-data"
+        // see https://stackoverflow.com/questions/4007969/application-x-www-form-urlencoded-or-multipart-form-data
+        useForm = canConsumeForm;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         }
 
-        return this.httpClient.post<UserResponse>(`${this.configuration.basePath}/account/register`,
-            userRequest,
+        if (file !== undefined) {
+            formParams = formParams.append('file', <any>file) || formParams;
+        }
+
+        return this.httpClient.post<MediaItemResponse>(`${this.configuration.basePath}/files/upload`,
+            convertFormParamsToString ? formParams.toString() : formParams,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

@@ -9,22 +9,23 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { GroupResponse } from './groupResponse';
+import { MediaItemResponse } from './mediaItemResponse';
 
 
-export interface GroupingResponse { 
+export interface FreeTextResponse { 
+    correctAnswer: string;
     difficulty: number;
-    groups: Array<GroupResponse>;
     id: number;
     lastModified: Date;
     owner: string;
+    question: MediaItemResponse;
     recommendedMaxClass: number;
     recommendedMinClass: number;
-    subject: GroupingResponse.SubjectEnum;
+    subject: FreeTextResponse.SubjectEnum;
     title: string;
-    type: GroupingResponse.TypeEnum;
+    type: FreeTextResponse.TypeEnum;
 }
-export namespace GroupingResponse {
+export namespace FreeTextResponse {
     export type SubjectEnum = 'None' | 'Hungarian_grammar_and_literature' | 'Foreign_language' | 'Mathematics' | 'Ethics_religion' | 'Knowledge_environment' | 'Music' | 'Visual_culture' | 'Technique' | 'Sport' | 'History' | 'Biology' | 'Physics';
     export const SubjectEnum = {
         None: 'None' as SubjectEnum,
