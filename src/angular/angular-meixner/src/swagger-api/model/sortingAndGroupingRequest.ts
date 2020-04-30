@@ -9,18 +9,18 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { MediaItemRequest } from './mediaItemRequest';
+import { GroupListItemRequest } from './groupListItemRequest';
 
 
-export interface SortingRequest { 
+export interface SortingAndGroupingRequest { 
     title: string;
     difficulty?: number;
-    subject: SortingRequest.SubjectEnum;
+    subject: SortingAndGroupingRequest.SubjectEnum;
     recommendedMinClass?: number;
     recommendedMaxClass?: number;
-    elements: Array<MediaItemRequest>;
+    groups: Array<GroupListItemRequest>;
 }
-export namespace SortingRequest {
+export namespace SortingAndGroupingRequest {
     export type SubjectEnum = 'None' | 'Hungarian_grammar_and_literature' | 'Foreign_language' | 'Mathematics' | 'Ethics_religion' | 'Knowledge_environment' | 'Music' | 'Visual_culture' | 'Technique' | 'Sport' | 'History' | 'Biology' | 'Physics';
     export const SubjectEnum = {
         None: 'None' as SubjectEnum,

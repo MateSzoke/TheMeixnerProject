@@ -12,15 +12,16 @@
 import { MediaItemRequest } from './mediaItemRequest';
 
 
-export interface SortingRequest { 
+export interface TrueFalseRequest { 
+    trueItems: Array<MediaItemRequest>;
+    falseItems: Array<MediaItemRequest>;
     title: string;
     difficulty?: number;
-    subject: SortingRequest.SubjectEnum;
+    subject: TrueFalseRequest.SubjectEnum;
     recommendedMinClass?: number;
     recommendedMaxClass?: number;
-    elements: Array<MediaItemRequest>;
 }
-export namespace SortingRequest {
+export namespace TrueFalseRequest {
     export type SubjectEnum = 'None' | 'Hungarian_grammar_and_literature' | 'Foreign_language' | 'Mathematics' | 'Ethics_religion' | 'Knowledge_environment' | 'Music' | 'Visual_culture' | 'Technique' | 'Sport' | 'History' | 'Biology' | 'Physics';
     export const SubjectEnum = {
         None: 'None' as SubjectEnum,

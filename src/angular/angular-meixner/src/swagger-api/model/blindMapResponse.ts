@@ -9,22 +9,24 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { GroupResponse } from './groupResponse';
+import { BlindMapTag } from './blindMapTag';
+import { MediaItemResponse } from './mediaItemResponse';
 
 
-export interface GroupingResponse { 
+export interface BlindMapResponse { 
     difficulty: number;
-    groups: Array<GroupResponse>;
     id: number;
+    image: MediaItemResponse;
     lastModified: Date;
     owner: string;
     recommendedMaxClass: number;
     recommendedMinClass: number;
-    subject: GroupingResponse.SubjectEnum;
+    subject: BlindMapResponse.SubjectEnum;
+    tags: Array<BlindMapTag>;
     title: string;
-    type: GroupingResponse.TypeEnum;
+    type: BlindMapResponse.TypeEnum;
 }
-export namespace GroupingResponse {
+export namespace BlindMapResponse {
     export type SubjectEnum = 'None' | 'Hungarian_grammar_and_literature' | 'Foreign_language' | 'Mathematics' | 'Ethics_religion' | 'Knowledge_environment' | 'Music' | 'Visual_culture' | 'Technique' | 'Sport' | 'History' | 'Biology' | 'Physics';
     export const SubjectEnum = {
         None: 'None' as SubjectEnum,

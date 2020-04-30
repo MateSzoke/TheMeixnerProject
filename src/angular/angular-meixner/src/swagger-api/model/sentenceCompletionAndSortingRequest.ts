@@ -9,18 +9,18 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { MediaItemRequest } from './mediaItemRequest';
+import { SentenceCompletionItem } from './sentenceCompletionItem';
 
 
-export interface SortingRequest { 
+export interface SentenceCompletionAndSortingRequest { 
+    sentences: Array<SentenceCompletionItem>;
     title: string;
     difficulty?: number;
-    subject: SortingRequest.SubjectEnum;
+    subject: SentenceCompletionAndSortingRequest.SubjectEnum;
     recommendedMinClass?: number;
     recommendedMaxClass?: number;
-    elements: Array<MediaItemRequest>;
 }
-export namespace SortingRequest {
+export namespace SentenceCompletionAndSortingRequest {
     export type SubjectEnum = 'None' | 'Hungarian_grammar_and_literature' | 'Foreign_language' | 'Mathematics' | 'Ethics_religion' | 'Knowledge_environment' | 'Music' | 'Visual_culture' | 'Technique' | 'Sport' | 'History' | 'Biology' | 'Physics';
     export const SubjectEnum = {
         None: 'None' as SubjectEnum,
