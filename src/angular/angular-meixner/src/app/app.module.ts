@@ -17,7 +17,7 @@ import { LoginComponent } from './login/login.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {MatInputModule} from '@angular/material/input';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatExpansionModule} from '@angular/material/expansion';
@@ -41,6 +41,7 @@ import { SentencecreationSortingComponent } from './exercise_types/sentencecreat
 import { SortingGroupingComponent } from './exercise_types/sorting-grouping/sorting-grouping.component';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {HttpInterceptorService} from "./service/http-interceptor.service";
 
 @NgModule({
   declarations: [
@@ -87,7 +88,9 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
         MatSliderModule,
         MatProgressSpinnerModule
     ],
-  providers: [DomService, ModalService, ModalComponent,LoginComponent, NewExerciseComponent],
+  providers: [DomService, ModalService, ModalComponent,
+    {provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true},
+    LoginComponent, NewExerciseComponent],
   bootstrap: [AppComponent],
   entryComponents: [NewExerciseComponent, LoginComponent, ModalComponent]
 })

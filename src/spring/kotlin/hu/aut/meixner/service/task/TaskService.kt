@@ -1,10 +1,12 @@
 package hu.aut.meixner.service.task
 
-import hu.aut.meixner.dto.mapping.toEntity
-import hu.aut.meixner.dto.task.TaskResponse
+import hu.aut.meixner.dto.task.common.TaskResponse
 import hu.aut.meixner.extensions.currentUser
 import hu.aut.meixner.extensions.toNullable
-import hu.aut.meixner.repository.task.easytask.*
+import hu.aut.meixner.mapping.toDomainModel
+import hu.aut.meixner.repository.task.complex.*
+import hu.aut.meixner.repository.task.easy.*
+import hu.aut.meixner.repository.task.other.*
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.stereotype.Service
 
@@ -14,24 +16,63 @@ class TaskService(
         private val groupingRepository: GroupingRepository,
         private val sentenceCompletionRepository: SentenceCompletionRepository,
         private val sentenceCreationRepository: SentenceCreationRepository,
-        private val sortingRepository: SortingRepository
+        private val sortingRepository: SortingRepository,
+        private val trueFalseRepository: TrueFalseRepository,
+        private val memoryGameRepository: MemoryGameRepository,
+        private val groupingAndSortingRepository: GroupingAndSortingRepository,
+        private val sentenceCreationAndSortingRepository: SentenceCreationAndSortingRepository,
+        private val sentenceCreationAndGroupingRepository: SentenceCreationAndGroupingRepository,
+        private val sentenceCompletionAndSortingRepository: SentenceCompletionAndGroupingRepository,
+        private val sentenceCompletionAndGroupingRepository: SentenceCompletionAndSortingRepository,
+        private val sortingAndGroupingRepository: SortingAndGroupingRepository,
+        private val blindMapRepository: BlindMapRepository,
+        private val timelineRepository: TimelineRepository,
+        private val oddOneOutRepository: OddOneOutRepository,
+        private val freeTextRepository: FreeTextRepository,
+        private val tableRepository: TableRepository
 ) {
 
     fun getTaskById(taskId: Long): TaskResponse? {
-        return pairingRepository.findById(taskId).toNullable?.toEntity()
-                ?: groupingRepository.findById(taskId).toNullable?.toEntity()
-                ?: sentenceCompletionRepository.findById(taskId).toNullable?.toEntity()
-                ?: sentenceCreationRepository.findById(taskId).toNullable?.toEntity()
-                ?: sortingRepository.findById(taskId).toNullable?.toEntity()
+        return pairingRepository.findById(taskId).toNullable?.toDomainModel()
+                ?: groupingRepository.findById(taskId).toNullable?.toDomainModel()
+                ?: sentenceCompletionRepository.findById(taskId).toNullable?.toDomainModel()
+                ?: sentenceCreationRepository.findById(taskId).toNullable?.toDomainModel()
+                ?: sortingRepository.findById(taskId).toNullable?.toDomainModel()
+                ?: trueFalseRepository.findById(taskId).toNullable?.toDomainModel()
+                ?: memoryGameRepository.findById(taskId).toNullable?.toDomainModel()
+                ?: groupingAndSortingRepository.findById(taskId).toNullable?.toDomainModel()
+                ?: sentenceCreationAndSortingRepository.findById(taskId).toNullable?.toDomainModel()
+                ?: sentenceCreationAndGroupingRepository.findById(taskId).toNullable?.toDomainModel()
+                ?: sentenceCompletionAndSortingRepository.findById(taskId).toNullable?.toDomainModel()
+                ?: sentenceCompletionAndGroupingRepository.findById(taskId).toNullable?.toDomainModel()
+                ?: sortingAndGroupingRepository.findById(taskId).toNullable?.toDomainModel()
+                ?: blindMapRepository.findById(taskId).toNullable?.toDomainModel()
+                ?: timelineRepository.findById(taskId).toNullable?.toDomainModel()
+                ?: oddOneOutRepository.findById(taskId).toNullable?.toDomainModel()
+                ?: freeTextRepository.findById(taskId).toNullable?.toDomainModel()
+                ?: tableRepository.findById(taskId).toNullable?.toDomainModel()
     }
 
     fun getAllTasks(): List<TaskResponse> {
         return listOf(
-                pairingRepository.findAll().map { it.toEntity() },
-                groupingRepository.findAll().map { it.toEntity() },
-                sentenceCompletionRepository.findAll().map { it.toEntity() },
-                sentenceCreationRepository.findAll().map { it.toEntity() },
-                sortingRepository.findAll().map { it.toEntity() }
+                pairingRepository.findAll().map { it.toDomainModel() },
+                groupingRepository.findAll().map { it.toDomainModel() },
+                sentenceCompletionRepository.findAll().map { it.toDomainModel() },
+                sentenceCreationRepository.findAll().map { it.toDomainModel() },
+                sortingRepository.findAll().map { it.toDomainModel() },
+                trueFalseRepository.findAll().map { it.toDomainModel() },
+                memoryGameRepository.findAll().map { it.toDomainModel() },
+                groupingAndSortingRepository.findAll().map { it.toDomainModel() },
+                sentenceCreationAndSortingRepository.findAll().map { it.toDomainModel() },
+                sentenceCreationAndGroupingRepository.findAll().map { it.toDomainModel() },
+                sentenceCompletionAndSortingRepository.findAll().map { it.toDomainModel() },
+                sentenceCompletionAndGroupingRepository.findAll().map { it.toDomainModel() },
+                sortingAndGroupingRepository.findAll().map { it.toDomainModel() },
+                blindMapRepository.findAll().map { it.toDomainModel() },
+                timelineRepository.findAll().map { it.toDomainModel() },
+                oddOneOutRepository.findAll().map { it.toDomainModel() },
+                freeTextRepository.findAll().map { it.toDomainModel() },
+                tableRepository.findAll().map { it.toDomainModel() }
         )
                 .flatten()
                 .sortedBy { it.lastModified }
@@ -55,6 +96,19 @@ class TaskService(
         tryDelete { sentenceCompletionRepository.deleteById(taskId) }
         tryDelete { sentenceCreationRepository.deleteById(taskId) }
         tryDelete { sortingRepository.deleteById(taskId) }
+        tryDelete { trueFalseRepository.deleteById(taskId) }
+        tryDelete { memoryGameRepository.deleteById(taskId) }
+        tryDelete { groupingAndSortingRepository.deleteById(taskId) }
+        tryDelete { sentenceCreationAndSortingRepository.deleteById(taskId) }
+        tryDelete { sentenceCreationAndGroupingRepository.deleteById(taskId) }
+        tryDelete { sentenceCompletionAndSortingRepository.deleteById(taskId) }
+        tryDelete { sentenceCompletionAndGroupingRepository.deleteById(taskId) }
+        tryDelete { sortingAndGroupingRepository.deleteById(taskId) }
+        tryDelete { blindMapRepository.deleteById(taskId) }
+        tryDelete { timelineRepository.deleteById(taskId) }
+        tryDelete { oddOneOutRepository.deleteById(taskId) }
+        tryDelete { freeTextRepository.deleteById(taskId) }
+        tryDelete { tableRepository.deleteById(taskId) }
     }
 
 }

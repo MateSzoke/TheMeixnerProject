@@ -1,1 +1,34 @@
-<p>users works!</p>
+<div class="container">
+  <mat-card class="my-card">
+    <mat-card-title>
+      Regisztráció
+    </mat-card-title>
+    <mat-card-content>
+      <div *ngIf='this.wrongUser' class="alert alert-warning">Rossz adatok lettek megadva!</div>
+      <form class="my-form">
+        <mat-form-field class="full-width">
+          <mat-label>felhasználónév</mat-label>
+          <input [(ngModel)]="username" matInput name="felhasználónév" placeholder="felhasználónév">
+        </mat-form-field>
+        <br>
+        <mat-form-field class="full-width">
+          <mat-label>jelszó</mat-label>
+          <input (keyup.enter)="register()" [(ngModel)]="password" matInput name="jelszó" placeholder="jelszó"
+                 type="password">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Jogok</mat-label>
+          <mat-select (selectionChange)="this.roleChange($event)">
+            <mat-option *ngFor="let role of roles; let roleIndex=index" [value]="roleIndex">
+              {{role}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+      <button (click)="register()" class="loginbtn" mat-raised-button>REGISZTRÁLÁS</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

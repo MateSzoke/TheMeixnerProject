@@ -16,5 +16,3 @@ class MeixnerApplication {
 fun main(args: Array<String>) {
     runApplication<MeixnerApplication>(*args)
 }
-
-

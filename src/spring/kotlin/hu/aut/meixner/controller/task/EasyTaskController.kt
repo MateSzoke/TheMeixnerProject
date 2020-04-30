@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
-@Api(tags = ["The easy tasks"], description = "Add and update Pairing, Grouping, Sorting, Sentence completion, Sentence creation tasks")
+@Api(tags = ["Easy tasks"], description = "Add and update Pairing, Grouping, Sorting, Sentence completion, Sentence creation tasks")
 @RestController
 @RequestMapping("/tasks")
 class EasyTaskController(
@@ -16,14 +16,17 @@ class EasyTaskController(
         private val groupingService: GroupingService,
         private val sentenceCompletionService: SentenceCompletionService,
         private val sentenceCreationService: SentenceCreationService,
-        private val sortingService: SortingService
+        private val sortingService: SortingService,
+        private val trueFalseService: TrueFalseService,
+        private val memoryGameService: MemoryGameService
 ) {
 
     //region Pairing
     @PostMapping("/pairing")
     @ApiOperation("Creates a new Pairing task.")
     fun createPairing(@RequestBody @Valid pairingRequest: PairingRequest): ResponseEntity<PairingResponse> {
-        return ResponseEntity.ok(pairingService.createPairing(pairingRequest))
+        val response = pairingService.createPairing(pairingRequest) ?: return ResponseEntity.badRequest().build()
+        return ResponseEntity.ok(response)
     }
 
     @PatchMapping("/pairing/{taskId}")
@@ -41,7 +44,8 @@ class EasyTaskController(
     @PostMapping("/grouping")
     @ApiOperation("Creates a new Grouping task.")
     fun createGrouping(@RequestBody @Valid groupingRequest: GroupingRequest): ResponseEntity<GroupingResponse> {
-        return ResponseEntity.ok(groupingService.createGrouping(groupingRequest))
+        val result = groupingService.createGrouping(groupingRequest) ?: return ResponseEntity.badRequest().build()
+        return ResponseEntity.ok(result)
     }
 
     @PatchMapping("/grouping/{taskId}")
@@ -99,7 +103,8 @@ class EasyTaskController(
     @PostMapping("/sorting")
     @ApiOperation("Creates a new Sorting task.")
     fun createSorting(@RequestBody @Valid sortingRequest: SortingRequest): ResponseEntity<SortingResponse> {
-        return ResponseEntity.ok(sortingService.createSorting(sortingRequest))
+        val result = sortingService.createSorting(sortingRequest) ?: return ResponseEntity.badRequest().build()
+        return ResponseEntity.ok(result)
     }
 
     @PatchMapping("/sorting/{taskId}")
@@ -111,6 +116,44 @@ class EasyTaskController(
         val sortingResponse = sortingService.updateSorting(taskId, sortingRequest)
                 ?: return ResponseEntity.notFound().build()
         return ResponseEntity.ok(sortingResponse)
+    }
+    //endregion
+
+    //region TrueFalse
+    @PostMapping("/trueFalse")
+    @ApiOperation("Creates a new TrueFalse task.")
+    fun createTrueFalse(@RequestBody @Valid request: TrueFalseRequest): ResponseEntity<TrueFalseResponse> {
+        val response = trueFalseService.createTrueFalse(request) ?: return ResponseEntity.badRequest().build()
+        return ResponseEntity.ok(response)
+    }
+
+    @PatchMapping("/trueFalse/{taskId}")
+    @ApiOperation("Updates existing TrueFalse task by taskId.")
+    fun updateTrueFalseById(
+            @PathVariable("taskId") taskId: Long,
+            @RequestBody @Valid request: TrueFalseRequest
+    ): ResponseEntity<TrueFalseResponse> {
+        val result = trueFalseService.updateTrueFalse(taskId, request) ?: return ResponseEntity.notFound().build()
+        return ResponseEntity.ok(result)
+    }
+    //endregion
+
+    //region MemoryGame
+    @PostMapping("/memoryGame")
+    @ApiOperation("Creates a new Memory game task.")
+    fun createMemoryGame(@RequestBody @Valid request: MemoryGameRequest): ResponseEntity<MemoryGameResponse> {
+        val response = memoryGameService.createMemoryGame(request) ?: return ResponseEntity.badRequest().build()
+        return ResponseEntity.ok(response)
+    }
+
+    @PatchMapping("/memoryGame/{taskId}")
+    @ApiOperation("Updates existing Memory game task by taskId.")
+    fun updateMemoryGamed(
+            @PathVariable("taskId") taskId: Long,
+            @RequestBody @Valid request: MemoryGameRequest
+    ): ResponseEntity<MemoryGameResponse> {
+        val result = memoryGameService.updateMemoryGame(taskId, request) ?: return ResponseEntity.notFound().build()
+        return ResponseEntity.ok(result)
     }
     //endregion
 

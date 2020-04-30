@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import {AuthenticationService} from './service/authentication.service';
-import {DefaultService} from './backend_temp/default.service';
 
 @Component({
   selector: 'app-root',
@@ -12,13 +11,19 @@ export class AppComponent {
   public logInStatus = false;
 
   constructor(
-    public authenticationService: AuthenticationService,
-    private service: DefaultService
+    public authenticationService: AuthenticationService
   ) {
-    this.service.loggedInStatus.subscribe((data: boolean) =>
-    {
-      this.logInStatus = data;
-    });
+      this.authenticationService.userLoggedIn.subscribe(
+        data => {
+          this.logInStatus = data;
+        },
+        err => {
+
+        },
+        fin => {
+
+        }
+      );
   }
 
   onLogout() {

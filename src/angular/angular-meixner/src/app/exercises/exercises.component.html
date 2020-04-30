@@ -11,8 +11,8 @@
           <mat-form-field>
             <mat-label style="color: black;">Tantárgy</mat-label>
             <mat-select (selectionChange)="this.subjectChange($event)">
-              <mat-option *ngFor="let tantargy of subjects" [value]="tantargy">
-                {{tantargy}}
+              <mat-option *ngFor="let subject of subjects" [value]="subject">
+                {{subject}}
               </mat-option>
               <mat-option>vissza</mat-option>
             </mat-select>
@@ -20,8 +20,8 @@
           <mat-form-field>
             <mat-label style="color: black;">Évfolyam</mat-label>
             <mat-select (selectionChange)="this.classYearsChange($event)">
-              <mat-option *ngFor="let evfolyam of classYears" [value]="evfolyam">
-                {{evfolyam}}
+              <mat-option *ngFor="let classYear of classYears" [value]="classYear">
+                {{classYear}}
               </mat-option>
               <mat-option>vissza</mat-option>
             </mat-select>
@@ -39,7 +39,7 @@
 <div *ngIf="this.exercisesLoaded==false" >
   <div class="wrapper">
     <div class="inner">
-      <mat-spinner></mat-spinner>
+      <mat-spinner diameter="70"></mat-spinner>
     </div>
   </div>
 </div>
@@ -49,13 +49,13 @@
   <mat-card class="right-aligned-header" *ngFor="let feladat of exercises; index as i">
     <div fxLayout="row" fxLayout.xs="column-reverse" fxLayoutGap="8px">
       <div class="float-left">
-        {{feladat.title}} - {{this.convertEnum(feladat.type)}}
+        {{feladat.title}} {{this.convertEnum(feladat.type)}}
         <img class="image1" src="{{this.diffImServ.convertNumToPath100(feladat.difficulty)}}">
       </div>
       <div class="float-right">
         {{this.today.getFullYear()}}.{{this.today.getMonth().toString().padStart(2, '0')}}.{{this.today.getDay().toString().padStart(2, '0')}}
         &nbsp;&#8196;<i class="fa fa-trash" (click)="this.deleteTask(feladat.id)"></i>&nbsp;
-        <i [routerLink]="['/csoportositas']" class="fa fa-edit"></i>&nbsp;&nbsp;
+        <i (click)="this.redirect(feladat.type)" class="fa fa-edit"></i>&nbsp;&nbsp;
       </div>
     </div>
   </mat-card>

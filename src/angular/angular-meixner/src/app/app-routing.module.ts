@@ -32,7 +32,7 @@ const routes: Routes = [
     canActivate: [RouteGuardService]
   },
   {
-    path: 'feladatok',
+    path: 'feladatok/:viewtype',
     component: ExercisesComponent,
     canActivate: [RouteGuardService]
   },

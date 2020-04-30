@@ -1,38 +1,46 @@
 package hu.aut.meixner.service.task.easy
 
-import hu.aut.meixner.dto.mapping.toDBModel
-import hu.aut.meixner.dto.mapping.toEntity
 import hu.aut.meixner.dto.task.easy.PairingRequest
 import hu.aut.meixner.dto.task.easy.PairingResponse
+import hu.aut.meixner.entity.task.easy.PairEntity
 import hu.aut.meixner.extensions.currentUser
 import hu.aut.meixner.extensions.ownerIsTheCurrentUser
 import hu.aut.meixner.extensions.toNullable
-import hu.aut.meixner.repository.task.easytask.PairingRepository
+import hu.aut.meixner.mapping.toDomainModel
+import hu.aut.meixner.mapping.toEntity
+import hu.aut.meixner.repository.task.easy.PairingRepository
+import hu.aut.meixner.service.file.MediaItemService
 import org.springframework.stereotype.Service
-import java.time.OffsetDateTime
 
 @Service
 class PairingService(
-        private val pairingRepository: PairingRepository
+        private val pairingRepository: PairingRepository,
+        private val mediaItemService: MediaItemService
 ) {
 
-    fun createPairing(pairing: PairingRequest): PairingResponse {
-        return pairingRepository.save(pairing.toDBModel(currentUser)).toEntity()
+    fun createPairing(pairing: PairingRequest): PairingResponse? {
+        val result = pairing.toEntity(owner = currentUser, pairs = pairing.pairs.map { pair ->
+            PairEntity(
+                    pair = pair.pair.map {
+                        mediaItemService.mediaItemRequestToEntity(it) ?: return null
+                    }.toMutableList()
+            )
+        })
+        return pairingRepository.save(result).toDomainModel()
     }
 
     fun updatePairing(id: Long, pairingRequest: PairingRequest): PairingResponse? {
         val pairing = pairingRepository.findById(id).toNullable ?: return null
         if (!pairing.ownerIsTheCurrentUser) return null
         return pairingRepository.save(
-                pairingRequest.run {
-                    pairing.copy(
-                            title = title,
-                            pairs = pairs.map { it.toDBModel() }.toMutableList(),
-                            difficulty = difficulty,
-                            lastModified = OffsetDateTime.now()
+                pairingRequest.toEntity(owner = currentUser, pairs = pairingRequest.pairs.map { pair ->
+                    PairEntity(
+                            pair = pair.pair.map {
+                                mediaItemService.mediaItemRequestToEntity(it) ?: return null
+                            }.toMutableList()
                     )
-                }.apply { this.id = id }
-        ).toEntity()
+                }).apply { this.id = id }
+        ).toDomainModel()
     }
 
 }

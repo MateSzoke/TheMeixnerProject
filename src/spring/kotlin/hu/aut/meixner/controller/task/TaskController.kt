@@ -1,6 +1,6 @@
 package hu.aut.meixner.controller.task
 
-import hu.aut.meixner.dto.task.TaskResponse
+import hu.aut.meixner.dto.task.common.TaskResponse
 import hu.aut.meixner.service.task.TaskService
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
