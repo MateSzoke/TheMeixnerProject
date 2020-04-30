@@ -9,19 +9,21 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import {GroupRequest} from './groupRequest';
+import {BlindMapTag} from './blindMapTag';
+import {MediaItemRequest} from './mediaItemRequest';
 
 
-export interface GroupingRequest {
-    title: string;
-    difficulty?: number;
-  subject: GroupingRequest.SubjectEnum;
+export interface BlindMapRequest {
+  image: MediaItemRequest;
+  tags: Array<BlindMapTag>;
+  title: string;
+  difficulty?: number;
+  subject: BlindMapRequest.SubjectEnum;
   recommendedMinClass?: number;
   recommendedMaxClass?: number;
-  groups: Array<GroupRequest>;
 }
 
-export namespace GroupingRequest {
+export namespace BlindMapRequest {
   export type SubjectEnum =
     'None'
     | 'Hungarian_grammar_and_literature'

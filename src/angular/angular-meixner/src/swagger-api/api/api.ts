@@ -1,9 +1,18 @@
 export * from './account.service';
-import { AccountService } from './account.service';
+import {AccountService} from './account.service';
+import {BasicErrorControllerService} from './basicErrorController.service';
+import {ComplexTasksService} from './complexTasks.service';
+import {EasyTasksService} from './easyTasks.service';
+import {ExercisesService} from './exercises.service';
+import {FilesService} from './files.service';
+import {OtherTasksService} from './otherTasks.service';
+import {TaskService} from './task.service';
+
 export * from './basicErrorController.service';
-import { BasicErrorControllerService } from './basicErrorController.service';
+export * from './complexTasks.service';
+export * from './easyTasks.service';
+export * from './exercises.service';
+export * from './files.service';
+export * from './otherTasks.service';
 export * from './task.service';
-import { TaskService } from './task.service';
-export * from './theEasyTasks.service';
-import { TheEasyTasksService } from './theEasyTasks.service';
-export const APIS = [AccountService, BasicErrorControllerService, TaskService, TheEasyTasksService];
+export const APIS = [AccountService, BasicErrorControllerService, ComplexTasksService, EasyTasksService, ExercisesService, FilesService, OtherTasksService, TaskService];

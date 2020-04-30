@@ -9,19 +9,19 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import {GroupRequest} from './groupRequest';
+import {SentenceCompletionList} from './sentenceCompletionList';
 
 
-export interface GroupingRequest {
-    title: string;
-    difficulty?: number;
-  subject: GroupingRequest.SubjectEnum;
+export interface SentenceCompletionAndGroupingRequest {
+  sentenceGroups: Array<SentenceCompletionList>;
+  title: string;
+  difficulty?: number;
+  subject: SentenceCompletionAndGroupingRequest.SubjectEnum;
   recommendedMinClass?: number;
   recommendedMaxClass?: number;
-  groups: Array<GroupRequest>;
 }
 
-export namespace GroupingRequest {
+export namespace SentenceCompletionAndGroupingRequest {
   export type SubjectEnum =
     'None'
     | 'Hungarian_grammar_and_literature'

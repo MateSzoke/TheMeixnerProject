@@ -9,19 +9,19 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import {GroupRequest} from './groupRequest';
+import {MediaItemRequest} from './mediaItemRequest';
 
 
-export interface GroupingRequest {
-    title: string;
-    difficulty?: number;
-  subject: GroupingRequest.SubjectEnum;
+export interface TableRequest {
+  table: Array<Array<MediaItemRequest>>;
+  title: string;
+  difficulty?: number;
+  subject: TableRequest.SubjectEnum;
   recommendedMinClass?: number;
   recommendedMaxClass?: number;
-  groups: Array<GroupRequest>;
 }
 
-export namespace GroupingRequest {
+export namespace TableRequest {
   export type SubjectEnum =
     'None'
     | 'Hungarian_grammar_and_literature'

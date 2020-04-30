@@ -9,19 +9,32 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import {GroupRequest} from './groupRequest';
+import {TimelineTag} from './timelineTag';
 
 
-export interface GroupingRequest {
-    title: string;
-    difficulty?: number;
-  subject: GroupingRequest.SubjectEnum;
+export interface TimelineRequest {
+  timelineType: TimelineRequest.TimelineTypeEnum;
+  minimumDate?: Date;
+  maximumDate?: Date;
+  minimumInt?: number;
+  maximumInt?: number;
+  minimumDouble?: number;
+  maximumDouble?: number;
+  timelineTags: Array<TimelineTag>;
+  title: string;
+  difficulty?: number;
+  subject: TimelineRequest.SubjectEnum;
   recommendedMinClass?: number;
   recommendedMaxClass?: number;
-  groups: Array<GroupRequest>;
 }
 
-export namespace GroupingRequest {
+export namespace TimelineRequest {
+  export type TimelineTypeEnum = 'DATE' | 'INTEGER' | 'DOUBLE';
+  export const TimelineTypeEnum = {
+    DATE: 'DATE' as TimelineTypeEnum,
+    INTEGER: 'INTEGER' as TimelineTypeEnum,
+    DOUBLE: 'DOUBLE' as TimelineTypeEnum
+  };
   export type SubjectEnum =
     'None'
     | 'Hungarian_grammar_and_literature'

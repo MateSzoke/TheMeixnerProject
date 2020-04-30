@@ -12,16 +12,16 @@
 import {GroupRequest} from './groupRequest';
 
 
-export interface GroupingRequest {
-    title: string;
-    difficulty?: number;
-  subject: GroupingRequest.SubjectEnum;
+export interface GroupingAndSortingRequest {
+  title: string;
+  difficulty?: number;
+  subject: GroupingAndSortingRequest.SubjectEnum;
   recommendedMinClass?: number;
   recommendedMaxClass?: number;
   groups: Array<GroupRequest>;
 }
 
-export namespace GroupingRequest {
+export namespace GroupingAndSortingRequest {
   export type SubjectEnum =
     'None'
     | 'Hungarian_grammar_and_literature'

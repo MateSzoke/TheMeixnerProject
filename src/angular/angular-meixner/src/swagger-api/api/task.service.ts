@@ -11,17 +11,15 @@
  */
 /* tslint:disable:no-unused-variable member-ordering */
 
-import { Inject, Injectable, Optional }                      from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams,
-         HttpResponse, HttpEvent }                           from '@angular/common/http';
-import { CustomHttpUrlEncodingCodec }                        from '../encoder';
+import {Inject, Injectable, Optional} from '@angular/core';
+import {HttpClient, HttpEvent, HttpHeaders, HttpResponse} from '@angular/common/http';
 
-import { Observable }                                        from 'rxjs';
+import {Observable} from 'rxjs';
 
-import { TaskResponse } from '../model/taskResponse';
+import {TaskResponse} from '../model/taskResponse';
 
-import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
-import { Configuration }                                     from '../configuration';
+import {BASE_PATH} from '../variables';
+import {Configuration} from '../configuration';
 
 
 @Injectable({
@@ -61,7 +59,7 @@ export class TaskService {
 
     /**
      * Deletes the task by it&#39;s taskId.
-     * 
+     *
      * @param taskId taskId
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -105,7 +103,7 @@ export class TaskService {
 
     /**
      * Returns all tasks int the database.
-     * 
+     *
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -146,7 +144,7 @@ export class TaskService {
 
     /**
      * Returns all tasks of the current user.
-     * 
+     *
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -187,7 +185,7 @@ export class TaskService {
 
     /**
      * Returns the specific task by it&#39;s taskId.
-     * 
+     *
      * @param taskId taskId
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.

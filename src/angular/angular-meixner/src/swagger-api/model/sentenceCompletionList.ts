@@ -9,18 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import {Sentence} from './sentence';
 
 
-export interface UserResponse {
-    id: number;
-  role: UserResponse.RoleEnum;
-    username: string;
-}
-
-export namespace UserResponse {
-  export type RoleEnum = 'ADMIN' | 'STUDENT';
-  export const RoleEnum = {
-    ADMIN: 'ADMIN' as RoleEnum,
-    STUDENT: 'STUDENT' as RoleEnum
-  };
+export interface SentenceCompletionList {
+  groupTitle: string;
+  sentences: Array<Sentence>;
 }

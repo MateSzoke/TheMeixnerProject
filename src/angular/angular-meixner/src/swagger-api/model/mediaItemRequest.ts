@@ -11,16 +11,7 @@
  */
 
 
-export interface UserResponse {
-    id: number;
-  role: UserResponse.RoleEnum;
-    username: string;
-}
-
-export namespace UserResponse {
-  export type RoleEnum = 'ADMIN' | 'STUDENT';
-  export const RoleEnum = {
-    ADMIN: 'ADMIN' as RoleEnum,
-    STUDENT: 'STUDENT' as RoleEnum
-  };
+export interface MediaItemRequest {
+  mediaItemId?: number;
+  content?: string;
 }

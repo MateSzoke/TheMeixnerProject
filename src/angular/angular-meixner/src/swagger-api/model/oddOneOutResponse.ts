@@ -12,19 +12,21 @@
 import {MediaItemResponse} from './mediaItemResponse';
 
 
-export interface SortingResponse {
-    difficulty: number;
-  elements: Array<MediaItemResponse>;
-    id: number;
-    lastModified: Date;
-    owner: string;
+export interface OddOneOutResponse {
+  correctAnswerIndex: number;
+  difficulty: number;
+  id: number;
+  lastModified: Date;
+  options: Array<MediaItemResponse>;
+  owner: string;
   recommendedMaxClass: number;
   recommendedMinClass: number;
-  subject: SortingResponse.SubjectEnum;
-    title: string;
-    type: SortingResponse.TypeEnum;
+  subject: OddOneOutResponse.SubjectEnum;
+  title: string;
+  type: OddOneOutResponse.TypeEnum;
 }
-export namespace SortingResponse {
+
+export namespace OddOneOutResponse {
   export type SubjectEnum =
     'None'
     | 'Hungarian_grammar_and_literature'
@@ -73,24 +75,24 @@ export namespace SortingResponse {
     | 'OddOneOut'
     | 'TimeLine'
     | 'Table';
-    export const TypeEnum = {
-        Grouping: 'Grouping' as TypeEnum,
-        Pairing: 'Pairing' as TypeEnum,
-        SentenceCompletion: 'SentenceCompletion' as TypeEnum,
-        SentenceCreation: 'SentenceCreation' as TypeEnum,
-        Sorting: 'Sorting' as TypeEnum,
-      TrueFalse: 'TrueFalse' as TypeEnum,
-      MemoryGame: 'MemoryGame' as TypeEnum,
-        GroupingAndSorting: 'GroupingAndSorting' as TypeEnum,
-        SentenceCompletionAndGrouping: 'SentenceCompletionAndGrouping' as TypeEnum,
-        SentenceCompletionAndSorting: 'SentenceCompletionAndSorting' as TypeEnum,
-        SentenceCreationAndGrouping: 'SentenceCreationAndGrouping' as TypeEnum,
-        SentenceCreationAndSorting: 'SentenceCreationAndSorting' as TypeEnum,
-        SortingAndGrouping: 'SortingAndGrouping' as TypeEnum,
-        BlindMap: 'BlindMap' as TypeEnum,
-        FreeText: 'FreeText' as TypeEnum,
-        OddOneOut: 'OddOneOut' as TypeEnum,
-      TimeLine: 'TimeLine' as TypeEnum,
-      Table: 'Table' as TypeEnum
-    };
+  export const TypeEnum = {
+    Grouping: 'Grouping' as TypeEnum,
+    Pairing: 'Pairing' as TypeEnum,
+    SentenceCompletion: 'SentenceCompletion' as TypeEnum,
+    SentenceCreation: 'SentenceCreation' as TypeEnum,
+    Sorting: 'Sorting' as TypeEnum,
+    TrueFalse: 'TrueFalse' as TypeEnum,
+    MemoryGame: 'MemoryGame' as TypeEnum,
+    GroupingAndSorting: 'GroupingAndSorting' as TypeEnum,
+    SentenceCompletionAndGrouping: 'SentenceCompletionAndGrouping' as TypeEnum,
+    SentenceCompletionAndSorting: 'SentenceCompletionAndSorting' as TypeEnum,
+    SentenceCreationAndGrouping: 'SentenceCreationAndGrouping' as TypeEnum,
+    SentenceCreationAndSorting: 'SentenceCreationAndSorting' as TypeEnum,
+    SortingAndGrouping: 'SortingAndGrouping' as TypeEnum,
+    BlindMap: 'BlindMap' as TypeEnum,
+    FreeText: 'FreeText' as TypeEnum,
+    OddOneOut: 'OddOneOut' as TypeEnum,
+    TimeLine: 'TimeLine' as TypeEnum,
+    Table: 'Table' as TypeEnum
+  };
 }

@@ -1,12 +1,16 @@
-import { NgModule, ModuleWithProviders, SkipSelf, Optional } from '@angular/core';
-import { Configuration } from './configuration';
-import { HttpClient } from '@angular/common/http';
+import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
+import {Configuration} from './configuration';
+import {HttpClient} from '@angular/common/http';
 
 
-import { AccountService } from './api/account.service';
-import { BasicErrorControllerService } from './api/basicErrorController.service';
-import { TaskService } from './api/task.service';
-import { TheEasyTasksService } from './api/theEasyTasks.service';
+import {AccountService} from './api/account.service';
+import {BasicErrorControllerService} from './api/basicErrorController.service';
+import {ComplexTasksService} from './api/complexTasks.service';
+import {EasyTasksService} from './api/easyTasks.service';
+import {ExercisesService} from './api/exercises.service';
+import {FilesService} from './api/files.service';
+import {OtherTasksService} from './api/otherTasks.service';
+import {TaskService} from './api/task.service';
 
 @NgModule({
   imports:      [],
@@ -15,8 +19,12 @@ import { TheEasyTasksService } from './api/theEasyTasks.service';
   providers: [
     AccountService,
     BasicErrorControllerService,
-    TaskService,
-    TheEasyTasksService ]
+    ComplexTasksService,
+    EasyTasksService,
+    ExercisesService,
+    FilesService,
+    OtherTasksService,
+    TaskService]
 })
 export class ApiModule {
     public static forRoot(configurationFactory: () => Configuration): ModuleWithProviders {

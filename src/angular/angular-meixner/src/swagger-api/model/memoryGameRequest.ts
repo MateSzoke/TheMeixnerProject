@@ -9,19 +9,19 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import {GroupRequest} from './groupRequest';
+import {PairElementRequest} from './pairElementRequest';
 
 
-export interface GroupingRequest {
-    title: string;
-    difficulty?: number;
-  subject: GroupingRequest.SubjectEnum;
+export interface MemoryGameRequest {
+  pairs: Array<PairElementRequest>;
+  title: string;
+  difficulty?: number;
+  subject: MemoryGameRequest.SubjectEnum;
   recommendedMinClass?: number;
   recommendedMaxClass?: number;
-  groups: Array<GroupRequest>;
 }
 
-export namespace GroupingRequest {
+export namespace MemoryGameRequest {
   export type SubjectEnum =
     'None'
     | 'Hungarian_grammar_and_literature'

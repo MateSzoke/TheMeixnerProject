@@ -9,22 +9,30 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import {MediaItemResponse} from './mediaItemResponse';
+import {TimelineTag} from './timelineTag';
 
 
-export interface SortingResponse {
-    difficulty: number;
-  elements: Array<MediaItemResponse>;
-    id: number;
-    lastModified: Date;
-    owner: string;
+export interface TimelineResponse {
+  difficulty: number;
+  id: number;
+  lastModified: Date;
+  maximumDate?: Date;
+  maximumDouble?: number;
+  maximumInt?: number;
+  minimumDate?: Date;
+  minimumDouble?: number;
+  minimumInt?: number;
+  owner: string;
   recommendedMaxClass: number;
   recommendedMinClass: number;
-  subject: SortingResponse.SubjectEnum;
-    title: string;
-    type: SortingResponse.TypeEnum;
+  subject: TimelineResponse.SubjectEnum;
+  timelineTags: Array<TimelineTag>;
+  timelineType: TimelineResponse.TimelineTypeEnum;
+  title: string;
+  type: TimelineResponse.TypeEnum;
 }
-export namespace SortingResponse {
+
+export namespace TimelineResponse {
   export type SubjectEnum =
     'None'
     | 'Hungarian_grammar_and_literature'
@@ -54,6 +62,12 @@ export namespace SortingResponse {
     Biology: 'Biology' as SubjectEnum,
     Physics: 'Physics' as SubjectEnum
   };
+  export type TimelineTypeEnum = 'DATE' | 'INTEGER' | 'DOUBLE';
+  export const TimelineTypeEnum = {
+    DATE: 'DATE' as TimelineTypeEnum,
+    INTEGER: 'INTEGER' as TimelineTypeEnum,
+    DOUBLE: 'DOUBLE' as TimelineTypeEnum
+  };
   export type TypeEnum =
     'Grouping'
     | 'Pairing'
@@ -73,24 +87,24 @@ export namespace SortingResponse {
     | 'OddOneOut'
     | 'TimeLine'
     | 'Table';
-    export const TypeEnum = {
-        Grouping: 'Grouping' as TypeEnum,
-        Pairing: 'Pairing' as TypeEnum,
-        SentenceCompletion: 'SentenceCompletion' as TypeEnum,
-        SentenceCreation: 'SentenceCreation' as TypeEnum,
-        Sorting: 'Sorting' as TypeEnum,
-      TrueFalse: 'TrueFalse' as TypeEnum,
-      MemoryGame: 'MemoryGame' as TypeEnum,
-        GroupingAndSorting: 'GroupingAndSorting' as TypeEnum,
-        SentenceCompletionAndGrouping: 'SentenceCompletionAndGrouping' as TypeEnum,
-        SentenceCompletionAndSorting: 'SentenceCompletionAndSorting' as TypeEnum,
-        SentenceCreationAndGrouping: 'SentenceCreationAndGrouping' as TypeEnum,
-        SentenceCreationAndSorting: 'SentenceCreationAndSorting' as TypeEnum,
-        SortingAndGrouping: 'SortingAndGrouping' as TypeEnum,
-        BlindMap: 'BlindMap' as TypeEnum,
-        FreeText: 'FreeText' as TypeEnum,
-        OddOneOut: 'OddOneOut' as TypeEnum,
-      TimeLine: 'TimeLine' as TypeEnum,
-      Table: 'Table' as TypeEnum
-    };
+  export const TypeEnum = {
+    Grouping: 'Grouping' as TypeEnum,
+    Pairing: 'Pairing' as TypeEnum,
+    SentenceCompletion: 'SentenceCompletion' as TypeEnum,
+    SentenceCreation: 'SentenceCreation' as TypeEnum,
+    Sorting: 'Sorting' as TypeEnum,
+    TrueFalse: 'TrueFalse' as TypeEnum,
+    MemoryGame: 'MemoryGame' as TypeEnum,
+    GroupingAndSorting: 'GroupingAndSorting' as TypeEnum,
+    SentenceCompletionAndGrouping: 'SentenceCompletionAndGrouping' as TypeEnum,
+    SentenceCompletionAndSorting: 'SentenceCompletionAndSorting' as TypeEnum,
+    SentenceCreationAndGrouping: 'SentenceCreationAndGrouping' as TypeEnum,
+    SentenceCreationAndSorting: 'SentenceCreationAndSorting' as TypeEnum,
+    SortingAndGrouping: 'SortingAndGrouping' as TypeEnum,
+    BlindMap: 'BlindMap' as TypeEnum,
+    FreeText: 'FreeText' as TypeEnum,
+    OddOneOut: 'OddOneOut' as TypeEnum,
+    TimeLine: 'TimeLine' as TypeEnum,
+    Table: 'Table' as TypeEnum
+  };
 }

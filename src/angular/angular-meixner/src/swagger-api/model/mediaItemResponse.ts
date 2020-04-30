@@ -11,16 +11,16 @@
  */
 
 
-export interface UserResponse {
-    id: number;
-  role: UserResponse.RoleEnum;
-    username: string;
+export interface MediaItemResponse {
+  content: string;
+  id: number;
+  type: MediaItemResponse.TypeEnum;
 }
 
-export namespace UserResponse {
-  export type RoleEnum = 'ADMIN' | 'STUDENT';
-  export const RoleEnum = {
-    ADMIN: 'ADMIN' as RoleEnum,
-    STUDENT: 'STUDENT' as RoleEnum
+export namespace MediaItemResponse {
+  export type TypeEnum = 'TEXT' | 'FILE';
+  export const TypeEnum = {
+    TEXT: 'TEXT' as TypeEnum,
+    FILE: 'FILE' as TypeEnum
   };
 }
