@@ -1,12 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {
-  Group,
+  EasyTasksService,
   GroupingRequest,
-  PairElement,
-  PairingRequest, PairingResponse, Sentence,
-  SentenceCompletionRequest, SentenceCreationRequest, SortingRequest,
-  TaskService,
-  TheEasyTasksService
+  GroupRequest,
+  MediaItemRequest,
+  PairElementRequest,
+  PairingRequest,
+  Sentence,
+  SentenceCompletionRequest,
+  SentenceCreationRequest,
+  SortingRequest
 } from '../../swagger-api';
 import {GroupingResponse} from '../../swagger-api/model/groupingResponse';
 import {ConvertEnum} from '../model/ConvertEnum';
@@ -40,7 +43,7 @@ export class NewExerciseComponent implements OnInit {
   }
 
   constructor(private modalC: ModalComponent,
-              private theEasyTasksService: TheEasyTasksService) {
+              private theEasyTasksService: EasyTasksService) {
 
 
     ModalComponent.saveBtnPressed.subscribe(data => {
@@ -52,7 +55,14 @@ export class NewExerciseComponent implements OnInit {
         return;
       } else {
         console.log("type is " + this.type);
-        const g1 : GroupingRequest = {title: this.name, difficulty: this.difficulty, groups: new Array<Group>()};
+        const g1: GroupingRequest = {
+          title: this.name,
+          difficulty: this.difficulty,
+          groups: new Array<GroupRequest>(),
+          recommendedMinClass: this.classFrom,
+          recommendedMaxClass: this.classTo,
+          subject: "None"
+        };
         console.log(this.type + " type");
         let j = 0;
         for(let i in GroupingResponse.TypeEnum) {
@@ -88,31 +98,67 @@ export class NewExerciseComponent implements OnInit {
     switch (input) {
       case GroupingResponse.TypeEnum.Grouping.toString(): {
         console.log("csoportositas POST called");
-        const g1 : GroupingRequest = {title: this.name, difficulty: this.difficulty, groups: new Array<Group>()};
+        const g1: GroupingRequest = {
+          title: this.name,
+          difficulty: this.difficulty,
+          groups: new Array<GroupRequest>(),
+          recommendedMinClass: this.classFrom,
+          recommendedMaxClass: this.classTo,
+          subject: "None"
+        };
         return this.theEasyTasksService.createGroupingUsingPOST(g1);
         break;
       }
       case GroupingResponse.TypeEnum.Pairing.toString(): {
         console.log("parositas POST called");
-        const g1 : PairingRequest = {title: this.name, difficulty: this.difficulty, pairs: new Array<PairElement>()};
+        const g1: PairingRequest = {
+          title: this.name,
+          difficulty: this.difficulty,
+          pairs: new Array<PairElementRequest>(),
+          recommendedMinClass: this.classFrom,
+          recommendedMaxClass: this.classTo,
+          subject: "None"
+        };
         return this.theEasyTasksService.createPairingUsingPOST(g1);
         break;
       }
       case GroupingResponse.TypeEnum.SentenceCompletion.toString(): {
         console.log("mondatkieg POST called");
-        const g1 : SentenceCompletionRequest = {title: this.name, difficulty: this.difficulty,sentence: null, options: new Array<string>()};
+        const g1: SentenceCompletionRequest = {
+          title: this.name,
+          difficulty: this.difficulty,
+          sentence: null,
+          options: new Array<string>(),
+          recommendedMinClass: this.classFrom,
+          recommendedMaxClass: this.classTo,
+          subject: "None"
+        };
         return this.theEasyTasksService.createSentenceCompletionUsingPOST(g1);
         break;
       }
       case GroupingResponse.TypeEnum.SentenceCreation.toString(): {
         console.log("mondatkeszites POST called");
-        const g1 : SentenceCreationRequest = {title: this.name, difficulty: this.difficulty, sentences: new Array<Sentence>()};
+        const g1: SentenceCreationRequest = {
+          title: this.name,
+          difficulty: this.difficulty,
+          sentences: new Array<Sentence>(),
+          recommendedMinClass: this.classFrom,
+          recommendedMaxClass: this.classTo,
+          subject: "None"
+        };
         return this.theEasyTasksService.createSentenceCreationUsingPOST(g1);
         break;
       }
       case GroupingResponse.TypeEnum.Sorting.toString(): {
         console.log("sorrendezes POST called");
-        const g1 : SortingRequest = {title: this.name, difficulty: this.difficulty, elements: new Array<string>()};
+        const g1: SortingRequest = {
+          title: this.name,
+          difficulty: this.difficulty,
+          elements: new Array<MediaItemRequest>(),
+          recommendedMinClass: this.classFrom,
+          recommendedMaxClass: this.classTo,
+          subject: "None"
+        };
         return this.theEasyTasksService.createSortingUsingPOST(g1);
         break;
       }
