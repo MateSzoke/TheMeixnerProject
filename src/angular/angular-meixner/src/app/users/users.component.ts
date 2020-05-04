@@ -1,10 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {AuthenticationService} from "../service/authentication.service";
 import {HttpClient} from "@angular/common/http";
-import {AccountService, Group, GroupingRequest, GroupingResponse, UserRequest} from "../../swagger-api";
+import {AccountService, UserRequest} from "../../swagger-api";
 import {ConvertEnum} from "../model/ConvertEnum";
-import {ModalComponent} from "../modal/modal.component";
 
 @Component({
   selector: 'app-users',

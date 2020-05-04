@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {PairingServiceService} from '../../backend_temp/pairing-service.service';
-import {PairElement, PairingRequest, TaskResponse, TheEasyTasksService} from "../../../swagger-api";
+import {EasyTasksService, PairingRequest} from "../../../swagger-api";
 
 @Component({
   selector: 'app-pairing',
@@ -12,12 +12,12 @@ export class PairingComponent implements OnInit {
   public members: PairingRequest;
 
   constructor(public pairingService: PairingServiceService,
-              public theEasyTasksService: TheEasyTasksService) {
+              public theEasyTasksService: EasyTasksService) {
 
   }
 
   ngOnInit(): void {
-    
+
   }
 
   public onModelChange(newValue, indexService, indexPair) {
