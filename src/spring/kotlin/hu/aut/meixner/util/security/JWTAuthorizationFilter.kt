@@ -25,10 +25,6 @@ class JWTAuthorizationFilter(authManager: AuthenticationManager?) : BasicAuthent
             chain.doFilter(req, res)
             return
         }
-        res.addHeader("Access-Control-Expose-Headers", "Authorization")
-        res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
-        res.setHeader("Access-Control-Allow-Credentials", "true")
-        res.setHeader("Access-Control-Allow-Headers", "content-type, Authorization")
         val authentication = getAuthentication(req)
         SecurityContextHolder.getContext().authentication = authentication
         chain.doFilter(req, res)
