@@ -140,6 +140,7 @@ export class ExercisesComponent implements OnInit {
   private getMyTasksFunction() {
     this.taskService.getMyTaskUsingGET().subscribe(data => {
         this.exercises = new Array<TaskResponse>();
+
         this.exercisesUI = new Array<TaskResponse>();
         data.forEach(element => {
           this.exercises.push({
