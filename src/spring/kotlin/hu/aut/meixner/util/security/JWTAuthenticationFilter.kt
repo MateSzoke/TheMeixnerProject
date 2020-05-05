@@ -23,6 +23,10 @@ class JWTAuthenticationFilter(private val mAuthenticationManager: Authentication
 
     override fun attemptAuthentication(req: HttpServletRequest, res: HttpServletResponse): Authentication {
         return try {
+            res.addHeader("Access-Control-Expose-Headers", "Authorization")
+            res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
+            res.setHeader("Access-Control-Allow-Credentials", "true")
+            res.setHeader("Access-Control-Allow-Headers", "content-type, Authorization")
             val creds: UserEntity = ObjectMapper()
                     .readValue(req.inputStream, UserEntity::class.java)
             mAuthenticationManager.authenticate(
@@ -42,6 +46,10 @@ class JWTAuthenticationFilter(private val mAuthenticationManager: Authentication
             chain: FilterChain,
             auth: Authentication
     ) {
+        res.addHeader("Access-Control-Expose-Headers", "Authorization")
+        res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
+        res.setHeader("Access-Control-Allow-Credentials", "true")
+        res.setHeader("Access-Control-Allow-Headers", "content-type, Authorization")
         val token = JWT.create()
                 .withSubject((auth.principal as User).username)
                 .withExpiresAt(Date(System.currentTimeMillis() + EXPIRATION_TIME))

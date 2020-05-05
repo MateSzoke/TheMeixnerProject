@@ -1,6 +1,5 @@
 package hu.aut.meixner.util.security
 
-import com.google.common.collect.ImmutableList
 import hu.aut.meixner.service.auth.UserService
 import hu.aut.meixner.util.security.SecurityConstants.AUTH_WHITELIST
 import hu.aut.meixner.util.security.SecurityConstants.REGISTER_URL
@@ -42,20 +41,6 @@ class WebSecurity(
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource {
         val source = UrlBasedCorsConfigurationSource()
-        val configuration = CorsConfiguration()
-        configuration.allowedOrigins = ImmutableList.of("*")
-        configuration.allowedMethods = ImmutableList.of("HEAD",
-                "GET", "POST", "PUT", "DELETE", "PATCH")
-        // setAllowCredentials(true) is important, otherwise:
-        // The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' when the request's credentials mode is 'include'.
-        // setAllowCredentials(true) is important, otherwise:
-// The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' when the request's credentials mode is 'include'.
-        configuration.allowCredentials = true
-        // setAllowedHeaders is important! Without it, OPTIONS preflight request
-        // will fail with 403 Invalid CORS request
-        // setAllowedHeaders is important! Without it, OPTIONS preflight request
-// will fail with 403 Invalid CORS request
-        configuration.allowedHeaders = ImmutableList.of("Authorization", "Cache-Control", "Content-Type")
         source.registerCorsConfiguration("/**", CorsConfiguration().applyPermitDefaultValues())
         return source
     }
