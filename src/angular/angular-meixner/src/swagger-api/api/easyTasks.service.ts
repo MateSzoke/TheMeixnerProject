@@ -74,7 +74,7 @@ export class EasyTasksService {
 
     /**
      * Creates a new Grouping task.
-     * 
+     *
      * @param groupingRequest groupingRequest
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -90,9 +90,7 @@ export class EasyTasksService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-        if (this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
-        }
+
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -125,7 +123,7 @@ export class EasyTasksService {
 
     /**
      * Creates a new Memory game task.
-     * 
+     *
      * @param memoryGameRequest request
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -141,9 +139,7 @@ export class EasyTasksService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-        if (this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
-        }
+
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -176,7 +172,7 @@ export class EasyTasksService {
 
     /**
      * Creates a new Pairing task.
-     * 
+     *
      * @param pairingRequest pairingRequest
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -192,9 +188,7 @@ export class EasyTasksService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-        if (this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
-        }
+
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -227,7 +221,7 @@ export class EasyTasksService {
 
     /**
      * Creates a new Sentence Completion task.
-     * 
+     *
      * @param sentenceCompletionRequest sentenceCompletionRequest
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -243,9 +237,7 @@ export class EasyTasksService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-        if (this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
-        }
+
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -278,7 +270,7 @@ export class EasyTasksService {
 
     /**
      * Creates a new Sentence creation task.
-     * 
+     *
      * @param sentenceCreationRequest sentenceCreationRequest
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -294,9 +286,7 @@ export class EasyTasksService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-        if (this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
-        }
+
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -329,7 +319,7 @@ export class EasyTasksService {
 
     /**
      * Creates a new Sorting task.
-     * 
+     *
      * @param sortingRequest sortingRequest
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -345,9 +335,7 @@ export class EasyTasksService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-        if (this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
-        }
+
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -380,7 +368,7 @@ export class EasyTasksService {
 
     /**
      * Creates a new TrueFalse task.
-     * 
+     *
      * @param trueFalseRequest request
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -396,9 +384,7 @@ export class EasyTasksService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-        if (this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
-        }
+
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -431,7 +417,7 @@ export class EasyTasksService {
 
     /**
      * Updates existing Grouping task by taskId.
-     * 
+     *
      * @param taskId taskId
      * @param groupingRequest groupingRequest
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -451,9 +437,7 @@ export class EasyTasksService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-        if (this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
-        }
+
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -486,7 +470,7 @@ export class EasyTasksService {
 
     /**
      * Updates existing Memory game task by taskId.
-     * 
+     *
      * @param taskId taskId
      * @param memoryGameRequest request
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -506,9 +490,7 @@ export class EasyTasksService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-        if (this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
-        }
+
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -541,7 +523,7 @@ export class EasyTasksService {
 
     /**
      * Updates existing Pairing task by taskId.
-     * 
+     *
      * @param taskId taskId
      * @param pairingRequest pairingRequest
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -561,9 +543,7 @@ export class EasyTasksService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-        if (this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
-        }
+
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -596,7 +576,7 @@ export class EasyTasksService {
 
     /**
      * Updates existing Sentence completion task by taskId.
-     * 
+     *
      * @param taskId taskId
      * @param sentenceCompletionRequest sentenceCompletionRequest
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -616,9 +596,7 @@ export class EasyTasksService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-        if (this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
-        }
+
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -651,7 +629,7 @@ export class EasyTasksService {
 
     /**
      * Updates existing Sentence creation task by taskId.
-     * 
+     *
      * @param taskId taskId
      * @param sentenceCreationRequest sentenceCreationRequest
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -671,9 +649,7 @@ export class EasyTasksService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-        if (this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
-        }
+
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -706,7 +682,7 @@ export class EasyTasksService {
 
     /**
      * Updates existing Sorting task by taskId.
-     * 
+     *
      * @param taskId taskId
      * @param sortingRequest sortingRequest
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -726,9 +702,7 @@ export class EasyTasksService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-        if (this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
-        }
+
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -761,7 +735,7 @@ export class EasyTasksService {
 
     /**
      * Updates existing TrueFalse task by taskId.
-     * 
+     *
      * @param taskId taskId
      * @param trueFalseRequest request
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -781,9 +755,7 @@ export class EasyTasksService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-        if (this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
-        }
+
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [

@@ -61,7 +61,7 @@ export class FilesService {
 
     /**
      * Download file by fileId
-     * 
+     *
      * @param fileId fileId
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -77,9 +77,7 @@ export class FilesService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-        if (this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
-        }
+
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -106,7 +104,7 @@ export class FilesService {
 
     /**
      * You can upload file here
-     * 
+     *
      * @param file file
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -122,9 +120,7 @@ export class FilesService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-        if (this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
-        }
+
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
