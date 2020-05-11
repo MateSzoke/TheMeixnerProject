@@ -12,23 +12,22 @@ export class ModalComponent implements OnInit {
   @Output() static saveBtnPressed = new EventEmitter<ModalComponent>();
   @Output() static closeBtnPressed = new EventEmitter<ModalComponent>();
   title = "";
+
   constructor(private domService: DomService) {
-    this.domService.setContainerRef(this.containerRef);
-    console.log("modal constructor called");
-    this.domService.showContainerElement$.subscribe((value) => {
-      if(value){
-        this.display='block';
-      }
-    })
+    this.constructModal();
   }
 
   ngOnInit() {
+    this.constructModal();
+  }
+
+  constructModal() {
     this.domService.setContainerRef(this.containerRef);
     this.domService.showContainerElement$.subscribe((value) => {
       if(value){
         this.display='block';
       }
-    })
+    });
   }
 
   cancel() {

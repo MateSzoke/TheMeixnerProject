@@ -93,7 +93,7 @@ export class NewExerciseComponent implements OnInit {
   }
 
 
-  private postTaskDataByType(input: string) : Observable<any> {
+  private postTaskDataByType(input: string): Observable<any> {
     console.log("postTaskDataByType called");
     switch (input) {
       case GroupingResponse.TypeEnum.Grouping.toString(): {
@@ -208,40 +208,30 @@ export class NewExerciseComponent implements OnInit {
 
   public setName(event) {
     this.name = event;
-    console.log(this.name);
   }
 
   public typeSelected(event) {
-    console.log("typeselected called");
     this.type = event.value;
   }
 
   public difficultySelected(event) {
-    console.log("difficultySelected called ");
-    console.log(event);
     this.difficulty = event.value;
     console.log(event.value);
   }
 
   public classFromSelected(event) {
-    console.log("classFromSelected called");
     this.classFrom = event.value;
     this.classesTo = new Array<number>();
     for(let i = this.classFrom; i < 13; i++) {
       this.classesTo.push(i);
     }
-    console.log(event.value);
   }
 
   public classToSelected(event) {
-    console.log("classToSelected called");
     this.classTo = event.value;
-    console.log(event.value);
   }
 
   public topicSelected(event) {
-    console.log("topicSelected called");
     this.topic = event.value;
-    console.log(event.value);
   }
 }

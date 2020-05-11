@@ -1,0 +1,6 @@
+{
+  "/api": {
+    "target": "https://meixner.herokuapp.com/",
+    "secure": false
+  }
+}

@@ -71,7 +71,7 @@ export class ExercisesComponent implements OnInit {
 
   public deleteTask(input: number) {
     this.exercisesLoaded = false;
-    console.log("calling delete");
+    console.log("calling delete id is " + input);
     this.taskService.deleteTaskByIdUsingDELETE(input).subscribe(
       data => {
         console.log("calling delete get...");
@@ -82,7 +82,7 @@ export class ExercisesComponent implements OnInit {
         }
       },
       err => {
-
+        console.log("delete error");
       },
       () => {
 
@@ -176,11 +176,12 @@ export class ExercisesComponent implements OnInit {
   }
 
   public newTask() {
+    //this.modComponent.ngOnInit();
     this.dom.show(NewExerciseComponent);
   }
 
-  public convertEnum(input: string) {
-    ConvertEnum.convertType(input);
+  public convertEnum(input: string): string {
+    return ConvertEnum.convertType(input);
   }
 
 
