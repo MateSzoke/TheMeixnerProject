@@ -9,10 +9,10 @@ import {DiffimageService} from "../service/diffimage.service";
 
 @Component({
   selector: 'app-exams',
-  templateUrl: './exams.component.html',
-  styleUrls: ['./exams.component.scss']
+  templateUrl: './exercises.component.html',
+  styleUrls: ['./exercises.component.scss']
 })
-export class ExamsComponent implements OnInit {
+export class ExercisesComponent implements OnInit {
 
   public today = new Date();
   public actualMonth = this.today.getMonth().toString().padStart(2, '0');

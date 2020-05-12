@@ -9,7 +9,7 @@ import {DiffimageService} from '../service/diffimage.service';
 import {ConvertEnum} from '../model/ConvertEnum';
 
 @Component({
-  selector: 'app-exercises',
+  selector: 'app-tasks',
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.scss']
 })

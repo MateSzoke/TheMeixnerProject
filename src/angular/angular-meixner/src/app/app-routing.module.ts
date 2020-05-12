@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {TasksComponent} from './tasks/tasks.component';
 import {RouteGuardService} from './service/route-guard.service';
-import {ExamsComponent} from './exams/exams.component';
+import {ExercisesComponent} from './exercises/exercises.component';
 import {UsersComponent} from './users/users.component';
 import {LoginComponent} from './login/login.component';
-import {SorrendezesComponent} from './exercise_types/sorrendezes/sorrendezes.component';
-import {PairingComponent} from './exercise_types/pairing/pairing.component';
-import {GroupingComponent} from './exercise_types/grouping/grouping.component';
+import {SorrendezesComponent} from './task_types/sorrendezes/sorrendezes.component';
+import {PairingComponent} from './task_types/pairing/pairing.component';
+import {GroupingComponent} from './task_types/grouping/grouping.component';
 
 
 const routes: Routes = [
@@ -38,7 +38,7 @@ const routes: Routes = [
   },
   {
     path: 'feladatsorok',
-    component: ExamsComponent,
+    component: ExercisesComponent,
     canActivate: [RouteGuardService]
   },
   {
