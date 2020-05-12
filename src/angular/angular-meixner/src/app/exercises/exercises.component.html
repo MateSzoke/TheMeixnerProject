@@ -49,7 +49,7 @@
   <mat-card class="right-aligned-header" *ngFor="let feladat of exercises; index as i">
     <div fxLayout="row" fxLayout.xs="column-reverse" fxLayoutGap="8px">
       <div class="float-left">
-        {{feladat.title}} - {{this.convertEnum(feladat.type)}} - {{feladat.id}}
+        {{feladat.title}} - {{this.convertEnum(feladat.type)}} -
         <img class="image1" src="{{this.diffImServ.convertNumToPath100(feladat.difficulty)}}">
       </div>
       <div class="float-right">
