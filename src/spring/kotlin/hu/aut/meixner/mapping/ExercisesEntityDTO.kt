@@ -6,10 +6,11 @@ import hu.aut.meixner.dto.task.common.TaskResponse
 import hu.aut.meixner.entity.exercises.ExercisesEntity
 import kotlin.math.roundToInt
 
-fun ExerciseRequest.toEntity(): ExercisesEntity {
+fun ExerciseRequest.toEntity(owner: String): ExercisesEntity {
     return ExercisesEntity(
             name = name,
-            comment = comment
+            comment = comment,
+            owner = owner
     )
 }
 
@@ -19,7 +20,8 @@ fun ExercisesEntity.toDomainModel(tasks: List<TaskResponse>): ExercisesResponse 
             name = name,
             comment = comment,
             tasks = tasks,
+            owner = owner,
             averageDifficulty = if (tasks.isNotEmpty()) tasks.map { it.difficulty }.average().roundToInt() else 0,
-            lastModified = tasks.map { it.lastModified }.max()
+            lastModified = tasks.map { it.lastModified }.max() ?: createdAt
     )
 }
