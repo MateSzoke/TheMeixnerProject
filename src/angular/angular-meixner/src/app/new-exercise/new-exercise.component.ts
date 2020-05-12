@@ -1,12 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {
-  Group,
+  EasyTasksService,
   GroupingRequest,
-  PairElement,
-  PairingRequest, PairingResponse, Sentence,
-  SentenceCompletionRequest, SentenceCreationRequest, SortingRequest,
-  TaskService,
-  TheEasyTasksService
+  ComplexTasksService,
+  GroupRequest,
+  MediaItemRequest,
+  PairElementRequest,
+  PairingRequest,
+  Sentence,
+  SentenceCompletionRequest,
+  SentenceCreationRequest,
+  SortingRequest,
+  GroupingAndSortingRequest,
+  SentenceCompletionAndGroupingRequest,
+  SentenceCompletionAndSortingRequest,
+  SentenceCompletionItem,
+  SentenceCreationAndGroupingRequest,
+  SentenceCreationList,
+  SentenceCompletionList,
+  SentenceCreationAndSortingRequest,
+  SortingAndGroupingRequest,
+  GroupListItemRequest,
+  BlindMapTag,
+  BlindMapRequest,
+  OtherTasksService, FreeTextRequest, OddOneOutRequest, TimelineRequest, TimelineTag
 } from '../../swagger-api';
 import {GroupingResponse} from '../../swagger-api/model/groupingResponse';
 import {ConvertEnum} from '../model/ConvertEnum';
@@ -40,7 +57,9 @@ export class NewExerciseComponent implements OnInit {
   }
 
   constructor(private modalC: ModalComponent,
-              private theEasyTasksService: TheEasyTasksService) {
+              private theEasyTasksService: EasyTasksService,
+              private complexTasksService: ComplexTasksService,
+              private otherTasksService: OtherTasksService) {
 
 
     ModalComponent.saveBtnPressed.subscribe(data => {
@@ -52,7 +71,14 @@ export class NewExerciseComponent implements OnInit {
         return;
       } else {
         console.log("type is " + this.type);
-        const g1 : GroupingRequest = {title: this.name, difficulty: this.difficulty, groups: new Array<Group>()};
+        const g1: GroupingRequest = {
+          title: this.name,
+          difficulty: this.difficulty,
+          groups: new Array<GroupRequest>(),
+          recommendedMinClass: this.classFrom,
+          recommendedMaxClass: this.classTo,
+          subject: "None"
+        };
         console.log(this.type + " type");
         let j = 0;
         for(let i in GroupingResponse.TypeEnum) {
@@ -83,77 +109,206 @@ export class NewExerciseComponent implements OnInit {
   }
 
 
-  private postTaskDataByType(input: string) : Observable<any> {
+  private postTaskDataByType(input: string): Observable<any> {
     console.log("postTaskDataByType called");
     switch (input) {
       case GroupingResponse.TypeEnum.Grouping.toString(): {
         console.log("csoportositas POST called");
-        const g1 : GroupingRequest = {title: this.name, difficulty: this.difficulty, groups: new Array<Group>()};
+        const g1: GroupingRequest = {
+          title: this.name,
+          difficulty: this.difficulty,
+          groups: new Array<GroupRequest>(),
+          recommendedMinClass: this.classFrom,
+          recommendedMaxClass: this.classTo,
+          subject: "None"
+        };
         return this.theEasyTasksService.createGroupingUsingPOST(g1);
         break;
       }
       case GroupingResponse.TypeEnum.Pairing.toString(): {
         console.log("parositas POST called");
-        const g1 : PairingRequest = {title: this.name, difficulty: this.difficulty, pairs: new Array<PairElement>()};
+        const g1: PairingRequest = {
+          title: this.name,
+          difficulty: this.difficulty,
+          pairs: new Array<PairElementRequest>(),
+          recommendedMinClass: this.classFrom,
+          recommendedMaxClass: this.classTo,
+          subject: "None"
+        };
         return this.theEasyTasksService.createPairingUsingPOST(g1);
         break;
       }
       case GroupingResponse.TypeEnum.SentenceCompletion.toString(): {
         console.log("mondatkieg POST called");
-        const g1 : SentenceCompletionRequest = {title: this.name, difficulty: this.difficulty,sentence: null, options: new Array<string>()};
+        const g1: SentenceCompletionRequest = {
+          title: this.name,
+          difficulty: this.difficulty,
+          subject: "None",
+          recommendedMinClass: this.classFrom,
+          recommendedMaxClass: this.classTo,
+          sentence: null,
+          options: new Array<string>()
+        };
         return this.theEasyTasksService.createSentenceCompletionUsingPOST(g1);
         break;
       }
       case GroupingResponse.TypeEnum.SentenceCreation.toString(): {
         console.log("mondatkeszites POST called");
-        const g1 : SentenceCreationRequest = {title: this.name, difficulty: this.difficulty, sentences: new Array<Sentence>()};
+        const g1: SentenceCreationRequest = {
+          title: this.name,
+          difficulty: this.difficulty,
+          sentences: new Array<Sentence>(),
+          recommendedMinClass: this.classFrom,
+          recommendedMaxClass: this.classTo,
+          subject: "None"
+        };
         return this.theEasyTasksService.createSentenceCreationUsingPOST(g1);
         break;
       }
       case GroupingResponse.TypeEnum.Sorting.toString(): {
         console.log("sorrendezes POST called");
-        const g1 : SortingRequest = {title: this.name, difficulty: this.difficulty, elements: new Array<string>()};
+        const g1: SortingRequest = {
+          title: this.name,
+          difficulty: this.difficulty,
+          elements: new Array<MediaItemRequest>(),
+          recommendedMinClass: this.classFrom,
+          recommendedMaxClass: this.classTo,
+          subject: "None"
+        };
         return this.theEasyTasksService.createSortingUsingPOST(g1);
         break;
       }
       case GroupingResponse.TypeEnum.GroupingAndSorting.toString(): {
-        return;
+        console.log("csoportositas es sorrendezes POST called");
+        const g1: GroupingAndSortingRequest = {
+          title: this.name,
+          difficulty: this.difficulty,
+          subject: "None",
+          recommendedMinClass: this.classFrom,
+          recommendedMaxClass: this.classTo,
+          groups: Array<GroupRequest>()
+        };
+        return this.complexTasksService.createGroupingAndSortingUsingPOST(g1);
         break;
       }
       case GroupingResponse.TypeEnum.SentenceCompletionAndGrouping.toString(): {
-        return;
+        console.log("Mondatkiegeszites es csoportositas POST called");
+        const g1: SentenceCompletionAndGroupingRequest = {
+          sentenceGroups: Array<SentenceCompletionList>(),
+          title: this.name,
+          difficulty: this.difficulty,
+          subject: "None",
+          recommendedMinClass: this.classFrom,
+          recommendedMaxClass: this.classTo
+        };
+        return this.complexTasksService.createSentenceCompletionAndGroupingUsingPOST(g1);
         break;
       }
       case GroupingResponse.TypeEnum.SentenceCompletionAndSorting.toString(): {
-        return;
+        console.log("Mondatkiegeszites es sorrendezes POST called");
+        const g1: SentenceCompletionAndSortingRequest = {
+          sentences: Array<SentenceCompletionItem>(),
+          title: this.name,
+          difficulty: this.difficulty,
+          subject: "None",
+          recommendedMinClass: this.classFrom,
+          recommendedMaxClass: this.classTo
+        };
+        return this.complexTasksService.createSentenceCompletionAndSortingUsingPOST(g1);
         break;
       }
       case GroupingResponse.TypeEnum.SentenceCreationAndGrouping.toString(): {
-        return;
+        const g1: SentenceCreationAndGroupingRequest = {
+          sentenceGroups: Array<SentenceCreationList>(),
+          title: this.name,
+          difficulty: this.difficulty,
+          subject: "None",
+          recommendedMinClass: this.classFrom,
+          recommendedMaxClass: this.classTo
+        };
+        return this.complexTasksService.createSentenceCreationAndGroupingUsingPOST(g1);
         break;
       }
       case GroupingResponse.TypeEnum.SentenceCreationAndSorting.toString(): {
-        return;
+        const g1: SentenceCreationAndSortingRequest = {
+          title: this.name,
+          difficulty: this.difficulty,
+          subject: "None",
+          recommendedMinClass: this.classFrom,
+          recommendedMaxClass: this.classTo,
+          sentences: Array<Sentence>()
+        };
+        return this.complexTasksService.createSentenceCreationAndSortingUsingPOST(g1);
         break;
       }
       case GroupingResponse.TypeEnum.SortingAndGrouping.toString(): {
-        return;
+        const g1: SortingAndGroupingRequest = {
+          title: this.name,
+          difficulty: this.difficulty,
+          subject: "None",
+          recommendedMinClass: this.classFrom,
+          recommendedMaxClass: this.classTo,
+          groups: Array<GroupListItemRequest>()
+        };
+        return this.complexTasksService.createSortingAndGroupingUsingPOST(g1);
         break;
       }
       case GroupingResponse.TypeEnum.BlindMap.toString(): {
-        return;
+        const g1: BlindMapRequest = {
+          image: null,
+          tags: Array<BlindMapTag>(),
+          title: this.name,
+          difficulty: this.difficulty,
+          subject: "None",
+          recommendedMinClass: this.classFrom,
+          recommendedMaxClass: this.classTo
+        };
+        return this.otherTasksService.createBlindMapUsingPOST(g1);
         break;
       }
       case GroupingResponse.TypeEnum.FreeText.toString(): {
-        return;
+        const g1: FreeTextRequest = {
+          title: this.name,
+          difficulty: this.difficulty,
+          subject: "None",
+          recommendedMinClass: this.classFrom,
+          recommendedMaxClass: this.classTo,
+          question: null,
+          correctAnswer: null
+        };
+        return this.otherTasksService.createFreeTextUsingPOST(g1);
         break;
       }
       case GroupingResponse.TypeEnum.OddOneOut.toString(): {
-        return;
+        const g1: OddOneOutRequest = {
+          title: this.name,
+          difficulty: this.difficulty,
+          subject: "None",
+          recommendedMinClass: this.classFrom,
+          recommendedMaxClass: this.classTo,
+          correctAnswerIndex: null,
+          options: Array<MediaItemRequest>()
+        };
+        return this.otherTasksService.createOddOneOutUsingPOST(g1);
         break;
       }
       case GroupingResponse.TypeEnum.TimeLine.toString(): {
-        return;
+        const g1: TimelineRequest = {
+          timelineType: TimelineRequest.TimelineTypeEnum.DATE,
+          minimumDate: null,
+          maximumDate: null,
+          minimumInt: 0,
+          maximumInt: 0,
+          minimumDouble: 0,
+          maximumDouble: 0,
+          timelineTags: Array<TimelineTag>(),
+          title: this.name,
+          difficulty: this.difficulty,
+          subject: "None",
+          recommendedMinClass: this.classFrom,
+          recommendedMaxClass: this.classTo
+        };
+        return this.otherTasksService.createTimelineUsingPOST(g1);
         break;
       }
     }
@@ -162,40 +317,30 @@ export class NewExerciseComponent implements OnInit {
 
   public setName(event) {
     this.name = event;
-    console.log(this.name);
   }
 
   public typeSelected(event) {
-    console.log("typeselected called");
     this.type = event.value;
   }
 
   public difficultySelected(event) {
-    console.log("difficultySelected called ");
-    console.log(event);
     this.difficulty = event.value;
     console.log(event.value);
   }
 
   public classFromSelected(event) {
-    console.log("classFromSelected called");
     this.classFrom = event.value;
     this.classesTo = new Array<number>();
     for(let i = this.classFrom; i < 13; i++) {
       this.classesTo.push(i);
     }
-    console.log(event.value);
   }
 
   public classToSelected(event) {
-    console.log("classToSelected called");
     this.classTo = event.value;
-    console.log(event.value);
   }
 
   public topicSelected(event) {
-    console.log("topicSelected called");
     this.topic = event.value;
-    console.log(event.value);
   }
 }
