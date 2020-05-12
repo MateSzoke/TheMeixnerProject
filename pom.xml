@@ -47,13 +47,6 @@
             <version>1.4.199</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.threeten/threetenbp -->
-        <dependency>
-            <groupId>org.threeten</groupId>
-            <artifactId>threetenbp</artifactId>
-            <version>0.7.2</version>
-        </dependency>
-
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
