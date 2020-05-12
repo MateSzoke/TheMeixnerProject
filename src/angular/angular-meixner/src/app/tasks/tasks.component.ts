@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ModalService} from '../service/modal.service';
 import {DomService} from '../service/dom.service';
 import {ModalComponent} from '../modal/modal.component';
-import {NewExerciseComponent} from '../new-exercise/new-exercise.component';
+import {NewTaskComponent} from '../new-task/new-task.component';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {TaskResponse, TaskService} from '../../swagger-api';
 import {DiffimageService} from '../service/diffimage.service';
@@ -10,19 +10,19 @@ import {ConvertEnum} from '../model/ConvertEnum';
 
 @Component({
   selector: 'app-exercises',
-  templateUrl: './exercises.component.html',
-  styleUrls: ['./exercises.component.scss']
+  templateUrl: './tasks.component.html',
+  styleUrls: ['./tasks.component.scss']
 })
-export class ExercisesComponent implements OnInit {
+export class TasksComponent implements OnInit {
 
   public today = new Date();
   public actualMonth = this.today.getMonth().toString().padStart(2, '0');
   public subjects: Array<String> = ['történelem', "matematika"];
   public classYears = Array.from({length: (8 - 5) / 1 + 1}, (_, i) => 5 + (i * 1));
   public classes: Array<String> = ['a', 'b', 'c'];
-  public exercises: Array<TaskResponse> = new Array<TaskResponse>();
-  public exercisesUI: Array<TaskResponse> = new Array<TaskResponse>();
-  public exercisesLoaded = false;
+  public tasks: Array<TaskResponse> = new Array<TaskResponse>();
+  public tasksUI: Array<TaskResponse> = new Array<TaskResponse>();
+  public tasksLoaded = false;
   public getAllTasks = false;
 
   constructor(private modal: ModalService, private dom: DomService,
@@ -70,7 +70,7 @@ export class ExercisesComponent implements OnInit {
   }
 
   public deleteTask(input: number) {
-    this.exercisesLoaded = false;
+    this.tasksLoaded = false;
     console.log("calling delete id is " + input);
     this.taskService.deleteTaskByIdUsingDELETE(input).subscribe(
       data => {
@@ -102,10 +102,10 @@ export class ExercisesComponent implements OnInit {
 
   private getAllTasksFunction() {
     this.taskService.getAllTaskUsingGET().subscribe(data => {
-        this.exercises = new Array<TaskResponse>();
-        this.exercisesUI = new Array<TaskResponse>();
+        this.tasks = new Array<TaskResponse>();
+        this.tasksUI = new Array<TaskResponse>();
         data.forEach(element => {
-          this.exercises.push({
+          this.tasks.push({
             difficulty: element.difficulty,
             id: element.id,
             lastModified: element.lastModified,
@@ -116,7 +116,7 @@ export class ExercisesComponent implements OnInit {
             recommendedMaxClass: element.recommendedMaxClass,
             subject: element.subject
           } as TaskResponse);
-          this.exercisesUI.push({
+          this.tasksUI.push({
             difficulty: element.difficulty,
             id: element.id,
             lastModified: element.lastModified,
@@ -128,7 +128,7 @@ export class ExercisesComponent implements OnInit {
             subject: element.subject
           } as TaskResponse);
         });
-        this.exercisesLoaded = true;
+        this.tasksLoaded = true;
       },
       error => {
         console.log("subscribe error");
@@ -139,11 +139,11 @@ export class ExercisesComponent implements OnInit {
 
   private getMyTasksFunction() {
     this.taskService.getMyTaskUsingGET().subscribe(data => {
-        this.exercises = new Array<TaskResponse>();
+        this.tasks = new Array<TaskResponse>();
 
-        this.exercisesUI = new Array<TaskResponse>();
+        this.tasksUI = new Array<TaskResponse>();
         data.forEach(element => {
-          this.exercises.push({
+          this.tasks.push({
             difficulty: element.difficulty,
             id: element.id,
             lastModified: element.lastModified,
@@ -154,7 +154,7 @@ export class ExercisesComponent implements OnInit {
             recommendedMaxClass: element.recommendedMaxClass,
             subject: element.subject
           } as TaskResponse);
-          this.exercisesUI.push({
+          this.tasksUI.push({
             difficulty: element.difficulty,
             id: element.id,
             lastModified: element.lastModified,
@@ -166,7 +166,7 @@ export class ExercisesComponent implements OnInit {
             subject: element.subject,
           } as TaskResponse);
         });
-        this.exercisesLoaded = true;
+        this.tasksLoaded = true;
       },
       error => {
         console.log("subscribe error");
@@ -177,7 +177,7 @@ export class ExercisesComponent implements OnInit {
 
   public newTask() {
     //this.modComponent.ngOnInit();
-    this.dom.show(NewExerciseComponent);
+    this.dom.show(NewTaskComponent);
   }
 
   public convertEnum(input: string): string {

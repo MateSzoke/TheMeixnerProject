@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {ExercisesComponent} from './exercises/exercises.component';
+import {TasksComponent} from './tasks/tasks.component';
 import {RouteGuardService} from './service/route-guard.service';
 import {ExamsComponent} from './exams/exams.component';
 import {UsersComponent} from './users/users.component';
@@ -33,7 +33,7 @@ const routes: Routes = [
   },
   {
     path: 'feladatok/:viewtype',
-    component: ExercisesComponent,
+    component: TasksComponent,
     canActivate: [RouteGuardService]
   },
   {

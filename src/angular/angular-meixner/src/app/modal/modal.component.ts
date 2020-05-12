@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild, ViewContainerRef, HostBinding, Output, EventEmitter} from '@angular/core';
 import { DomService } from '../service/dom.service';
-import {ExercisesComponent} from '../exercises/exercises.component';
+import {TasksComponent} from '../tasks/tasks.component';
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',

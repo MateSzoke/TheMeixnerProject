@@ -36,7 +36,7 @@
   <br>
 </div>
 
-<div *ngIf="this.exercisesLoaded==false" >
+<div *ngIf="this.tasksLoaded==false" >
   <div class="wrapper">
     <div class="inner">
       <mat-spinner diameter="70"></mat-spinner>
@@ -45,8 +45,8 @@
 </div>
 
 
-<div *ngIf="this.exercisesLoaded">
-  <mat-card class="right-aligned-header" *ngFor="let feladat of exercises; index as i">
+<div *ngIf="this.tasksLoaded">
+  <mat-card class="right-aligned-header" *ngFor="let feladat of tasks; index as i">
     <div fxLayout="row" fxLayout.xs="column-reverse" fxLayoutGap="8px">
       <div class="float-left">
         {{feladat.title}} - {{this.convertEnum(feladat.type)}} -

@@ -10,7 +10,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatButtonModule} from '@angular/material/button';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import { ExercisesComponent } from './exercises/exercises.component';
+import { TasksComponent } from './tasks/tasks.component';
 import { ExamsComponent } from './exams/exams.component';
 import { UsersComponent } from './users/users.component';
 import { LoginComponent } from './login/login.component';
@@ -22,11 +22,11 @@ import {MatInputModule} from '@angular/material/input';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatSelectModule} from '@angular/material/select';
-import { NewExamComponent } from './new-exam/new-exam.component';
+import { NewExerciseComponent } from './new-exercise/new-exercise.component';
 import { ModalComponent } from './modal/modal.component';
 import {DomService} from './service/dom.service';
 import {ModalService} from './service/modal.service';
-import { NewExerciseComponent } from './new-exercise/new-exercise.component';
+import { NewTaskComponent } from './new-task/new-task.component';
 import { SorrendezesComponent } from './exercise_types/sorrendezes/sorrendezes.component';
 import { GroupingComponent } from './exercise_types/grouping/grouping.component';
 import { PairingComponent } from './exercise_types/pairing/pairing.component';
@@ -46,13 +46,13 @@ import {HttpInterceptorService} from "./service/http-interceptor.service";
 @NgModule({
   declarations: [
     AppComponent,
-    ExercisesComponent,
+    TasksComponent,
     ExamsComponent,
     UsersComponent,
     LoginComponent,
-    NewExamComponent,
-    ModalComponent,
     NewExerciseComponent,
+    ModalComponent,
+    NewTaskComponent,
     SorrendezesComponent,
     GroupingComponent,
     PairingComponent,
@@ -90,8 +90,8 @@ import {HttpInterceptorService} from "./service/http-interceptor.service";
     ],
   providers: [DomService, ModalService, ModalComponent,
     {provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true},
-    LoginComponent, NewExerciseComponent],
+    LoginComponent, NewTaskComponent],
   bootstrap: [AppComponent],
-  entryComponents: [NewExerciseComponent, LoginComponent, ModalComponent]
+  entryComponents: [NewTaskComponent, LoginComponent, ModalComponent]
 })
 export class AppModule { }
