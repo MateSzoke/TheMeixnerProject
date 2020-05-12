@@ -1,5 +1,6 @@
 package hu.aut.meixner.entity.exercises
 
+import java.time.OffsetDateTime
 import javax.persistence.*
 
 @Entity
@@ -9,6 +10,7 @@ data class ExercisesEntity(
         val name: String = "",
         val comment: String = "",
         val owner: String = "",
+        val createdAt: OffsetDateTime = OffsetDateTime.now(),
         @ElementCollection(targetClass = Long::class)
         val taskIds: MutableList<Long> = mutableListOf()
 )
