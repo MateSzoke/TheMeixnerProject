@@ -9,10 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Sentence } from './sentence';
+import {Sentence} from './sentence';
 
 
-export interface SentenceCreationRequest { 
+export interface SentenceCreationRequest {
     title: string;
     difficulty?: number;
     subject: SentenceCreationRequest.SubjectEnum;

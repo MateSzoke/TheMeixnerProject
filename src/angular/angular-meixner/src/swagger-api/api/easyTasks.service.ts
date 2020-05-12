@@ -11,30 +11,28 @@
  */
 /* tslint:disable:no-unused-variable member-ordering */
 
-import { Inject, Injectable, Optional }                      from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams,
-         HttpResponse, HttpEvent }                           from '@angular/common/http';
-import { CustomHttpUrlEncodingCodec }                        from '../encoder';
+import {Inject, Injectable, Optional} from '@angular/core';
+import {HttpClient, HttpEvent, HttpHeaders, HttpResponse} from '@angular/common/http';
 
-import { Observable }                                        from 'rxjs';
+import {Observable} from 'rxjs';
 
-import { GroupingRequest } from '../model/groupingRequest';
-import { GroupingResponse } from '../model/groupingResponse';
-import { MemoryGameRequest } from '../model/memoryGameRequest';
-import { MemoryGameResponse } from '../model/memoryGameResponse';
-import { PairingRequest } from '../model/pairingRequest';
-import { PairingResponse } from '../model/pairingResponse';
-import { SentenceCompletionRequest } from '../model/sentenceCompletionRequest';
-import { SentenceCompletionResponse } from '../model/sentenceCompletionResponse';
-import { SentenceCreationRequest } from '../model/sentenceCreationRequest';
-import { SentenceCreationResponse } from '../model/sentenceCreationResponse';
-import { SortingRequest } from '../model/sortingRequest';
-import { SortingResponse } from '../model/sortingResponse';
-import { TrueFalseRequest } from '../model/trueFalseRequest';
-import { TrueFalseResponse } from '../model/trueFalseResponse';
+import {GroupingRequest} from '../model/groupingRequest';
+import {GroupingResponse} from '../model/groupingResponse';
+import {MemoryGameRequest} from '../model/memoryGameRequest';
+import {MemoryGameResponse} from '../model/memoryGameResponse';
+import {PairingRequest} from '../model/pairingRequest';
+import {PairingResponse} from '../model/pairingResponse';
+import {SentenceCompletionRequest} from '../model/sentenceCompletionRequest';
+import {SentenceCompletionResponse} from '../model/sentenceCompletionResponse';
+import {SentenceCreationRequest} from '../model/sentenceCreationRequest';
+import {SentenceCreationResponse} from '../model/sentenceCreationResponse';
+import {SortingRequest} from '../model/sortingRequest';
+import {SortingResponse} from '../model/sortingResponse';
+import {TrueFalseRequest} from '../model/trueFalseRequest';
+import {TrueFalseResponse} from '../model/trueFalseResponse';
 
-import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
-import { Configuration }                                     from '../configuration';
+import {BASE_PATH} from '../variables';
+import {Configuration} from '../configuration';
 
 
 @Injectable({
@@ -90,7 +88,9 @@ export class EasyTasksService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -139,7 +139,9 @@ export class EasyTasksService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -188,7 +190,9 @@ export class EasyTasksService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -237,7 +241,9 @@ export class EasyTasksService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -286,7 +292,9 @@ export class EasyTasksService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -335,7 +343,9 @@ export class EasyTasksService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -384,7 +394,9 @@ export class EasyTasksService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -437,7 +449,9 @@ export class EasyTasksService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -490,7 +504,9 @@ export class EasyTasksService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -543,7 +559,9 @@ export class EasyTasksService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -596,7 +614,9 @@ export class EasyTasksService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -649,7 +669,9 @@ export class EasyTasksService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -702,7 +724,9 @@ export class EasyTasksService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -755,7 +779,9 @@ export class EasyTasksService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [

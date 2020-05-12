@@ -9,10 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { SentenceCreationList } from './sentenceCreationList';
+import {SentenceCreationList} from './sentenceCreationList';
 
 
-export interface SentenceCreationAndGroupingRequest { 
+export interface SentenceCreationAndGroupingRequest {
     sentenceGroups: Array<SentenceCreationList>;
     title: string;
     difficulty?: number;

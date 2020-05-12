@@ -9,10 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { MediaItemRequest } from './mediaItemRequest';
+import {MediaItemRequest} from './mediaItemRequest';
 
 
-export interface TrueFalseRequest { 
+export interface TrueFalseRequest {
     trueItems: Array<MediaItemRequest>;
     falseItems: Array<MediaItemRequest>;
     title: string;

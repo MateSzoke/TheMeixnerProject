@@ -9,10 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { SentenceCompletionList } from './sentenceCompletionList';
+import {SentenceCompletionList} from './sentenceCompletionList';
 
 
-export interface SentenceCompletionAndGroupingResponse { 
+export interface SentenceCompletionAndGroupingResponse {
     difficulty: number;
     id: number;
     lastModified: Date;

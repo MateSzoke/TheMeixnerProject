@@ -9,10 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { MediaItemRequest } from './mediaItemRequest';
+import {MediaItemRequest} from './mediaItemRequest';
 
 
-export interface TableRequest { 
+export interface TableRequest {
     table: Array<Array<MediaItemRequest>>;
     title: string;
     difficulty?: number;
