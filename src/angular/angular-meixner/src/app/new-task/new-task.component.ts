@@ -31,7 +31,7 @@ import {ModalComponent} from '../modal/modal.component';
 import {Observable} from 'rxjs';
 
 @Component({
-  selector: 'app-new-exercise',
+  selector: 'app-new-task',
   templateUrl: './new-task.component.html',
   styleUrls: ['./new-task.component.scss']
 })

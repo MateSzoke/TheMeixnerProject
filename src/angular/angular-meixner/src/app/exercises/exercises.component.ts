@@ -4,11 +4,11 @@ import {ModalService} from '../service/modal.service';
 import {LoginComponent} from '../login/login.component';
 import {ModalComponent} from '../modal/modal.component';
 import {ActivatedRoute, Params, Router} from "@angular/router";
-import {TaskResponse, TaskService} from "../../swagger-api";
+import {ExercisesResponse, ExercisesService, TaskResponse, TaskService} from "../../swagger-api";
 import {DiffimageService} from "../service/diffimage.service";
 
 @Component({
-  selector: 'app-exams',
+  selector: 'app-exercises',
   templateUrl: './exercises.component.html',
   styleUrls: ['./exercises.component.scss']
 })
@@ -19,17 +19,17 @@ export class ExercisesComponent implements OnInit {
   public tantargyak: Array<String> = ['történelem', "matematika"];
   public evfolyamok = Array.from({length: (8 - 5) / 1 + 1}, (_, i) => 5 + (i * 1));
   public classes: Array<String> = ['a', 'b', 'c'];
-  public exercises: Array<TaskResponse> = new Array<TaskResponse>();
-  public exercisesUI: Array<TaskResponse> = new Array<TaskResponse>();
+  public exercises: Array<ExercisesResponse> = new Array<ExercisesResponse>();
+  public exercisesUI: Array<ExercisesResponse> = new Array<ExercisesResponse>();
   public exercisesLoaded = false;
   public getAllTasks = false;
 
   constructor(private modal: ModalService, private dom: DomService,
               private modComponent: ModalComponent,
-              private taskService: TaskService,
+              private exerciseService: ExercisesService,
               public router: Router,
               private route: ActivatedRoute,
-              public diffImServ: DiffimageService) {
+              public imageService: DiffimageService) {
     modComponent.ngOnInit();
   }
 
@@ -39,10 +39,10 @@ export class ExercisesComponent implements OnInit {
       console.log("route params received");
       console.log(JSON.stringify(params.viewtype));
       this.getAllTasks = true;
-      this.getAllTasksFunction();
+      this.getMyExercises();
       ModalComponent.closeBtnPressed.subscribe(
         data => {
-          this.getAllTasksFunction();
+          this.getMyExercises();
         },
         error => {
           console.log("subscribe error");
@@ -53,33 +53,29 @@ export class ExercisesComponent implements OnInit {
 
   }
 
-  private getAllTasksFunction() {
-    this.taskService.getAllTaskUsingGET().subscribe(data => {
-        this.exercises = new Array<TaskResponse>();
-        this.exercisesUI = new Array<TaskResponse>();
+  private getMyExercises() {
+    this.exerciseService.getMyExercisesUsingGET().subscribe(data => {
+        this.exercises = new Array<ExercisesResponse>();
+        this.exercisesUI = new Array<ExercisesResponse>();
         data.forEach(element => {
           this.exercises.push({
-            difficulty: element.difficulty,
             id: element.id,
+            averageDifficulty: element.averageDifficulty,
             lastModified: element.lastModified,
             owner: element.owner,
-            title: element.title,
-            type: element.type,
-            recommendedMinClass: element.recommendedMinClass,
-            recommendedMaxClass: element.recommendedMaxClass,
-            subject: element.subject
-          } as TaskResponse);
+            comment: element.comment,
+            name: element.name,
+            tasks: element.tasks,
+          } as ExercisesResponse);
           this.exercisesUI.push({
-            difficulty: element.difficulty,
             id: element.id,
+            averageDifficulty: element.averageDifficulty,
             lastModified: element.lastModified,
             owner: element.owner,
-            title: element.title,
-            type: element.type,
-            recommendedMinClass: element.recommendedMinClass,
-            recommendedMaxClass: element.recommendedMaxClass,
-            subject: element.subject
-          } as TaskResponse);
+            comment: element.comment,
+            name: element.name,
+            tasks: element.tasks,
+          } as ExercisesResponse);
         });
         this.exercisesLoaded = true;
       },
