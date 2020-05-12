@@ -32,20 +32,42 @@
   </mat-card>
   <br>
 </div>
-<div *ngIf="this.exercisesLoaded">
-  <mat-card class="right-aligned-header" *ngFor="let exercise of exercises; index as i">
-    <div fxLayout="row" fxLayout.xs="column-reverse" fxLayoutGap="8px">
-      <div class="float-left">
-        {{exercise.name}} -
-        <img class="image1" src="{{this.imageService.convertNumToPath100(exercise.averageDifficulty)}}">
+
+<mat-accordion [togglePosition]="'before'" *ngIf="this.exercisesLoaded">
+  <mat-expansion-panel  *ngFor="let exercise of exercises; index as i" style="margin-top: 16px">
+    <mat-expansion-panel-header  >
+      <div>
+        <mat-panel-title>
+          {{exercise.name}}&nbsp; -
+          <img class="image1" src="assets/icons/bars_lv1.png">
+        </mat-panel-title>
+          <div fxLayout="row wrap" fxLayout.xs="column-reverse" fxLayoutAlign="space-around center" fxLayoutGap="8px">
+            <mat-card>
+              {{exercise.lastModified}}
+            </mat-card>
+            <mat-card>
+              &nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-square"></i>
+              &nbsp;&#8196;<i class="fa fa-trash"></i>&nbsp;&nbsp;
+            </mat-card>
+          </div>
       </div>
-      <div class="float-right">
-        {{this.today.getFullYear()}}.{{this.today.getMonth().toString().padStart(2, '0')}}.{{this.today.getDay().toString().padStart(2, '0')}}
-        &nbsp;&#8196;<i class="fa fa-trash" (click)="this.deleteExercise(+exercise.id)"></i>&nbsp;
-        <i (click)="this.redirect(0)" class="fa fa-edit"></i>&nbsp;&nbsp;
+    <div>{{exercise.comment}}</div>
+    </mat-expansion-panel-header>
+
+
+    <mat-card class="right-aligned-header"  *ngFor="let task of exercise.tasks; index as j" style="margin-top: 8px">
+      <div fxLayout="row" fxLayout.xs="column-reverse" fxLayoutGap="8px">
+        <div class="float-left">
+          {{task.title}}&nbsp; -
+          <img class="image1" src="assets/icons/bars_lv2.png">
+        </div>
+        <div class="float-right">
+          {{task.lastModified}}
+          &nbsp;&#8196;<i class="fa fa-trash"></i>&nbsp;
+        </div>
       </div>
-    </div>
-  </mat-card>
-</div>
+    </mat-card>
+  </mat-expansion-panel>
+</mat-accordion>
 </body>
 </html>
