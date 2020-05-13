@@ -22,6 +22,13 @@ class ExerciseController(
         return ResponseEntity.ok(exerciseService.createExercises(exerciseRequest))
     }
 
+    @GetMapping("/myExercises")
+    @ApiOperation("Get exercises of the current user")
+    fun getMyExercises(): ResponseEntity<List<ExercisesResponse>> {
+        val result = exerciseService.getMyExercises()
+        return ResponseEntity.ok(result)
+    }
+
     @GetMapping("/{exercisesId}")
     @ApiOperation("Get the exercises group by exercisesId")
     fun getExercisesById(@PathVariable("exercisesId") exercisesId: Long): ResponseEntity<ExercisesResponse> {

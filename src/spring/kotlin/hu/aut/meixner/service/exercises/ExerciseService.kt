@@ -4,6 +4,7 @@ import hu.aut.meixner.dto.exercises.ExerciseRequest
 import hu.aut.meixner.dto.exercises.ExercisesResponse
 import hu.aut.meixner.dto.task.common.TaskResponse
 import hu.aut.meixner.entity.exercises.ExercisesEntity
+import hu.aut.meixner.extensions.currentUser
 import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.mapping.toDomainModel
 import hu.aut.meixner.mapping.toEntity
@@ -18,7 +19,13 @@ class ExerciseService(
 ) {
 
     fun createExercises(exerciseRequest: ExerciseRequest): ExercisesResponse {
-        return exerciseRepository.save(exerciseRequest.toEntity()).toDomainModel(emptyList())
+        return exerciseRepository.save(exerciseRequest.toEntity(owner = currentUser)).toDomainModel(emptyList())
+    }
+
+    fun getMyExercises(): List<ExercisesResponse> {
+        return exerciseRepository.findAll().filter { it.owner == currentUser }.map { exercise ->
+            exercise.toDomainModel(tasks = getTaskEntitiesFromExercises(exercise) ?: emptyList())
+        }
     }
 
     fun getExercisesById(exercisesId: Long): ExercisesResponse? {
@@ -60,4 +67,5 @@ class ExerciseService(
         return exerciseRepository.save(exercise)
                 .toDomainModel(tasks = getTaskEntitiesFromExercises(exercise) ?: return null)
     }
+
 }

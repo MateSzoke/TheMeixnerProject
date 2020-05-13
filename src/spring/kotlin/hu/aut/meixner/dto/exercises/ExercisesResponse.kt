@@ -7,6 +7,7 @@ class ExercisesResponse(
         val id: Long,
         val name: String,
         val comment: String,
+        val owner: String,
         val tasks: List<TaskResponse>,
         val lastModified: OffsetDateTime?,
         val averageDifficulty: Int
