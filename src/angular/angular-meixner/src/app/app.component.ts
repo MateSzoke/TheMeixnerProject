@@ -8,12 +8,12 @@ import {AuthenticationService} from './service/authentication.service';
 })
 export class AppComponent {
   title = 'angular-meixner';
-  public logInStatus = true;
+  public logInStatus = false;
 
   constructor(
     public authenticationService: AuthenticationService
   ) {
-/*      this.authenticationService.userLoggedIn.subscribe(
+      this.authenticationService.userLoggedIn.subscribe(
         data => {
           this.logInStatus = data;
         },
@@ -23,11 +23,11 @@ export class AppComponent {
         fin => {
 
         }
-      );*/
+      );
   }
 
-  onLogout() {/*
-    this.authenticationService.logout();*/
+  onLogout() {
+    this.authenticationService.logout();
   }
 
 
