@@ -12,7 +12,7 @@
 import { PairElementResponse } from './pairElementResponse';
 
 
-export interface PairingResponse { 
+export interface PairingResponse {
     difficulty: number;
     id: number;
     lastModified: Date;

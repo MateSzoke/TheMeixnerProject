@@ -37,8 +37,8 @@ import {Observable} from 'rxjs';
 })
 export class NewExerciseComponent implements OnInit {
 
-  public types: Array<string> = ['csoportositas', 'parositas', 'sorrendezes', 'mondatkiegeszites'];
-  public difficulties:  Array<string> = ['konnyu', 'kozepes', 'nehez'];
+  public types: Array<string>;
+  public difficulties:  Array<string>;
   public topics:  Array<string> = ['Történelem', 'Fizika', 'Matematika', 'Biológia'];
   public classes:  Array<number> = [1,2,3,4,5,6,7,8,9,10,11,12];
   public classesTo:  Array<number> = [1,2,3,4,5,6,7,8,9,10,11,12];

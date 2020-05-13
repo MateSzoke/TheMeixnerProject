@@ -42,6 +42,10 @@ import { SortingGroupingComponent } from './exercise_types/sorting-grouping/sort
 import {MatSliderModule} from '@angular/material/slider';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {HttpInterceptorService} from "./service/http-interceptor.service";
+import { BlindMapComponent } from './exercise_types/blind-map/blind-map.component';
+import { FreetextComponent } from './exercise_types/freetext/freetext.component';
+import { OddoneoutComponent } from './exercise_types/oddoneout/oddoneout.component';
+import { TimelineComponent } from './exercise_types/timeline/timeline.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +68,11 @@ import {HttpInterceptorService} from "./service/http-interceptor.service";
     SentencecompletionSortingComponent,
     SentencecreationGroupingComponent,
     SentencecreationSortingComponent,
-    SortingGroupingComponent
+    SortingGroupingComponent,
+    BlindMapComponent,
+    FreetextComponent,
+    OddoneoutComponent,
+    TimelineComponent
   ],
     imports: [
         BrowserModule,
