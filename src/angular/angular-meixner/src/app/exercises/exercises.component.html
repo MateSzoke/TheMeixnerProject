@@ -1,4 +1,3 @@
-
 <html>
 <body>
 <app-modal></app-modal>
@@ -35,27 +34,24 @@
 
 <mat-accordion [togglePosition]="'before'" *ngIf="this.exercisesLoaded">
   <mat-expansion-panel *ngFor="let exercise of exercisesUI; index as i" style="margin-top: 16px">
-    <mat-expansion-panel-header  >
+    <mat-expansion-panel-header>
       <div>
-        <mat-panel-title>
+        <mat-panel-title style="font-size: large">
           {{exercise.name}}&nbsp; -
-          <img class="image1" src="assets/icons/bars_lv1.png">
+          <img class="image1" src="assets/icons/bars_lv1.png" style="margin-left: 16px">
         </mat-panel-title>
-          <div fxLayout="row wrap" fxLayout.xs="column-reverse" fxLayoutAlign="space-around center" fxLayoutGap="8px">
-            <mat-card>
-              {{exercise.lastModified}}
-            </mat-card>
-            <mat-card>
-              &nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-square"></i>
-              &nbsp;&#8196;<i class="fa fa-trash"></i>&nbsp;&nbsp;
-            </mat-card>
-          </div>
+        <div fxLayout="row wrap" style="margin-top: 8px">
+          {{exercise.comment}}
+        </div>
       </div>
-    <div>{{exercise.comment}}</div>
+      <div class="float-right">{{exercise.lastModified}}
+        <div><i class="fa fa-plus-square" style="margin-top: 8px"></i>
+          <i class="fa fa-trash" style="margin-left: 16px"></i></div>
+      </div>
     </mat-expansion-panel-header>
 
 
-    <mat-card class="right-aligned-header"  *ngFor="let task of exercise.tasks; index as j" style="margin-top: 8px">
+    <mat-card *ngFor="let task of exercise.tasks; index as j" class="right-aligned-header" style="margin-top: 8px">
       <div fxLayout="row" fxLayout.xs="column-reverse" fxLayoutGap="8px">
         <div class="float-left">
           {{task.title}}&nbsp; -
@@ -63,7 +59,7 @@
         </div>
         <div class="float-right">
           {{task.formattedLastModified }}
-          &nbsp;&#8196;<i class="fa fa-trash"></i>&nbsp;
+          &nbsp;<i class="fa fa-trash"></i>&nbsp;
         </div>
       </div>
     </mat-card>
