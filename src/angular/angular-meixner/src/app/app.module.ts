@@ -1,19 +1,19 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatListModule} from '@angular/material/list';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatButtonModule} from '@angular/material/button';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import { TasksComponent } from './tasks/tasks.component';
-import { ExercisesComponent } from './exercises/exercises.component';
-import { UsersComponent } from './users/users.component';
-import { LoginComponent } from './login/login.component';
+import {TasksComponent} from './tasks/tasks.component';
+import {ExercisesComponent} from './exercises/exercises.component';
+import {UsersComponent} from './users/users.component';
+import {LoginComponent} from './login/login.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -22,30 +22,26 @@ import {MatInputModule} from '@angular/material/input';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatSelectModule} from '@angular/material/select';
-import { NewExerciseComponent } from './new-exercise/new-exercise.component';
-import { ModalComponent } from './modal/modal.component';
+import {NewExerciseComponent} from './new-exercise/new-exercise.component';
+import {ModalComponent} from './modal/modal.component';
 import {DomService} from './service/dom.service';
 import {ModalService} from './service/modal.service';
-import { NewTaskComponent } from './new-task/new-task.component';
-import { SorrendezesComponent } from './task_types/sorrendezes/sorrendezes.component';
-import { GroupingComponent } from './task_types/grouping/grouping.component';
-import { PairingComponent } from './task_types/pairing/pairing.component';
-import { SentenceCompletionComponent } from './task_types/sentence-completion/sentence-completion.component';
-import { SentenceCreationComponent } from './task_types/sentence-creation/sentence-creation.component';
-import { SortingComponent } from './task_types/sorting/sorting.component';
-import { GroupingSortingComponent } from './task_types/grouping-sorting/grouping-sorting.component';
-import { SentencecompletionGroupingComponent } from './task_types/sentencecompletion-grouping/sentencecompletion-grouping.component';
-import { SentencecompletionSortingComponent } from './task_types/sentencecompletion-sorting/sentencecompletion-sorting.component';
-import { SentencecreationGroupingComponent } from './task_types/sentencecreation-grouping/sentencecreation-grouping.component';
-import { SentencecreationSortingComponent } from './task_types/sentencecreation-sorting/sentencecreation-sorting.component';
-import { SortingGroupingComponent } from './task_types/sorting-grouping/sorting-grouping.component';
+import {NewTaskComponent} from './new-task/new-task.component';
+import {SorrendezesComponent} from './task_types/sorrendezes/sorrendezes.component';
+import {GroupingComponent} from './task_types/grouping/grouping.component';
+import {PairingComponent} from './task_types/pairing/pairing.component';
+import {SentenceCompletionComponent} from './task_types/sentence-completion/sentence-completion.component';
+import {SentenceCreationComponent} from './task_types/sentence-creation/sentence-creation.component';
+import {SortingComponent} from './task_types/sorting/sorting.component';
+import {GroupingSortingComponent} from './task_types/grouping-sorting/grouping-sorting.component';
+import {SentencecompletionGroupingComponent} from './task_types/sentencecompletion-grouping/sentencecompletion-grouping.component';
+import {SentencecompletionSortingComponent} from './task_types/sentencecompletion-sorting/sentencecompletion-sorting.component';
+import {SentencecreationGroupingComponent} from './task_types/sentencecreation-grouping/sentencecreation-grouping.component';
+import {SentencecreationSortingComponent} from './task_types/sentencecreation-sorting/sentencecreation-sorting.component';
+import {SortingGroupingComponent} from './task_types/sorting-grouping/sorting-grouping.component';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {HttpInterceptorService} from "./service/http-interceptor.service";
-import { BlindMapComponent } from './exercise_types/blind-map/blind-map.component';
-import { FreetextComponent } from './exercise_types/freetext/freetext.component';
-import { OddoneoutComponent } from './exercise_types/oddoneout/oddoneout.component';
-import { TimelineComponent } from './exercise_types/timeline/timeline.component';
 
 @NgModule({
   declarations: [
@@ -68,11 +64,7 @@ import { TimelineComponent } from './exercise_types/timeline/timeline.component'
     SentencecompletionSortingComponent,
     SentencecreationGroupingComponent,
     SentencecreationSortingComponent,
-    SortingGroupingComponent,
-    BlindMapComponent,
-    FreetextComponent,
-    OddoneoutComponent,
-    TimelineComponent
+    SortingGroupingComponent
   ],
     imports: [
         BrowserModule,

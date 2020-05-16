@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {TasksComponent} from './tasks/tasks.component';
 import {RouteGuardService} from './service/route-guard.service';
 import {ExercisesComponent} from './exercises/exercises.component';
@@ -11,14 +11,8 @@ import {SentenceCreationComponent} from "./task_types/sentence-creation/sentence
 import {GroupingSortingComponent} from "./task_types/grouping-sorting/grouping-sorting.component";
 import {SentencecompletionGroupingComponent} from "./task_types/sentencecompletion-grouping/sentencecompletion-grouping.component";
 import {SentencecompletionSortingComponent} from "./task_types/sentencecompletion-sorting/sentencecompletion-sorting.component";
-import {SentencecreationGroupingComponent} from "./task_types/sentencecreation-grouping/sentencecreation-grouping.component";
 import {SentencecreationSortingComponent} from "./task_types/sentencecreation-sorting/sentencecreation-sorting.component";
 import {SortingGroupingComponent} from "./task_types/sorting-grouping/sorting-grouping.component";
-import {BlindMapComponent} from "./task_types/blind-map/blind-map.component";
-import {FreetextComponent} from "./task_types/freetext/freetext.component";
-import {OddoneoutComponent} from "./task_types/oddoneout/oddoneout.component";
-import {TimelineComponent} from "./task_types/timeline/timeline.component";
-import {SorrendezesComponent} from './task_types/sorrendezes/sorrendezes.component';
 import {PairingComponent} from './task_types/pairing/pairing.component';
 import {GroupingComponent} from './task_types/grouping/grouping.component';
 
@@ -82,26 +76,6 @@ const routes: Routes = [
   {
     path: 'sorrendezes_es_csoportositas',
     component: SortingGroupingComponent,
-    canActivate: [RouteGuardService]
-  },
-  {
-    path: 'memoriajatek',
-    component: BlindMapComponent,
-    canActivate: [RouteGuardService]
-  },
-  {
-    path: 'szabadszoveges_feladatok',
-    component: FreetextComponent,
-    canActivate: [RouteGuardService]
-  },
-  {
-    path: 'kakukktojas',
-    component: OddoneoutComponent,
-    canActivate: [RouteGuardService]
-  },
-  {
-    path: 'idoszalag',
-    component: TimelineComponent,
     canActivate: [RouteGuardService]
   },
   {
