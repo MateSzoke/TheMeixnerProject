@@ -2,11 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {ModalService} from '../service/modal.service';
 import {DomService} from '../service/dom.service';
 import {ModalComponent} from '../modal/modal.component';
-import {NewTaskComponent} from '../new-task/new-task.component';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {TaskResponse, TaskService} from '../../swagger-api';
 import {DiffimageService} from '../service/diffimage.service';
 import {ConvertEnum} from '../model/ConvertEnum';
+import {TaskAngularService} from "../data/task-angular.service";
+import {NewTaskComponent} from "../new-task/new-task.component";
+import {DateUtils} from "../util/date";
 
 @Component({
   selector: 'app-tasks',
@@ -21,18 +23,21 @@ export class TasksComponent implements OnInit {
   public classYears = Array.from({length: (8 - 5) / 1 + 1}, (_, i) => 5 + (i * 1));
   public classes: Array<String> = ['a', 'b', 'c'];
   public tasks: Array<TaskResponse> = new Array<TaskResponse>();
-  public tasksUI: Array<TaskResponse> = new Array<TaskResponse>();
+  //public tasksUI: Array<TaskResponse> = new Array<TaskResponse>();
   public tasksLoaded = false;
   public getAllTasks = false;
+  public routerLink = "parositas";
 
   constructor(private modal: ModalService, private dom: DomService,
               private modComponent: ModalComponent,
               private taskService: TaskService,
               public router: Router,
               private route: ActivatedRoute,
-              public diffImServ: DiffimageService) {
+              public diffImServ: DiffimageService,
+              public taskAngular: TaskAngularService) {
     modComponent.ngOnInit();
   }
+
 
   ngOnInit(): void {
     console.log("Init called");
@@ -100,79 +105,13 @@ export class TasksComponent implements OnInit {
     this.modal.destroy();
   }
 
-  private getAllTasksFunction() {
-    this.taskService.getAllTaskUsingGET().subscribe(data => {
-        this.tasks = new Array<TaskResponse>();
-        this.tasksUI = new Array<TaskResponse>();
-        data.forEach(element => {
-          this.tasks.push({
-            difficulty: element.difficulty,
-            id: element.id,
-            lastModified: element.lastModified,
-            owner: element.owner,
-            title: element.title,
-            type: element.type,
-            recommendedMinClass: element.recommendedMinClass,
-            recommendedMaxClass: element.recommendedMaxClass,
-            subject: element.subject
-          } as TaskResponse);
-          this.tasksUI.push({
-            difficulty: element.difficulty,
-            id: element.id,
-            lastModified: element.lastModified,
-            owner: element.owner,
-            title: element.title,
-            type: element.type,
-            recommendedMinClass: element.recommendedMinClass,
-            recommendedMaxClass: element.recommendedMaxClass,
-            subject: element.subject
-          } as TaskResponse);
-        });
-        this.tasksLoaded = true;
-      },
-      error => {
-        console.log("subscribe error");
-      },
-      () => {
-      });
+  public redirect(input: string): string {
+    let router: string = ConvertEnum.convertTypeToRouterLink(input);
+    return router;
   }
 
-  private getMyTasksFunction() {
-    this.taskService.getMyTaskUsingGET().subscribe(data => {
-        this.tasks = new Array<TaskResponse>();
-
-        this.tasksUI = new Array<TaskResponse>();
-        data.forEach(element => {
-          this.tasks.push({
-            difficulty: element.difficulty,
-            id: element.id,
-            lastModified: element.lastModified,
-            owner: element.owner,
-            title: element.title,
-            type: element.type,
-            recommendedMinClass: element.recommendedMinClass,
-            recommendedMaxClass: element.recommendedMaxClass,
-            subject: element.subject
-          } as TaskResponse);
-          this.tasksUI.push({
-            difficulty: element.difficulty,
-            id: element.id,
-            lastModified: element.lastModified,
-            owner: element.owner,
-            title: element.title,
-            type: element.type,
-            recommendedMinClass: element.recommendedMinClass,
-            recommendedMaxClass: element.recommendedMaxClass,
-            subject: element.subject,
-          } as TaskResponse);
-        });
-        this.tasksLoaded = true;
-      },
-      error => {
-        console.log("subscribe error");
-      },
-      () => {
-      });
+  public openTask(input: string, id: number) {
+    this.router.navigate([ConvertEnum.convertTypeToRouterLink(input) + '/' + id]);
   }
 
   public newTask() {
@@ -184,9 +123,23 @@ export class TasksComponent implements OnInit {
     return ConvertEnum.convertType(input);
   }
 
+  getFormattedDate(date: Date): string {
+    return DateUtils.getFormattedDate(date);
+  }
 
-  public redirect(input: string) {
-    this.router.navigate([ConvertEnum.convertTypeToRouterLink(input)]);
+  private getAllTasksFunction() {
+    this.taskService.getAllTaskUsingGET().subscribe(data => {
+        this.taskAngular.tasks = new Array<TaskResponse>();
+        data.forEach(element => {
+          this.taskAngular.tasks.push(element);
+        });
+        this.tasksLoaded = true;
+      },
+      error => {
+        console.log("subscribe error");
+      },
+      () => {
+      });
   }
 
   public subjectChange(input) {
@@ -195,6 +148,22 @@ export class TasksComponent implements OnInit {
 
   public classYearsChange(input) {
     console.log(input.value);
+  }
+
+  private getMyTasksFunction() {
+    this.taskService.getMyTaskUsingGET().subscribe(data => {
+        this.taskAngular.tasks = new Array<TaskResponse>();
+
+        data.forEach(element => {
+          this.taskAngular.tasks.push(element);
+        });
+        this.tasksLoaded = true;
+      },
+      error => {
+        console.log("subscribe error");
+      },
+      () => {
+      });
   }
 
 }

@@ -1,29 +1,33 @@
 import {Component, OnInit} from '@angular/core';
 import {
-  EasyTasksService,
-  GroupingRequest,
+  BlindMapRequest,
+  BlindMapTag,
   ComplexTasksService,
+  EasyTasksService,
+  FreeTextRequest,
+  GroupingAndSortingRequest,
+  GroupingRequest,
+  GroupListItemRequest,
   GroupRequest,
   MediaItemRequest,
+  OddOneOutRequest,
+  OtherTasksService,
   PairElementRequest,
   PairingRequest,
   Sentence,
-  SentenceCompletionRequest,
-  SentenceCreationRequest,
-  SortingRequest,
-  GroupingAndSortingRequest,
   SentenceCompletionAndGroupingRequest,
   SentenceCompletionAndSortingRequest,
   SentenceCompletionItem,
-  SentenceCreationAndGroupingRequest,
-  SentenceCreationList,
   SentenceCompletionList,
+  SentenceCompletionRequest,
+  SentenceCreationAndGroupingRequest,
   SentenceCreationAndSortingRequest,
+  SentenceCreationList,
+  SentenceCreationRequest,
   SortingAndGroupingRequest,
-  GroupListItemRequest,
-  BlindMapTag,
-  BlindMapRequest,
-  OtherTasksService, FreeTextRequest, OddOneOutRequest, TimelineRequest, TimelineTag
+  SortingRequest,
+  TimelineRequest,
+  TimelineTag
 } from '../../swagger-api';
 import {GroupingResponse} from '../../swagger-api/model/groupingResponse';
 import {ConvertEnum} from '../model/ConvertEnum';
@@ -37,8 +41,8 @@ import {Observable} from 'rxjs';
 })
 export class NewTaskComponent implements OnInit {
 
-  public types: Array<string> = ['csoportositas', 'parositas', 'sorrendezes', 'mondatkiegeszites'];
-  public difficulties:  Array<string> = ['konnyu', 'kozepes', 'nehez'];
+  public types: Array<string>;
+  public difficulties: Array<string>;
   public topics:  Array<string> = ['Történelem', 'Fizika', 'Matematika', 'Biológia'];
   public classes:  Array<number> = [1,2,3,4,5,6,7,8,9,10,11,12];
   public classesTo:  Array<number> = [1,2,3,4,5,6,7,8,9,10,11,12];

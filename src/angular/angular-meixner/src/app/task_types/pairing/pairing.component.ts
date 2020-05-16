@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {PairingServiceService} from '../../backend_temp/pairing-service.service';
-import {EasyTasksService, MediaItemResponse, PairingRequest, PairingResponse} from "../../../swagger-api";
+import {EasyTasksService, MediaItemResponse, PairingResponse} from "../../../swagger-api";
 import {ActivatedRoute, Params} from "@angular/router";
-import {ModalComponent} from "../../modal/modal.component";
 import {TaskAngularService} from "../../data/task-angular.service";
 
 @Component({
@@ -24,7 +23,7 @@ export class PairingComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       console.log("id is " + JSON.stringify(params.id));
-      this.pairingResponse = this.taskAngularService.exercises[params.id] as PairingResponse;
+      this.pairingResponse = this.taskAngularService.tasks[params.id] as PairingResponse;
     });
   }
 
