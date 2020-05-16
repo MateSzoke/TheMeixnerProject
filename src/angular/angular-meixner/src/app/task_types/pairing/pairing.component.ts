@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {PairingServiceService} from '../../backend_temp/pairing-service.service';
-import {EasyTasksService, PairingRequest} from "../../../swagger-api";
+import {EasyTasksService, MediaItemResponse, PairingRequest, PairingResponse} from "../../../swagger-api";
+import {ActivatedRoute, Params} from "@angular/router";
+import {ModalComponent} from "../../modal/modal.component";
+import {TaskAngularService} from "../../data/task-angular.service";
 
 @Component({
   selector: 'app-pairing',
@@ -9,20 +12,25 @@ import {EasyTasksService, PairingRequest} from "../../../swagger-api";
 })
 export class PairingComponent implements OnInit {
 
-  public members: PairingRequest;
+  public pairingResponse: PairingResponse;
 
   constructor(public pairingService: PairingServiceService,
-              public theEasyTasksService: EasyTasksService) {
+              public theEasyTasksService: EasyTasksService,
+              public taskAngularService: TaskAngularService,
+              private route: ActivatedRoute) {
 
   }
 
   ngOnInit(): void {
-
+    this.route.params.subscribe((params: Params) => {
+      console.log("id is " + JSON.stringify(params.id));
+      this.pairingResponse = this.taskAngularService.exercises[params.id] as PairingResponse;
+    });
   }
 
   public onModelChange(newValue, indexService, indexPair) {
-    this.members[indexService].content1 = newValue;
-
+    this.pairingResponse.pairs[indexService].pair[indexPair].content = newValue;
+    this.pairingResponse.pairs[indexService].pair[indexPair].type = MediaItemResponse.TypeEnum.TEXT;
   }
 
   public deleteItem(indexService) {

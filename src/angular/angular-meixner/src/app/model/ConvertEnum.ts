@@ -25,6 +25,14 @@ export class ConvertEnum {
         return 'sorrendezés';
         break;
       }
+      case GroupingResponse.TypeEnum.TrueFalse.toString(): {
+        return 'igaz-hamis';
+        break;
+      }
+      case GroupingResponse.TypeEnum.MemoryGame.toString(): {
+        return 'memóriajáték';
+        break;
+      }
       case GroupingResponse.TypeEnum.GroupingAndSorting.toString(): {
         return 'csoportosítás és sorrendezés';
         break;
