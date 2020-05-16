@@ -34,7 +34,7 @@
 </div>
 
 <mat-accordion [togglePosition]="'before'" *ngIf="this.exercisesLoaded">
-  <mat-expansion-panel  *ngFor="let exercise of exercises; index as i" style="margin-top: 16px">
+  <mat-expansion-panel *ngFor="let exercise of exercisesUI; index as i" style="margin-top: 16px">
     <mat-expansion-panel-header  >
       <div>
         <mat-panel-title>
@@ -62,7 +62,7 @@
           <img class="image1" src="assets/icons/bars_lv2.png">
         </div>
         <div class="float-right">
-          {{task.lastModified}}
+          {{task.formattedLastModified }}
           &nbsp;&#8196;<i class="fa fa-trash"></i>&nbsp;
         </div>
       </div>

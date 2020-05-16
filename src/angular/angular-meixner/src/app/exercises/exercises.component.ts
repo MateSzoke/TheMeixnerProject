@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {DomService} from '../service/dom.service';
 import {ModalService} from '../service/modal.service';
-import {LoginComponent} from '../login/login.component';
+import {DateUtils} from '../util/date';
 import {ModalComponent} from '../modal/modal.component';
 import {ActivatedRoute, Params, Router} from "@angular/router";
-import {ExercisesResponse, ExercisesService, TaskResponse, TaskService} from "../../swagger-api";
+import {ExercisesResponse, ExercisesService, TaskResponse} from "../../swagger-api";
 import {DiffimageService} from "../service/diffimage.service";
 
 @Component({
@@ -20,7 +20,7 @@ export class ExercisesComponent implements OnInit {
   public evfolyamok = Array.from({length: (8 - 5) / 1 + 1}, (_, i) => 5 + (i * 1));
   public classes: Array<String> = ['a', 'b', 'c'];
   public exercises: Array<ExercisesResponse> = new Array<ExercisesResponse>();
-  public exercisesUI: Array<ExercisesResponse> = new Array<ExercisesResponse>();
+  public exercisesUI: Array<ExerciseUI> = new Array<ExerciseUI>();
   public exercisesLoaded = false;
   public getAllTasks = false;
 
@@ -53,37 +53,13 @@ export class ExercisesComponent implements OnInit {
 
   }
 
-  private getMyExercises() {
-    this.exerciseService.getMyExercisesUsingGET().subscribe(data => {
-        this.exercises = new Array<ExercisesResponse>();
-        this.exercisesUI = new Array<ExercisesResponse>();
-        data.forEach(element => {
-          this.exercises.push({
-            id: element.id,
-            averageDifficulty: element.averageDifficulty,
-            lastModified: element.lastModified,
-            owner: element.owner,
-            comment: element.comment,
-            name: element.name,
-            tasks: element.tasks,
-          } as ExercisesResponse);
-          this.exercisesUI.push({
-            id: element.id,
-            averageDifficulty: element.averageDifficulty,
-            lastModified: element.lastModified,
-            owner: element.owner,
-            comment: element.comment,
-            name: element.name,
-            tasks: element.tasks,
-          } as ExercisesResponse);
-        });
-        this.exercisesLoaded = true;
-      },
-      error => {
-        console.log("subscribe error");
-      },
-      () => {
-      });
+  mapTaskResponse(tasks: Array<TaskResponse>): Array<TaskResponseUI> {
+    return tasks.map(task =>
+      new TaskResponseUI(
+        task.title,
+        DateUtils.getFormattedDate(task.lastModified)
+      )
+    )
   }
 
   removeModalNewExam() {
@@ -101,5 +77,58 @@ export class ExercisesComponent implements OnInit {
   redirect(taskId: number) {
 
   }
+
+  private getMyExercises() {
+    this.exerciseService.getMyExercisesUsingGET().subscribe(data => {
+        this.exercises = new Array<ExercisesResponse>();
+        this.exercisesUI = new Array<ExerciseUI>();
+        data.forEach(exercise => {
+          this.exercises.push({
+            id: exercise.id,
+            averageDifficulty: exercise.averageDifficulty,
+            lastModified: exercise.lastModified,
+            owner: exercise.owner,
+            comment: exercise.comment,
+            name: exercise.name,
+            tasks: exercise.tasks,
+          } as ExercisesResponse);
+          this.exercisesUI.push({
+            id: exercise.id,
+            averageDifficulty: exercise.averageDifficulty,
+            lastModified: DateUtils.getFormattedDate(exercise.lastModified),
+            owner: exercise.owner,
+            comment: exercise.comment,
+            name: exercise.name,
+            tasks: this.mapTaskResponse(exercise.tasks),
+          } as ExerciseUI);
+        });
+        this.exercisesLoaded = true;
+      },
+      error => {
+        console.log("subscribe error");
+      },
+      () => {
+      });
+  }
+
 }
 
+class ExerciseUI {
+  id: number;
+  averageDifficulty: number;
+  lastModified: string;
+  owner: string;
+  comment: string;
+  name: string;
+  tasks: Array<TaskResponseUI>;
+}
+
+class TaskResponseUI {
+  title: string;
+  formattedLastModified: string;
+
+  constructor(title: string, formattedLastModified: string) {
+    this.title = title;
+    this.formattedLastModified = formattedLastModified
+  }
+}
