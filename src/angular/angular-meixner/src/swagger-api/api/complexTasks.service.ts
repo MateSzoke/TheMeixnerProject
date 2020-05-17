@@ -11,28 +11,26 @@
  */
 /* tslint:disable:no-unused-variable member-ordering */
 
-import { Inject, Injectable, Optional }                      from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams,
-         HttpResponse, HttpEvent }                           from '@angular/common/http';
-import { CustomHttpUrlEncodingCodec }                        from '../encoder';
+import {Inject, Injectable, Optional} from '@angular/core';
+import {HttpClient, HttpEvent, HttpHeaders, HttpResponse} from '@angular/common/http';
 
-import { Observable }                                        from 'rxjs';
+import {Observable} from 'rxjs';
 
-import { GroupingAndSortingRequest } from '../model/groupingAndSortingRequest';
-import { GroupingAndSortingResponse } from '../model/groupingAndSortingResponse';
-import { SentenceCompletionAndGroupingRequest } from '../model/sentenceCompletionAndGroupingRequest';
-import { SentenceCompletionAndGroupingResponse } from '../model/sentenceCompletionAndGroupingResponse';
-import { SentenceCompletionAndSortingRequest } from '../model/sentenceCompletionAndSortingRequest';
-import { SentenceCompletionAndSortingResponse } from '../model/sentenceCompletionAndSortingResponse';
-import { SentenceCreationAndGroupingRequest } from '../model/sentenceCreationAndGroupingRequest';
-import { SentenceCreationAndGroupingResponse } from '../model/sentenceCreationAndGroupingResponse';
-import { SentenceCreationAndSortingRequest } from '../model/sentenceCreationAndSortingRequest';
-import { SentenceCreationAndSortingResponse } from '../model/sentenceCreationAndSortingResponse';
-import { SortingAndGroupingRequest } from '../model/sortingAndGroupingRequest';
-import { SortingAndGroupingResponse } from '../model/sortingAndGroupingResponse';
+import {GroupingAndSortingRequest} from '../model/groupingAndSortingRequest';
+import {GroupingAndSortingResponse} from '../model/groupingAndSortingResponse';
+import {SentenceCompletionAndGroupingRequest} from '../model/sentenceCompletionAndGroupingRequest';
+import {SentenceCompletionAndGroupingResponse} from '../model/sentenceCompletionAndGroupingResponse';
+import {SentenceCompletionAndSortingRequest} from '../model/sentenceCompletionAndSortingRequest';
+import {SentenceCompletionAndSortingResponse} from '../model/sentenceCompletionAndSortingResponse';
+import {SentenceCreationAndGroupingRequest} from '../model/sentenceCreationAndGroupingRequest';
+import {SentenceCreationAndGroupingResponse} from '../model/sentenceCreationAndGroupingResponse';
+import {SentenceCreationAndSortingRequest} from '../model/sentenceCreationAndSortingRequest';
+import {SentenceCreationAndSortingResponse} from '../model/sentenceCreationAndSortingResponse';
+import {SortingAndGroupingRequest} from '../model/sortingAndGroupingRequest';
+import {SortingAndGroupingResponse} from '../model/sortingAndGroupingResponse';
 
-import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
-import { Configuration }                                     from '../configuration';
+import {BASE_PATH} from '../variables';
+import {Configuration} from '../configuration';
 
 
 @Injectable({
@@ -87,8 +85,6 @@ export class ComplexTasksService {
 
         let headers = this.defaultHeaders;
 
-        // authentication (apiKey) required
-
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -136,7 +132,6 @@ export class ComplexTasksService {
 
         let headers = this.defaultHeaders;
 
-        // authentication (apiKey) required
 
 
         // to determine the Accept header
@@ -185,8 +180,6 @@ export class ComplexTasksService {
 
         let headers = this.defaultHeaders;
 
-        // authentication (apiKey) required
-
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -234,7 +227,6 @@ export class ComplexTasksService {
 
         let headers = this.defaultHeaders;
 
-        // authentication (apiKey) required
 
 
         // to determine the Accept header
@@ -283,7 +275,6 @@ export class ComplexTasksService {
 
         let headers = this.defaultHeaders;
 
-        // authentication (apiKey) required
 
 
         // to determine the Accept header
@@ -332,7 +323,6 @@ export class ComplexTasksService {
 
         let headers = this.defaultHeaders;
 
-        // authentication (apiKey) required
 
 
         // to determine the Accept header
@@ -385,7 +375,6 @@ export class ComplexTasksService {
 
         let headers = this.defaultHeaders;
 
-        // authentication (apiKey) required
 
 
         // to determine the Accept header
@@ -438,7 +427,6 @@ export class ComplexTasksService {
 
         let headers = this.defaultHeaders;
 
-        // authentication (apiKey) required
 
 
         // to determine the Accept header
@@ -491,8 +479,6 @@ export class ComplexTasksService {
 
         let headers = this.defaultHeaders;
 
-        // authentication (apiKey) required
-
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -544,7 +530,6 @@ export class ComplexTasksService {
 
         let headers = this.defaultHeaders;
 
-        // authentication (apiKey) required
 
 
         // to determine the Accept header
@@ -597,7 +582,6 @@ export class ComplexTasksService {
 
         let headers = this.defaultHeaders;
 
-        // authentication (apiKey) required
 
 
         // to determine the Accept header
@@ -650,7 +634,6 @@ export class ComplexTasksService {
 
         let headers = this.defaultHeaders;
 
-        // authentication (apiKey) required
 
 
         // to determine the Accept header

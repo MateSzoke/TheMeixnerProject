@@ -1,13 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {ModalService} from '../service/modal.service';
 import {DomService} from '../service/dom.service';
+import {ModalService} from '../service/modal.service';
+import {DateUtils} from '../util/date';
 import {ModalComponent} from '../modal/modal.component';
-import {NewExerciseComponent} from '../new-exercise/new-exercise.component';
-import {ActivatedRoute, Params, Router} from '@angular/router';
-import {TaskResponse, TaskService} from '../../swagger-api';
-import {DiffimageService} from '../service/diffimage.service';
-import {ConvertEnum} from '../model/ConvertEnum';
-import {TaskAngularService} from "../data/task-angular.service";
+import {ActivatedRoute, Params, Router} from "@angular/router";
+import {ExercisesResponse, ExercisesService, TaskResponse} from "../../swagger-api";
+import {DiffimageService} from "../service/diffimage.service";
 
 @Component({
   selector: 'app-exercises',
@@ -18,97 +16,91 @@ export class ExercisesComponent implements OnInit {
 
   public today = new Date();
   public actualMonth = this.today.getMonth().toString().padStart(2, '0');
-  public subjects: Array<String> = ['történelem', "matematika"];
-  public classYears = Array.from({length: (8 - 5) / 1 + 1}, (_, i) => 5 + (i * 1));
+  public tantargyak: Array<String> = ['történelem', "matematika"];
+  public evfolyamok = Array.from({length: (8 - 5) / 1 + 1}, (_, i) => 5 + (i * 1));
   public classes: Array<String> = ['a', 'b', 'c'];
-  public exercises: Array<TaskResponse> = new Array<TaskResponse>();
-  //public exercisesUI: Array<TaskResponse> = new Array<TaskResponse>();
+  public exercises: Array<ExercisesResponse> = new Array<ExercisesResponse>();
+  public exercisesUI: Array<ExerciseUI> = new Array<ExerciseUI>();
   public exercisesLoaded = false;
   public getAllTasks = false;
-  public routerLink = "parositas";
 
   constructor(private modal: ModalService, private dom: DomService,
               private modComponent: ModalComponent,
-              private taskService: TaskService,
+              private exerciseService: ExercisesService,
               public router: Router,
               private route: ActivatedRoute,
-              public diffImServ: DiffimageService,
-              public taskAngular: TaskAngularService) {
+              public imageService: DiffimageService) {
     modComponent.ngOnInit();
   }
-
 
   ngOnInit(): void {
     console.log("Init called");
     this.route.params.subscribe((params: Params) => {
       console.log("route params received");
       console.log(JSON.stringify(params.viewtype));
-      if (JSON.stringify(params.viewtype) === JSON.stringify(String('feladatok'))) {
-        this.getAllTasks = true;
-        this.getAllTasksFunction();
-        ModalComponent.closeBtnPressed.subscribe(
-          data => {
-            this.getAllTasksFunction();
-          },
-          error => {
-            console.log("subscribe error");
-          },
-          () => {
-          });
-
-      } else {
-        this.getAllTasks = false;
-        this.getMyTasksFunction();
-        ModalComponent.closeBtnPressed.subscribe(
-          data => {
-            this.getMyTasksFunction();
-          },
-          error => {
-            console.log("subscribe error");
-          },
-          () => {
-          });
-      }
+      this.getAllTasks = true;
+      this.getMyExercises();
+      ModalComponent.closeBtnPressed.subscribe(
+        data => {
+          this.getMyExercises();
+        },
+        error => {
+          console.log("subscribe error");
+        },
+        () => {
+        });
     });
 
   }
 
-  public deleteTask(input: number) {
-    this.exercisesLoaded = false;
-    console.log("calling delete id is " + input);
-    this.taskService.deleteTaskByIdUsingDELETE(input).subscribe(
-      data => {
-        console.log("calling delete get...");
-        if (this.getAllTasks === true) {
-          this.getAllTasksFunction();
-        } else {
-          this.getMyTasksFunction();
-        }
-      },
-      err => {
-        console.log("delete error");
-      },
-      () => {
-
-      }
+  mapTaskResponse(tasks: Array<TaskResponse>): Array<TaskResponseUI> {
+    return tasks.map(task =>
+      new TaskResponseUI(
+        task.title,
+        DateUtils.getFormattedDate(task.lastModified)
+      )
     )
   }
 
+  removeModalNewExam() {
 
-  public removeModalnewTask() {
-    if (this.getAllTasks === true) {
-      this.getAllTasksFunction();
-    } else {
-      this.getMyTasksFunction();
-    }
-    this.modal.destroy();
   }
 
-  private getAllTasksFunction() {
-    this.taskService.getAllTaskUsingGET().subscribe(data => {
-        this.taskAngular.exercises = new Array<TaskResponse>();
-        data.forEach(element => {
-          this.taskAngular.exercises.push(element);
+  newExam() {
+
+  }
+
+  deleteExercise(exerciseId: number) {
+
+  }
+
+  redirect(taskId: number) {
+
+  }
+
+  private getMyExercises() {
+    this.exerciseService.getMyExercisesUsingGET().subscribe(data => {
+        this.exercises = new Array<ExercisesResponse>();
+        this.exercisesUI = new Array<ExerciseUI>();
+        data.forEach(exercise => {
+          this.exercises.push({
+            id: exercise.id,
+            averageDifficulty: exercise.averageDifficulty,
+            lastModified: exercise.lastModified,
+            owner: exercise.owner,
+            comment: exercise.comment,
+            name: exercise.name,
+            tasks: exercise.tasks,
+          } as ExercisesResponse);
+          this.exercisesUI.push({
+            id: exercise.id,
+            averageDifficulty: exercise.averageDifficulty,
+            lastModified: DateUtils.getFormattedDate(exercise.lastModified),
+            owner: exercise.owner,
+            comment: exercise.comment,
+            name: exercise.name,
+            tasks: this.mapTaskResponse(exercise.tasks),
+          } as ExerciseUI);
         });
         this.exercisesLoaded = true;
       },
@@ -119,47 +111,24 @@ export class ExercisesComponent implements OnInit {
       });
   }
 
-  private getMyTasksFunction() {
-    this.taskService.getMyTaskUsingGET().subscribe(data => {
-        this.taskAngular.exercises = new Array<TaskResponse>();
+}
 
-        data.forEach(element => {
-          this.taskAngular.exercises.push(element);
-        });
-        this.exercisesLoaded = true;
-      },
-      error => {
-        console.log("subscribe error");
-      },
-      () => {
-      });
+class ExerciseUI {
+  id: number;
+  averageDifficulty: number;
+  lastModified: string;
+  owner: string;
+  comment: string;
+  name: string;
+  tasks: Array<TaskResponseUI>;
+}
+
+class TaskResponseUI {
+  title: string;
+  formattedLastModified: string;
+
+  constructor(title: string, formattedLastModified: string) {
+    this.title = title;
+    this.formattedLastModified = formattedLastModified
   }
-
-  public newTask() {
-    //this.modComponent.ngOnInit();
-    this.dom.show(NewExerciseComponent);
-  }
-
-  public convertEnum(input: string): string {
-    return ConvertEnum.convertType(input);
-  }
-
-
-  public redirect(input: string): string {
-    let router: string = ConvertEnum.convertTypeToRouterLink(input);
-    return router;
-  }
-
-  public openExercise(input: string, id: number) {
-    this.router.navigate([ConvertEnum.convertTypeToRouterLink(input) + '/' + id]);
-  }
-
-  public subjectChange(input) {
-    console.log(input.value);
-  }
-
-  public classYearsChange(input) {
-    console.log(input.value);
-  }
-
 }

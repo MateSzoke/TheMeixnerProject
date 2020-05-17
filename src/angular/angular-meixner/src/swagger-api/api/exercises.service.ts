@@ -11,18 +11,16 @@
  */
 /* tslint:disable:no-unused-variable member-ordering */
 
-import { Inject, Injectable, Optional }                      from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams,
-         HttpResponse, HttpEvent }                           from '@angular/common/http';
-import { CustomHttpUrlEncodingCodec }                        from '../encoder';
+import {Inject, Injectable, Optional} from '@angular/core';
+import {HttpClient, HttpEvent, HttpHeaders, HttpResponse} from '@angular/common/http';
 
-import { Observable }                                        from 'rxjs';
+import {Observable} from 'rxjs';
 
-import { ExerciseRequest } from '../model/exerciseRequest';
-import { ExercisesResponse } from '../model/exercisesResponse';
+import {ExerciseRequest} from '../model/exerciseRequest';
+import {ExercisesResponse} from '../model/exercisesResponse';
 
-import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
-import { Configuration }                                     from '../configuration';
+import {BASE_PATH} from '../variables';
+import {Configuration} from '../configuration';
 
 
 @Injectable({
@@ -81,8 +79,6 @@ export class ExercisesService {
 
         let headers = this.defaultHeaders;
 
-        // authentication (apiKey) required
-
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -125,7 +121,6 @@ export class ExercisesService {
 
         let headers = this.defaultHeaders;
 
-        // authentication (apiKey) required
 
 
         // to determine the Accept header
@@ -174,7 +169,6 @@ export class ExercisesService {
 
         let headers = this.defaultHeaders;
 
-        // authentication (apiKey) required
 
 
         // to determine the Accept header
@@ -216,7 +210,6 @@ export class ExercisesService {
 
         let headers = this.defaultHeaders;
 
-        // authentication (apiKey) required
 
 
         // to determine the Accept header
@@ -233,6 +226,44 @@ export class ExercisesService {
         ];
 
         return this.httpClient.get<ExercisesResponse>(`${this.configuration.basePath}/exercises/${encodeURIComponent(String(exercisesId))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Get exercises of the current user
+     *
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getMyExercisesUsingGET(observe?: 'body', reportProgress?: boolean): Observable<Array<ExercisesResponse>>;
+    public getMyExercisesUsingGET(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<ExercisesResponse>>>;
+    public getMyExercisesUsingGET(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<ExercisesResponse>>>;
+    public getMyExercisesUsingGET(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.get<Array<ExercisesResponse>>(`${this.configuration.basePath}/exercises/myExercises`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -263,7 +294,6 @@ export class ExercisesService {
 
         let headers = this.defaultHeaders;
 
-        // authentication (apiKey) required
 
 
         // to determine the Accept header
@@ -309,8 +339,6 @@ export class ExercisesService {
         }
 
         let headers = this.defaultHeaders;
-
-        // authentication (apiKey) required
 
 
         // to determine the Accept header

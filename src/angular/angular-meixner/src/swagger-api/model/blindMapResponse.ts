@@ -9,11 +9,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { BlindMapTag } from './blindMapTag';
-import { MediaItemResponse } from './mediaItemResponse';
+import {BlindMapTag} from './blindMapTag';
+import {MediaItemResponse} from './mediaItemResponse';
 
 
-export interface BlindMapResponse { 
+export interface BlindMapResponse {
     difficulty: number;
     id: number;
     image: MediaItemResponse;

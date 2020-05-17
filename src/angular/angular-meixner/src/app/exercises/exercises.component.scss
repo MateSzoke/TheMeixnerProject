@@ -11,21 +11,6 @@ mat-grid-list  {
   margin-left: 6px;
 }
 
-.float-left{
-  float:left;
-  margin-left: 20px;
-}
-
-.float-right{
-  margin-left: auto;
-  margin-right: 20px;
-  float:right;
-}
-
-.fit-parent {
-  max-width: fit-content;
-}
-
 mat-card {
   max-width: 36rem;
   text-align: center;
@@ -46,6 +31,14 @@ mat-accordion {
   padding: 1px;
 }
 
+mat-panel-description{
+  color: black;
+}
+
+mat-expansion-panel-header{
+  width: 97%;
+}
+
 mat-grid-list, .mat-card-controls {
   height: auto;
   width: 100%;
@@ -63,6 +56,11 @@ mat-card-content {
   display: flex;
 }
 
+.card-container {
+  display: flex;
+  justify-content: space-between;
+}
+
 .project-card-container {
   display: flex !important;
   flex-wrap: nowrap !important;
@@ -76,6 +74,17 @@ mat-card-content {
 .flex-layout {
   display: flex;
   justify-content: flex-end;
+}
+
+.float-left{
+  float:left;
+  margin-left: 20px;
+}
+
+.float-right{
+  margin-left: auto;
+  margin-right: 20px;
+  float:right;
 }
 
 .dateInput {
@@ -96,20 +105,17 @@ mat-card-content {
 }
 
 .mat-stroked-button:hover, .mat-button:hover {
-  background: rgb(17, 131, 181);
+  background: rgb(0, 180, 181);
   color: white;
 }
 
 
-.wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: calc(70vh - 20px);
+.mat-spinner {
+  circle {
+    stroke: rgb(0, 180, 181);
+  }
 }
-.inner {
-  padding: 12px;
-}
+
 
 .sumOfHours {
   font-size: 1.35em;
@@ -120,7 +126,7 @@ mat-card-content {
 }
 
 .mat-datepicker:hover {
-  background: rgb(17, 131, 181);
+  background: rgb(0, 180, 181);
 }
 
 .aligned-with-icon {

@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { PairElementResponse } from './pairElementResponse';
+import {PairElementResponse} from './pairElementResponse';
 
 
 export interface PairingResponse {

@@ -9,10 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { GroupResponse } from './groupResponse';
+import {GroupResponse} from './groupResponse';
 
 
-export interface GroupingResponse { 
+export interface GroupingResponse {
     difficulty: number;
     groups: Array<GroupResponse>;
     id: number;

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {NewExerciseComponent} from '../../new-exercise/new-exercise.component';
+import {NewTaskComponent} from '../../new-task/new-task.component';
 import {PairingServiceService} from '../../backend_temp/pairing-service.service';
 import {SortingService} from '../../backend_temp/sorting.service';
 

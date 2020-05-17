@@ -9,10 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { TimelineTag } from './timelineTag';
+import {TimelineTag} from './timelineTag';
 
 
-export interface TimelineResponse { 
+export interface TimelineResponse {
     difficulty: number;
     id: number;
     lastModified: Date;

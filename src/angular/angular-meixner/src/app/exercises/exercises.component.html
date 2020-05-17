@@ -2,32 +2,28 @@
 <body>
 <app-modal></app-modal>
 <div id="modal-container" class="hidden"></div>
-<div id="overlay" (click)="removeModalnewTask()" class="hidden"></div>
+<div id="overlay" (click)="removeModalNewExam()" class="hidden"></div>
 <div class="container">
   <mat-card class="mat-card-controls">
     <mat-card-content>
       <div class="flex-layout">
-        <div class="fit-parent">
-          <mat-form-field>
-            <mat-label style="color: black;">Tantárgy</mat-label>
-            <mat-select (selectionChange)="this.subjectChange($event)">
-              <mat-option *ngFor="let subject of subjects" [value]="subject">
-                {{subject}}
-              </mat-option>
-              <mat-option>vissza</mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label style="color: black;">Évfolyam</mat-label>
-            <mat-select (selectionChange)="this.classYearsChange($event)">
-              <mat-option *ngFor="let classYear of classYears" [value]="classYear">
-                {{classYear}}
-              </mat-option>
-              <mat-option>vissza</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <button (click)="newTask()" class="plusButton" mat-button>
+        <mat-form-field>
+          <mat-label style="color: black;">Tantárgy</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let tantargy of tantargyak" [value]="tantargy">
+              {{tantargy}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label style="color: black;">Évfolyam</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let evfolyam of evfolyamok" [value]="evfolyam">
+              {{evfolyam}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button (click)="newExam()" class="plusButton" mat-button>
           <i class="fa fa-plus"></i>
         </button>
       </div>
@@ -36,31 +32,38 @@
   <br>
 </div>
 
-<div *ngIf="this.exercisesLoaded==false" >
-  <div class="wrapper">
-    <div class="inner">
-      <mat-spinner diameter="70"></mat-spinner>
-    </div>
-  </div>
-</div>
-
-
-<div *ngIf="this.exercisesLoaded">
-  <mat-card class="right-aligned-header" *ngFor="let feladat of this.taskAngular.exercises; index as i">
-    <div fxLayout="row" fxLayout.xs="column-reverse" fxLayoutGap="8px">
-      <div class="float-left">
-        {{feladat.title}} - {{this.convertEnum(feladat.type)}} -
-        <img class="image1" src="{{this.diffImServ.convertNumToPath100(feladat.difficulty)}}">
+<mat-accordion [togglePosition]="'before'" *ngIf="this.exercisesLoaded">
+  <mat-expansion-panel *ngFor="let exercise of exercisesUI; index as i" style="margin-top: 16px">
+    <mat-expansion-panel-header>
+      <div>
+        <mat-panel-title style="font-size: large">
+          {{exercise.name}}&nbsp; -
+          <img class="image1" src="assets/icons/bars_lv1.png" style="margin-left: 16px">
+        </mat-panel-title>
+        <div fxLayout="row wrap" style="margin-top: 8px">
+          {{exercise.comment}}
+        </div>
       </div>
-      <div class="float-right">
-        {{this.today.getFullYear()}}.{{this.today.getMonth().toString().padStart(2, '0')}}.{{this.today.getDay().toString().padStart(2, '0')}}
-        &nbsp;&#8196;
-        <i class="fa fa-trash" (click)="this.deleteTask(+feladat.id)"></i>&nbsp;
-        <a (click)="this.openExercise(feladat.type,i)" class="fa fa-edit"></a>&nbsp;&nbsp;
+      <div class="float-right">{{exercise.lastModified}}
+        <div><i class="fa fa-plus-square" style="margin-top: 8px"></i>
+          <i class="fa fa-trash" style="margin-left: 16px"></i></div>
       </div>
-    </div>
-  </mat-card>
-</div>
+    </mat-expansion-panel-header>
 
+
+    <mat-card *ngFor="let task of exercise.tasks; index as j" class="right-aligned-header" style="margin-top: 8px">
+      <div fxLayout="row" fxLayout.xs="column-reverse" fxLayoutGap="8px">
+        <div class="float-left">
+          {{task.title}}&nbsp; -
+          <img class="image1" src="assets/icons/bars_lv2.png">
+        </div>
+        <div class="float-right">
+          {{task.formattedLastModified }}
+          &nbsp;<i class="fa fa-trash"></i>&nbsp;
+        </div>
+      </div>
+    </mat-card>
+  </mat-expansion-panel>
+</mat-accordion>
 </body>
 </html>

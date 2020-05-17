@@ -9,10 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { TimelineTag } from './timelineTag';
+import {TimelineTag} from './timelineTag';
 
 
-export interface TimelineRequest { 
+export interface TimelineRequest {
     timelineType: TimelineRequest.TimelineTypeEnum;
     minimumDate?: Date;
     maximumDate?: Date;

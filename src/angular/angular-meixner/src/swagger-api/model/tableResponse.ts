@@ -9,10 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { MediaItemResponse } from './mediaItemResponse';
+import {MediaItemResponse} from './mediaItemResponse';
 
 
-export interface TableResponse { 
+export interface TableResponse {
     difficulty: number;
     id: number;
     lastModified: Date;
