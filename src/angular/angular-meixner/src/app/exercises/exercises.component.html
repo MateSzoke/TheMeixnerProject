@@ -2,7 +2,7 @@
 <body>
 <app-modal></app-modal>
 <div id="modal-container" class="hidden"></div>
-<div id="overlay" (click)="removeModalNewExam()" class="hidden"></div>
+<div (click)="removeModalNewExercise()" class="hidden" id="overlay"></div>
 <div class="container">
   <mat-card class="mat-card-controls">
     <mat-card-content>
@@ -23,7 +23,7 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <button (click)="newExam()" class="plusButton" mat-button>
+        <button (click)="newExercise()" class="plusButton" mat-button>
           <i class="fa fa-plus"></i>
         </button>
       </div>

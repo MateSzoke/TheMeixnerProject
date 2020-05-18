@@ -6,6 +6,7 @@ import {ModalComponent} from '../modal/modal.component';
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {ExercisesResponse, ExercisesService, TaskResponse} from "../../swagger-api";
 import {DiffimageService} from "../service/diffimage.service";
+import {NewExerciseComponent} from "../new-exercise/new-exercise.component";
 
 @Component({
   selector: 'app-exercises',
@@ -62,12 +63,12 @@ export class ExercisesComponent implements OnInit {
     )
   }
 
-  removeModalNewExam() {
-
+  removeModalNewExercise() {
+    this.modal.destroy();
   }
 
-  newExam() {
-
+  newExercise() {
+    this.dom.show(NewExerciseComponent);
   }
 
   deleteExercise(exerciseId: number) {

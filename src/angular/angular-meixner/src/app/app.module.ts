@@ -90,8 +90,8 @@ import {HttpInterceptorService} from "./service/http-interceptor.service";
     ],
   providers: [DomService, ModalService, ModalComponent,
     {provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true},
-    LoginComponent, NewTaskComponent],
+    LoginComponent, NewTaskComponent, NewExerciseComponent],
   bootstrap: [AppComponent],
-  entryComponents: [NewTaskComponent, LoginComponent, ModalComponent]
+  entryComponents: [NewTaskComponent, NewExerciseComponent, LoginComponent, ModalComponent]
 })
 export class AppModule { }
