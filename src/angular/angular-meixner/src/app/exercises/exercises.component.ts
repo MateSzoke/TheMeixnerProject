@@ -7,6 +7,7 @@ import {ActivatedRoute, Params, Router} from "@angular/router";
 import {ExercisesResponse, ExercisesService, TaskResponse} from "../../swagger-api";
 import {DiffimageService} from "../service/diffimage.service";
 import {NewExerciseComponent} from "../new-exercise/new-exercise.component";
+import {ExerciseTaskListComponent} from "../exercise-task-list/exercise-task-list.component";
 
 @Component({
   selector: 'app-exercises',
@@ -71,11 +72,11 @@ export class ExercisesComponent implements OnInit {
     this.dom.show(NewExerciseComponent);
   }
 
-  deleteExercise(exerciseId: number) {
-
+  openMyTasks() {
+    this.dom.show(ExerciseTaskListComponent)
   }
 
-  redirect(taskId: number) {
+  deleteExercise(exerciseId: number) {
 
   }
 
