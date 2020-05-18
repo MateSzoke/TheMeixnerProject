@@ -72,7 +72,7 @@ export class ExercisesComponent implements OnInit {
     this.dom.show(NewExerciseComponent);
   }
 
-  openMyTasks() {
+  openMyTasks(exerciseId: number) {
     this.dom.show(ExerciseTaskListComponent)
   }
 

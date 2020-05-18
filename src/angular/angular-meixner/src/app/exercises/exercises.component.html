@@ -45,8 +45,9 @@
         </div>
       </div>
       <div class="float-right">{{exercise.lastModified}}
-        <div><i (click)="openMyTasks()" class="fa fa-plus-square" style="margin-top: 8px"></i>
-          <i class="fa fa-trash" style="margin-left: 16px"></i></div>
+        <div><i (click)="openMyTasks(exercise.id)" class="fa fa-plus-square small-menu-button"
+                style="margin-top: 8px"></i>
+          <i class="fa fa-trash small-menu-button" style="margin-left: 16px"></i></div>
       </div>
     </mat-expansion-panel-header>
 

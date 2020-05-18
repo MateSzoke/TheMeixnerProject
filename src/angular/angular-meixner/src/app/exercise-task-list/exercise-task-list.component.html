@@ -9,7 +9,8 @@
   </div>
   <div *ngIf="this.tasksLoaded">
     <div *ngFor="let task of tasks" class="task-element">
-      <input type="checkbox"> {{task.name}} - {{task.type}} - {{task.lastModified}}
+      <input [checked]="task.checked" type="checkbox" value="{{task.checked}}"> {{task.name}} - {{task.type}}
+      - {{task.lastModified}}
     </div>
   </div>
 </form>
