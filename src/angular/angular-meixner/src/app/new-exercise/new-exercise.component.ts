@@ -38,35 +38,28 @@ import {Observable} from 'rxjs';
 export class NewExerciseComponent implements OnInit {
 
   public types: Array<string>;
-  public difficulties:  Array<string>;
-  public topics:  Array<string> = ['Történelem', 'Fizika', 'Matematika', 'Biológia'];
-  public classes:  Array<number> = [1,2,3,4,5,6,7,8,9,10,11,12];
-  public classesTo:  Array<number> = [1,2,3,4,5,6,7,8,9,10,11,12];
-  private type : number = -1;
-  private difficulty : number =-1;
+  public difficulties: Array<string>;
+  public topics: Array<string> = ['Történelem', 'Fizika', 'Matematika', 'Biológia'];
+  public classes: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  public classesTo: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  private type: number = -1;
+  private difficulty: number = -1;
   private classFrom: number = -1;
   private classTo: number = -1;
   private topic: number = -1;
   public name: string = null;
+  public subscription;
 
   ngOnInit(): void {
+    console.log("ngOnInit called");
     this.types = new Array<string>();
-    for(let i in GroupingResponse.TypeEnum) {
+    for (let i in GroupingResponse.TypeEnum) {
       this.types.push(ConvertEnum.convertType(i));
     }
-  }
 
-  constructor(private modalC: ModalComponent,
-              private theEasyTasksService: EasyTasksService,
-              private complexTasksService: ComplexTasksService,
-              private otherTasksService: OtherTasksService) {
-
-
-    ModalComponent.saveBtnPressed.subscribe(data => {
-      if(this.name == null || this.type == -1 || this.difficulty == -1 || this.classFrom == -1 || this.classTo == -1 || this.topic == -1) {
-        console.log("szempontok: " + this.type + this.difficulty +
-        this.classFrom + this.classTo + this.topic);
-
+    this.subscription = ModalComponent.saveBtnPressed.subscribe(data => {
+      if (this.name == null || this.type === -1 || this.difficulty === -1 || this.classFrom === -1 ||
+        this.classTo === -1 || this.topic === -1) {
         alert("Kérem adja meg az összes szempontot!");
         return;
       } else {
@@ -81,12 +74,14 @@ export class NewExerciseComponent implements OnInit {
         };
         console.log(this.type + " type");
         let j = 0;
-        for(let i in GroupingResponse.TypeEnum) {
-          if(j == this.type) {
+        for (let i in GroupingResponse.TypeEnum) {
+          if (j == this.type) {
             console.log("j equals");
+            this.type = -2;
             this.postTaskDataByType(i).subscribe(
-              data => {
+              data2 => {
                 console.log("data sent");
+                this.subscription.unsubscribe();
               },
               error => {
                 console.log("subscribe error");
@@ -98,12 +93,25 @@ export class NewExerciseComponent implements OnInit {
           }
           j++;
         }
-        ModalComponent.closeAfterSave(data);
+        ModalComponent.closeAfterSave();
       }
     });
   }
 
-  private testInsideFunction(input: string) : String {
+  ngOnDestroy(): void {
+    console.log("onDestroy called");
+    this.subscription.unsubscribe();
+  }
+
+  constructor(private modalC: ModalComponent,
+              private theEasyTasksService: EasyTasksService,
+              private complexTasksService: ComplexTasksService,
+              private otherTasksService: OtherTasksService) {
+
+
+  }
+
+  private testInsideFunction(input: string): String {
     console.log("testInsideFunction called" + input.toString());
     return "this is what was returned";
   }
@@ -331,7 +339,7 @@ export class NewExerciseComponent implements OnInit {
   public classFromSelected(event) {
     this.classFrom = event.value;
     this.classesTo = new Array<number>();
-    for(let i = this.classFrom; i < 13; i++) {
+    for (let i = this.classFrom; i < 13; i++) {
       this.classesTo.push(i);
     }
   }

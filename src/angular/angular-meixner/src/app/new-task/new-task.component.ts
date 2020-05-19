@@ -91,6 +91,7 @@ export class NewTaskComponent implements OnInit {
             this.postTaskDataByType(i).subscribe(
               data => {
                 console.log("data sent");
+                //ModalComponent.saveBtnPressed.unsubscribe();
               },
               error => {
                 console.log("subscribe error");
@@ -102,7 +103,7 @@ export class NewTaskComponent implements OnInit {
           }
           j++;
         }
-        ModalComponent.closeAfterSave(data);
+        ModalComponent.closeAfterSave();
       }
     });
   }

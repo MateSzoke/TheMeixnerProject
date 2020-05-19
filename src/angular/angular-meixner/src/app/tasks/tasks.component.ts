@@ -117,6 +117,16 @@ export class TasksComponent implements OnInit {
   public newTask() {
     //this.modComponent.ngOnInit();
     this.dom.show(NewTaskComponent);
+    ModalComponent.saveBtnPressed.subscribe(data => {
+        if (this.getAllTasks === true) {
+          this.getAllTasksFunction();
+        } else {
+          this.getMyTasksFunction();
+        }
+      },
+      err => {
+
+      });
   }
 
   public convertEnum(input: string): string {
