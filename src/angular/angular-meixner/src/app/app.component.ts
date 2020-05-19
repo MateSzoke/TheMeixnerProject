@@ -13,6 +13,7 @@ export class AppComponent {
   constructor(
     public authenticationService: AuthenticationService
   ) {
+    console.log("app component constructor called");
       this.authenticationService.userLoggedIn.subscribe(
         data => {
           this.logInStatus = data;
@@ -24,6 +25,7 @@ export class AppComponent {
 
         }
       );
+      this.authenticationService.emitCurrentData();
   }
 
   onLogout() {

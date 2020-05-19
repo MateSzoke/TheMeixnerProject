@@ -11,7 +11,7 @@ import {LoginDTO} from "../model/LoginDTO";
 })
 export class AuthenticationService {
 
-  @Output() userLoggedIn = new EventEmitter<boolean>();
+  @Output() userLoggedIn = new EventEmitter<boolean>(false);
 
   loginError = false;
   constructor(
@@ -20,8 +20,21 @@ export class AuthenticationService {
     private service: AccountService,
     private routeSelectorService: RouteSelectorService
   ) {
+    console.log(this.getAuthenticatedUser());
+    if (this.getAuthenticatedUser()) {
+      this.userLoggedIn.emit(true);
+    }
 
   }
+
+  emitCurrentData() {
+    if (this.getAuthenticatedUser()) {
+      this.userLoggedIn.emit(true);
+    } else {
+      this.userLoggedIn.emit(false);
+    }
+  }
+
 
   getAuthenticatedUser() {
     return sessionStorage.getItem('authenticatedUser');
