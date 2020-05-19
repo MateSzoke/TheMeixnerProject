@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ExercisesService, TaskService} from "../../swagger-api";
 import {TaskAngularService} from "../data/task-angular.service";
 import {DateUtils} from "../util/date";
@@ -10,8 +10,7 @@ import {ModalComponent} from "../modal/modal.component";
   styleUrls: ['./exercise-task-list.component.scss']
 })
 export class ExerciseTaskListComponent implements OnInit {
-
-  public exerciseId: number;
+  @Input() public exerciseId: number;
   public tasks: Array<TaskUI> = new Array<TaskUI>();
   public tasksLoaded = false;
 
@@ -38,6 +37,7 @@ export class ExerciseTaskListComponent implements OnInit {
         });
         console.log(this.taskAngular.tasks);
         this.tasksLoaded = true;
+        console.log(`WELCOME FROM ${this.exerciseId} TASK LISTS COMPONENT`);
       },
       error => {
         console.log("subscribe error");

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ExerciseRequest, ExercisesService} from '../../swagger-api';
 import {ModalComponent} from '../modal/modal.component';
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-new-exercise',
@@ -22,14 +23,26 @@ export class NewExerciseComponent implements OnInit {
         alert("Feladatsor neve nem lehet üres");
         return;
       } else {
-        const exercise: ExerciseRequest = {name: this.name, comment: this.comment};
-        exerciseService.createExercisesUsingPOST(exercise);
+        this.createExercise(this.name, this.comment).subscribe(
+          data => {
+            console.log("exercise sent")
+          },
+          error => {
+          },
+          () => {
+          }
+        );
         ModalComponent.closeAfterSave(data);
       }
     });
   }
 
   ngOnInit() {
+  }
+
+  private createExercise(name: string, comment: string): Observable<any> {
+    const exercise: ExerciseRequest = {name: name, comment: comment};
+    return this.exerciseService.createExercisesUsingPOST(exercise);
   }
 
   public setName(event) {

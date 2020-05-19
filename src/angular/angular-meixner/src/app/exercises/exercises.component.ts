@@ -5,7 +5,6 @@ import {DateUtils} from '../util/date';
 import {ModalComponent} from '../modal/modal.component';
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {ExercisesResponse, ExercisesService, TaskResponse} from "../../swagger-api";
-import {DiffimageService} from "../service/diffimage.service";
 import {NewExerciseComponent} from "../new-exercise/new-exercise.component";
 import {ExerciseTaskListComponent} from "../exercise-task-list/exercise-task-list.component";
 
@@ -16,11 +15,8 @@ import {ExerciseTaskListComponent} from "../exercise-task-list/exercise-task-lis
 })
 export class ExercisesComponent implements OnInit {
 
-  public today = new Date();
-  public actualMonth = this.today.getMonth().toString().padStart(2, '0');
-  public tantargyak: Array<String> = ['történelem', "matematika"];
-  public evfolyamok = Array.from({length: (8 - 5) / 1 + 1}, (_, i) => 5 + (i * 1));
-  public classes: Array<String> = ['a', 'b', 'c'];
+  public subjects: Array<String> = ['történelem', "matematika"];
+  public classes = Array.from({length: (8 - 5) / 1 + 1}, (_, i) => 5 + (i * 1));
   public exercises: Array<ExercisesResponse> = new Array<ExercisesResponse>();
   public exercisesUI: Array<ExerciseUI> = new Array<ExerciseUI>();
   public exercisesLoaded = false;
@@ -30,8 +26,7 @@ export class ExercisesComponent implements OnInit {
               private modComponent: ModalComponent,
               private exerciseService: ExercisesService,
               public router: Router,
-              private route: ActivatedRoute,
-              public imageService: DiffimageService) {
+              private route: ActivatedRoute) {
     modComponent.ngOnInit();
   }
 
@@ -73,11 +68,20 @@ export class ExercisesComponent implements OnInit {
   }
 
   openMyTasks(exerciseId: number) {
-    this.dom.show(ExerciseTaskListComponent)
+    this.dom.show(ExerciseTaskListComponent);
   }
 
   deleteExercise(exerciseId: number) {
-
+    this.exercisesLoaded = true;
+    this.exerciseService.deleteExercisesUsingDELETE(exerciseId).subscribe(
+      data => {
+        this.exercisesLoaded = false;
+      },
+      error => {
+      },
+      () => {
+      }
+    );
   }
 
   private getMyExercises() {
