@@ -19,7 +19,7 @@
       <mat-card-content>
         <form *ngFor="let pair of member.pair; let j = index" class="my-form">
           <mat-form-field class="full-width">
-            <input [ngModel]="pair.content" (ngModelChange)="onModelChange($event, i, j)" matInput name="username">
+            <input [ngModel]="pair.content" (ngModelChange)="updatePairElement($event, i, j)" matInput name="username">
           </mat-form-field>
           <br>
         </form>

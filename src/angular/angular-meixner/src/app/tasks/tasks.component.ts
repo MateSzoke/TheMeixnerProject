@@ -34,7 +34,7 @@ export class TasksComponent implements OnInit {
               public router: Router,
               private route: ActivatedRoute,
               public diffImServ: DiffimageService,
-              public taskAngular: TaskAngularService) {
+              public taskAngularService: TaskAngularService) {
     modComponent.ngOnInit();
   }
 
@@ -46,10 +46,10 @@ export class TasksComponent implements OnInit {
       console.log(JSON.stringify(params.viewtype));
       if (JSON.stringify(params.viewtype) === JSON.stringify(String('feladatok'))) {
         this.getAllTasks = true;
-        this.getAllTasksFunction();
+        this.taskAngularService.getAllTasksFunction();
         ModalComponent.closeBtnPressed.subscribe(
           data => {
-            this.getAllTasksFunction();
+            this.taskAngularService.getAllTasksFunction();
           },
           error => {
             console.log("subscribe error");
@@ -75,13 +75,13 @@ export class TasksComponent implements OnInit {
   }
 
   public deleteTask(input: number) {
-    this.tasksLoaded = false;
+    this.taskAngularService.tasksLoaded = false;
     console.log("calling delete id is " + input);
     this.taskService.deleteTaskByIdUsingDELETE(input).subscribe(
       data => {
         console.log("calling delete get...");
         if (this.getAllTasks === true) {
-          this.getAllTasksFunction();
+          this.taskAngularService.getAllTasksFunction();
         } else {
           this.getMyTasksFunction();
         }
@@ -98,7 +98,7 @@ export class TasksComponent implements OnInit {
 
   public removeModalnewTask() {
     if (this.getAllTasks === true) {
-      this.getAllTasksFunction();
+      this.taskAngularService.getAllTasksFunction();
     } else {
       this.getMyTasksFunction();
     }
@@ -119,7 +119,7 @@ export class TasksComponent implements OnInit {
     this.dom.show(NewTaskComponent);
     ModalComponent.saveBtnPressed.subscribe(data => {
         if (this.getAllTasks === true) {
-          this.getAllTasksFunction();
+          this.taskAngularService.getAllTasksFunction();
         } else {
           this.getMyTasksFunction();
         }
@@ -137,21 +137,6 @@ export class TasksComponent implements OnInit {
     return DateUtils.getFormattedDate(date);
   }
 
-  private getAllTasksFunction() {
-    this.taskService.getAllTaskUsingGET().subscribe(data => {
-        this.taskAngular.tasks = new Array<TaskResponse>();
-        data.forEach(element => {
-          this.taskAngular.tasks.push(element);
-        });
-        this.tasksLoaded = true;
-      },
-      error => {
-        console.log("subscribe error");
-      },
-      () => {
-      });
-  }
-
   public subjectChange(input) {
     console.log(input.value);
   }
@@ -162,12 +147,12 @@ export class TasksComponent implements OnInit {
 
   private getMyTasksFunction() {
     this.taskService.getMyTaskUsingGET().subscribe(data => {
-        this.taskAngular.tasks = new Array<TaskResponse>();
+        this.taskAngularService.tasks = new Array<TaskResponse>();
 
         data.forEach(element => {
-          this.taskAngular.tasks.push(element);
+          this.taskAngularService.tasks.push(element);
         });
-        this.tasksLoaded = true;
+        this.taskAngularService.tasksLoaded = true;
       },
       error => {
         console.log("subscribe error");
