@@ -14,6 +14,6 @@ class ApplicationConfig : WebMvcConfigurerAdapter() {
     @Override
     override fun addCorsMappings(registry: CorsRegistry) {
         // Can just allow `methods` that you need.
-        registry.addMapping("/**").allowedMethods("PUT", "GET", "DELETE", "OPTIONS", "PATCH", "POST")
+        registry.addMapping("/**")
     }
 }
