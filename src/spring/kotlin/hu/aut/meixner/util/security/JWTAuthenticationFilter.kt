@@ -45,7 +45,7 @@ class JWTAuthenticationFilter(private val mAuthenticationManager: Authentication
         res.addHeader("Access-Control-Expose-Headers", "Authorization")
         res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
         res.setHeader("Access-Control-Allow-Credentials", "true")
-        res.setHeader("Access-Control-Allow-Headers", "content-type, Authorization")
+        res.setHeader("Access-Control-Allow-Headers", "accept, content-type, Authorization, X-Requested-With")
         val token = JWT.create()
                 .withSubject((auth.principal as User).username)
                 .withExpiresAt(Date(System.currentTimeMillis() + EXPIRATION_TIME))
