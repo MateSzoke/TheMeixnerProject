@@ -62,7 +62,7 @@ export class ExercisesService {
 
     /**
      * Add task to an exercises group by id
-     *
+     * 
      * @param exercisesId exercisesId
      * @param taskId taskId
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -82,7 +82,9 @@ export class ExercisesService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -110,7 +112,7 @@ export class ExercisesService {
 
     /**
      * Creates a new exercises group
-     *
+     * 
      * @param exerciseRequest exerciseRequest
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -126,7 +128,9 @@ export class ExercisesService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -159,7 +163,7 @@ export class ExercisesService {
 
     /**
      * Delete exercise group by id
-     *
+     * 
      * @param exercisesId exercisesId
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -175,7 +179,9 @@ export class ExercisesService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -201,7 +207,7 @@ export class ExercisesService {
 
     /**
      * Get the exercises group by exercisesId
-     *
+     * 
      * @param exercisesId exercisesId
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -217,7 +223,9 @@ export class ExercisesService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -243,8 +251,49 @@ export class ExercisesService {
     }
 
     /**
+     * Get exercises of the current user
+     * 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getMyExercisesUsingGET(observe?: 'body', reportProgress?: boolean): Observable<Array<ExercisesResponse>>;
+    public getMyExercisesUsingGET(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<ExercisesResponse>>>;
+    public getMyExercisesUsingGET(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<ExercisesResponse>>>;
+    public getMyExercisesUsingGET(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        // authentication (apiKey) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.get<Array<ExercisesResponse>>(`${this.configuration.basePath}/exercises/myExercises`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Remove task from an exercises group by id
-     *
+     * 
      * @param exercisesId exercisesId
      * @param taskId taskId
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -264,7 +313,9 @@ export class ExercisesService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -291,7 +342,7 @@ export class ExercisesService {
 
     /**
      * Update an existing exercises group
-     *
+     * 
      * @param exercisesId exercisesId
      * @param exerciseRequest exerciseRequest
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -311,7 +362,9 @@ export class ExercisesService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [

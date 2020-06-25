@@ -61,7 +61,7 @@ export class TaskService {
 
     /**
      * Deletes the task by it&#39;s taskId.
-     *
+     * 
      * @param taskId taskId
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -77,7 +77,9 @@ export class TaskService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -103,7 +105,7 @@ export class TaskService {
 
     /**
      * Returns all tasks int the database.
-     *
+     * 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -115,7 +117,9 @@ export class TaskService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -142,7 +146,7 @@ export class TaskService {
 
     /**
      * Returns all tasks of the current user.
-     *
+     * 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -154,7 +158,9 @@ export class TaskService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -181,7 +187,7 @@ export class TaskService {
 
     /**
      * Returns the specific task by it&#39;s taskId.
-     *
+     * 
      * @param taskId taskId
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -197,7 +203,9 @@ export class TaskService {
         let headers = this.defaultHeaders;
 
         // authentication (apiKey) required
-
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
