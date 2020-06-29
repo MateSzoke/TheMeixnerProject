@@ -1,5 +1,6 @@
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {TaskResponse, TaskService} from "../../swagger-api";
+import {Observable, Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,7 @@ export class TaskAngularService {
 
   private _tasks: Array<any> = new Array<any>();
   private _tasksLoaded = false;
+  public finishedLoading: Subject<boolean> = new Subject<boolean>();
 
   constructor(private taskService: TaskService) { }
 
@@ -34,6 +36,7 @@ export class TaskAngularService {
           this.tasks.push(element);
         });
         this.tasksLoaded = true;
+        this.finishedLoading.next(true);
       },
       error => {
         console.log("subscribe error");

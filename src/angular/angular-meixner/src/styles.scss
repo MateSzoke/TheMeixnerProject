@@ -46,6 +46,22 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   width: 100%;
 }
 
+
+.full-width-inactive {
+  width: 100%;
+  opacity: 0.5;
+}
+
+.width-and-trash {
+  width: calc(100% - 50px);
+}
+
+.width-and-trash-inactive {
+  width: calc(100% - 50px);
+  margin-right: 11px;
+  opacity: 0.5;
+}
+
 .mat-slider-thumb {
   background-color: rgb(17, 131, 181) !important;
 }
