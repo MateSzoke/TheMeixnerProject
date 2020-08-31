@@ -11,26 +11,28 @@
  */
 /* tslint:disable:no-unused-variable member-ordering */
 
-import {Inject, Injectable, Optional} from '@angular/core';
-import {HttpClient, HttpEvent, HttpHeaders, HttpResponse} from '@angular/common/http';
+import { Inject, Injectable, Optional }                      from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams,
+         HttpResponse, HttpEvent }                           from '@angular/common/http';
+import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
-import {Observable} from 'rxjs';
+import { Observable }                                        from 'rxjs';
 
-import {GroupingAndSortingRequest} from '../model/groupingAndSortingRequest';
-import {GroupingAndSortingResponse} from '../model/groupingAndSortingResponse';
-import {SentenceCompletionAndGroupingRequest} from '../model/sentenceCompletionAndGroupingRequest';
-import {SentenceCompletionAndGroupingResponse} from '../model/sentenceCompletionAndGroupingResponse';
-import {SentenceCompletionAndSortingRequest} from '../model/sentenceCompletionAndSortingRequest';
-import {SentenceCompletionAndSortingResponse} from '../model/sentenceCompletionAndSortingResponse';
-import {SentenceCreationAndGroupingRequest} from '../model/sentenceCreationAndGroupingRequest';
-import {SentenceCreationAndGroupingResponse} from '../model/sentenceCreationAndGroupingResponse';
-import {SentenceCreationAndSortingRequest} from '../model/sentenceCreationAndSortingRequest';
-import {SentenceCreationAndSortingResponse} from '../model/sentenceCreationAndSortingResponse';
-import {SortingAndGroupingRequest} from '../model/sortingAndGroupingRequest';
-import {SortingAndGroupingResponse} from '../model/sortingAndGroupingResponse';
+import { GroupingAndSortingRequest } from '../model/groupingAndSortingRequest';
+import { GroupingAndSortingResponse } from '../model/groupingAndSortingResponse';
+import { SentenceCompletionAndGroupingRequest } from '../model/sentenceCompletionAndGroupingRequest';
+import { SentenceCompletionAndGroupingResponse } from '../model/sentenceCompletionAndGroupingResponse';
+import { SentenceCompletionAndSortingRequest } from '../model/sentenceCompletionAndSortingRequest';
+import { SentenceCompletionAndSortingResponse } from '../model/sentenceCompletionAndSortingResponse';
+import { SentenceCreationAndGroupingRequest } from '../model/sentenceCreationAndGroupingRequest';
+import { SentenceCreationAndGroupingResponse } from '../model/sentenceCreationAndGroupingResponse';
+import { SentenceCreationAndSortingRequest } from '../model/sentenceCreationAndSortingRequest';
+import { SentenceCreationAndSortingResponse } from '../model/sentenceCreationAndSortingResponse';
+import { SortingAndGroupingRequest } from '../model/sortingAndGroupingRequest';
+import { SortingAndGroupingResponse } from '../model/sortingAndGroupingResponse';
 
-import {BASE_PATH} from '../variables';
-import {Configuration} from '../configuration';
+import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
+import { Configuration }                                     from '../configuration';
 
 
 @Injectable({
@@ -70,7 +72,7 @@ export class ComplexTasksService {
 
     /**
      * Creates a new Grouping and sorting task.
-     *
+     * 
      * @param groupingAndSortingRequest request
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -85,6 +87,10 @@ export class ComplexTasksService {
 
         let headers = this.defaultHeaders;
 
+        // authentication (apiKey) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -117,7 +123,7 @@ export class ComplexTasksService {
 
     /**
      * Creates a new Sentence completion and grouping task.
-     *
+     * 
      * @param sentenceCompletionAndGroupingRequest request
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -132,7 +138,10 @@ export class ComplexTasksService {
 
         let headers = this.defaultHeaders;
 
-
+        // authentication (apiKey) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -165,7 +174,7 @@ export class ComplexTasksService {
 
     /**
      * Creates a new Sentence completion and sorting task.
-     *
+     * 
      * @param sentenceCompletionAndSortingRequest request
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -180,6 +189,10 @@ export class ComplexTasksService {
 
         let headers = this.defaultHeaders;
 
+        // authentication (apiKey) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -212,7 +225,7 @@ export class ComplexTasksService {
 
     /**
      * Creates a new Sentence creation and grouping task.
-     *
+     * 
      * @param sentenceCreationAndGroupingRequest request
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -227,7 +240,10 @@ export class ComplexTasksService {
 
         let headers = this.defaultHeaders;
 
-
+        // authentication (apiKey) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -260,7 +276,7 @@ export class ComplexTasksService {
 
     /**
      * Creates a new Sentence creation and sorting task.
-     *
+     * 
      * @param sentenceCreationAndSortingRequest request
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -275,7 +291,10 @@ export class ComplexTasksService {
 
         let headers = this.defaultHeaders;
 
-
+        // authentication (apiKey) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -308,7 +327,7 @@ export class ComplexTasksService {
 
     /**
      * Creates a new Sorting and Grouping task.
-     *
+     * 
      * @param sortingAndGroupingRequest request
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -323,7 +342,10 @@ export class ComplexTasksService {
 
         let headers = this.defaultHeaders;
 
-
+        // authentication (apiKey) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -356,7 +378,7 @@ export class ComplexTasksService {
 
     /**
      * Updates existing Grouping and sorting task by taskId.
-     *
+     * 
      * @param taskId taskId
      * @param groupingAndSortingRequest request
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -375,7 +397,10 @@ export class ComplexTasksService {
 
         let headers = this.defaultHeaders;
 
-
+        // authentication (apiKey) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -408,7 +433,7 @@ export class ComplexTasksService {
 
     /**
      * Updates existing Sentence completion and grouping task by taskId.
-     *
+     * 
      * @param taskId taskId
      * @param sentenceCompletionAndGroupingRequest request
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -427,7 +452,10 @@ export class ComplexTasksService {
 
         let headers = this.defaultHeaders;
 
-
+        // authentication (apiKey) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -460,7 +488,7 @@ export class ComplexTasksService {
 
     /**
      * Updates existing Sentence completion and sorting task by taskId.
-     *
+     * 
      * @param taskId taskId
      * @param sentenceCompletionAndSortingRequest request
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -479,6 +507,10 @@ export class ComplexTasksService {
 
         let headers = this.defaultHeaders;
 
+        // authentication (apiKey) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -511,7 +543,7 @@ export class ComplexTasksService {
 
     /**
      * Updates existing Sentence creation and grouping task by taskId.
-     *
+     * 
      * @param taskId taskId
      * @param sentenceCreationAndGroupingRequest request
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -530,7 +562,10 @@ export class ComplexTasksService {
 
         let headers = this.defaultHeaders;
 
-
+        // authentication (apiKey) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -563,7 +598,7 @@ export class ComplexTasksService {
 
     /**
      * Updates existing Sentence creation and sorting task by taskId.
-     *
+     * 
      * @param taskId taskId
      * @param sentenceCreationAndSortingRequest request
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -582,7 +617,10 @@ export class ComplexTasksService {
 
         let headers = this.defaultHeaders;
 
-
+        // authentication (apiKey) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -615,7 +653,7 @@ export class ComplexTasksService {
 
     /**
      * Updates existing Sorting and Grouping task by taskId.
-     *
+     * 
      * @param taskId taskId
      * @param sortingAndGroupingRequest request
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -634,7 +672,10 @@ export class ComplexTasksService {
 
         let headers = this.defaultHeaders;
 
-
+        // authentication (apiKey) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [

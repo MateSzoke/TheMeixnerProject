@@ -11,24 +11,26 @@
  */
 /* tslint:disable:no-unused-variable member-ordering */
 
-import {Inject, Injectable, Optional} from '@angular/core';
-import {HttpClient, HttpEvent, HttpHeaders, HttpResponse} from '@angular/common/http';
+import { Inject, Injectable, Optional }                      from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams,
+         HttpResponse, HttpEvent }                           from '@angular/common/http';
+import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
-import {Observable} from 'rxjs';
+import { Observable }                                        from 'rxjs';
 
-import {BlindMapRequest} from '../model/blindMapRequest';
-import {BlindMapResponse} from '../model/blindMapResponse';
-import {FreeTextRequest} from '../model/freeTextRequest';
-import {FreeTextResponse} from '../model/freeTextResponse';
-import {OddOneOutRequest} from '../model/oddOneOutRequest';
-import {OddOneOutResponse} from '../model/oddOneOutResponse';
-import {TableRequest} from '../model/tableRequest';
-import {TableResponse} from '../model/tableResponse';
-import {TimelineRequest} from '../model/timelineRequest';
-import {TimelineResponse} from '../model/timelineResponse';
+import { BlindMapRequest } from '../model/blindMapRequest';
+import { BlindMapResponse } from '../model/blindMapResponse';
+import { FreeTextRequest } from '../model/freeTextRequest';
+import { FreeTextResponse } from '../model/freeTextResponse';
+import { OddOneOutRequest } from '../model/oddOneOutRequest';
+import { OddOneOutResponse } from '../model/oddOneOutResponse';
+import { TableRequest } from '../model/tableRequest';
+import { TableResponse } from '../model/tableResponse';
+import { TimelineRequest } from '../model/timelineRequest';
+import { TimelineResponse } from '../model/timelineResponse';
 
-import {BASE_PATH} from '../variables';
-import {Configuration} from '../configuration';
+import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
+import { Configuration }                                     from '../configuration';
 
 
 @Injectable({
@@ -68,7 +70,7 @@ export class OtherTasksService {
 
     /**
      * Creates a new Blind map task.
-     *
+     * 
      * @param blindMapRequest request
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -83,7 +85,10 @@ export class OtherTasksService {
 
         let headers = this.defaultHeaders;
 
-
+        // authentication (apiKey) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -116,7 +121,7 @@ export class OtherTasksService {
 
     /**
      * Creates a new Free Text task.
-     *
+     * 
      * @param freeTextRequest request
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -131,7 +136,10 @@ export class OtherTasksService {
 
         let headers = this.defaultHeaders;
 
-
+        // authentication (apiKey) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -164,7 +172,7 @@ export class OtherTasksService {
 
     /**
      * Creates a new Odd One Out task.
-     *
+     * 
      * @param oddOneOutRequest request
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -179,7 +187,10 @@ export class OtherTasksService {
 
         let headers = this.defaultHeaders;
 
-
+        // authentication (apiKey) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -212,7 +223,7 @@ export class OtherTasksService {
 
     /**
      * Creates a new Table task.
-     *
+     * 
      * @param tableRequest request
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -227,7 +238,10 @@ export class OtherTasksService {
 
         let headers = this.defaultHeaders;
 
-
+        // authentication (apiKey) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -260,7 +274,7 @@ export class OtherTasksService {
 
     /**
      * Creates a Timeline task.
-     *
+     * 
      * @param timelineRequest request
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -275,7 +289,10 @@ export class OtherTasksService {
 
         let headers = this.defaultHeaders;
 
-
+        // authentication (apiKey) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -308,7 +325,7 @@ export class OtherTasksService {
 
     /**
      * Updates existing Blind map task by taskId.
-     *
+     * 
      * @param taskId taskId
      * @param blindMapRequest request
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -327,6 +344,10 @@ export class OtherTasksService {
 
         let headers = this.defaultHeaders;
 
+        // authentication (apiKey) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -359,7 +380,7 @@ export class OtherTasksService {
 
     /**
      * Updates existing Odd One Out task by taskId.
-     *
+     * 
      * @param taskId taskId
      * @param oddOneOutRequest request
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -378,7 +399,10 @@ export class OtherTasksService {
 
         let headers = this.defaultHeaders;
 
-
+        // authentication (apiKey) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -411,7 +435,7 @@ export class OtherTasksService {
 
     /**
      * Updates existing Free Text task by taskId.
-     *
+     * 
      * @param taskId taskId
      * @param freeTextRequest request
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -430,6 +454,10 @@ export class OtherTasksService {
 
         let headers = this.defaultHeaders;
 
+        // authentication (apiKey) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -462,7 +490,7 @@ export class OtherTasksService {
 
     /**
      * Updates existing Table task by taskId.
-     *
+     * 
      * @param taskId taskId
      * @param tableRequest request
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -481,7 +509,10 @@ export class OtherTasksService {
 
         let headers = this.defaultHeaders;
 
-
+        // authentication (apiKey) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -514,7 +545,7 @@ export class OtherTasksService {
 
     /**
      * Updates existing Timeline task by taskId.
-     *
+     * 
      * @param taskId taskId
      * @param timelineRequest request
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -533,6 +564,10 @@ export class OtherTasksService {
 
         let headers = this.defaultHeaders;
 
+        // authentication (apiKey) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
