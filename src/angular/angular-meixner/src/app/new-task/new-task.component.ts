@@ -41,6 +41,7 @@ import {Observable} from 'rxjs';
 })
 export class NewTaskComponent implements OnInit {
 
+  public 
   public types: Array<string>;
   public difficulties: Array<string>;
   public topics:  Array<string> = ['Történelem', 'Fizika', 'Matematika', 'Biológia'];
