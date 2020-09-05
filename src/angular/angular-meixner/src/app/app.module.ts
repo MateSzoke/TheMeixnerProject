@@ -42,6 +42,7 @@ import {SortingGroupingComponent} from './task_types/sorting-grouping/sorting-gr
 import {MatSliderModule} from '@angular/material/slider';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {HttpInterceptorService} from "./service/http-interceptor.service";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
@@ -66,32 +67,34 @@ import {HttpInterceptorService} from "./service/http-interceptor.service";
     SentencecreationSortingComponent,
     SortingGroupingComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatToolbarModule,
-        MatIconModule,
-        MatSidenavModule,
-        MatListModule,
-        MatButtonModule,
-        FlexLayoutModule,
-        MatCardModule,
-        MatFormFieldModule,
-        HttpClientModule,
-        ReactiveFormsModule,
-        MatInputModule,
-        FormsModule,
-        MatGridListModule,
-        MatExpansionModule,
-        MatSelectModule,
-        MatSliderModule,
-        MatProgressSpinnerModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatListModule,
+    MatButtonModule,
+    FlexLayoutModule,
+    MatCardModule,
+    MatFormFieldModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    FormsModule,
+    MatGridListModule,
+    MatExpansionModule,
+    MatSelectModule,
+    MatSliderModule,
+    MatProgressSpinnerModule,
+    NgbModule
+  ],
   providers: [DomService, ModalService, ModalComponent,
     {provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true},
     LoginComponent, NewTaskComponent],
   bootstrap: [AppComponent],
   entryComponents: [NewTaskComponent, LoginComponent, ModalComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
