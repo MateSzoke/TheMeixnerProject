@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ModalService} from '../service/modal.service';
 import {DomService} from '../service/dom.service';
 import {ModalComponent} from '../modal/modal.component';
@@ -9,6 +9,7 @@ import {ConvertEnum} from '../model/ConvertEnum';
 import {TaskAngularService} from "../data/task-angular.service";
 import {NewTaskComponent} from "../new-task/new-task.component";
 import {DateUtils} from "../util/date";
+import {UniversalModalComponent} from "../universal-modal/universal-modal.component";
 
 @Component({
   selector: 'app-tasks',
@@ -23,10 +24,11 @@ export class TasksComponent implements OnInit {
   public classYears = Array.from({length: (8 - 5) / 1 + 1}, (_, i) => 5 + (i * 1));
   public classes: Array<String> = ['a', 'b', 'c'];
   public tasks: Array<TaskResponse> = new Array<TaskResponse>();
-  //public tasksUI: Array<TaskResponse> = new Array<TaskResponse>();
   public tasksLoaded = false;
   public getAllTasks = false;
   public routerLink = "parositas";
+
+  @ViewChild('universalModalComponent', {static: true}) universalModalComponent: UniversalModalComponent;
 
   constructor(private modal: ModalService, private dom: DomService,
               private modComponent: ModalComponent,
@@ -111,22 +113,12 @@ export class TasksComponent implements OnInit {
   }
 
   public openTask(input: string, id: number) {
+    console.log("TaskComponent openTask");
     this.router.navigate([ConvertEnum.convertTypeToRouterLink(input) + '/' + id]);
   }
 
-  public newTask() {
-    //this.modComponent.ngOnInit();
-    this.dom.show(NewTaskComponent);
-    ModalComponent.saveBtnPressed.subscribe(data => {
-        if (this.getAllTasks === true) {
-          this.taskAngularService.getAllTasksFunction();
-        } else {
-          this.getMyTasksFunction();
-        }
-      },
-      err => {
-
-      });
+  public async newTask() {
+    await this.universalModalComponent.openModal();
   }
 
   public convertEnum(input: string): string {

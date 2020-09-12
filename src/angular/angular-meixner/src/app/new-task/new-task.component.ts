@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {
   BlindMapRequest,
   BlindMapTag,
@@ -33,6 +33,7 @@ import {GroupingResponse} from '../../swagger-api/model/groupingResponse';
 import {ConvertEnum} from '../model/ConvertEnum';
 import {ModalComponent} from '../modal/modal.component';
 import {Observable} from 'rxjs';
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-new-task',
@@ -41,22 +42,24 @@ import {Observable} from 'rxjs';
 })
 export class NewTaskComponent implements OnInit {
 
-  public 
   public types: Array<string>;
   public difficulties: Array<string>;
-  public topics:  Array<string> = ['Történelem', 'Fizika', 'Matematika', 'Biológia'];
-  public classes:  Array<number> = [1,2,3,4,5,6,7,8,9,10,11,12];
-  public classesTo:  Array<number> = [1,2,3,4,5,6,7,8,9,10,11,12];
-  private type : number = -1;
-  private difficulty : number =-1;
+  public topics: Array<string> = ['Történelem', 'Fizika', 'Matematika', 'Biológia'];
+  public classes: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  public classesTo: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  private type: number = -1;
+  private difficulty: number = -1;
   private classFrom: number = -1;
   private classTo: number = -1;
   private topic: number = -1;
   public name: string = null;
 
+  @ViewChild('taskContent', {static: true}) taskContent: TemplateRef<any>;
+
   ngOnInit(): void {
+    console.log("NewTaskComponent called");
     this.types = new Array<string>();
-    for(let i in GroupingResponse.TypeEnum) {
+    for (let i in GroupingResponse.TypeEnum) {
       this.types.push(ConvertEnum.convertType(i));
     }
   }
@@ -64,13 +67,14 @@ export class NewTaskComponent implements OnInit {
   constructor(private modalC: ModalComponent,
               private theEasyTasksService: EasyTasksService,
               private complexTasksService: ComplexTasksService,
-              private otherTasksService: OtherTasksService) {
+              private otherTasksService: OtherTasksService,
+              private ngbModal: NgbModal) {
 
-
+/*
     ModalComponent.saveBtnPressed.subscribe(data => {
-      if(this.name == null || this.type == -1 || this.difficulty == -1 || this.classFrom == -1 || this.classTo == -1 || this.topic == -1) {
+      if (this.name == null || this.type == -1 || this.difficulty == -1 || this.classFrom == -1 || this.classTo == -1 || this.topic == -1) {
         console.log("szempontok: " + this.type + this.difficulty +
-        this.classFrom + this.classTo + this.topic);
+          this.classFrom + this.classTo + this.topic);
 
         alert("Kérem adja meg az összes szempontot!");
         return;
@@ -86,8 +90,8 @@ export class NewTaskComponent implements OnInit {
         };
         console.log(this.type + " type");
         let j = 0;
-        for(let i in GroupingResponse.TypeEnum) {
-          if(j == this.type) {
+        for (let i in GroupingResponse.TypeEnum) {
+          if (j == this.type) {
             console.log("j equals");
             this.postTaskDataByType(i).subscribe(
               data => {
@@ -106,10 +110,10 @@ export class NewTaskComponent implements OnInit {
         }
         ModalComponent.closeAfterSave();
       }
-    });
+    });*/
   }
 
-  private testInsideFunction(input: string) : String {
+  private testInsideFunction(input: string): String {
     console.log("testInsideFunction called" + input.toString());
     return "this is what was returned";
   }
@@ -337,7 +341,7 @@ export class NewTaskComponent implements OnInit {
   public classFromSelected(event) {
     this.classFrom = event.value;
     this.classesTo = new Array<number>();
-    for(let i = this.classFrom; i < 13; i++) {
+    for (let i = this.classFrom; i < 13; i++) {
       this.classesTo.push(i);
     }
   }
@@ -348,5 +352,9 @@ export class NewTaskComponent implements OnInit {
 
   public topicSelected(event) {
     this.topic = event.value;
+  }
+
+  async openEditor() {
+    this.ngbModal.open(this.taskContent, {centered: true, size: 'lg'});
   }
 }

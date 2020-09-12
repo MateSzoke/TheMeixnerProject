@@ -43,7 +43,7 @@ import {MatSliderModule} from '@angular/material/slider';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {HttpInterceptorService} from "./service/http-interceptor.service";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
-
+import { UniversalModalComponent } from './universal-modal/universal-modal.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -65,7 +65,8 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
     SentencecompletionSortingComponent,
     SentencecreationGroupingComponent,
     SentencecreationSortingComponent,
-    SortingGroupingComponent
+    SortingGroupingComponent,
+    UniversalModalComponent
   ],
   imports: [
     BrowserModule,
