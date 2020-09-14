@@ -5,3 +5,8 @@
 
 Elkészült végpontok és teszt:
 - https://meixner.herokuapp.com/swagger-ui.html
+
+## Frontend
+
+Herokun lévő frontend app:
+- http://angular-meixner.herokuapp.com/
