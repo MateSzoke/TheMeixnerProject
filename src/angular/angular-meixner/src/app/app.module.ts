@@ -44,6 +44,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {HttpInterceptorService} from "./service/http-interceptor.service";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { UniversalModalComponent } from './universal-modal/universal-modal.component';
+import {MatDialogModule} from "@angular/material/dialog";
 @NgModule({
   declarations: [
     AppComponent,
@@ -68,29 +69,30 @@ import { UniversalModalComponent } from './universal-modal/universal-modal.compo
     SortingGroupingComponent,
     UniversalModalComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatListModule,
-    MatButtonModule,
-    FlexLayoutModule,
-    MatCardModule,
-    MatFormFieldModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    FormsModule,
-    MatGridListModule,
-    MatExpansionModule,
-    MatSelectModule,
-    MatSliderModule,
-    MatProgressSpinnerModule,
-    NgbModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatSidenavModule,
+        MatListModule,
+        MatButtonModule,
+        FlexLayoutModule,
+        MatCardModule,
+        MatFormFieldModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        FormsModule,
+        MatGridListModule,
+        MatExpansionModule,
+        MatSelectModule,
+        MatSliderModule,
+        MatProgressSpinnerModule,
+        NgbModule,
+        MatDialogModule
+    ],
   providers: [DomService, ModalService, ModalComponent,
     {provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true},
     LoginComponent, NewTaskComponent],

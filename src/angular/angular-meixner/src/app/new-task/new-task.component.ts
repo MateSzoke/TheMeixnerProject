@@ -1,4 +1,4 @@
-import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild} from '@angular/core';
 import {
   BlindMapRequest,
   BlindMapTag,
@@ -25,7 +25,7 @@ import {
   SentenceCreationList,
   SentenceCreationRequest,
   SortingAndGroupingRequest,
-  SortingRequest,
+  SortingRequest, TaskResponse,
   TimelineRequest,
   TimelineTag
 } from '../../swagger-api';
@@ -33,7 +33,11 @@ import {GroupingResponse} from '../../swagger-api/model/groupingResponse';
 import {ConvertEnum} from '../model/ConvertEnum';
 import {ModalComponent} from '../modal/modal.component';
 import {Observable} from 'rxjs';
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
+import TypeEnum = TaskResponse.TypeEnum;
+import {TaskDTO} from "../model/taskDTO";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import SubjectEnum = TaskResponse.SubjectEnum;
 
 @Component({
   selector: 'app-new-task',
@@ -44,7 +48,7 @@ export class NewTaskComponent implements OnInit {
 
   public types: Array<string>;
   public difficulties: Array<string>;
-  public topics: Array<string> = ['Történelem', 'Fizika', 'Matematika', 'Biológia'];
+  public subjects: Array<string>;
   public classes: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   public classesTo: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   private type: number = -1;
@@ -54,7 +58,14 @@ export class NewTaskComponent implements OnInit {
   private topic: number = -1;
   public name: string = null;
 
-  @ViewChild('taskContent', {static: true}) taskContent: TemplateRef<any>;
+  public newTaskModel: NewTask = {
+    title: "valami",
+    type: TypeEnum.Grouping,
+    difficulty: 50,
+    classFrom: 4,
+    classTo: 6,
+    topic: SubjectEnum.Biology
+  };
 
   ngOnInit(): void {
     console.log("NewTaskComponent called");
@@ -62,55 +73,59 @@ export class NewTaskComponent implements OnInit {
     for (let i in GroupingResponse.TypeEnum) {
       this.types.push(ConvertEnum.convertType(i));
     }
+    this.subjects = new Array<string>();
+    for (let j in GroupingResponse.SubjectEnum) {
+      this.subjects.push(j.toString());
+    }
   }
 
   constructor(private modalC: ModalComponent,
               private theEasyTasksService: EasyTasksService,
               private complexTasksService: ComplexTasksService,
               private otherTasksService: OtherTasksService,
-              private ngbModal: NgbModal) {
+              public matDialogRef: MatDialogRef<NewTaskComponent>) {
 
-/*
-    ModalComponent.saveBtnPressed.subscribe(data => {
-      if (this.name == null || this.type == -1 || this.difficulty == -1 || this.classFrom == -1 || this.classTo == -1 || this.topic == -1) {
-        console.log("szempontok: " + this.type + this.difficulty +
-          this.classFrom + this.classTo + this.topic);
+    /*
+        ModalComponent.saveBtnPressed.subscribe(data => {
+          if (this.name == null || this.type == -1 || this.difficulty == -1 || this.classFrom == -1 || this.classTo == -1 || this.topic == -1) {
+            console.log("szempontok: " + this.type + this.difficulty +
+              this.classFrom + this.classTo + this.topic);
 
-        alert("Kérem adja meg az összes szempontot!");
-        return;
-      } else {
-        console.log("type is " + this.type);
-        const g1: GroupingRequest = {
-          title: this.name,
-          difficulty: this.difficulty,
-          groups: new Array<GroupRequest>(),
-          recommendedMinClass: this.classFrom,
-          recommendedMaxClass: this.classTo,
-          subject: "None"
-        };
-        console.log(this.type + " type");
-        let j = 0;
-        for (let i in GroupingResponse.TypeEnum) {
-          if (j == this.type) {
-            console.log("j equals");
-            this.postTaskDataByType(i).subscribe(
-              data => {
-                console.log("data sent");
-                //ModalComponent.saveBtnPressed.unsubscribe();
-              },
-              error => {
-                console.log("subscribe error");
-              },
-              () => {
+            alert("Kérem adja meg az összes szempontot!");
+            return;
+          } else {
+            console.log("type is " + this.type);
+            const g1: GroupingRequest = {
+              title: this.name,
+              difficulty: this.difficulty,
+              groups: new Array<GroupRequest>(),
+              recommendedMinClass: this.classFrom,
+              recommendedMaxClass: this.classTo,
+              subject: "None"
+            };
+            console.log(this.type + " type");
+            let j = 0;
+            for (let i in GroupingResponse.TypeEnum) {
+              if (j == this.type) {
+                console.log("j equals");
+                this.postTaskDataByType(i).subscribe(
+                  data => {
+                    console.log("data sent");
+                    //ModalComponent.saveBtnPressed.unsubscribe();
+                  },
+                  error => {
+                    console.log("subscribe error");
+                  },
+                  () => {
 
+                  }
+                );
               }
-            );
+              j++;
+            }
+            ModalComponent.closeAfterSave();
           }
-          j++;
-        }
-        ModalComponent.closeAfterSave();
-      }
-    });*/
+        });*/
   }
 
   private testInsideFunction(input: string): String {
@@ -121,6 +136,7 @@ export class NewTaskComponent implements OnInit {
 
   private postTaskDataByType(input: string): Observable<any> {
     console.log("postTaskDataByType called");
+    console.log(input);
     switch (input) {
       case GroupingResponse.TypeEnum.Grouping.toString(): {
         console.log("csoportositas POST called");
@@ -354,7 +370,27 @@ export class NewTaskComponent implements OnInit {
     this.topic = event.value;
   }
 
-  async openEditor() {
-    this.ngbModal.open(this.taskContent, {centered: true, size: 'lg'});
+  saveData() {
+    this.postTaskDataByType(this.newTaskModel.type.toString()).subscribe(
+      data => {
+        console.log("data sent");
+        //ModalComponent.saveBtnPressed.unsubscribe();
+      },
+      error => {
+        console.log("subscribe error");
+      },
+      () => {
+
+      }
+    );
   }
+}
+
+export interface NewTask {
+  title: string;
+  type: TypeEnum;
+  difficulty: number;
+  classFrom: number;
+  classTo: number;
+  topic: SubjectEnum;
 }

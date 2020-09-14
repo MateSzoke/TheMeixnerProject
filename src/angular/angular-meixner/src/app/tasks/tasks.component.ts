@@ -10,6 +10,7 @@ import {TaskAngularService} from "../data/task-angular.service";
 import {NewTaskComponent} from "../new-task/new-task.component";
 import {DateUtils} from "../util/date";
 import {UniversalModalComponent} from "../universal-modal/universal-modal.component";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-tasks',
@@ -28,7 +29,7 @@ export class TasksComponent implements OnInit {
   public getAllTasks = false;
   public routerLink = "parositas";
 
-  @ViewChild('universalModalComponent', {static: true}) universalModalComponent: UniversalModalComponent;
+  matDialogRef: MatDialogRef<NewTaskComponent>;
 
   constructor(private modal: ModalService, private dom: DomService,
               private modComponent: ModalComponent,
@@ -36,7 +37,8 @@ export class TasksComponent implements OnInit {
               public router: Router,
               private route: ActivatedRoute,
               public diffImServ: DiffimageService,
-              public taskAngularService: TaskAngularService) {
+              public taskAngularService: TaskAngularService,
+              private matDialog: MatDialog) {
     modComponent.ngOnInit();
   }
 
@@ -118,7 +120,16 @@ export class TasksComponent implements OnInit {
   }
 
   public async newTask() {
-    await this.universalModalComponent.openModal();
+    this.matDialogRef = this.matDialog.open(NewTaskComponent, {
+      data: {  },
+      disableClose: true
+    });
+
+    this.matDialogRef.afterClosed().subscribe(res => {
+      if ((res == true)) {
+
+      }
+    });
   }
 
   public convertEnum(input: string): string {
