@@ -1,7 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ExercisesService, TaskService} from "../../swagger-api";
+import {ExercisesService, TaskResponse, TaskService} from "../../swagger-api";
 import {TaskAngularService} from "../data/task-angular.service";
 import {DateUtils} from "../util/date";
+import {TypeEnumUtil} from "../util/typeEnumUtil";
 import {ModalComponent} from "../modal/modal.component";
 
 @Component({
@@ -33,7 +34,7 @@ export class ExerciseTaskListComponent implements OnInit {
   ngOnInit(): void {
     this.taskService.getMyTaskUsingGET().subscribe(tasks => {
         tasks.forEach(task => {
-          this.tasks.push(new TaskUI(task.id, task.title, task.type.toString(), task.lastModified));
+          this.tasks.push(new TaskUI(task.id, task.title, TypeEnumUtil.taskTypeToString(task.type), task.lastModified));
         });
         console.log(this.taskAngular.tasks);
         this.tasksLoaded = true;
@@ -45,7 +46,6 @@ export class ExerciseTaskListComponent implements OnInit {
       () => {
       });
   }
-
 
 }
 
