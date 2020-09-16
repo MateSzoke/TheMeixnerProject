@@ -4,6 +4,7 @@ import {TaskAngularService} from "../data/task-angular.service";
 import {DateUtils} from "../util/date";
 import {TypeEnumUtil} from "../util/typeEnumUtil";
 import {ModalComponent} from "../modal/modal.component";
+import TypeEnum = TaskResponse.TypeEnum;
 
 @Component({
   selector: 'app-exercise-task-list',
@@ -34,11 +35,9 @@ export class ExerciseTaskListComponent implements OnInit {
   ngOnInit(): void {
     this.taskService.getMyTaskUsingGET().subscribe(tasks => {
         tasks.forEach(task => {
-          this.tasks.push(new TaskUI(task.id, task.title, TypeEnumUtil.taskTypeToString(task.type), task.lastModified));
+          this.tasks.push(new TaskUI(task.id, task.title, task.type, task.lastModified));
         });
-        console.log(this.taskAngular.tasks);
         this.tasksLoaded = true;
-        console.log(`WELCOME FROM ${this.exerciseId} TASK LISTS COMPONENT`);
       },
       error => {
         console.log("subscribe error");
@@ -56,10 +55,10 @@ class TaskUI {
   lastModified: string;
   checked: boolean = false;
 
-  constructor(id: number, name: string, type: string, lastModified: Date) {
+  constructor(id: number, name: string, type: TypeEnum, lastModified: Date) {
     this.id = id;
     this.name = name;
-    this.type = type;
+    this.type = TypeEnumUtil.taskTypeToString(type);
     this.lastModified = DateUtils.getFormattedDate(lastModified);
   }
 }

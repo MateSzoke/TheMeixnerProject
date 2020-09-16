@@ -33,6 +33,7 @@ export class NewExerciseComponent implements OnInit {
           }
         );
         ModalComponent.closeAfterSave(data);
+        window.location.reload()
       }
     });
   }

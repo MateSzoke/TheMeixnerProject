@@ -73,15 +73,20 @@ export class ExercisesComponent implements OnInit {
 
   deleteExercise(exerciseId: number) {
     this.exercisesLoaded = true;
+    console.log(`delete exercise ${exerciseId}`)
     this.exerciseService.deleteExercisesUsingDELETE(exerciseId).subscribe(
       data => {
+        console.log(`delete exercise ${data}`)
         this.exercisesLoaded = false;
       },
       error => {
+        console.log(`delete exercise error`)
       },
       () => {
+        console.log(`delete exercise complete`)
       }
     );
+    window.location.reload()
   }
 
   private getMyExercises() {
