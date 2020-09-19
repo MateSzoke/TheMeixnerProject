@@ -62,7 +62,7 @@
         </div>
         <div class="float-right">
           {{task.formattedLastModified }}
-          &nbsp;<i class="fa fa-trash"></i>&nbsp;
+          &nbsp;<i (click)="deleteTaskFromExercise(exercise.id, task.id)" class="fa fa-trash small-menu-button"></i>&nbsp;
         </div>
       </div>
     </mat-card>

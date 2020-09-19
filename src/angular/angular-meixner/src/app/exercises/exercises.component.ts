@@ -55,6 +55,7 @@ export class ExercisesComponent implements OnInit {
   mapTaskResponse(tasks: Array<TaskResponse>): Array<TaskResponseUI> {
     return tasks.map(task =>
       new TaskResponseUI(
+        task.id,
         task.title,
         DateUtils.getFormattedDate(task.lastModified)
       )
@@ -86,14 +87,27 @@ export class ExercisesComponent implements OnInit {
         console.log(`delete exercise ${data}`)
         this.exercisesLoaded = false;
       },
-      error => {
-        console.log(`delete exercise error`)
+      () => {
       },
       () => {
-        console.log(`delete exercise complete`)
+        window.location.reload()
       }
     );
-    window.location.reload()
+  }
+
+  deleteTaskFromExercise(exerciseId: number, taskId: number) {
+    this.exercisesLoaded = true;
+    this.exerciseService.removeTaskFromExercisesUsingDELETE(exerciseId, taskId).subscribe(
+      data => {
+        console.log(`delete task from exercise ${data}`)
+        this.exercisesLoaded = false;
+      },
+      () => {
+      },
+      () => {
+        window.location.reload()
+      }
+    )
   }
 
   private getMyExercises() {
@@ -142,10 +156,12 @@ class ExerciseUI {
 }
 
 class TaskResponseUI {
+  id: number;
   title: string;
   formattedLastModified: string;
 
-  constructor(title: string, formattedLastModified: string) {
+  constructor(id: number, title: string, formattedLastModified: string) {
+    this.id = id;
     this.title = title;
     this.formattedLastModified = formattedLastModified
   }
