@@ -121,7 +121,7 @@ export class TasksComponent implements OnInit {
 
   public async newTask() {
     this.matDialogRef = this.matDialog.open(NewTaskComponent, {
-      data: {  },
+      data: { name: "Uj feladat" },
       disableClose: true
     });
 

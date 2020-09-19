@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Inject, OnInit, Output, TemplateRef, ViewChild} from '@angular/core';
 import {
   BlindMapRequest,
   BlindMapTag,
@@ -36,7 +36,7 @@ import {Observable} from 'rxjs';
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import TypeEnum = TaskResponse.TypeEnum;
 import {TaskDTO} from "../model/taskDTO";
-import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import SubjectEnum = TaskResponse.SubjectEnum;
 
 @Component({
@@ -59,7 +59,7 @@ export class NewTaskComponent implements OnInit {
   public name: string = null;
 
   public newTaskModel: NewTask = {
-    title: "valami",
+    title: this.data.name,
     type: TypeEnum.Grouping,
     difficulty: 50,
     classFrom: 4,
@@ -70,6 +70,7 @@ export class NewTaskComponent implements OnInit {
   ngOnInit(): void {
     console.log("NewTaskComponent called");
     this.types = new Array<string>();
+    console.log(this.data);
     for (let i in GroupingResponse.TypeEnum) {
       this.types.push(ConvertEnum.convertType(i));
     }
@@ -83,7 +84,10 @@ export class NewTaskComponent implements OnInit {
               private theEasyTasksService: EasyTasksService,
               private complexTasksService: ComplexTasksService,
               private otherTasksService: OtherTasksService,
-              public matDialogRef: MatDialogRef<NewTaskComponent>) {
+              public matDialogRef: MatDialogRef<NewTaskComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: any) {
+    console.log("constructor called");
+    console.log(data);
 
     /*
         ModalComponent.saveBtnPressed.subscribe(data => {
