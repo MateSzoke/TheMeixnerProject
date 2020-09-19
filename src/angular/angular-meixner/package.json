@@ -2,8 +2,8 @@
   "name": "angular-meixner",
   "version": "0.0.0",
   "engines": {
-    "node": "12.16.x",
-    "npm": "6.13.x"
+    "node": "12.16.2",
+    "npm": "6.14.4"
   },
   "scripts": {
     "ng": "ng",
@@ -13,10 +13,6 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "heroku-postbuild": "npm install && ng build --prod"
-  },
-  "engines": {
-    "node": "12.16.2",
-    "npm": "6.14.4"
   },
   "private": true,
   "dependencies": {
@@ -36,7 +32,7 @@
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2",
     "typescript": "~3.7.5",
-    "express":"*"
+    "express": "*"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.900.2",

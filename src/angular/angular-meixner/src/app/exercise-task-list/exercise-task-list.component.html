@@ -9,8 +9,13 @@
   </div>
   <div *ngIf="this.tasksLoaded">
     <div *ngFor="let task of tasks" class="task-element">
-      <input [checked]="task.checked" type="checkbox" value="{{task.checked}}"> {{task.name}} - {{task.type}}
+      <input (change)="task.checked = !task.checked" [checked]="task.checked" type="checkbox"
+             value="{{task.checked}}"> {{task.name}} - {{task.type}}
       - {{task.lastModified}}
+    </div>
+    <div mat-dialog-actions style="float: right">
+      <button [mat-dialog-close] mat-button>Mégsem</button>
+      <button (click)="saveTasks()" [mat-dialog-close] mat-button>Hozzáadás</button>
     </div>
   </div>
 </form>

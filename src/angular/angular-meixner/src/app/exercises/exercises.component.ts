@@ -7,6 +7,7 @@ import {ActivatedRoute, Params, Router} from "@angular/router";
 import {ExercisesResponse, ExercisesService, TaskResponse} from "../../swagger-api";
 import {NewExerciseComponent} from "../new-exercise/new-exercise.component";
 import {ExerciseTaskListComponent} from "../exercise-task-list/exercise-task-list.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-exercises',
@@ -25,6 +26,7 @@ export class ExercisesComponent implements OnInit {
   constructor(private modal: ModalService, private dom: DomService,
               private modComponent: ModalComponent,
               private exerciseService: ExercisesService,
+              private dialog: MatDialog,
               public router: Router,
               private route: ActivatedRoute) {
     modComponent.ngOnInit();
@@ -68,7 +70,12 @@ export class ExercisesComponent implements OnInit {
   }
 
   openMyTasks(exerciseId: number) {
-    this.dom.show(ExerciseTaskListComponent);
+    this.dialog.open(ExerciseTaskListComponent, {
+      data: {exerciseId: exerciseId}
+    })
+    this.dialog.afterAllClosed.subscribe(() => {
+      window.location.reload()
+    })
   }
 
   deleteExercise(exerciseId: number) {

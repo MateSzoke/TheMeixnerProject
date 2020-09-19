@@ -1,9 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {ExercisesService, TaskResponse, TaskService} from "../../swagger-api";
-import {TaskAngularService} from "../data/task-angular.service";
 import {DateUtils} from "../util/date";
 import {TypeEnumUtil} from "../util/typeEnumUtil";
 import {ModalComponent} from "../modal/modal.component";
+import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 import TypeEnum = TaskResponse.TypeEnum;
 
 @Component({
@@ -12,7 +12,7 @@ import TypeEnum = TaskResponse.TypeEnum;
   styleUrls: ['./exercise-task-list.component.scss']
 })
 export class ExerciseTaskListComponent implements OnInit {
-  @Input() public exerciseId: number;
+  public exerciseId: number;
   public tasks: Array<TaskUI> = new Array<TaskUI>();
   public tasksLoaded = false;
 
@@ -20,16 +20,9 @@ export class ExerciseTaskListComponent implements OnInit {
     private modalComponent: ModalComponent,
     private exerciseService: ExercisesService,
     private taskService: TaskService,
-    private taskAngular: TaskAngularService
+    @Inject(MAT_DIALOG_DATA) public params: any
   ) {
-    ModalComponent.saveBtnPressed.subscribe(data => {
-      this.tasks.forEach(task => {
-        if (task.checked) {
-          exerciseService.addTaskToExercisesUsingPOST(this.exerciseId, task.id)
-        }
-      });
-      ModalComponent.closeAfterSave(data);
-    });
+    this.exerciseId = params.exerciseId
   }
 
   ngOnInit(): void {
@@ -44,6 +37,15 @@ export class ExerciseTaskListComponent implements OnInit {
       },
       () => {
       });
+  }
+
+  saveTasks() {
+    this.tasks.forEach(task => {
+      if (task.checked) {
+        console.log(`add ${task.id} task to ${this.exerciseId} exercise`)
+        this.exerciseService.addTaskToExercisesUsingPOST(this.exerciseId, task.id).subscribe();
+      }
+    });
   }
 
 }
