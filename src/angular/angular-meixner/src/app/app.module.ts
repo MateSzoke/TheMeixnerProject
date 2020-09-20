@@ -42,6 +42,9 @@ import {SortingGroupingComponent} from './task_types/sorting-grouping/sorting-gr
 import {MatSliderModule} from '@angular/material/slider';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {HttpInterceptorService} from "./service/http-interceptor.service";
+import {ExerciseTaskListComponent} from './exercise-task-list/exercise-task-list.component';
+import {MatDialogModule} from "@angular/material/dialog";
+
 
 @NgModule({
   declarations: [
@@ -64,34 +67,37 @@ import {HttpInterceptorService} from "./service/http-interceptor.service";
     SentencecompletionSortingComponent,
     SentencecreationGroupingComponent,
     SentencecreationSortingComponent,
-    SortingGroupingComponent
+    SortingGroupingComponent,
+    ExerciseTaskListComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatToolbarModule,
-        MatIconModule,
-        MatSidenavModule,
-        MatListModule,
-        MatButtonModule,
-        FlexLayoutModule,
-        MatCardModule,
-        MatFormFieldModule,
-        HttpClientModule,
-        ReactiveFormsModule,
-        MatInputModule,
-        FormsModule,
-        MatGridListModule,
-        MatExpansionModule,
-        MatSelectModule,
-        MatSliderModule,
-        MatProgressSpinnerModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatListModule,
+    MatButtonModule,
+    FlexLayoutModule,
+    MatCardModule,
+    MatFormFieldModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    FormsModule,
+    MatGridListModule,
+    MatExpansionModule,
+    MatSelectModule,
+    MatSliderModule,
+    MatProgressSpinnerModule,
+    MatDialogModule
+  ],
   providers: [DomService, ModalService, ModalComponent,
     {provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true},
-    LoginComponent, NewTaskComponent],
+    LoginComponent, NewTaskComponent, NewExerciseComponent, ExerciseTaskListComponent],
   bootstrap: [AppComponent],
-  entryComponents: [NewTaskComponent, LoginComponent, ModalComponent]
+  entryComponents: [NewTaskComponent, NewExerciseComponent, ExerciseTaskListComponent, LoginComponent, ModalComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

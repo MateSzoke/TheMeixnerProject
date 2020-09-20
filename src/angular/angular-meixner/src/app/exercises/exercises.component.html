@@ -2,7 +2,7 @@
 <body>
 <app-modal></app-modal>
 <div id="modal-container" class="hidden"></div>
-<div id="overlay" (click)="removeModalNewExam()" class="hidden"></div>
+<div (click)="removeModalNewExercise()" class="hidden" id="overlay"></div>
 <div class="container">
   <mat-card class="mat-card-controls">
     <mat-card-content>
@@ -10,20 +10,20 @@
         <mat-form-field>
           <mat-label style="color: black;">Tantárgy</mat-label>
           <mat-select>
-            <mat-option *ngFor="let tantargy of tantargyak" [value]="tantargy">
-              {{tantargy}}
+            <mat-option *ngFor="let subject of subjects" [value]="subject">
+              {{subject}}
             </mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field>
           <mat-label style="color: black;">Évfolyam</mat-label>
           <mat-select>
-            <mat-option *ngFor="let evfolyam of evfolyamok" [value]="evfolyam">
-              {{evfolyam}}
+            <mat-option *ngFor="let class of classes" [value]="class">
+              {{class}}
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <button (click)="newExam()" class="plusButton" mat-button>
+        <button (click)="newExercise()" class="plusButton" mat-button>
           <i class="fa fa-plus"></i>
         </button>
       </div>
@@ -32,7 +32,7 @@
   <br>
 </div>
 
-<mat-accordion [togglePosition]="'before'" *ngIf="this.exercisesLoaded">
+<mat-accordion *ngIf="this.exercisesLoaded" [multi]="true" [togglePosition]="'before'">
   <mat-expansion-panel *ngFor="let exercise of exercisesUI; index as i" style="margin-top: 16px">
     <mat-expansion-panel-header>
       <div>
@@ -45,8 +45,11 @@
         </div>
       </div>
       <div class="float-right">{{exercise.lastModified}}
-        <div><i class="fa fa-plus-square" style="margin-top: 8px"></i>
-          <i class="fa fa-trash" style="margin-left: 16px"></i></div>
+        <div>
+          <i (click)="openMyTasks(exercise.id)" class="fa fa-plus-square small-menu-button"
+             style="margin-top: 8px"></i>
+          <i (click)="deleteExercise(exercise.id)" class="fa fa-trash small-menu-button" style="margin-left: 16px"></i>
+        </div>
       </div>
     </mat-expansion-panel-header>
 
@@ -59,7 +62,7 @@
         </div>
         <div class="float-right">
           {{task.formattedLastModified }}
-          &nbsp;<i class="fa fa-trash"></i>&nbsp;
+          &nbsp;<i (click)="deleteTaskFromExercise(exercise.id, task.id)" class="fa fa-trash small-menu-button"></i>&nbsp;
         </div>
       </div>
     </mat-card>

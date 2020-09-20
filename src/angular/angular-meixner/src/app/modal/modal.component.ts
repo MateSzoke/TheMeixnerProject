@@ -1,6 +1,6 @@
-import {Component, OnInit, ViewChild, ViewContainerRef, HostBinding, Output, EventEmitter} from '@angular/core';
-import { DomService } from '../service/dom.service';
-import {TasksComponent} from '../tasks/tasks.component';
+import {Component, EventEmitter, HostBinding, OnInit, Output, ViewChild, ViewContainerRef} from '@angular/core';
+import {DomService} from '../service/dom.service';
+
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
@@ -46,7 +46,7 @@ export class ModalComponent implements OnInit {
     data.domService.setContainerRef(data.containerRef);
     data.domService.cancelComponent();
     data.display = 'none';
-    ModalComponent.saveBtnPressed.unsubscribe();
+    //ModalComponent.saveBtnPressed.unsubscribe();
   }
 
 }

@@ -5,7 +5,9 @@ import {DateUtils} from '../util/date';
 import {ModalComponent} from '../modal/modal.component';
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {ExercisesResponse, ExercisesService, TaskResponse} from "../../swagger-api";
-import {DiffimageService} from "../service/diffimage.service";
+import {NewExerciseComponent} from "../new-exercise/new-exercise.component";
+import {ExerciseTaskListComponent} from "../exercise-task-list/exercise-task-list.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-exercises',
@@ -14,11 +16,8 @@ import {DiffimageService} from "../service/diffimage.service";
 })
 export class ExercisesComponent implements OnInit {
 
-  public today = new Date();
-  public actualMonth = this.today.getMonth().toString().padStart(2, '0');
-  public tantargyak: Array<String> = ['történelem', "matematika"];
-  public evfolyamok = Array.from({length: (8 - 5) / 1 + 1}, (_, i) => 5 + (i * 1));
-  public classes: Array<String> = ['a', 'b', 'c'];
+  public subjects: Array<String> = ['történelem', "matematika"];
+  public classes = Array.from({length: (8 - 5) / 1 + 1}, (_, i) => 5 + (i * 1));
   public exercises: Array<ExercisesResponse> = new Array<ExercisesResponse>();
   public exercisesUI: Array<ExerciseUI> = new Array<ExerciseUI>();
   public exercisesLoaded = false;
@@ -27,9 +26,9 @@ export class ExercisesComponent implements OnInit {
   constructor(private modal: ModalService, private dom: DomService,
               private modComponent: ModalComponent,
               private exerciseService: ExercisesService,
+              private dialog: MatDialog,
               public router: Router,
-              private route: ActivatedRoute,
-              public imageService: DiffimageService) {
+              private route: ActivatedRoute) {
     modComponent.ngOnInit();
   }
 
@@ -56,26 +55,59 @@ export class ExercisesComponent implements OnInit {
   mapTaskResponse(tasks: Array<TaskResponse>): Array<TaskResponseUI> {
     return tasks.map(task =>
       new TaskResponseUI(
+        task.id,
         task.title,
         DateUtils.getFormattedDate(task.lastModified)
       )
     )
   }
 
-  removeModalNewExam() {
-
+  removeModalNewExercise() {
+    this.modal.destroy();
   }
 
-  newExam() {
+  newExercise() {
+    this.dom.show(NewExerciseComponent);
+  }
 
+  openMyTasks(exerciseId: number) {
+    this.dialog.open(ExerciseTaskListComponent, {
+      data: {exerciseId: exerciseId}
+    })
+    this.dialog.afterAllClosed.subscribe(() => {
+      window.location.reload()
+    })
   }
 
   deleteExercise(exerciseId: number) {
-
+    this.exercisesLoaded = true;
+    console.log(`delete exercise ${exerciseId}`)
+    this.exerciseService.deleteExercisesUsingDELETE(exerciseId).subscribe(
+      data => {
+        console.log(`delete exercise ${data}`)
+        this.exercisesLoaded = false;
+      },
+      () => {
+      },
+      () => {
+        window.location.reload()
+      }
+    );
   }
 
-  redirect(taskId: number) {
-
+  deleteTaskFromExercise(exerciseId: number, taskId: number) {
+    this.exercisesLoaded = true;
+    this.exerciseService.removeTaskFromExercisesUsingDELETE(exerciseId, taskId).subscribe(
+      data => {
+        console.log(`delete task from exercise ${data}`)
+        this.exercisesLoaded = false;
+      },
+      () => {
+      },
+      () => {
+        window.location.reload()
+      }
+    )
   }
 
   private getMyExercises() {
@@ -124,10 +156,12 @@ class ExerciseUI {
 }
 
 class TaskResponseUI {
+  id: number;
   title: string;
   formattedLastModified: string;
 
-  constructor(title: string, formattedLastModified: string) {
+  constructor(id: number, title: string, formattedLastModified: string) {
+    this.id = id;
     this.title = title;
     this.formattedLastModified = formattedLastModified
   }
