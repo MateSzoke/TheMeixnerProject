@@ -12,9 +12,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.web.access.channel.ChannelProcessingFilter
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
+import org.springframework.web.filter.CorsFilter
+import javax.servlet.Filter
 
 
 @EnableWebSecurity
@@ -24,6 +27,7 @@ class WebSecurity(
 ) : WebSecurityConfigurerAdapter() {
 
     override fun configure(http: HttpSecurity) {
+        http.addFilterBefore(corsFilter(), ChannelProcessingFilter::class.java)
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, REGISTER_URL).permitAll()
                 .antMatchers(*AUTH_WHITELIST).permitAll()
@@ -40,9 +44,35 @@ class WebSecurity(
 
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource {
+//        val configuration = CorsConfiguration()
+//        configuration.allowedOrigins = Arrays.asList("http://localhost:4200")
+//        configuration.allowedMethods = Arrays.asList("GET", "POST")
+//        val source = UrlBasedCorsConfigurationSource()
+//        source.registerCorsConfiguration("/**", configuration)
+//        return source
+
         val source = UrlBasedCorsConfigurationSource()
         source.registerCorsConfiguration("/**", CorsConfiguration().applyPermitDefaultValues())
         return source
+    }
+
+    @Bean
+    protected fun corsFilter(): Filter? {
+        val source = UrlBasedCorsConfigurationSource()
+        val config = CorsConfiguration()
+        config.allowCredentials = true
+        config.addAllowedOrigin("*")
+        config.addAllowedHeader("*")
+        config.addAllowedMethod("OPTIONS")
+        config.addAllowedMethod("HEAD")
+        config.addAllowedMethod("GET")
+        config.addAllowedMethod("PUT")
+        config.addAllowedMethod("POST")
+        config.addAllowedMethod("DELETE")
+        config.addAllowedMethod("PATCH")
+        config.addExposedHeader("Location")
+        source.registerCorsConfiguration("/**", config)
+        return CorsFilter(source)
     }
 
 }

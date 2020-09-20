@@ -43,7 +43,7 @@ class JWTAuthenticationFilter(private val mAuthenticationManager: Authentication
             auth: Authentication
     ) {
         res.addHeader("Access-Control-Expose-Headers", "Authorization")
-        res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
+        res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE")
         res.setHeader("Access-Control-Allow-Credentials", "true")
         res.setHeader("Access-Control-Allow-Origin", "*")
         res.setHeader("Access-Control-Allow-Headers", "accept, content-type, Authorization, X-Requested-With, x-uw-act-as")
