@@ -38,6 +38,7 @@ import TypeEnum = TaskResponse.TypeEnum;
 import {TaskDTO} from "../model/taskDTO";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import SubjectEnum = TaskResponse.SubjectEnum;
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-new-task',
@@ -45,6 +46,9 @@ import SubjectEnum = TaskResponse.SubjectEnum;
   styleUrls: ['./new-task.component.scss']
 })
 export class NewTaskComponent implements OnInit {
+
+  submitted = false;
+  closeDialog = false;
 
   public types: Array<string>;
   public difficulties: Array<string>;
@@ -58,8 +62,17 @@ export class NewTaskComponent implements OnInit {
   private topic: number = -1;
   public name: string = null;
 
+  newTaskForm: FormGroup = this.formBuilder.group({
+    title: ['', [Validators.required, Validators.minLength(3)]],
+    type: ['', Validators.required],
+    difficulty: ['', Validators.required],
+    classFrom: ['', Validators.required],
+    classTo: ['', [Validators.required]],
+    topic: ['', [Validators.required]]
+  });
+
   public newTaskModel: NewTask = {
-    title: "valami",
+    title: "",
     type: TypeEnum.Grouping,
     difficulty: 50,
     classFrom: 4,
@@ -68,7 +81,8 @@ export class NewTaskComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    console.log("NewTaskComponent called");
+    console.log("NewTaskComponent called")
+    console.log(this.newTaskForm);
     this.types = new Array<string>();
     for (let i in GroupingResponse.TypeEnum) {
       this.types.push(ConvertEnum.convertType(i));
@@ -83,13 +97,14 @@ export class NewTaskComponent implements OnInit {
               private theEasyTasksService: EasyTasksService,
               private complexTasksService: ComplexTasksService,
               private otherTasksService: OtherTasksService,
-              public matDialogRef: MatDialogRef<NewTaskComponent>) {
+              private formBuilder: FormBuilder,
+              public dialogRef: MatDialogRef<NewTaskComponent>) {
 
     /*
         ModalComponent.saveBtnPressed.subscribe(data => {
-          if (this.name == null || this.type == -1 || this.difficulty == -1 || this.classFrom == -1 || this.classTo == -1 || this.topic == -1) {
-            console.log("szempontok: " + this.type + this.difficulty +
-              this.classFrom + this.classTo + this.topic);
+          if (this.name == null || this.type == -1 || this.newTaskForm.value.difficulty == -1 || this.newTaskForm.value.classFrom == -1 || this.newTaskForm.value.classTo == -1 || this.topic == -1) {
+            console.log("szempontok: " + this.type + this.newTaskForm.value.difficulty +
+              this.newTaskForm.value.classFrom + this.newTaskForm.value.classTo + this.topic);
 
             alert("Kérem adja meg az összes szempontot!");
             return;
@@ -97,10 +112,10 @@ export class NewTaskComponent implements OnInit {
             console.log("type is " + this.type);
             const g1: GroupingRequest = {
               title: this.name,
-              difficulty: this.difficulty,
+              difficulty: this.newTaskForm.value.difficulty,
               groups: new Array<GroupRequest>(),
-              recommendedMinClass: this.classFrom,
-              recommendedMaxClass: this.classTo,
+              recommendedMinClass: this.newTaskForm.value.classFrom,
+              recommendedMaxClass: this.newTaskForm.value.classTo,
               subject: "None"
             };
             console.log(this.type + " type");
@@ -141,11 +156,11 @@ export class NewTaskComponent implements OnInit {
       case GroupingResponse.TypeEnum.Grouping.toString(): {
         console.log("csoportositas POST called");
         const g1: GroupingRequest = {
-          title: this.name,
-          difficulty: this.difficulty,
+          title: this.newTaskForm.value.title,
+          difficulty: this.newTaskForm.value.difficulty,
           groups: new Array<GroupRequest>(),
-          recommendedMinClass: this.classFrom,
-          recommendedMaxClass: this.classTo,
+          recommendedMinClass: this.newTaskForm.value.classFrom,
+          recommendedMaxClass: this.newTaskForm.value.classTo,
           subject: "None"
         };
         return this.theEasyTasksService.createGroupingUsingPOST(g1);
@@ -154,11 +169,11 @@ export class NewTaskComponent implements OnInit {
       case GroupingResponse.TypeEnum.Pairing.toString(): {
         console.log("parositas POST called");
         const g1: PairingRequest = {
-          title: this.name,
-          difficulty: this.difficulty,
+          title: this.newTaskForm.value.title,
+          difficulty: this.newTaskForm.value.difficulty,
           pairs: new Array<PairElementRequest>(),
-          recommendedMinClass: this.classFrom,
-          recommendedMaxClass: this.classTo,
+          recommendedMinClass: this.newTaskForm.value.classFrom,
+          recommendedMaxClass: this.newTaskForm.value.classTo,
           subject: "None"
         };
         return this.theEasyTasksService.createPairingUsingPOST(g1);
@@ -167,11 +182,11 @@ export class NewTaskComponent implements OnInit {
       case GroupingResponse.TypeEnum.SentenceCompletion.toString(): {
         console.log("mondatkieg POST called");
         const g1: SentenceCompletionRequest = {
-          title: this.name,
-          difficulty: this.difficulty,
+          title: this.newTaskForm.value.title,
+          difficulty: this.newTaskForm.value.difficulty,
           subject: "None",
-          recommendedMinClass: this.classFrom,
-          recommendedMaxClass: this.classTo,
+          recommendedMinClass: this.newTaskForm.value.classFrom,
+          recommendedMaxClass: this.newTaskForm.value.classTo,
           sentence: null,
           options: new Array<string>()
         };
@@ -181,11 +196,11 @@ export class NewTaskComponent implements OnInit {
       case GroupingResponse.TypeEnum.SentenceCreation.toString(): {
         console.log("mondatkeszites POST called");
         const g1: SentenceCreationRequest = {
-          title: this.name,
-          difficulty: this.difficulty,
+          title: this.newTaskForm.value.title,
+          difficulty: this.newTaskForm.value.difficulty,
           sentences: new Array<Sentence>(),
-          recommendedMinClass: this.classFrom,
-          recommendedMaxClass: this.classTo,
+          recommendedMinClass: this.newTaskForm.value.classFrom,
+          recommendedMaxClass: this.newTaskForm.value.classTo,
           subject: "None"
         };
         return this.theEasyTasksService.createSentenceCreationUsingPOST(g1);
@@ -194,11 +209,11 @@ export class NewTaskComponent implements OnInit {
       case GroupingResponse.TypeEnum.Sorting.toString(): {
         console.log("sorrendezes POST called");
         const g1: SortingRequest = {
-          title: this.name,
-          difficulty: this.difficulty,
+          title: this.newTaskForm.value.title,
+          difficulty: this.newTaskForm.value.difficulty,
           elements: new Array<MediaItemRequest>(),
-          recommendedMinClass: this.classFrom,
-          recommendedMaxClass: this.classTo,
+          recommendedMinClass: this.newTaskForm.value.classFrom,
+          recommendedMaxClass: this.newTaskForm.value.classTo,
           subject: "None"
         };
         return this.theEasyTasksService.createSortingUsingPOST(g1);
@@ -207,11 +222,11 @@ export class NewTaskComponent implements OnInit {
       case GroupingResponse.TypeEnum.GroupingAndSorting.toString(): {
         console.log("csoportositas es sorrendezes POST called");
         const g1: GroupingAndSortingRequest = {
-          title: this.name,
-          difficulty: this.difficulty,
+          title: this.newTaskForm.value.title,
+          difficulty: this.newTaskForm.value.difficulty,
           subject: "None",
-          recommendedMinClass: this.classFrom,
-          recommendedMaxClass: this.classTo,
+          recommendedMinClass: this.newTaskForm.value.classFrom,
+          recommendedMaxClass: this.newTaskForm.value.classTo,
           groups: Array<GroupRequest>()
         };
         return this.complexTasksService.createGroupingAndSortingUsingPOST(g1);
@@ -221,11 +236,11 @@ export class NewTaskComponent implements OnInit {
         console.log("Mondatkiegeszites es csoportositas POST called");
         const g1: SentenceCompletionAndGroupingRequest = {
           sentenceGroups: Array<SentenceCompletionList>(),
-          title: this.name,
-          difficulty: this.difficulty,
+          title: this.newTaskForm.value.title,
+          difficulty: this.newTaskForm.value.difficulty,
           subject: "None",
-          recommendedMinClass: this.classFrom,
-          recommendedMaxClass: this.classTo
+          recommendedMinClass: this.newTaskForm.value.classFrom,
+          recommendedMaxClass: this.newTaskForm.value.classTo
         };
         return this.complexTasksService.createSentenceCompletionAndGroupingUsingPOST(g1);
         break;
@@ -234,11 +249,11 @@ export class NewTaskComponent implements OnInit {
         console.log("Mondatkiegeszites es sorrendezes POST called");
         const g1: SentenceCompletionAndSortingRequest = {
           sentences: Array<SentenceCompletionItem>(),
-          title: this.name,
-          difficulty: this.difficulty,
+          title: this.newTaskForm.value.title,
+          difficulty: this.newTaskForm.value.difficulty,
           subject: "None",
-          recommendedMinClass: this.classFrom,
-          recommendedMaxClass: this.classTo
+          recommendedMinClass: this.newTaskForm.value.classFrom,
+          recommendedMaxClass: this.newTaskForm.value.classTo
         };
         return this.complexTasksService.createSentenceCompletionAndSortingUsingPOST(g1);
         break;
@@ -246,22 +261,22 @@ export class NewTaskComponent implements OnInit {
       case GroupingResponse.TypeEnum.SentenceCreationAndGrouping.toString(): {
         const g1: SentenceCreationAndGroupingRequest = {
           sentenceGroups: Array<SentenceCreationList>(),
-          title: this.name,
-          difficulty: this.difficulty,
+          title: this.newTaskForm.value.title,
+          difficulty: this.newTaskForm.value.difficulty,
           subject: "None",
-          recommendedMinClass: this.classFrom,
-          recommendedMaxClass: this.classTo
+          recommendedMinClass: this.newTaskForm.value.classFrom,
+          recommendedMaxClass: this.newTaskForm.value.classTo
         };
         return this.complexTasksService.createSentenceCreationAndGroupingUsingPOST(g1);
         break;
       }
       case GroupingResponse.TypeEnum.SentenceCreationAndSorting.toString(): {
         const g1: SentenceCreationAndSortingRequest = {
-          title: this.name,
-          difficulty: this.difficulty,
+          title: this.newTaskForm.value.title,
+          difficulty: this.newTaskForm.value.difficulty,
           subject: "None",
-          recommendedMinClass: this.classFrom,
-          recommendedMaxClass: this.classTo,
+          recommendedMinClass: this.newTaskForm.value.classFrom,
+          recommendedMaxClass: this.newTaskForm.value.classTo,
           sentences: Array<Sentence>()
         };
         return this.complexTasksService.createSentenceCreationAndSortingUsingPOST(g1);
@@ -269,11 +284,11 @@ export class NewTaskComponent implements OnInit {
       }
       case GroupingResponse.TypeEnum.SortingAndGrouping.toString(): {
         const g1: SortingAndGroupingRequest = {
-          title: this.name,
-          difficulty: this.difficulty,
+          title: this.newTaskForm.value.title,
+          difficulty: this.newTaskForm.value.difficulty,
           subject: "None",
-          recommendedMinClass: this.classFrom,
-          recommendedMaxClass: this.classTo,
+          recommendedMinClass: this.newTaskForm.value.classFrom,
+          recommendedMaxClass: this.newTaskForm.value.classTo,
           groups: Array<GroupListItemRequest>()
         };
         return this.complexTasksService.createSortingAndGroupingUsingPOST(g1);
@@ -283,22 +298,22 @@ export class NewTaskComponent implements OnInit {
         const g1: BlindMapRequest = {
           image: null,
           tags: Array<BlindMapTag>(),
-          title: this.name,
-          difficulty: this.difficulty,
+          title: this.newTaskForm.value.title,
+          difficulty: this.newTaskForm.value.difficulty,
           subject: "None",
-          recommendedMinClass: this.classFrom,
-          recommendedMaxClass: this.classTo
+          recommendedMinClass: this.newTaskForm.value.classFrom,
+          recommendedMaxClass: this.newTaskForm.value.classTo
         };
         return this.otherTasksService.createBlindMapUsingPOST(g1);
         break;
       }
       case GroupingResponse.TypeEnum.FreeText.toString(): {
         const g1: FreeTextRequest = {
-          title: this.name,
-          difficulty: this.difficulty,
+          title: this.newTaskForm.value.title,
+          difficulty: this.newTaskForm.value.difficulty,
           subject: "None",
-          recommendedMinClass: this.classFrom,
-          recommendedMaxClass: this.classTo,
+          recommendedMinClass: this.newTaskForm.value.classFrom,
+          recommendedMaxClass: this.newTaskForm.value.classTo,
           question: null,
           correctAnswer: null
         };
@@ -307,11 +322,11 @@ export class NewTaskComponent implements OnInit {
       }
       case GroupingResponse.TypeEnum.OddOneOut.toString(): {
         const g1: OddOneOutRequest = {
-          title: this.name,
-          difficulty: this.difficulty,
+          title: this.newTaskForm.value.title,
+          difficulty: this.newTaskForm.value.difficulty,
           subject: "None",
-          recommendedMinClass: this.classFrom,
-          recommendedMaxClass: this.classTo,
+          recommendedMinClass: this.newTaskForm.value.classFrom,
+          recommendedMaxClass: this.newTaskForm.value.classTo,
           correctAnswerIndex: null,
           options: Array<MediaItemRequest>()
         };
@@ -328,11 +343,11 @@ export class NewTaskComponent implements OnInit {
           minimumDouble: 0,
           maximumDouble: 0,
           timelineTags: Array<TimelineTag>(),
-          title: this.name,
-          difficulty: this.difficulty,
+          title: this.newTaskForm.value.title,
+          difficulty: this.newTaskForm.value.difficulty,
           subject: "None",
-          recommendedMinClass: this.classFrom,
-          recommendedMaxClass: this.classTo
+          recommendedMinClass: this.newTaskForm.value.classFrom,
+          recommendedMaxClass: this.newTaskForm.value.classTo
         };
         return this.otherTasksService.createTimelineUsingPOST(g1);
         break;
@@ -340,37 +355,18 @@ export class NewTaskComponent implements OnInit {
     }
   }
 
-
-  public setName(event) {
-    this.name = event;
-  }
-
-  public typeSelected(event) {
-    this.type = event.value;
-  }
-
-  public difficultySelected(event) {
-    this.difficulty = event.value;
-    console.log(event.value);
-  }
-
-  public classFromSelected(event) {
-    this.classFrom = event.value;
-    this.classesTo = new Array<number>();
-    for (let i = this.classFrom; i < 13; i++) {
-      this.classesTo.push(i);
-    }
-  }
-
-  public classToSelected(event) {
-    this.classTo = event.value;
-  }
-
-  public topicSelected(event) {
-    this.topic = event.value;
-  }
-
   saveData() {
+    this.submitted = true;
+
+    console.log("saveData called");
+    // stop here if form is invalid
+    if (!this.newTaskForm.valid) {
+      console.log("Form is invalid");
+      return;
+    } else {
+      console.log("closing...")
+      this.dialogRef.close();
+    }
     this.postTaskDataByType(this.newTaskModel.type.toString()).subscribe(
       data => {
         console.log("data sent");

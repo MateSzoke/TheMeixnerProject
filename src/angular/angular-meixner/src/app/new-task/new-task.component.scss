@@ -15,15 +15,15 @@
 }
 
 mat-label {
-  color: rgb(17, 131, 181) !important;
+  color: #90a4ae !important;
 }
 
 .background-color {
-  background-color: rgb(17, 131, 181);
+  background-color: #90a4ae;
 }
 
-.color-blue {
-  color: rgb(17, 131, 181);
+.color-mat {
+  color: #90a4ae;
 }
 
 .color-white {
@@ -36,5 +36,5 @@ mat-label {
 }
 
 .mat-dialog-content {
-
+  overflow: inherit;
 }
