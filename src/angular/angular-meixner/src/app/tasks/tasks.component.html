@@ -36,7 +36,7 @@
   <br>
 </div>
 
-<div *ngIf="this.tasksLoaded==false" >
+<div *ngIf="this.taskAngularService.tasksLoaded==false" >
   <div class="wrapper">
     <div class="inner">
       <mat-spinner diameter="70"></mat-spinner>
@@ -45,8 +45,8 @@
 </div>
 
 
-<div *ngIf="this.tasksLoaded">
-  <mat-card *ngFor="let task of this.taskAngular.tasks; index as i" class="right-aligned-header">
+<div *ngIf="this.taskAngularService.tasksLoaded">
+  <mat-card *ngFor="let task of this.taskAngularService.tasks; index as i" class="right-aligned-header">
     <div fxLayout="row" fxLayout.xs="column-reverse" fxLayoutGap="8px">
       <div class="float-left">
         {{task.title}} - {{this.convertEnum(task.type)}} -
@@ -62,5 +62,7 @@
   </mat-card>
 </div>
 
+<div>
+</div>
 </body>
 </html>

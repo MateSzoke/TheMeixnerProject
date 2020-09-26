@@ -31,6 +31,7 @@ class EasyTaskController(
 
     @PatchMapping("/pairing/{taskId}")
     @ApiOperation("Updates existing Pairing task by taskId.")
+    @CrossOrigin(exposedHeaders=["Access-Control-Allow-Origin"])
     fun updatePairingById(
             @PathVariable("taskId") taskId: Long,
             @RequestBody @Valid pairingRequest: PairingRequest

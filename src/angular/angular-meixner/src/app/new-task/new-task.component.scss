@@ -1,7 +1,8 @@
 .task-form {
   min-width: 150px;
-  max-width: 500px;
+  max-width: 450px;
   width: 95%;
+  transform: translateX(10%);
 }
 
 .example-full-width {
@@ -14,5 +15,26 @@
 }
 
 mat-label {
-  color: rgb(17, 131, 181) !important;;
+  color: #90a4ae !important;
+}
+
+.background-color {
+  background-color: #90a4ae;
+}
+
+.color-mat {
+  color: #90a4ae;
+}
+
+.color-white {
+  color: white;
+}
+
+.mat-dialog-title {
+  transform: translateX(8%);
+  max-width: 450px;
+}
+
+.mat-dialog-content {
+  overflow: inherit;
 }

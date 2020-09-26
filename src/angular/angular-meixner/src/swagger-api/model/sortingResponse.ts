@@ -9,10 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import {MediaItemResponse} from './mediaItemResponse';
+import { MediaItemResponse } from './mediaItemResponse';
 
 
-export interface SortingResponse {
+export interface SortingResponse { 
     difficulty: number;
     elements: Array<MediaItemResponse>;
     id: number;

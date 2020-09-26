@@ -9,10 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import {MediaItemResponse} from './mediaItemResponse';
+import { MediaItemResponse } from './mediaItemResponse';
 
 
-export interface FreeTextResponse {
+export interface FreeTextResponse { 
     correctAnswer: string;
     difficulty: number;
     id: number;

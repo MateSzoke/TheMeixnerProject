@@ -11,7 +11,7 @@ import {LoginDTO} from "../model/LoginDTO";
 })
 export class AuthenticationService {
 
-  @Output() userLoggedIn = new EventEmitter<boolean>();
+  @Output() userLoggedIn = new EventEmitter<boolean>(false);
 
   loginError = false;
   constructor(
@@ -20,8 +20,20 @@ export class AuthenticationService {
     private service: AccountService,
     private routeSelectorService: RouteSelectorService
   ) {
+    if (this.getAuthenticatedUser()) {
+      this.userLoggedIn.emit(true);
+    }
 
   }
+
+  emitCurrentData() {
+    if (this.getAuthenticatedUser()) {
+      this.userLoggedIn.emit(true);
+    } else {
+      this.userLoggedIn.emit(false);
+    }
+  }
+
 
   getAuthenticatedUser() {
     return sessionStorage.getItem('authenticatedUser');
@@ -39,20 +51,15 @@ export class AuthenticationService {
   }
 
   public login(username: string, password: string) {
-    console.log("login called");
     let loginDTO = {username: username , password:  password  } as LoginDTO;
-    console.log(JSON.stringify(loginDTO));
     const observable = this.service.loginUsingPOST(
       JSON.stringify(loginDTO), 'response'
     );
     //this.router.navigate([this.routeSelectorService.getLastRequestedRouteUrl()]);
     observable
           .subscribe(resp => {
-                console.log("login subscribe answer");
-                console.log(resp);
                 sessionStorage.setItem('authenticatedUser', username);
                 sessionStorage.setItem('token', resp.headers.get("Authorization"));
-                console.log("saved token is " +sessionStorage.getItem('token'));
                 //sessionStorage.setItem('userid', resp.id);
                 this.userLoggedIn.emit(true);
                 if (this.routeSelectorService.getLastRequestedRouteUrl()) {

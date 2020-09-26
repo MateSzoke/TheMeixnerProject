@@ -9,10 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import {Sentence} from './sentence';
+import { Sentence } from './sentence';
 
 
-export interface SentenceCreationAndSortingResponse {
+export interface SentenceCreationAndSortingResponse { 
     difficulty: number;
     id: number;
     lastModified: Date;

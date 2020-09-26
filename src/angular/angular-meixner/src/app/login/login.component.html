@@ -1,25 +1,25 @@
 <div class="container">
   <mat-card class="my-card">
     <mat-card-title>
-      Please sign in
+       Jelentkezzen be!
     </mat-card-title>
     <mat-card-content>
-      <div *ngIf='this.authenticationService.loginError' class="alert alert-warning">Invalid credentials</div>
+      <div *ngIf='this.authenticationService.loginError' class="alert alert-warning">Érvénytelen adatok!</div>
       <form class="my-form">
         <mat-form-field class="full-width">
-          <mat-label>Username</mat-label>
+          <mat-label>Felhasználónév</mat-label>
           <input [(ngModel)]="username" matInput name="username" placeholder="username">
         </mat-form-field>
         <br>
         <mat-form-field class="full-width">
-          <mat-label>Password</mat-label>
+          <mat-label>Jelszó</mat-label>
           <input (keyup.enter)="onLogin()" [(ngModel)]="password" matInput name="password" placeholder="password"
                  type="password">
         </mat-form-field>
       </form>
     </mat-card-content>
     <mat-card-actions>
-      <button (click)="onLogin()" class="loginbtn" mat-raised-button>SIGN IN</button>
+      <button (click)="onLogin()" class="loginbtn" mat-raised-button>BELÉPÉS</button>
     </mat-card-actions>
   </mat-card>
 </div>

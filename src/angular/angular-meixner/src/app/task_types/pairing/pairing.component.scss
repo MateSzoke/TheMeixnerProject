@@ -1,3 +1,5 @@
+
+
 .plusButton {
   align-content: flex-end;
   margin-left: 25px;
@@ -24,27 +26,8 @@
 }
 
 .addbtn {
-  background-color: rgb(17, 131, 181);
+  background-color: #90a4ae;
   color: white;
-}
-
-.full-width.mat-form-field-appearance-legacy.mat-focused
-.mat-form-field-underline {
-  color: rgb(17, 131, 181);
-  background-color: rgb(17, 131, 181) !important;
-}
-
-.mat-form-field-ripple {
-  /*change color of underline when focused*/
-  background-color: rgb(17, 131, 181) !important;
-}
-
-.mat-form-field-label {
-  color: rgb(17, 131, 181) !important;
-}
-
-.mat-form-field-appearance-outline .mat-form-field-outline-thick {
-  color: rgb(17, 131, 181);
 }
 
 .container {
@@ -92,7 +75,7 @@ mat-card-content {
 }
 
 .mat-stroked-button:hover, .mat-button:hover {
-  background: rgb(17, 131, 181);
+  background: #90a4ae;
   color: white;
 }
 
@@ -107,4 +90,10 @@ mat-card-content {
   padding: 12px;
 }
 
+mat-form-field {
+  display:inline-block;
+}
 
+i {
+  display:inline-block;
+}

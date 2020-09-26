@@ -9,10 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import {PairElementResponse} from './pairElementResponse';
+import { PairElementResponse } from './pairElementResponse';
 
 
-export interface MemoryGameResponse {
+export interface MemoryGameResponse { 
     difficulty: number;
     id: number;
     lastModified: Date;

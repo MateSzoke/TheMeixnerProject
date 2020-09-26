@@ -9,10 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import {GroupRequest} from './groupRequest';
+import { GroupRequest } from './groupRequest';
 
 
-export interface GroupingAndSortingRequest {
+export interface GroupingAndSortingRequest { 
     title: string;
     difficulty?: number;
     subject: GroupingAndSortingRequest.SubjectEnum;

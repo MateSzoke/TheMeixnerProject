@@ -11,16 +11,17 @@
  */
 /* tslint:disable:no-unused-variable member-ordering */
 
-import {Inject, Injectable, Optional} from '@angular/core';
-import {HttpClient, HttpEvent, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
-import {CustomHttpUrlEncodingCodec} from '../encoder';
+import { Inject, Injectable, Optional }                      from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams,
+         HttpResponse, HttpEvent }                           from '@angular/common/http';
+import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
-import {Observable} from 'rxjs';
+import { Observable }                                        from 'rxjs';
 
-import {MediaItemResponse} from '../model/mediaItemResponse';
+import { MediaItemResponse } from '../model/mediaItemResponse';
 
-import {BASE_PATH} from '../variables';
-import {Configuration} from '../configuration';
+import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
+import { Configuration }                                     from '../configuration';
 
 
 @Injectable({
@@ -75,6 +76,8 @@ export class FilesService {
 
         let headers = this.defaultHeaders;
 
+        // authentication (apiKey) required
+
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -116,6 +119,7 @@ export class FilesService {
 
         let headers = this.defaultHeaders;
 
+        // authentication (apiKey) required
 
 
         // to determine the Accept header

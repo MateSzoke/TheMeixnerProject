@@ -25,14 +25,14 @@ export class NewExerciseComponent implements OnInit {
       } else {
         this.createExercise(this.name, this.comment).subscribe(
           data => {
-            console.log("exercise sent")
+
           },
           error => {
           },
           () => {
           }
         );
-        ModalComponent.closeAfterSave(data);
+        ModalComponent.closeAfterSave();
         window.location.reload()
       }
     });

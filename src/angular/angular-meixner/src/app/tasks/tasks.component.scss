@@ -96,7 +96,7 @@ mat-card-content {
 }
 
 .mat-stroked-button:hover, .mat-button:hover {
-  background: rgb(17, 131, 181);
+  background: #90a4ae;
   color: white;
 }
 
@@ -117,10 +117,6 @@ mat-card-content {
 
 .mat-button:focus .mat-button-focus-overlay .mat-stroked-button .mat-stroked-button-focus-overlay {
   background-color: transparent;
-}
-
-.mat-datepicker:hover {
-  background: rgb(17, 131, 181);
 }
 
 .aligned-with-icon {

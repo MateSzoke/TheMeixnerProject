@@ -47,7 +47,7 @@ export class DiffimageService {
       return this.folderPath.concat(this.level2Diff.toString());
     } else if (diff < 80) {
       return this.folderPath.concat(this.level3Diff.toString());
-    } else if (diff < 100) {
+    } else if (diff < 101) {
       return this.folderPath.concat(this.level4Diff.toString());
     } else {
       return this.folderPath.concat(this.level0Diff.toString());

@@ -9,9 +9,9 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import {MediaItemRequest} from './mediaItemRequest';
+import { MediaItemRequest } from './mediaItemRequest';
 
 
-export interface PairElementRequest {
+export interface PairElementRequest { 
     pair: Array<MediaItemRequest>;
 }

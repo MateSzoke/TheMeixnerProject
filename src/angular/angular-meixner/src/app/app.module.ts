@@ -27,7 +27,6 @@ import {ModalComponent} from './modal/modal.component';
 import {DomService} from './service/dom.service';
 import {ModalService} from './service/modal.service';
 import {NewTaskComponent} from './new-task/new-task.component';
-import {SorrendezesComponent} from './task_types/sorrendezes/sorrendezes.component';
 import {GroupingComponent} from './task_types/grouping/grouping.component';
 import {PairingComponent} from './task_types/pairing/pairing.component';
 import {SentenceCompletionComponent} from './task_types/sentence-completion/sentence-completion.component';
@@ -44,7 +43,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {HttpInterceptorService} from "./service/http-interceptor.service";
 import {ExerciseTaskListComponent} from './exercise-task-list/exercise-task-list.component';
 import {MatDialogModule} from "@angular/material/dialog";
-
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
@@ -56,7 +55,6 @@ import {MatDialogModule} from "@angular/material/dialog";
     NewExerciseComponent,
     ModalComponent,
     NewTaskComponent,
-    SorrendezesComponent,
     GroupingComponent,
     PairingComponent,
     SentenceCompletionComponent,
@@ -70,29 +68,30 @@ import {MatDialogModule} from "@angular/material/dialog";
     SortingGroupingComponent,
     ExerciseTaskListComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatListModule,
-    MatButtonModule,
-    FlexLayoutModule,
-    MatCardModule,
-    MatFormFieldModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    FormsModule,
-    MatGridListModule,
-    MatExpansionModule,
-    MatSelectModule,
-    MatSliderModule,
-    MatProgressSpinnerModule,
-    MatDialogModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatSidenavModule,
+        MatListModule,
+        MatButtonModule,
+        FlexLayoutModule,
+        MatCardModule,
+        MatFormFieldModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        FormsModule,
+        MatGridListModule,
+        MatExpansionModule,
+        MatSelectModule,
+        MatSliderModule,
+        MatProgressSpinnerModule,
+        NgbModule,
+        MatDialogModule
+    ],
   providers: [DomService, ModalService, ModalComponent,
     {provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true},
     LoginComponent, NewTaskComponent, NewExerciseComponent, ExerciseTaskListComponent],

@@ -11,16 +11,18 @@
  */
 /* tslint:disable:no-unused-variable member-ordering */
 
-import {Inject, Injectable, Optional} from '@angular/core';
-import {HttpClient, HttpEvent, HttpHeaders, HttpResponse} from '@angular/common/http';
+import { Inject, Injectable, Optional }                      from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams,
+         HttpResponse, HttpEvent }                           from '@angular/common/http';
+import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
-import {Observable} from 'rxjs';
+import { Observable }                                        from 'rxjs';
 
-import {UserRequest} from '../model/userRequest';
-import {UserResponse} from '../model/userResponse';
+import { UserRequest } from '../model/userRequest';
+import { UserResponse } from '../model/userResponse';
 
-import {BASE_PATH} from '../variables';
-import {Configuration} from '../configuration';
+import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
+import { Configuration }                                     from '../configuration';
 
 
 @Injectable({
@@ -71,6 +73,7 @@ export class AccountService {
 
         let headers = this.defaultHeaders;
 
+        // authentication (apiKey) required
 
 
         // to determine the Accept header
@@ -157,6 +160,7 @@ export class AccountService {
 
         let headers = this.defaultHeaders;
 
+        // authentication (apiKey) required
 
 
         // to determine the Accept header

@@ -9,10 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import {MediaItemRequest} from './mediaItemRequest';
+import { MediaItemRequest } from './mediaItemRequest';
 
 
-export interface OddOneOutRequest {
+export interface OddOneOutRequest { 
     correctAnswerIndex?: number;
     options: Array<MediaItemRequest>;
     title: string;

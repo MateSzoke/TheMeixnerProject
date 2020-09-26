@@ -4,8 +4,7 @@
   <mat-card class="mat-card-controls mat-card-base">
     <mat-card-content>
       <div class="flex-layout">
-
-        <button (click)="newPairing()" class="plusButton" mat-button>
+        <button (click)="newPair()" class="plusButton" mat-button>
           <i class="fa fa-plus"></i>
         </button>
       </div>
@@ -15,18 +14,20 @@
 </div>
 <div class="mat-card-base">
   <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-around center" fxLayoutGap="25px">
-    <mat-card class="mat-width" *ngFor="let member of this.pairingResponse.pairs; let i = index" >
+    <mat-card class="mat-width" *ngFor="let member of this.pairingResponse.pairs; let i = index">
       <mat-card-content>
         <form *ngFor="let pair of member.pair; let j = index" class="my-form">
-          <mat-form-field class="full-width">
-            <input [ngModel]="pair.content" (ngModelChange)="onModelChange($event, i, j)" matInput name="username">
+          <mat-form-field class="width-and-trash">
+            <input #pairchild (click)="elementClicked(i,j)" [ngModel]="pair.content"
+                   (ngModelChange)="updatePairElement($event, i, j)" matInput name="username">
           </mat-form-field>
+          <i (click)="this.deletePairElement(i,j)" class="fa fa-trash"></i>&nbsp;
           <br>
         </form>
+        <mat-form-field class="width-and-trash-inactive">
+          <input (click)="addPairElement(i)" matInput name="username">
+        </mat-form-field>
       </mat-card-content>
-      <mat-card-actions>
-        <button (click)="addPairElement(i)" class="addbtn" mat-raised-button>Új Elem</button>
-      </mat-card-actions>
     </mat-card>
   </div>
 </div>

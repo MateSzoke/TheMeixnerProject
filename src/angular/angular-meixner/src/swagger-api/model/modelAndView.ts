@@ -9,10 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import {View} from './view';
+import { View } from './view';
 
 
-export interface ModelAndView {
+export interface ModelAndView { 
     empty?: boolean;
     model?: any;
     modelMap?: { [key: string]: any; };

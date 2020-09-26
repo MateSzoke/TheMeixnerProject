@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ModalService} from '../service/modal.service';
 import {DomService} from '../service/dom.service';
 import {ModalComponent} from '../modal/modal.component';
@@ -6,9 +6,10 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {TaskResponse, TaskService} from '../../swagger-api';
 import {DiffimageService} from '../service/diffimage.service';
 import {ConvertEnum} from '../model/ConvertEnum';
-import {TaskAngularService} from "../data/task-angular.service";
 import {NewTaskComponent} from "../new-task/new-task.component";
 import {DateUtils} from "../util/date";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {TaskAngularService} from "../data/task-angular.service";
 
 @Component({
   selector: 'app-tasks',
@@ -23,10 +24,11 @@ export class TasksComponent implements OnInit {
   public classYears = Array.from({length: (8 - 5) / 1 + 1}, (_, i) => 5 + (i * 1));
   public classes: Array<String> = ['a', 'b', 'c'];
   public tasks: Array<TaskResponse> = new Array<TaskResponse>();
-  //public tasksUI: Array<TaskResponse> = new Array<TaskResponse>();
   public tasksLoaded = false;
   public getAllTasks = false;
   public routerLink = "parositas";
+
+  matDialogRef: MatDialogRef<NewTaskComponent>;
 
   constructor(private modal: ModalService, private dom: DomService,
               private modComponent: ModalComponent,
@@ -34,25 +36,23 @@ export class TasksComponent implements OnInit {
               public router: Router,
               private route: ActivatedRoute,
               public diffImServ: DiffimageService,
-              public taskAngular: TaskAngularService) {
+              public taskAngularService: TaskAngularService,
+              private matDialog: MatDialog) {
     modComponent.ngOnInit();
   }
 
 
   ngOnInit(): void {
-    console.log("Init called");
     this.route.params.subscribe((params: Params) => {
-      console.log("route params received");
-      console.log(JSON.stringify(params.viewtype));
       if (JSON.stringify(params.viewtype) === JSON.stringify(String('feladatok'))) {
         this.getAllTasks = true;
-        this.getAllTasksFunction();
+        this.taskAngularService.getAllTasksFunction();
         ModalComponent.closeBtnPressed.subscribe(
           data => {
-            this.getAllTasksFunction();
+            this.taskAngularService.getAllTasksFunction();
           },
           error => {
-            console.log("subscribe error");
+
           },
           () => {
           });
@@ -65,7 +65,7 @@ export class TasksComponent implements OnInit {
             this.getMyTasksFunction();
           },
           error => {
-            console.log("subscribe error");
+
           },
           () => {
           });
@@ -75,19 +75,17 @@ export class TasksComponent implements OnInit {
   }
 
   public deleteTask(input: number) {
-    this.tasksLoaded = false;
-    console.log("calling delete id is " + input);
+    this.taskAngularService.tasksLoaded = false;
     this.taskService.deleteTaskByIdUsingDELETE(input).subscribe(
       data => {
-        console.log("calling delete get...");
         if (this.getAllTasks === true) {
-          this.getAllTasksFunction();
+          this.taskAngularService.getAllTasksFunction();
         } else {
           this.getMyTasksFunction();
         }
       },
       err => {
-        console.log("delete error");
+
       },
       () => {
 
@@ -98,7 +96,7 @@ export class TasksComponent implements OnInit {
 
   public removeModalnewTask() {
     if (this.getAllTasks === true) {
-      this.getAllTasksFunction();
+      this.taskAngularService.getAllTasksFunction();
     } else {
       this.getMyTasksFunction();
     }
@@ -114,9 +112,17 @@ export class TasksComponent implements OnInit {
     this.router.navigate([ConvertEnum.convertTypeToRouterLink(input) + '/' + id]);
   }
 
-  public newTask() {
-    //this.modComponent.ngOnInit();
-    this.dom.show(NewTaskComponent);
+  public async newTask() {
+    this.matDialogRef = this.matDialog.open(NewTaskComponent, {
+      data: { name: "Uj feladat" },
+      disableClose: true
+    });
+
+    this.matDialogRef.afterClosed().subscribe(res => {
+      if ((res == true)) {
+
+      }
+    });
   }
 
   public convertEnum(input: string): string {
@@ -127,40 +133,25 @@ export class TasksComponent implements OnInit {
     return DateUtils.getFormattedDate(date);
   }
 
-  private getAllTasksFunction() {
-    this.taskService.getAllTaskUsingGET().subscribe(data => {
-        this.taskAngular.tasks = new Array<TaskResponse>();
-        data.forEach(element => {
-          this.taskAngular.tasks.push(element);
-        });
-        this.tasksLoaded = true;
-      },
-      error => {
-        console.log("subscribe error");
-      },
-      () => {
-      });
-  }
-
   public subjectChange(input) {
-    console.log(input.value);
+
   }
 
   public classYearsChange(input) {
-    console.log(input.value);
+
   }
 
   private getMyTasksFunction() {
     this.taskService.getMyTaskUsingGET().subscribe(data => {
-        this.taskAngular.tasks = new Array<TaskResponse>();
+        this.taskAngularService.tasks = new Array<TaskResponse>();
 
         data.forEach(element => {
-          this.taskAngular.tasks.push(element);
+          this.taskAngularService.tasks.push(element);
         });
-        this.tasksLoaded = true;
+        this.taskAngularService.tasksLoaded = true;
       },
       error => {
-        console.log("subscribe error");
+
       },
       () => {
       });
