@@ -18,5 +18,6 @@ export interface ExercisesResponse {
     id: number;
     lastModified?: Date;
     name: string;
+    owner: string;
     tasks: Array<TaskResponse>;
 }

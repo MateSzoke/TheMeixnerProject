@@ -1,19 +1,19 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatListModule} from '@angular/material/list';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatButtonModule} from '@angular/material/button';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import { ExercisesComponent } from './exercises/exercises.component';
-import { ExamsComponent } from './exams/exams.component';
-import { UsersComponent } from './users/users.component';
-import { LoginComponent } from './login/login.component';
+import {TasksComponent} from './tasks/tasks.component';
+import {ExercisesComponent} from './exercises/exercises.component';
+import {UsersComponent} from './users/users.component';
+import {LoginComponent} from './login/login.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -22,38 +22,39 @@ import {MatInputModule} from '@angular/material/input';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatSelectModule} from '@angular/material/select';
-import { NewExamComponent } from './new-exam/new-exam.component';
-import { ModalComponent } from './modal/modal.component';
+import {NewExerciseComponent} from './new-exercise/new-exercise.component';
+import {ModalComponent} from './modal/modal.component';
 import {DomService} from './service/dom.service';
 import {ModalService} from './service/modal.service';
-import { NewExerciseComponent } from './new-exercise/new-exercise.component';
-import { SorrendezesComponent } from './exercise_types/sorrendezes/sorrendezes.component';
-import { GroupingComponent } from './exercise_types/grouping/grouping.component';
-import { PairingComponent } from './exercise_types/pairing/pairing.component';
-import { SentenceCompletionComponent } from './exercise_types/sentence-completion/sentence-completion.component';
-import { SentenceCreationComponent } from './exercise_types/sentence-creation/sentence-creation.component';
-import { SortingComponent } from './exercise_types/sorting/sorting.component';
-import { GroupingSortingComponent } from './exercise_types/grouping-sorting/grouping-sorting.component';
-import { SentencecompletionGroupingComponent } from './exercise_types/sentencecompletion-grouping/sentencecompletion-grouping.component';
-import { SentencecompletionSortingComponent } from './exercise_types/sentencecompletion-sorting/sentencecompletion-sorting.component';
-import { SentencecreationGroupingComponent } from './exercise_types/sentencecreation-grouping/sentencecreation-grouping.component';
-import { SentencecreationSortingComponent } from './exercise_types/sentencecreation-sorting/sentencecreation-sorting.component';
-import { SortingGroupingComponent } from './exercise_types/sorting-grouping/sorting-grouping.component';
+import {NewTaskComponent} from './new-task/new-task.component';
+import {GroupingComponent} from './task_types/grouping/grouping.component';
+import {PairingComponent} from './task_types/pairing/pairing.component';
+import {SentenceCompletionComponent} from './task_types/sentence-completion/sentence-completion.component';
+import {SentenceCreationComponent} from './task_types/sentence-creation/sentence-creation.component';
+import {SortingComponent} from './task_types/sorting/sorting.component';
+import {GroupingSortingComponent} from './task_types/grouping-sorting/grouping-sorting.component';
+import {SentencecompletionGroupingComponent} from './task_types/sentencecompletion-grouping/sentencecompletion-grouping.component';
+import {SentencecompletionSortingComponent} from './task_types/sentencecompletion-sorting/sentencecompletion-sorting.component';
+import {SentencecreationGroupingComponent} from './task_types/sentencecreation-grouping/sentencecreation-grouping.component';
+import {SentencecreationSortingComponent} from './task_types/sentencecreation-sorting/sentencecreation-sorting.component';
+import {SortingGroupingComponent} from './task_types/sorting-grouping/sorting-grouping.component';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {HttpInterceptorService} from "./service/http-interceptor.service";
+import {ExerciseTaskListComponent} from './exercise-task-list/exercise-task-list.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
     AppComponent,
+    TasksComponent,
     ExercisesComponent,
-    ExamsComponent,
     UsersComponent,
     LoginComponent,
-    NewExamComponent,
-    ModalComponent,
     NewExerciseComponent,
-    SorrendezesComponent,
+    ModalComponent,
+    NewTaskComponent,
     GroupingComponent,
     PairingComponent,
     SentenceCompletionComponent,
@@ -64,7 +65,8 @@ import {HttpInterceptorService} from "./service/http-interceptor.service";
     SentencecompletionSortingComponent,
     SentencecreationGroupingComponent,
     SentencecreationSortingComponent,
-    SortingGroupingComponent
+    SortingGroupingComponent,
+    ExerciseTaskListComponent
   ],
     imports: [
         BrowserModule,
@@ -86,12 +88,15 @@ import {HttpInterceptorService} from "./service/http-interceptor.service";
         MatExpansionModule,
         MatSelectModule,
         MatSliderModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        NgbModule,
+        MatDialogModule
     ],
   providers: [DomService, ModalService, ModalComponent,
     {provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true},
-    LoginComponent, NewExerciseComponent],
+    LoginComponent, NewTaskComponent, NewExerciseComponent, ExerciseTaskListComponent],
   bootstrap: [AppComponent],
-  entryComponents: [NewExerciseComponent, LoginComponent, ModalComponent]
+  entryComponents: [NewTaskComponent, NewExerciseComponent, ExerciseTaskListComponent, LoginComponent, ModalComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

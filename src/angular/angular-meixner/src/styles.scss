@@ -2,34 +2,12 @@
 
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import 'font-awesome/css/font-awesome.css';
+@import 'node_modules/@angular/material/theming';
+@include mat-core();
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-.full-width.mat-form-field-appearance-legacy.mat-focused
-.mat-form-field-underline {
-  color: rgb(17, 131, 181);
-  background-color: rgb(17, 131, 181) !important;
-}
-
-.mat-form-field-ripple {
-  /*change color of underline when focused*/
-  background-color: rgb(17, 131, 181) !important;
-}
-
-.mat-spinner {
-  circle {
-    stroke: rgb(17, 131, 181);
-  }
-}
-
-.mat-form-field-label {
-  color: rgb(17, 131, 181) !important;
-}
-
-.mat-form-field-appearance-outline .mat-form-field-outline-thick {
-  color: rgb(17, 131, 181);
-}
 .mat-card-actions, .mat-card-content, .mat-card-subtitle {
   margin-bottom: 0px;
 }
@@ -46,20 +24,36 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   width: 100%;
 }
 
+
+.full-width-inactive {
+  width: 100%;
+  opacity: 0.5;
+}
+
+.width-and-trash {
+  width: calc(100% - 50px);
+}
+
+.width-and-trash-inactive {
+  width: calc(100% - 50px);
+  margin-right: 11px;
+  opacity: 0.5;
+}
+
 .mat-slider-thumb {
-  background-color: rgb(17, 131, 181) !important;
+  background-color: #90a4ae !important;
 }
 
 .mat-slider-thumb-label {
-  background-color: rgb(17, 131, 181) !important;
+  background-color: #90a4ae  !important;
 }
 
 .mat-slider-ticks {
-  background-color: rgb(17, 131, 181) !important;
+  background-color: #90a4ae  !important;
 }
 
 .mat-slider-track-fill {
-  background-color: rgb(17, 131, 181) !important;
+  background-color: #90a4ae  !important;
 }
 
 

@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild, ViewContainerRef, HostBinding, Output, EventEmitter} from '@angular/core';
 import { DomService } from '../service/dom.service';
-import {ExercisesComponent} from '../exercises/exercises.component';
+import {TasksComponent} from '../tasks/tasks.component';
+import {Observable, Subject} from "rxjs";
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
@@ -9,9 +10,10 @@ import {ExercisesComponent} from '../exercises/exercises.component';
 export class ModalComponent implements OnInit {
   @HostBinding('style.display') display = 'none';
   @ViewChild('content', { read: ViewContainerRef, static: true }) containerRef: ViewContainerRef;
-  @Output() static saveBtnPressed = new EventEmitter<ModalComponent>();
-  @Output() static closeBtnPressed = new EventEmitter<ModalComponent>();
+  static saveBtnPressed = new Subject<ModalComponent>();
+  static closeBtnPressed = new Subject<ModalComponent>();
   title = "";
+  static componentRef;
 
   constructor(private domService: DomService) {
     this.constructModal();
@@ -22,6 +24,9 @@ export class ModalComponent implements OnInit {
   }
 
   constructModal() {
+    ModalComponent.componentRef = this;
+    ModalComponent.saveBtnPressed = new Subject<ModalComponent>();
+    ModalComponent.closeBtnPressed = new Subject<ModalComponent>();
     this.domService.setContainerRef(this.containerRef);
     this.domService.showContainerElement$.subscribe((value) => {
       if(value){
@@ -30,23 +35,22 @@ export class ModalComponent implements OnInit {
     });
   }
 
-  cancel() {
+  public cancel() {
     this.domService.setContainerRef(this.containerRef);
     this.domService.cancelComponent();
     this.display = 'none';
   }
 
   public savedata() {
-    console.log("savedata called");
-    ModalComponent.saveBtnPressed.emit(this);
+    ModalComponent.saveBtnPressed.next(this);
+    ModalComponent.saveBtnPressed = new Subject<ModalComponent>();
   }
 
-  public static closeAfterSave(data) {
-    ModalComponent.closeBtnPressed.emit();
-    data.domService.setContainerRef(data.containerRef);
-    data.domService.cancelComponent();
-    data.display = 'none';
-    ModalComponent.saveBtnPressed.unsubscribe();
+  public static closeAfterSave() {
+    ModalComponent.closeBtnPressed.next();
+    ModalComponent.componentRef.domService.setContainerRef(ModalComponent.componentRef.containerRef);
+    ModalComponent.componentRef.domService.cancelComponent();
+    ModalComponent.componentRef.display = 'none';
   }
 
 }

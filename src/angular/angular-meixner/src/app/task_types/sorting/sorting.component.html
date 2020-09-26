@@ -2,7 +2,7 @@
   <mat-card class="mat-card-controls">
     <mat-card-content>
       <div class="flex-layout">
-        <button (click)="newPairing()" class="plusButton" mat-button>
+        <button (click)="newItem()" class="plusButton" mat-button>
           <i class="fa fa-plus"></i>
         </button>
       </div>
@@ -11,20 +11,17 @@
   <br>
 </div>
 <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-around center" fxLayoutGap="25px">
-  <mat-card *ngFor="let member of this.members.pairs; let i = index" fxFlex="calc(33%-25px)" fxFlex.sm="calc(50%-25px)" >
+  <mat-card *ngFor="let member of members; let i = index" fxFlex="calc(33%-25px)" fxFlex.sm="calc(50%-25px)" >
     <mat-card-header>
       <div mat-card-avatar class="example-header-image"></div>
-      <!--<mat-card-title>{{member.title}}</mat-card-title>-->
+      <mat-card-title>Cím</mat-card-title>
       <button (click)="deleteItem(i)" class="plusButton" mat-button>
         <i class="fa fa-trash"></i>
       </button>
-      <button (click)="addPairElement(i)" class="plusButton" mat-button>
-        <i class="fa fa-trash"></i>
-      </button>
     </mat-card-header>
-    <mat-card-content>
-      <mat-form-field *ngFor="let pair of member.pair; let j = index" class="full-width">
-        <input matInput [ngModel]="pair" (ngModelChange)="onModelChange($event, i, j)">
+    <mat-card-content *ngFor="let member of members; let i = index">
+      <mat-form-field class="full-width">
+        <input matInput [ngModel]="member.content">
       </mat-form-field>
     </mat-card-content>
   </mat-card>

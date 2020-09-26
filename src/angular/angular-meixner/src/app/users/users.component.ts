@@ -44,17 +44,13 @@ export class UsersComponent implements OnInit {
         }
         j++;
       }
-      console.log("role is " + roleEnum.toString());
-      console.log("roleEnum is " + UserRequest.RoleEnum[roleEnum]);
-      console.log({username: this.username,
-        password: this.password, role: UserRequest.RoleEnum[roleEnum]} as UserRequest);
       this.accountService.registerUsingPOST({username: this.username,
       password: this.password, role: roleEnum} as UserRequest).subscribe(
             data => {
               alert("Felhasználó hozzáadva!");
             },
             error => {
-              console.log("subscribe error");
+
             },
             () => {
 

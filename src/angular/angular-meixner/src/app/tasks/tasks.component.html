@@ -1,0 +1,68 @@
+<html>
+<body>
+<app-modal></app-modal>
+<div id="modal-container" class="hidden"></div>
+<div id="overlay" (click)="removeModalnewTask()" class="hidden"></div>
+<div class="container">
+  <mat-card class="mat-card-controls">
+    <mat-card-content>
+      <div class="flex-layout">
+        <div class="fit-parent">
+          <mat-form-field>
+            <mat-label style="color: black;">Tantárgy</mat-label>
+            <mat-select (selectionChange)="this.subjectChange($event)">
+              <mat-option *ngFor="let subject of subjects" [value]="subject">
+                {{subject}}
+              </mat-option>
+              <mat-option>vissza</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label style="color: black;">Évfolyam</mat-label>
+            <mat-select (selectionChange)="this.classYearsChange($event)">
+              <mat-option *ngFor="let classYear of classYears" [value]="classYear">
+                {{classYear}}
+              </mat-option>
+              <mat-option>vissza</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <button (click)="newTask()" class="plusButton" mat-button>
+          <i class="fa fa-plus"></i>
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <br>
+</div>
+
+<div *ngIf="this.taskAngularService.tasksLoaded==false" >
+  <div class="wrapper">
+    <div class="inner">
+      <mat-spinner diameter="70"></mat-spinner>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="this.taskAngularService.tasksLoaded">
+  <mat-card *ngFor="let task of this.taskAngularService.tasks; index as i" class="right-aligned-header">
+    <div fxLayout="row" fxLayout.xs="column-reverse" fxLayoutGap="8px">
+      <div class="float-left">
+        {{task.title}} - {{this.convertEnum(task.type)}} -
+        <img class="image1" src="{{this.diffImServ.convertNumToPath100(task.difficulty)}}">
+      </div>
+      <div class="float-right">
+        {{getFormattedDate(task.lastModified)}}
+        &nbsp;&#8196;
+        <i (click)="this.deleteTask(+task.id)" class="fa fa-trash"></i>&nbsp;
+        <a (click)="this.openTask(task.type,i)" class="fa fa-edit"></a>&nbsp;&nbsp;
+      </div>
+    </div>
+  </mat-card>
+</div>
+
+<div>
+</div>
+</body>
+</html>
