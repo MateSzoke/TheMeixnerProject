@@ -11,6 +11,10 @@ mat-grid-list  {
   margin-left: 6px;
 }
 
+.small-menu-button {
+  font-size: large;
+}
+
 mat-card {
   max-width: 36rem;
   text-align: center;
@@ -105,14 +109,14 @@ mat-card-content {
 }
 
 .mat-stroked-button:hover, .mat-button:hover {
-  background: rgb(0, 180, 181);
+  background: rgb(17, 131, 181);
   color: white;
 }
 
 
 .mat-spinner {
   circle {
-    stroke: rgb(0, 180, 181);
+    stroke: rgb(17, 131, 181);
   }
 }
 
@@ -126,7 +130,7 @@ mat-card-content {
 }
 
 .mat-datepicker:hover {
-  background: rgb(0, 180, 181);
+  background: rgb(17, 131, 181);
 }
 
 .aligned-with-icon {

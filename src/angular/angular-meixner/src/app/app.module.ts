@@ -42,9 +42,11 @@ import {SortingGroupingComponent} from './task_types/sorting-grouping/sorting-gr
 import {MatSliderModule} from '@angular/material/slider';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {HttpInterceptorService} from "./service/http-interceptor.service";
+import {ExerciseTaskListComponent} from './exercise-task-list/exercise-task-list.component';
+import {MatDialogModule} from "@angular/material/dialog";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { UniversalModalComponent } from './universal-modal/universal-modal.component';
-import {MatDialogModule} from "@angular/material/dialog";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,7 +69,8 @@ import {MatDialogModule} from "@angular/material/dialog";
     SentencecreationGroupingComponent,
     SentencecreationSortingComponent,
     SortingGroupingComponent,
-    UniversalModalComponent
+    UniversalModalComponent,
+    ExerciseTaskListComponent
   ],
     imports: [
         BrowserModule,
@@ -95,9 +98,9 @@ import {MatDialogModule} from "@angular/material/dialog";
     ],
   providers: [DomService, ModalService, ModalComponent,
     {provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true},
-    LoginComponent, NewTaskComponent],
+    LoginComponent, NewTaskComponent, NewExerciseComponent, ExerciseTaskListComponent],
   bootstrap: [AppComponent],
-  entryComponents: [NewTaskComponent, LoginComponent, ModalComponent]
+  entryComponents: [NewTaskComponent, NewExerciseComponent, ExerciseTaskListComponent, LoginComponent, ModalComponent]
 })
 export class AppModule {
 }
