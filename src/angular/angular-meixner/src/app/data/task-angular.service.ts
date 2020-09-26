@@ -39,7 +39,7 @@ export class TaskAngularService {
         this.finishedLoading.next(true);
       },
       error => {
-        console.log("subscribe error");
+
       },
       () => {
       });

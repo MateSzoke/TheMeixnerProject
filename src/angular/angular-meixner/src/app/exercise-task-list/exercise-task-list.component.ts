@@ -33,7 +33,7 @@ export class ExerciseTaskListComponent implements OnInit {
         this.tasksLoaded = true;
       },
       error => {
-        console.log("subscribe error");
+
       },
       () => {
       });
@@ -42,7 +42,6 @@ export class ExerciseTaskListComponent implements OnInit {
   saveTasks() {
     this.tasks.forEach(task => {
       if (task.checked) {
-        console.log(`add ${task.id} task to ${this.exerciseId} exercise`)
         this.exerciseService.addTaskToExercisesUsingPOST(this.exerciseId, task.id).subscribe();
       }
     });

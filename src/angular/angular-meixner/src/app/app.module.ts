@@ -27,7 +27,6 @@ import {ModalComponent} from './modal/modal.component';
 import {DomService} from './service/dom.service';
 import {ModalService} from './service/modal.service';
 import {NewTaskComponent} from './new-task/new-task.component';
-import {SorrendezesComponent} from './task_types/sorrendezes/sorrendezes.component';
 import {GroupingComponent} from './task_types/grouping/grouping.component';
 import {PairingComponent} from './task_types/pairing/pairing.component';
 import {SentenceCompletionComponent} from './task_types/sentence-completion/sentence-completion.component';
@@ -45,7 +44,6 @@ import {HttpInterceptorService} from "./service/http-interceptor.service";
 import {ExerciseTaskListComponent} from './exercise-task-list/exercise-task-list.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
-import { UniversalModalComponent } from './universal-modal/universal-modal.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +55,6 @@ import { UniversalModalComponent } from './universal-modal/universal-modal.compo
     NewExerciseComponent,
     ModalComponent,
     NewTaskComponent,
-    SorrendezesComponent,
     GroupingComponent,
     PairingComponent,
     SentenceCompletionComponent,
@@ -69,7 +66,6 @@ import { UniversalModalComponent } from './universal-modal/universal-modal.compo
     SentencecreationGroupingComponent,
     SentencecreationSortingComponent,
     SortingGroupingComponent,
-    UniversalModalComponent,
     ExerciseTaskListComponent
   ],
     imports: [
