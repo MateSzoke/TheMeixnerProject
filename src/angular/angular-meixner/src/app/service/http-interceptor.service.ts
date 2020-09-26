@@ -25,7 +25,6 @@ export class HttpInterceptorService implements HttpInterceptor{
     let authHeaderString = this.authenticationService.getAuthenticatedToken();
     let username = this.authenticationService.getAuthenticatedUser();
     if(authHeaderString && username) {
-      console.log("adding jwt to header...");
       request = request.clone({
         setHeaders : {
           Authorization : authHeaderString

@@ -6,11 +6,10 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {TaskResponse, TaskService} from '../../swagger-api';
 import {DiffimageService} from '../service/diffimage.service';
 import {ConvertEnum} from '../model/ConvertEnum';
-import {TaskAngularService} from "../data/task-angular.service";
 import {NewTaskComponent} from "../new-task/new-task.component";
 import {DateUtils} from "../util/date";
-import {UniversalModalComponent} from "../universal-modal/universal-modal.component";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {TaskAngularService} from "../data/task-angular.service";
 
 @Component({
   selector: 'app-tasks',
@@ -44,10 +43,7 @@ export class TasksComponent implements OnInit {
 
 
   ngOnInit(): void {
-    console.log("Init called");
     this.route.params.subscribe((params: Params) => {
-      console.log("route params received");
-      console.log(JSON.stringify(params.viewtype));
       if (JSON.stringify(params.viewtype) === JSON.stringify(String('feladatok'))) {
         this.getAllTasks = true;
         this.taskAngularService.getAllTasksFunction();
@@ -56,7 +52,7 @@ export class TasksComponent implements OnInit {
             this.taskAngularService.getAllTasksFunction();
           },
           error => {
-            console.log("subscribe error");
+
           },
           () => {
           });
@@ -69,7 +65,7 @@ export class TasksComponent implements OnInit {
             this.getMyTasksFunction();
           },
           error => {
-            console.log("subscribe error");
+
           },
           () => {
           });
@@ -80,10 +76,8 @@ export class TasksComponent implements OnInit {
 
   public deleteTask(input: number) {
     this.taskAngularService.tasksLoaded = false;
-    console.log("calling delete id is " + input);
     this.taskService.deleteTaskByIdUsingDELETE(input).subscribe(
       data => {
-        console.log("calling delete get...");
         if (this.getAllTasks === true) {
           this.taskAngularService.getAllTasksFunction();
         } else {
@@ -91,7 +85,7 @@ export class TasksComponent implements OnInit {
         }
       },
       err => {
-        console.log("delete error");
+
       },
       () => {
 
@@ -115,7 +109,6 @@ export class TasksComponent implements OnInit {
   }
 
   public openTask(input: string, id: number) {
-    console.log("TaskComponent openTask");
     this.router.navigate([ConvertEnum.convertTypeToRouterLink(input) + '/' + id]);
   }
 
@@ -141,11 +134,11 @@ export class TasksComponent implements OnInit {
   }
 
   public subjectChange(input) {
-    console.log(input.value);
+
   }
 
   public classYearsChange(input) {
-    console.log(input.value);
+
   }
 
   private getMyTasksFunction() {
@@ -158,7 +151,7 @@ export class TasksComponent implements OnInit {
         this.taskAngularService.tasksLoaded = true;
       },
       error => {
-        console.log("subscribe error");
+
       },
       () => {
       });

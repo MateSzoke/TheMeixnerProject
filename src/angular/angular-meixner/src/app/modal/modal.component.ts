@@ -36,14 +36,12 @@ export class ModalComponent implements OnInit {
   }
 
   public cancel() {
-    console.log("destroy called");
     this.domService.setContainerRef(this.containerRef);
     this.domService.cancelComponent();
     this.display = 'none';
   }
 
   public savedata() {
-    console.log("savedata called");
     ModalComponent.saveBtnPressed.next(this);
     ModalComponent.saveBtnPressed = new Subject<ModalComponent>();
   }

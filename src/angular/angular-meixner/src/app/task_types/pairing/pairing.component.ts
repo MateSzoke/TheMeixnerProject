@@ -1,5 +1,4 @@
 import {AfterViewChecked, AfterViewInit, Component, ElementRef, OnInit, ViewChildren} from '@angular/core';
-import {PairingServiceService} from '../../backend_temp/pairing-service.service';
 import {
   EasyTasksService,
   MediaItemRequest,
@@ -23,8 +22,7 @@ export class PairingComponent implements OnInit, AfterViewChecked {
   @ViewChildren('pairchild') pairs: ElementRef[];
   pairElements: any;
 
-  constructor(public pairingService: PairingServiceService,
-              public theEasyTasksService: EasyTasksService,
+  constructor(public theEasyTasksService: EasyTasksService,
               public taskAngularService: TaskAngularService,
               private route: ActivatedRoute) {
 
@@ -32,20 +30,17 @@ export class PairingComponent implements OnInit, AfterViewChecked {
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      console.log("id is " + JSON.stringify(params.id));
       this.pairingResponse = this.taskAngularService.tasks[params.id] as PairingResponse;
     });
   }
 
   ngAfterViewChecked(): void {
-    console.log("ngAfterViewChecked");
     this.pairElements = this.pairs.map(pair => {
       return pair.nativeElement;
     });
   }
 
   public updatePairElement(newValue, indexService, indexPair) {
-    console.log(newValue);
     this.pairingResponse.pairs[indexService].pair[indexPair].content = newValue;
     this.pairingResponse.pairs[indexService].pair[indexPair].type = MediaItemResponse.TypeEnum.TEXT;
     this.syncPairingResponse();
@@ -84,12 +79,9 @@ export class PairingComponent implements OnInit, AfterViewChecked {
 
   public selectPair(indexPair, mediaId) {
     this.pairElements[mediaId].focus();
-    console.log(this.selectedMediaItem);
-    console.log("Selecteditem changed");
   }
 
   public elementClicked(indexPair, mediaId) {
-    console.log(this.pairingResponse.pairs[indexPair].pair[mediaId]);
   }
 
   public deletePairElement(indexService, indexPair) {

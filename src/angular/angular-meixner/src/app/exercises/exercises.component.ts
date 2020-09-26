@@ -33,10 +33,7 @@ export class ExercisesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("Init called");
     this.route.params.subscribe((params: Params) => {
-      console.log("route params received");
-      console.log(JSON.stringify(params.viewtype));
       this.getAllTasks = true;
       this.getMyExercises();
       ModalComponent.closeBtnPressed.subscribe(
@@ -44,7 +41,7 @@ export class ExercisesComponent implements OnInit {
           this.getMyExercises();
         },
         error => {
-          console.log("subscribe error");
+
         },
         () => {
         });
@@ -81,10 +78,8 @@ export class ExercisesComponent implements OnInit {
 
   deleteExercise(exerciseId: number) {
     this.exercisesLoaded = true;
-    console.log(`delete exercise ${exerciseId}`)
     this.exerciseService.deleteExercisesUsingDELETE(exerciseId).subscribe(
       data => {
-        console.log(`delete exercise ${data}`)
         this.exercisesLoaded = false;
       },
       () => {
@@ -99,7 +94,6 @@ export class ExercisesComponent implements OnInit {
     this.exercisesLoaded = true;
     this.exerciseService.removeTaskFromExercisesUsingDELETE(exerciseId, taskId).subscribe(
       data => {
-        console.log(`delete task from exercise ${data}`)
         this.exercisesLoaded = false;
       },
       () => {
@@ -137,7 +131,7 @@ export class ExercisesComponent implements OnInit {
         this.exercisesLoaded = true;
       },
       error => {
-        console.log("subscribe error");
+
       },
       () => {
       });

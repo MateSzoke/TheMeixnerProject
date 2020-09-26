@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {
   BlindMapRequest,
   BlindMapTag,
@@ -48,18 +48,14 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 export class NewTaskComponent implements OnInit {
 
   submitted = false;
-  closeDialog = false;
 
   public types: Array<string>;
-  public difficulties: Array<string>;
   public subjects: Array<string>;
   public classes: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   public classesTo: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-  private type: number = -1;
   private difficulty: number = -1;
   private classFrom: number = -1;
   private classTo: number = -1;
-  private topic: number = -1;
   public name: string = null;
 
   newTaskForm: FormGroup = this.formBuilder.group({
@@ -81,8 +77,6 @@ export class NewTaskComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    console.log("NewTaskComponent called")
-    console.log(this.newTaskForm);
     this.types = new Array<string>();
     for (let i in GroupingResponse.TypeEnum) {
       this.types.push(ConvertEnum.convertType(i));
@@ -100,58 +94,14 @@ export class NewTaskComponent implements OnInit {
               private formBuilder: FormBuilder,
               public dialogRef: MatDialogRef<NewTaskComponent>) {
 
-    /*
-        ModalComponent.saveBtnPressed.subscribe(data => {
-          if (this.name == null || this.type == -1 || this.newTaskForm.value.difficulty == -1 || this.newTaskForm.value.classFrom == -1 || this.newTaskForm.value.classTo == -1 || this.topic == -1) {
-            console.log("szempontok: " + this.type + this.newTaskForm.value.difficulty +
-              this.newTaskForm.value.classFrom + this.newTaskForm.value.classTo + this.topic);
-
-            alert("Kérem adja meg az összes szempontot!");
-            return;
-          } else {
-            console.log("type is " + this.type);
-            const g1: GroupingRequest = {
-              title: this.name,
-              difficulty: this.newTaskForm.value.difficulty,
-              groups: new Array<GroupRequest>(),
-              recommendedMinClass: this.newTaskForm.value.classFrom,
-              recommendedMaxClass: this.newTaskForm.value.classTo,
-              subject: "None"
-            };
-            console.log(this.type + " type");
-            let j = 0;
-            for (let i in GroupingResponse.TypeEnum) {
-              if (j == this.type) {
-                console.log("j equals");
-                this.postTaskDataByType(i).subscribe(
-                  data => {
-                    console.log("data sent");
-                    //ModalComponent.saveBtnPressed.unsubscribe();
-                  },
-                  error => {
-                    console.log("subscribe error");
-                  },
-                  () => {
-
-                  }
-                );
-              }
-              j++;
-            }
-            ModalComponent.closeAfterSave();
-          }
-        });*/
   }
 
   private testInsideFunction(input: string): String {
-    console.log("testInsideFunction called" + input.toString());
     return "this is what was returned";
   }
 
 
   private postTaskDataByType(input: string): Observable<any> {
-    console.log("postTaskDataByType called");
-    console.log(input);
     switch (input) {
       case GroupingResponse.TypeEnum.Grouping.toString(): {
         console.log("csoportositas POST called");
@@ -358,22 +308,17 @@ export class NewTaskComponent implements OnInit {
   saveData() {
     this.submitted = true;
 
-    console.log("saveData called");
-    // stop here if form is invalid
     if (!this.newTaskForm.valid) {
-      console.log("Form is invalid");
       return;
     } else {
-      console.log("closing...")
       this.dialogRef.close();
     }
     this.postTaskDataByType(this.newTaskModel.type.toString()).subscribe(
       data => {
-        console.log("data sent");
         //ModalComponent.saveBtnPressed.unsubscribe();
       },
       error => {
-        console.log("subscribe error");
+
       },
       () => {
 
