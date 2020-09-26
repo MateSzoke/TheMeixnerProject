@@ -25,20 +25,20 @@ import {
   SentenceCreationList,
   SentenceCreationRequest,
   SortingAndGroupingRequest,
-  SortingRequest, TaskResponse,
+  SortingRequest,
+  TaskResponse,
   TimelineRequest,
   TimelineTag
 } from '../../swagger-api';
 import {GroupingResponse} from '../../swagger-api/model/groupingResponse';
-import {ConvertEnum} from '../model/ConvertEnum';
 import {ModalComponent} from '../modal/modal.component';
 import {Observable} from 'rxjs';
-import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
-import TypeEnum = TaskResponse.TypeEnum;
-import {TaskDTO} from "../model/taskDTO";
-import {MatDialog, MatDialogRef} from "@angular/material/dialog";
-import SubjectEnum = TaskResponse.SubjectEnum;
+import {MatDialogRef} from "@angular/material/dialog";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {SubjectEnumUtil} from "../util/subjectEnumUtil";
+import {TypeEnumUtil} from "../util/typeEnumUtil";
+import TypeEnum = TaskResponse.TypeEnum;
+import SubjectEnum = TaskResponse.SubjectEnum;
 
 @Component({
   selector: 'app-new-task',
@@ -78,12 +78,12 @@ export class NewTaskComponent implements OnInit {
 
   ngOnInit(): void {
     this.types = new Array<string>();
-    for (let i in GroupingResponse.TypeEnum) {
-      this.types.push(ConvertEnum.convertType(i));
+    for (let taskType in TypeEnum) {
+      this.types.push(TypeEnumUtil.taskTypeToString(taskType));
     }
     this.subjects = new Array<string>();
-    for (let j in GroupingResponse.SubjectEnum) {
-      this.subjects.push(j.toString());
+    for (let subject in SubjectEnum) {
+      this.subjects.push(SubjectEnumUtil.subjectToString(subject));
     }
   }
 
