@@ -9,4 +9,4 @@ Elkészült végpontok és teszt:
 ## Frontend
 
 Herokun lévő frontend app:
-- http://angular-meixner.herokuapp.com/
+- https://angular-meixner.herokuapp.com/
