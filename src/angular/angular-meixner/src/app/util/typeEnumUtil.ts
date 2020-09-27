@@ -1,8 +1,12 @@
 import {TaskResponse} from "../../swagger-api";
+import {Injectable} from "@angular/core";
 
+@Injectable({
+  providedIn: 'root'
+})
 export class TypeEnumUtil {
 
-  public static taskTypeToString(type: string): string {
+  public taskTypeToString(type: string): string {
     switch (type) {
       case "Pairing":
         return "Párosítás"

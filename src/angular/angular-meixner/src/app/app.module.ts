@@ -44,6 +44,7 @@ import {HttpInterceptorService} from "./service/http-interceptor.service";
 import {ExerciseTaskListComponent} from './exercise-task-list/exercise-task-list.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {TypeEnumUtil} from "./util/typeEnumUtil";
 
 @NgModule({
   declarations: [
@@ -92,7 +93,7 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
         NgbModule,
         MatDialogModule
     ],
-  providers: [DomService, ModalService, ModalComponent,
+  providers: [DomService, ModalService, ModalComponent, TypeEnumUtil,
     {provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true},
     LoginComponent, NewTaskComponent, NewExerciseComponent, ExerciseTaskListComponent],
   bootstrap: [AppComponent],

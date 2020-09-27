@@ -4,10 +4,9 @@ import {
   MediaItemRequest,
   MediaItemResponse, PairElementResponse,
   PairingRequest,
-  PairingResponse
+  PairingResponse, TaskService
 } from "../../../swagger-api";
 import {ActivatedRoute, Params} from "@angular/router";
-import {TaskAngularService} from "../../data/task-angular.service";
 import {take} from "rxjs/operators";
 
 @Component({
@@ -17,20 +16,36 @@ import {take} from "rxjs/operators";
 })
 export class PairingComponent implements OnInit, AfterViewChecked {
 
-  public pairingResponse: PairingResponse;
+  public pairingResponse: PairingResponse = new class implements PairingResponse {
+    difficulty: number;
+    id: number;
+    lastModified: Date;
+    owner: string;
+    pairs: Array<PairElementResponse>;
+    recommendedMaxClass: number;
+    recommendedMinClass: number;
+    subject: PairingResponse.SubjectEnum;
+    title: string;
+    type: PairingResponse.TypeEnum;
+  }
   public selectedMediaItem: MediaItemResponse;
   @ViewChildren('pairchild') pairs: ElementRef[];
   pairElements: any;
 
   constructor(public theEasyTasksService: EasyTasksService,
-              public taskAngularService: TaskAngularService,
+              public taskService: TaskService,
               private route: ActivatedRoute) {
 
   }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      this.pairingResponse = this.taskAngularService.tasks[params.id] as PairingResponse;
+      this.taskService.getTaskByIdUsingGET(params.id).subscribe(data => {
+        console.log("getTaskByIdUsingGET");
+        console.log(data);
+        this.pairingResponse = data as PairingResponse;
+        console.log(this.pairingResponse);
+      });
     });
   }
 
@@ -51,30 +66,13 @@ export class PairingComponent implements OnInit, AfterViewChecked {
   }
 
   public addPairElement(indexService) {
-    const newRow: MediaItemResponse = {id: 0, content: '', type: MediaItemResponse.TypeEnum.TEXT};
-    this.pairingResponse.pairs[indexService].pair.push(newRow);
-    this.theEasyTasksService.updatePairingByIdUsingPATCH(this.pairingResponse.id, {
-      title: this.pairingResponse.title,
-      difficulty: this.pairingResponse.difficulty,
-      subject: this.pairingResponse.subject,
-      recommendedMinClass: this.pairingResponse.recommendedMinClass,
-      recommendedMaxClass: this.pairingResponse.recommendedMaxClass,
-      pairs: this.pairingResponse.pairs
-    } as PairingRequest)
-      .subscribe(data => {
-        this.syncPairingResponse();
-        this.taskAngularService.finishedLoading.pipe(take(1)).subscribe(() => {
-          this.pairElements = this.pairs.map(pair => {
-            return pair.nativeElement;
-          });
-          this.selectPair(indexService, this.pairingResponse.pairs[indexService].pair.length);
-        }
-      );
-      });
+    console.log(indexService);
   }
 
   public newPair() {
-
+    this.theEasyTasksService
+      .addElementToPairingByIdUsingPATCH(this.pairingResponse.id).subscribe();
+    this.syncPairingResponse();
   }
 
   public selectPair(indexPair, mediaId) {
@@ -99,7 +97,9 @@ export class PairingComponent implements OnInit, AfterViewChecked {
       pairs: this.pairingResponse.pairs
     } as PairingRequest)
       .subscribe(data => {
-        this.taskAngularService.getAllTasksFunction();
+        this.taskService.getTaskByIdUsingGET(this.pairingResponse.id).subscribe(data => {
+          this.pairingResponse = data as PairingResponse;
+        });
       });
   }
 }

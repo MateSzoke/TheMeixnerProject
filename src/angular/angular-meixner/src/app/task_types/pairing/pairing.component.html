@@ -25,7 +25,7 @@
           <br>
         </form>
         <mat-form-field class="width-and-trash-inactive">
-          <input (click)="addPairElement(i)" matInput name="username">
+          <input (click)="addPairElement(this.pairingResponse.pairs[i].id)" matInput name="username">
         </mat-form-field>
       </mat-card-content>
     </mat-card>

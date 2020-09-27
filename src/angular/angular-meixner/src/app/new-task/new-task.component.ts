@@ -79,7 +79,7 @@ export class NewTaskComponent implements OnInit {
   ngOnInit(): void {
     this.types = new Array<string>();
     for (let taskType in TypeEnum) {
-      this.types.push(TypeEnumUtil.taskTypeToString(taskType));
+      this.types.push(taskType);
     }
     this.subjects = new Array<string>();
     for (let subject in SubjectEnum) {
@@ -88,6 +88,7 @@ export class NewTaskComponent implements OnInit {
   }
 
   constructor(private modalC: ModalComponent,
+              public typeEnumUtil: TypeEnumUtil,
               private theEasyTasksService: EasyTasksService,
               private complexTasksService: ComplexTasksService,
               private otherTasksService: OtherTasksService,
@@ -307,23 +308,12 @@ export class NewTaskComponent implements OnInit {
 
   saveData() {
     this.submitted = true;
-
     if (!this.newTaskForm.valid) {
       return;
     } else {
       this.dialogRef.close();
     }
-    this.postTaskDataByType(this.newTaskModel.type.toString()).subscribe(
-      data => {
-        //ModalComponent.saveBtnPressed.unsubscribe();
-      },
-      error => {
-
-      },
-      () => {
-
-      }
-    );
+    this.postTaskDataByType(this.newTaskForm.controls.type.value.toString()).subscribe();
   }
 }
 

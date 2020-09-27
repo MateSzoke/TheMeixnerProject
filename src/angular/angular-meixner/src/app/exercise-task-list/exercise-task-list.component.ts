@@ -59,7 +59,7 @@ class TaskUI {
   constructor(id: number, name: string, type: TypeEnum, lastModified: Date) {
     this.id = id;
     this.name = name;
-    this.type = TypeEnumUtil.taskTypeToString(type);
+    this.type = new TypeEnumUtil().taskTypeToString(type);
     this.lastModified = DateUtils.getFormattedDate(lastModified);
   }
 }

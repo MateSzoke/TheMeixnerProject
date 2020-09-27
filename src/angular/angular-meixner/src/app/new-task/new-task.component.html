@@ -18,8 +18,8 @@
         <mat-form-field>
           <mat-label>Típus</mat-label>
           <mat-select formControlName="type">
-            <mat-option *ngFor="let type of types; let typeIndex=index" [value]="typeIndex">
-              {{type}}
+            <mat-option *ngFor="let type of types; let typeIndex=index" [value]="type">
+              {{typeEnumUtil.taskTypeToString(type)}}
             </mat-option>
           </mat-select>
         </mat-form-field>
