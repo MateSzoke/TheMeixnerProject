@@ -3,6 +3,8 @@ import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 import {AccountService, UserRequest, UserResponse} from "../../swagger-api";
 import {ConvertEnum} from "../model/ConvertEnum";
+import {MatDialog} from "@angular/material/dialog";
+import {ExerciseListComponent} from "./excercise-list/exercise-list.component";
 import RoleEnum = UserRequest.RoleEnum;
 
 @Component({
@@ -17,8 +19,13 @@ export class UsersComponent implements OnInit {
   public wrongUser = false;
   username: string = null;
   password: string = null;
-  errorMessage = 'Invalid Credentials';
   private role: number = -1;
+
+  constructor(private router: Router,
+              public accountService: AccountService,
+              private dialog: MatDialog,
+              private http: HttpClient) {
+  }
 
   ngOnInit() {
     this.roles = new Array<string>();
@@ -30,12 +37,8 @@ export class UsersComponent implements OnInit {
       {"id": 1, "role": RoleEnum.STUDENT, "username": "test student"},
       {"id": 2, "role": RoleEnum.STUDENT, "username": "Kiss Béla"},
       {"id": 3, "role": RoleEnum.STUDENT, "username": "Kovács Ilona"},
+      {"id": 123, "role": RoleEnum.ADMIN, "username": "Dr. Kiss Gábor József"},
       {"id": 4, "role": RoleEnum.STUDENT, "username": "Árpád Gizella"}]
-  }
-
-  constructor(private router: Router,
-              public accountService: AccountService,
-              private http: HttpClient) {
   }
 
   register() {
@@ -73,15 +76,24 @@ export class UsersComponent implements OnInit {
     this.role = input.value;
   }
 
-  openMyExercises(userId: number) {
-    // TODO open exercises dialog and bind for the given user
+  openMyExercises(user: UserResponse) {
+    this.dialog.open(ExerciseListComponent, {
+      data: {user: user}
+    })
+    this.dialog.afterAllClosed.subscribe(() => {
+      window.location.reload()
+    })
   }
 
   openUserResults(userId: number) {
-    // TODO open results of the given user
+    this.router.navigate([`felhasznalok/${userId}`])
   }
 
   deleteUser(userId: number) {
     // TODO delete user
+  }
+
+  isStudent(user: UserResponse): boolean {
+    return user.role == RoleEnum.STUDENT
   }
 }
