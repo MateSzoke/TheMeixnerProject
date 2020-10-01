@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {
   HttpErrorResponse,
   HttpEvent,
@@ -10,6 +10,7 @@ import {
 import {AuthenticationService} from "./authentication.service";
 import {Router} from "@angular/router";
 import {tap} from "rxjs/operators";
+import {Path} from "../path";
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +40,7 @@ export class HttpInterceptorService implements HttpInterceptor{
       if (err instanceof HttpErrorResponse) {
         if (err.status === 401) {
           sessionStorage.clear();
-          this.router.navigate(['login']);
+          this.router.navigate([Path.LOGIN]);
         }
       }
     }));

@@ -2,23 +2,20 @@
   <h2 class="mat-dialog-title" mat-dialog-title>Feladat hozzáadása</h2>
   <div class="mat-dialog-content" mat-dialog-content>
 
-    <form class="exercise-form" [formGroup]="newTaskForm"
-          (ngSubmit)="saveData()"
-    >
       <mat-form-field class="example-full-width">
         <mat-label>Feladat neve</mat-label>
-        <input matInput formControlName="title" type="text"
+        <input matInput type="text"
                [(ngModel)]="this.newTaskModel.title" name="title">
       </mat-form-field>
-      <div *ngIf="submitted && newTaskForm.controls.title.errors" class="invalid-feedback">
-        <div>Töltse ki a feladat nevét!</div>
-      </div>
+    <div *ngIf="!taskIsValid()" class="invalid-feedback">
+      <div>Töltse ki a feladat nevét!</div>
+    </div>
 
       <mat-card>
         <mat-form-field>
           <mat-label>Típus</mat-label>
-          <mat-select formControlName="type">
-            <mat-option *ngFor="let type of types; let typeIndex=index" [value]="typeIndex">
+          <mat-select [(ngModel)]="this.newTaskModel.type">
+            <mat-option *ngFor="let type of types" [value]="type">
               {{type}}
             </mat-option>
           </mat-select>
@@ -26,8 +23,8 @@
 
 
         <mat-label>Nehézség</mat-label>
-        <mat-slider formControlName="difficulty" [(ngModel)]="this.newTaskModel.difficulty" class="mat-slide-1"
-                    thumbLabel name="difficulty"
+        <mat-slider [(ngModel)]="this.newTaskModel.difficulty" class="mat-slide-1"
+                    thumbLabel
                     tickInterval="1"
                     min="1"
                     max="100"></mat-slider>
@@ -36,7 +33,7 @@
       <mat-card>
         <mat-form-field>
           <mat-label>-tól</mat-label>
-          <mat-select formControlName="classFrom" name="classFrom">
+          <mat-select [(ngModel)]="this.newTaskModel.classFrom">
             <mat-option *ngFor="let classFrom of classes" [value]="classFrom">
               {{classFrom}}
             </mat-option>
@@ -45,7 +42,7 @@
 
         <mat-form-field>
           <mat-label>-ig</mat-label>
-          <mat-select formControlName="classTo" name="classTo">
+          <mat-select [(ngModel)]="this.newTaskModel.classTo">
             <mat-option *ngFor="let classTo of classesTo" [value]="classTo">
               {{classTo}}
             </mat-option>
@@ -56,7 +53,7 @@
       <mat-card>
         <mat-form-field>
           <mat-label>Témakör</mat-label>
-          <mat-select formControlName="topic">
+          <mat-select [(ngModel)]="this.newTaskModel.subject">
             <mat-option *ngFor="let subject of subjects" [value]="subject">
               {{subject}}
             </mat-option>
@@ -74,12 +71,12 @@
           </button>
           <button
             type="submit"
+            (click)="saveData()"
             mat-stroked-button
             class="color-mat">
             Létrehozás
           </button>
         </span>
       </div>
-    </form>
   </div>
 </div>

@@ -14,7 +14,7 @@
 </div>
 <div class="mat-card-base">
   <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-around center" fxLayoutGap="25px">
-    <mat-card class="mat-width" *ngFor="let member of this.pairingResponse.pairs; let i = index">
+    <mat-card *ngFor="let member of this.pairingRequest.pairs; let i = index" class="mat-width">
       <mat-card-content>
         <form *ngFor="let pair of member.pair; let j = index" class="my-form">
           <mat-form-field class="width-and-trash">
