@@ -163,7 +163,7 @@
                                     <goal>generate</goal>
                                 </goals>
                                 <configuration>
-                                    <inputSpec>http://meixner.herokuapp.com/v2/api-docs</inputSpec>
+                                    <inputSpec>https://meixner.herokuapp.com/v2/api-docs</inputSpec>
 
                                     <language>typescript-angular</language>
                                     <output>${project.basedir}/src/angular/angular-meixner/src/swagger-api</output>

@@ -15,6 +15,7 @@ import {SentencecreationSortingComponent} from "./task_types/sentencecreation-so
 import {SortingGroupingComponent} from "./task_types/sorting-grouping/sorting-grouping.component";
 import {PairingComponent} from './task_types/pairing/pairing.component';
 import {GroupingComponent} from './task_types/grouping/grouping.component';
+import {UserResultsComponent} from "./users/user-results/user-results.component";
 
 
 const routes: Routes = [
@@ -91,6 +92,11 @@ const routes: Routes = [
   {
     path: 'felhasznalok',
     component: UsersComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: 'felhasznalok/:id',
+    component: UserResultsComponent,
     canActivate: [RouteGuardService]
   },
   {
