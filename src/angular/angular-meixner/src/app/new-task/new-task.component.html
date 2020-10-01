@@ -2,23 +2,23 @@
   <h2 class="mat-dialog-title" mat-dialog-title>Feladat hozzáadása</h2>
   <div class="mat-dialog-content" mat-dialog-content>
 
-      <mat-form-field class="example-full-width">
-        <mat-label>Feladat neve</mat-label>
-        <input matInput type="text"
-               [(ngModel)]="this.newTaskModel.title" name="title">
-      </mat-form-field>
-    <div *ngIf="!taskIsValid()" class="invalid-feedback">
-      <div>Töltse ki a feladat nevét!</div>
+    <mat-form-field class="example-full-width">
+      <mat-label>Feladat neve</mat-label>
+      <input matInput type="text"
+             [(ngModel)]="this.newTaskModel.title" name="title">
+    </mat-form-field>
+    <div *ngIf="!taskIsValid() && submitted" class="invalid-feedback">
+      <div style="color: darkred">Töltse ki a feladat nevét!</div>
     </div>
 
-      <mat-card>
-        <mat-form-field>
-          <mat-label>Típus</mat-label>
-          <mat-select [(ngModel)]="this.newTaskModel.type">
-            <mat-option *ngFor="let type of types" [value]="type">
-              {{type}}
-            </mat-option>
-          </mat-select>
+    <mat-card>
+      <mat-form-field>
+        <mat-label>Típus</mat-label>
+        <mat-select [(ngModel)]="this.newTaskModel.type">
+          <mat-option *ngFor="let type of types" [value]="type">
+            {{type}}
+          </mat-option>
+        </mat-select>
         </mat-form-field>
 
 

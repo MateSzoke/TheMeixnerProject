@@ -65,7 +65,7 @@ export class AuthenticationService {
                 if (this.routeSelectorService.getLastRequestedRouteUrl()) {
                   this.router.navigate([this.routeSelectorService.getLastRequestedRouteUrl()]);
                 } else {
-                  this.router.navigate(['']);
+                  this.router.navigate([`${Path.TASKS}/my`]);
                 }
               this.loginError = false;
             },

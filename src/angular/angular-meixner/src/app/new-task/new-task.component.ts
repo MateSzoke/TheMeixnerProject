@@ -64,12 +64,16 @@ export class NewTaskComponent implements OnInit {
 
   saveData() {
     this.submitted = true;
+    if (!this.taskIsValid()) {
+      return
+    }
     this.navigateToTaskTypeComponent(TypeEnumUtil.stringToTaskType(this.newTaskModel.type))
     this.dialogRef.close()
   }
 
   taskIsValid(): boolean {
-    return true;
+    // TODO add validation logic
+    return this.newTaskModel.title.length != 0;
   }
 
   private navigateToTaskTypeComponent(taskType: TypeEnum) {
