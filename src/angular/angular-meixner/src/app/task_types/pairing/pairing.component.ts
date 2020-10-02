@@ -4,6 +4,7 @@ import {
   MediaItemRequest,
   MediaItemResponse,
   PairElementRequest,
+  PairElementResponse,
   PairingRequest,
   PairingResponse,
   TaskService
@@ -25,6 +26,7 @@ export class PairingComponent implements OnInit, AfterViewChecked {
   public selectedMediaItem: MediaItemResponse;
   @ViewChildren('pairchild') pairs: ElementRef[];
   pairElements: any;
+  loaded: boolean = false
 
   constructor(public easyTasksService: EasyTasksService,
               public tasksService: TaskService,
@@ -40,7 +42,6 @@ export class PairingComponent implements OnInit, AfterViewChecked {
       this.initPairingRequestById()
     }
     console.log(`TaskId: ${this.taskId}`)
-    console.log(this.pairingRequest)
   }
 
   initNewPairingRequest() {
@@ -53,20 +54,23 @@ export class PairingComponent implements OnInit, AfterViewChecked {
       pairs = new Array<PairElementRequest>()
       subject = SubjectEnumUtil.stringToSubject(params.get("subject"))
     };
+    this.loaded = true
   }
 
   initPairingRequestById() {
     this.tasksService.getTaskByIdUsingGET(this.taskId).subscribe(
       (taskResponse) => {
         let pairingResponse = taskResponse as PairingResponse
-        this.pairingRequest = new class implements PairingRequest {
-          title = pairingResponse.title
-          difficulty = pairingResponse.difficulty
-          recommendedMinClass = pairingResponse.recommendedMinClass
-          recommendedMaxClass = pairingResponse.recommendedMaxClass
-          pairs = pairingResponse.pairs
-          subject = pairingResponse.subject
+        this.pairingRequest = {
+          title: pairingResponse.title,
+          difficulty: pairingResponse.difficulty,
+          recommendedMinClass: pairingResponse.recommendedMinClass,
+          recommendedMaxClass: pairingResponse.recommendedMaxClass,
+          pairs: pairingResponse.pairs.map(pair => this.pairingElementResponseToRequest(pair)),
+          subject: pairingResponse.subject
         }
+        this.loaded = true
+        console.log(this.pairingRequest)
       },
       (error) => {
         console.log(error)
@@ -116,5 +120,18 @@ export class PairingComponent implements OnInit, AfterViewChecked {
 
   public deletePairElement(indexService, indexPair) {
     this.pairingRequest.pairs[indexService].pair.splice(indexPair, 1);
+  }
+
+  pairingElementResponseToRequest(response: PairElementResponse): PairElementRequest {
+    return {
+      pair: response.pair.map(mediaItem => this.mediaItemResponseToRequest(mediaItem))
+    }
+  }
+
+  mediaItemResponseToRequest(response: MediaItemResponse): MediaItemRequest {
+    return {
+      mediaItemId: response.id,
+      content: response.content
+    }
   }
 }
