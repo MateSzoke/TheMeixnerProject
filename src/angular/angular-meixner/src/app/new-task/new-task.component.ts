@@ -6,6 +6,7 @@ import {SubjectEnumUtil} from "../util/subjectEnumUtil";
 import {TypeEnumUtil} from "../util/typeEnumUtil";
 import {Router} from "@angular/router";
 import {ConvertEnum} from "../model/ConvertEnum";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import TypeEnum = TaskResponse.TypeEnum;
 import SubjectEnum = TaskResponse.SubjectEnum;
 
@@ -24,14 +25,14 @@ export class NewTaskComponent implements OnInit {
   public classesTo: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   public name: string = null;
 
-  public newTaskModel: NewTask = {
-    title: "",
-    type: TypeEnum.Grouping,
-    difficulty: 50,
-    classFrom: 4,
-    classTo: 6,
-    subject: SubjectEnum.None
-  };
+  newTaskForm: FormGroup = this.formBuilder.group({
+    title: [null, [Validators.required, Validators.minLength(3)]],
+    type: [null, Validators.required],
+    difficulty: [50, Validators.required],
+    classFrom: [null, Validators.required],
+    classTo: [null, [Validators.required]],
+    subject: [null, [Validators.required]]
+  });
 
   ngOnInit(): void {
     this.types = new Array<string>();
@@ -48,6 +49,7 @@ export class NewTaskComponent implements OnInit {
               private theEasyTasksService: EasyTasksService,
               private complexTasksService: ComplexTasksService,
               private otherTasksService: OtherTasksService,
+              private formBuilder: FormBuilder,
               private router: Router,
               public dialogRef: MatDialogRef<NewTaskComponent>) {
 
@@ -55,37 +57,23 @@ export class NewTaskComponent implements OnInit {
 
   getTaskParams() {
     return {
-      title: this.newTaskModel.title,
-      difficulty: this.newTaskModel.difficulty,
-      recommendedMinClass: this.newTaskModel.classFrom,
-      recommendedMaxClass: this.newTaskModel.classTo
+      title: this.newTaskForm.value.title,
+      difficulty: this.newTaskForm.value.difficulty,
+      recommendedMinClass: this.newTaskForm.value.classFrom,
+      recommendedMaxClass: this.newTaskForm.value.classTo
     }
   }
 
   saveData() {
     this.submitted = true;
-    if (!this.taskIsValid()) {
+    if (!this.newTaskForm.valid) {
       return
     }
-    this.navigateToTaskTypeComponent(TypeEnumUtil.stringToTaskType(this.newTaskModel.type))
+    this.navigateToTaskTypeComponent(TypeEnumUtil.stringToTaskType(this.newTaskForm.value.type))
     this.dialogRef.close()
-  }
-
-  taskIsValid(): boolean {
-    // TODO add validation logic
-    return this.newTaskModel.title.length != 0;
   }
 
   private navigateToTaskTypeComponent(taskType: TypeEnum) {
     this.router.navigate([ConvertEnum.convertTypeToRouterLink(taskType), this.getTaskParams()])
   }
-}
-
-export interface NewTask {
-  title: string;
-  type: TypeEnum;
-  difficulty: number;
-  classFrom: number;
-  classTo: number;
-  subject: SubjectEnum;
 }

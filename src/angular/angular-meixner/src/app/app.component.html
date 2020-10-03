@@ -28,11 +28,11 @@
 
   <mat-sidenav-container fxFlexFill>
     <mat-sidenav #sidenav>
-      <mat-nav-list>
-        <a href="#" mat-button routerLink="feladatok/sajat">Feladataim</a>
-        <a href="#" mat-button routerLink="feladatsorok">Feladatsorok</a>
-        <a href="#" mat-button routerLink="felhasznalok">Felhasználók</a>
-        <a href="#" mat-button routerLink="feladatok/osszes">Minden feladat</a>
+      <mat-nav-list (click)="sidenav.toggle()">
+        <a href="#" mat-list-item routerLink="feladatok/sajat">Feladataim</a>
+        <a href="#" mat-list-item routerLink="feladatsorok">Feladatsorok</a>
+        <a href="#" mat-list-item routerLink="felhasznalok">Felhasználók</a>
+        <a href="#" mat-list-item routerLink="feladatok/osszes">Minden feladat</a>
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content align="center" fxFlexFill>

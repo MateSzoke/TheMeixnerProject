@@ -2,28 +2,28 @@
   <h2 class="mat-dialog-title" mat-dialog-title>Feladat hozzáadása</h2>
   <div class="mat-dialog-content" mat-dialog-content>
 
-    <mat-form-field class="example-full-width">
-      <mat-label>Feladat neve</mat-label>
-      <input matInput type="text"
-             [(ngModel)]="this.newTaskModel.title" name="title">
-    </mat-form-field>
-    <div *ngIf="!taskIsValid() && submitted" class="invalid-feedback">
-      <div style="color: darkred">Töltse ki a feladat nevét!</div>
-    </div>
+    <form #formGroup (ngSubmit)="saveData()" [formGroup]="newTaskForm">
+      <mat-form-field class="example-full-width">
+        <mat-label>Feladat neve</mat-label>
+        <input formControlName="title" matInput
+               type="text">
+        <mat-error>A feladat neve nem lehet üres</mat-error>
+      </mat-form-field>
 
-    <mat-card>
-      <mat-form-field>
-        <mat-label>Típus</mat-label>
-        <mat-select [(ngModel)]="this.newTaskModel.type">
-          <mat-option *ngFor="let type of types" [value]="type">
-            {{type}}
-          </mat-option>
-        </mat-select>
+      <mat-card>
+        <mat-form-field>
+          <mat-label>Típus</mat-label>
+          <mat-select formControlName="type">
+            <mat-option *ngFor="let type of types" [value]="type">
+              {{type}}
+            </mat-option>
+          </mat-select>
+          <mat-error>A feladat típusa nem lehet üres</mat-error>
         </mat-form-field>
 
 
         <mat-label>Nehézség</mat-label>
-        <mat-slider [(ngModel)]="this.newTaskModel.difficulty" class="mat-slide-1"
+        <mat-slider class="mat-slide-1" formControlName="difficulty"
                     thumbLabel
                     tickInterval="1"
                     min="1"
@@ -33,32 +33,36 @@
       <mat-card>
         <mat-form-field>
           <mat-label>-tól</mat-label>
-          <mat-select [(ngModel)]="this.newTaskModel.classFrom">
+          <mat-select formControlName="classFrom">
             <mat-option *ngFor="let classFrom of classes" [value]="classFrom">
               {{classFrom}}
             </mat-option>
           </mat-select>
+          <mat-error>üres</mat-error>
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>-ig</mat-label>
-          <mat-select [(ngModel)]="this.newTaskModel.classTo">
+          <mat-select formControlName="classTo">
             <mat-option *ngFor="let classTo of classesTo" [value]="classTo">
               {{classTo}}
             </mat-option>
           </mat-select>
+          <mat-error>üres</mat-error>
         </mat-form-field>
       </mat-card>
 
       <mat-card>
         <mat-form-field>
           <mat-label>Témakör</mat-label>
-          <mat-select [(ngModel)]="this.newTaskModel.subject">
+          <mat-select formControlName="subject">
             <mat-option *ngFor="let subject of subjects" [value]="subject">
               {{subject}}
             </mat-option>
           </mat-select>
+          <mat-error>üres</mat-error>
         </mat-form-field>
+
       </mat-card>
       <div mat-dialog-actions align="end">
         <span>
@@ -71,12 +75,12 @@
           </button>
           <button
             type="submit"
-            (click)="saveData()"
             mat-stroked-button
             class="color-mat">
             Létrehozás
           </button>
         </span>
       </div>
+    </form>
   </div>
 </div>
