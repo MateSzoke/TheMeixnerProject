@@ -1,22 +1,22 @@
 export class Path {
-  static GROUPING = 'grouping'
-  static PAIRING = 'pairing'
-  static SENTENCE_COMPLETION = 'sentence_completion'
-  static SORTING = 'sorting'
-  static SENTENCE_CREATION = 'sentence_creation'
-  static GROUPING_SORTING = 'grouping_sorting'
-  static SORTING_GROUPING = 'sorting_grouping'
-  static SENTENCE_COMPLETION_GROUPING = 'sentence_completion_grouping'
-  static SENTENCE_COMPLETION_SORTING = 'sentence_completion_sorting'
-  static SENTENCE_CREATION_GROUPING = 'sentence_creation_grouping'
-  static SENTENCE_CREATION_SORTING = 'sentence_creation_sorting'
-  static TASKS = 'tasks'
-  static EXERCISES = 'exercises'
-  static USERS = 'users'
+  static GROUPING = 'csoportositas'
+  static PAIRING = 'parositas'
+  static SENTENCE_COMPLETION = 'mondatkiegeszites'
+  static SORTING = 'sorrendezes'
+  static SENTENCE_CREATION = 'mondatkeszites'
+  static GROUPING_SORTING = 'csoportositas_sorrendezes'
+  static SORTING_GROUPING = 'sorrendezes_csoportositas'
+  static SENTENCE_COMPLETION_GROUPING = 'mondatkiegesztites_csoportositas'
+  static SENTENCE_COMPLETION_SORTING = 'mondatkiegesztites_sorrendezes'
+  static SENTENCE_CREATION_GROUPING = 'mondatkeszites_csoportositas'
+  static SENTENCE_CREATION_SORTING = 'mondatkeszites_sorrendezes'
+  static TASKS = 'feladatok'
+  static EXERCISES = 'feladatsorok'
+  static USERS = 'felhasznalok'
   static LOGIN = 'login'
-  static BLINDMAP: 'blindmap';
-  static FREE_TEXT: 'freetext';
-  static ODD_ONE_OUT: 'odd_one_out';
-  static TIMELINE: 'timeline';
-  static MEMORY_GAME: 'memory';
+  static BLINDMAP: 'vakterkep';
+  static FREE_TEXT: 'szabadszoveges';
+  static ODD_ONE_OUT: 'kakukktojas';
+  static TIMELINE: 'idovonal';
+  static MEMORY_GAME: 'memoria';
 }
