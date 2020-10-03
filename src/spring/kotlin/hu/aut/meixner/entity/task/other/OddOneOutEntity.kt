@@ -11,10 +11,10 @@ import javax.persistence.OneToMany
 
 @Entity
 data class OddOneOutEntity(
-        val correctAnswerIndex: Int,
+        val correctAnswerIndex: Int = 0,
         @OneToMany
         @Cascade(CascadeType.ALL)
-        val options: List<MediaItemEntity>,
+        val options: List<MediaItemEntity> = listOf(),
         override val title: String = "",
         override val owner: String = "",
         override val difficulty: Int = 0,
