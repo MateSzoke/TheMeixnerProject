@@ -5,6 +5,7 @@ import {AccountService, UserRequest, UserResponse} from "../../swagger-api";
 import {ConvertEnum} from "../model/ConvertEnum";
 import {MatDialog} from "@angular/material/dialog";
 import {ExerciseListComponent} from "./excercise-list/exercise-list.component";
+import {Path} from "../path";
 import RoleEnum = UserRequest.RoleEnum;
 
 @Component({
@@ -86,7 +87,7 @@ export class UsersComponent implements OnInit {
   }
 
   openUserResults(userId: number) {
-    this.router.navigate([`felhasznalok/${userId}`])
+    this.router.navigate([`${Path.USERS}/${userId}`])
   }
 
   deleteUser(userId: number) {

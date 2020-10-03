@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ModalService} from '../service/modal.service';
 import {DomService} from '../service/dom.service';
 import {ModalComponent} from '../modal/modal.component';
@@ -108,13 +108,13 @@ export class TasksComponent implements OnInit {
     return router;
   }
 
-  public openTask(input: string, id: number) {
-    this.router.navigate([ConvertEnum.convertTypeToRouterLink(input) + '/' + id]);
+  public openTask(taskType: string, id: number) {
+    this.router.navigate([ConvertEnum.convertTypeToRouterLink(taskType), {taskId: id}]);
   }
 
   public async newTask() {
     this.matDialogRef = this.matDialog.open(NewTaskComponent, {
-      data: { name: "Uj feladat" },
+      data: {name: "Uj feladat"},
       disableClose: true
     });
 

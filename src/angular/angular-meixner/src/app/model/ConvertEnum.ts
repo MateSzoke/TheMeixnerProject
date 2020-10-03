@@ -1,5 +1,6 @@
-import {GroupingResponse, UserRequest} from '../../swagger-api';
-import {Observable} from 'rxjs';
+import {GroupingResponse, TaskResponse, UserRequest} from '../../swagger-api';
+import {Path} from "../path";
+import TypeEnum = TaskResponse.TypeEnum;
 
 export class ConvertEnum {
 
@@ -7,136 +8,104 @@ export class ConvertEnum {
     switch (input) {
       case GroupingResponse.TypeEnum.Grouping.toString(): {
         return 'csoportosítás';
-        break;
       }
       case GroupingResponse.TypeEnum.Pairing.toString(): {
         return 'párosítás';
-        break;
       }
       case GroupingResponse.TypeEnum.SentenceCompletion.toString(): {
         return 'mondatkiegészítés';
-        break;
       }
       case GroupingResponse.TypeEnum.SentenceCreation.toString(): {
         return 'mondatkészítés';
-        break;
       }
       case GroupingResponse.TypeEnum.Sorting.toString(): {
         return 'sorrendezés';
-        break;
       }
       case GroupingResponse.TypeEnum.TrueFalse.toString(): {
         return 'igaz-hamis';
-        break;
       }
       case GroupingResponse.TypeEnum.MemoryGame.toString(): {
         return 'memóriajáték';
-        break;
       }
       case GroupingResponse.TypeEnum.GroupingAndSorting.toString(): {
         return 'csoportosítás és sorrendezés';
-        break;
       }
       case GroupingResponse.TypeEnum.SentenceCompletionAndGrouping.toString(): {
         return 'mondatkiegészítés és csoportosítás';
-        break;
       }
       case GroupingResponse.TypeEnum.SentenceCompletionAndSorting.toString(): {
         return 'mondatkiegészítés és sorrendezés';
-        break;
       }
       case GroupingResponse.TypeEnum.SentenceCreationAndGrouping.toString(): {
         return 'mondatkészítés és csoportosítás';
-        break;
       }
       case GroupingResponse.TypeEnum.SentenceCreationAndSorting.toString(): {
         return 'mondatkészítés és sorrendezés';
-        break;
       }
       case GroupingResponse.TypeEnum.SortingAndGrouping.toString(): {
         return 'sorrendezés és csoportosítás';
-        break;
       }
       case GroupingResponse.TypeEnum.BlindMap.toString(): {
         return 'memóriajáték';
-        break;
       }
       case GroupingResponse.TypeEnum.FreeText.toString(): {
         return 'szabadszöveges feladatok';
-        break;
       }
       case GroupingResponse.TypeEnum.OddOneOut.toString(): {
         return 'kakukktojás';
-        break;
       }
       case GroupingResponse.TypeEnum.TimeLine.toString(): {
         return 'időszalag';
-        break;
       }
     }
   }
 
   public static convertTypeToRouterLink(input: string): string {
     switch (input) {
-      case GroupingResponse.TypeEnum.Grouping.toString(): {
-        return '/csoportositas';
-        break;
+      case TypeEnum.Grouping.toString(): {
+        return Path.GROUPING;
       }
-      case GroupingResponse.TypeEnum.Pairing.toString(): {
-        return '/parositas';
-        break;
+      case TypeEnum.Pairing.toString(): {
+        return Path.PAIRING;
       }
-      case GroupingResponse.TypeEnum.SentenceCompletion.toString(): {
-        return '/mondatkiegeszites';
-        break;
+      case TypeEnum.SentenceCompletion.toString(): {
+        return Path.SENTENCE_COMPLETION;
       }
-      case GroupingResponse.TypeEnum.SentenceCreation.toString(): {
-        return '/mondatkeszites';
-        break;
+      case TypeEnum.SentenceCreation.toString(): {
+        return Path.SENTENCE_CREATION;
       }
-      case GroupingResponse.TypeEnum.Sorting.toString(): {
-        return '/sorrendezes';
-        break;
+      case TypeEnum.Sorting.toString(): {
+        return Path.SORTING;
       }
-      case GroupingResponse.TypeEnum.GroupingAndSorting.toString(): {
-        return '/csoportositas_es_sorrendezes';
-        break;
+      case TypeEnum.GroupingAndSorting.toString(): {
+        return Path.GROUPING_SORTING;
       }
-      case GroupingResponse.TypeEnum.SentenceCompletionAndGrouping.toString(): {
-        return '/mondatkiegeszites_es_csoportositas';
-        break;
+      case TypeEnum.SentenceCompletionAndGrouping.toString(): {
+        return Path.SENTENCE_COMPLETION_GROUPING;
       }
-      case GroupingResponse.TypeEnum.SentenceCompletionAndSorting.toString(): {
-        return '/mondatkiegeszites_es_sorrendezes';
-        break;
+      case TypeEnum.SentenceCompletionAndSorting.toString(): {
+        return Path.SENTENCE_COMPLETION_SORTING;
       }
-      case GroupingResponse.TypeEnum.SentenceCreationAndGrouping.toString(): {
-        return '/mondatkeszites_es_csoportositas';
-        break;
+      case TypeEnum.SentenceCreationAndGrouping.toString(): {
+        return Path.SENTENCE_CREATION_GROUPING;
       }
-      case GroupingResponse.TypeEnum.SentenceCreationAndSorting.toString(): {
-        return '/mondatkeszites_es_sorrendezes';
-        break;
+      case TypeEnum.SentenceCreationAndSorting.toString(): {
+        return Path.SENTENCE_CREATION_SORTING;
       }
-      case GroupingResponse.TypeEnum.SortingAndGrouping.toString(): {
-        return '/sorrendezes_es_csoportositas';
-        break;
+      case TypeEnum.SortingAndGrouping.toString(): {
+        return Path.SORTING_GROUPING;
       }
-      case GroupingResponse.TypeEnum.BlindMap.toString(): {
-        return '/memoriajatek';
-        break;
+      case TypeEnum.BlindMap.toString(): {
+        return Path.MEMORY_GAME;
       }
-      case GroupingResponse.TypeEnum.FreeText.toString(): {
-        return '/szabadszoveges_feladatok';
-        break;
+      case TypeEnum.FreeText.toString(): {
+        return Path.FREE_TEXT;
       }
-      case GroupingResponse.TypeEnum.OddOneOut.toString(): {
-        return '/kakukktojas';
-        break;
+      case TypeEnum.OddOneOut.toString(): {
+        return Path.ODD_ONE_OUT;
       }
-      case GroupingResponse.TypeEnum.TimeLine.toString(): {
-        return '/idoszalag';
-        break;
+      case TypeEnum.TimeLine.toString(): {
+        return Path.TIMELINE;
       }
     }
   }
@@ -145,11 +114,9 @@ export class ConvertEnum {
     switch (input) {
       case UserRequest.RoleEnum.ADMIN.toString(): {
         return 'Admin';
-        break;
       }
       case UserRequest.RoleEnum.STUDENT.toString(): {
         return 'Diák';
-        break;
       }
     }
   }

@@ -11,97 +11,98 @@ import {SentenceCreationComponent} from "./task_types/sentence-creation/sentence
 import {GroupingSortingComponent} from "./task_types/grouping-sorting/grouping-sorting.component";
 import {SentencecompletionGroupingComponent} from "./task_types/sentencecompletion-grouping/sentencecompletion-grouping.component";
 import {SentencecompletionSortingComponent} from "./task_types/sentencecompletion-sorting/sentencecompletion-sorting.component";
-import {SentencecreationSortingComponent} from "./task_types/sentencecreation-sorting/sentencecreation-sorting.component";
+import {SentenceCreationSortingComponent} from "./task_types/sentencecreation-sorting/sentence-creation-sorting.component";
 import {SortingGroupingComponent} from "./task_types/sorting-grouping/sorting-grouping.component";
 import {PairingComponent} from './task_types/pairing/pairing.component';
 import {GroupingComponent} from './task_types/grouping/grouping.component';
 import {UserResultsComponent} from "./users/user-results/user-results.component";
+import {Path} from "./path";
 
 
 const routes: Routes = [
   {
-    path: '',
-    component: LoginComponent,
-    canActivate: [RouteGuardService]
-  },
-  {
-    path: 'csoportositas',
+    path: Path.GROUPING,
     component: GroupingComponent,
     canActivate: [RouteGuardService]
   },
   {
-    path: 'parositas',
+    path: Path.PAIRING,
     component: PairingComponent,
     canActivate: [RouteGuardService]
   },
   {
-    path: 'parositas/:id',
+    path: `${Path.PAIRING}/:id`,
     component: PairingComponent,
     canActivate: [RouteGuardService]
   },
   {
-    path: 'mondatkiegeszites',
+    path: Path.SENTENCE_COMPLETION,
     component: SentenceCompletionComponent,
     canActivate: [RouteGuardService]
   },
   {
-    path: 'mondatkeszites',
+    path: Path.SENTENCE_CREATION,
     component: SentenceCreationComponent,
     canActivate: [RouteGuardService]
   },
   {
-    path: 'sorrendezes',
+    path: Path.SORTING,
     component: SortingComponent,
     canActivate: [RouteGuardService]
   },
   {
-    path: 'csoportositas_es_sorrendezes',
+    path: Path.GROUPING_SORTING,
     component: GroupingSortingComponent,
     canActivate: [RouteGuardService]
   },
   {
-    path: 'mondatkiegeszites_es_csoportositas',
+    path: Path.SENTENCE_COMPLETION_GROUPING,
     component: SentencecompletionGroupingComponent,
     canActivate: [RouteGuardService]
   },
   {
-    path: 'mondatkiegeszites_es_sorrendezes',
+    path: Path.SENTENCE_CREATION_SORTING,
     component: SentencecompletionSortingComponent,
     canActivate: [RouteGuardService]
   },
   {
-    path: 'mondatkeszites_es_sorrendezes',
-    component: SentencecreationSortingComponent,
+    path: Path.SENTENCE_CREATION_SORTING,
+    component: SentenceCreationSortingComponent,
     canActivate: [RouteGuardService]
   },
   {
-    path: 'sorrendezes_es_csoportositas',
+    path: Path.SORTING_GROUPING,
     component: SortingGroupingComponent,
     canActivate: [RouteGuardService]
   },
   {
-    path: 'feladatok/:viewtype',
+    path: `${Path.TASKS}/:viewtype`,
     component: TasksComponent,
     canActivate: [RouteGuardService]
   },
   {
-    path: 'feladatsorok',
+    path: Path.EXERCISES,
     component: ExercisesComponent,
     canActivate: [RouteGuardService]
   },
   {
-    path: 'felhasznalok',
+    path: Path.USERS,
     component: UsersComponent,
     canActivate: [RouteGuardService]
   },
   {
-    path: 'felhasznalok/:id',
+    path: `${Path.USERS}/:id`,
     component: UserResultsComponent,
     canActivate: [RouteGuardService]
   },
   {
-    path: 'login',
+    path: Path.LOGIN,
     component: LoginComponent
+  },
+  {
+    path: '',
+    component: LoginComponent,
+    canActivate: [RouteGuardService]
   },
   {
     path: '**',
