@@ -15,7 +15,7 @@
           <mat-label>Típus</mat-label>
           <mat-select formControlName="type">
             <mat-option *ngFor="let type of types" [value]="type">
-              {{typeEnumUtil.taskTypeToString(type)}}
+              {{type}}
             </mat-option>
           </mat-select>
           <mat-error>A feladat típusa nem lehet üres</mat-error>

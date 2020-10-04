@@ -2,13 +2,29 @@
 <body>
 <div class="container">
   <mat-card class="mat-card-controls mat-card-base">
-    <mat-card-content>
-      <div class="flex-layout">
+    <mat-toolbar-row>
+        <div class="flex-layout-center">
+            <button
+              type="button"
+              mat-flat-button
+              class="background-color color-white"
+              [mat-dialog-close]="true">
+              Mégsem
+            </button>
+            <button
+              type="submit"
+              mat-stroked-button
+              class="color-mat"
+            (click)="saveData()">
+              Mentés
+            </button>
+        </div>
+      <div class="flex-layout-end">
         <button (click)="newPair()" class="plusButton" mat-button>
           <i class="fa fa-plus"></i>
         </button>
       </div>
-    </mat-card-content>
+    </mat-toolbar-row>
   </mat-card>
   <br>
 </div>
@@ -23,17 +39,28 @@
   <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-around center" fxLayoutGap="25px">
     <mat-card *ngFor="let member of this.pairingRequest.pairs; let i = index" class="mat-width">
       <mat-card-content>
+        <mat-toolbar-row>
+          <div class="flex-layout-center">
+          </div>
+          <div class="flex-layout-end">
+            <i (click)="this.deletePair(i)" class="fa fa-trash fa-lg"></i>&nbsp;
+          </div>
+        </mat-toolbar-row>
         <form *ngFor="let pair of member.pair; let j = index" class="my-form">
-          <mat-form-field class="width-and-trash">
-            <input #pairchild (click)="elementClicked(i,j)" [ngModel]="pair.content"
+          <mat-form-field #pairchild class="width-and-trash">
+            <input [ngModel]="pair.content"
                    (ngModelChange)="updatePairElement($event, i, j)" matInput name="username">
           </mat-form-field>
           <i (click)="this.deletePairElement(i,j)" class="fa fa-trash"></i>&nbsp;
           <br>
         </form>
-        <mat-form-field class="width-and-trash-inactive">
-          <input (click)="addPairElement(this.pairingResponse.pairs[i].id)" matInput name="username">
-        </mat-form-field>
+        <button
+          type="submit"
+          mat-flat-button
+          class="color-mat"
+          (click)="addPairElement(i)">
+          Új elem
+        </button>
       </mat-card-content>
     </mat-card>
   </div>

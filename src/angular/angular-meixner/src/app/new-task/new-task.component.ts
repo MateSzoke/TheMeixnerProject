@@ -47,7 +47,6 @@ export class NewTaskComponent implements OnInit {
   }
 
   constructor(private modalC: ModalComponent,
-              public typeEnumUtil: TypeEnumUtil,
               private theEasyTasksService: EasyTasksService,
               private complexTasksService: ComplexTasksService,
               private otherTasksService: OtherTasksService,
