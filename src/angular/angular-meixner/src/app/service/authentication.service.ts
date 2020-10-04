@@ -2,9 +2,9 @@ import {EventEmitter, Injectable, Output} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {RouteSelectorService} from './route-selector.service';
-import {Observable} from 'rxjs';
 import {AccountService} from '../../swagger-api';
 import {LoginDTO} from "../model/LoginDTO";
+import {Path} from "../path";
 
 @Injectable({
   providedIn: 'root'
@@ -65,7 +65,7 @@ export class AuthenticationService {
                 if (this.routeSelectorService.getLastRequestedRouteUrl()) {
                   this.router.navigate([this.routeSelectorService.getLastRequestedRouteUrl()]);
                 } else {
-                  this.router.navigate(['']);
+                  this.router.navigate([`${Path.TASKS}/my`]);
                 }
               this.loginError = false;
             },
@@ -85,7 +85,7 @@ export class AuthenticationService {
       );*/
     this.userLoggedIn.emit(false);
     sessionStorage.clear();
-    this.router.navigate(['login']);
+    this.router.navigate([Path.LOGIN]);
   }
 
 }

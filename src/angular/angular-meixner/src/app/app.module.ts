@@ -36,7 +36,7 @@ import {GroupingSortingComponent} from './task_types/grouping-sorting/grouping-s
 import {SentencecompletionGroupingComponent} from './task_types/sentencecompletion-grouping/sentencecompletion-grouping.component';
 import {SentencecompletionSortingComponent} from './task_types/sentencecompletion-sorting/sentencecompletion-sorting.component';
 import {SentencecreationGroupingComponent} from './task_types/sentencecreation-grouping/sentencecreation-grouping.component';
-import {SentencecreationSortingComponent} from './task_types/sentencecreation-sorting/sentencecreation-sorting.component';
+import {SentenceCreationSortingComponent} from './task_types/sentencecreation-sorting/sentence-creation-sorting.component';
 import {SortingGroupingComponent} from './task_types/sorting-grouping/sorting-grouping.component';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -44,6 +44,8 @@ import {HttpInterceptorService} from "./service/http-interceptor.service";
 import {ExerciseTaskListComponent} from './exercise-task-list/exercise-task-list.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {UserResultsComponent} from './users/user-results/user-results.component';
+import {ExerciseListComponent} from './users/excercise-list/exercise-list.component';
 import {TypeEnumUtil} from "./util/typeEnumUtil";
 
 @NgModule({
@@ -65,9 +67,11 @@ import {TypeEnumUtil} from "./util/typeEnumUtil";
     SentencecompletionGroupingComponent,
     SentencecompletionSortingComponent,
     SentencecreationGroupingComponent,
-    SentencecreationSortingComponent,
+    SentenceCreationSortingComponent,
     SortingGroupingComponent,
-    ExerciseTaskListComponent
+    ExerciseTaskListComponent,
+    UserResultsComponent,
+    ExerciseListComponent
   ],
     imports: [
         BrowserModule,
@@ -95,9 +99,19 @@ import {TypeEnumUtil} from "./util/typeEnumUtil";
     ],
   providers: [DomService, ModalService, ModalComponent, TypeEnumUtil,
     {provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true},
-    LoginComponent, NewTaskComponent, NewExerciseComponent, ExerciseTaskListComponent],
+    LoginComponent,
+    NewTaskComponent,
+    NewExerciseComponent,
+    ExerciseTaskListComponent,
+    ExerciseListComponent],
   bootstrap: [AppComponent],
-  entryComponents: [NewTaskComponent, NewExerciseComponent, ExerciseTaskListComponent, LoginComponent, ModalComponent]
+  entryComponents: [
+    NewTaskComponent,
+    NewExerciseComponent,
+    ExerciseTaskListComponent,
+    LoginComponent,
+    ModalComponent,
+    ExerciseListComponent]
 })
 export class AppModule {
 }
