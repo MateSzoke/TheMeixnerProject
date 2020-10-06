@@ -91,7 +91,7 @@ const routes: Routes = [
     canActivate: [RouteGuardService]
   },
   {
-    path: `${Path.USERS}/:id`,
+    path: `${Path.USER_DETAILS}`,
     component: UserResultsComponent,
     canActivate: [RouteGuardService]
   },

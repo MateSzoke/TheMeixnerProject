@@ -81,7 +81,7 @@ export class UsersComponent implements OnInit {
   }
 
   openUserResults(userId: number) {
-    this.router.navigate([`${Path.USERS}/${userId}`])
+    this.router.navigate([`${Path.USER_DETAILS}`, {userId: userId}])
   }
 
   deleteUser(userId: number) {
