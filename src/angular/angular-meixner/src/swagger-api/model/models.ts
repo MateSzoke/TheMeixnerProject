@@ -44,6 +44,7 @@ export * from './sortingAndGroupingRequest';
 export * from './sortingAndGroupingResponse';
 export * from './sortingRequest';
 export * from './sortingResponse';
+export * from './studentResponse';
 export * from './tableRequest';
 export * from './tableResponse';
 export * from './taskResponse';
