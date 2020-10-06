@@ -1,0 +1,21 @@
+<form class="task-form">
+  <p class="title-left">Feladatsorok hozzáadása {{user.username}} felhasználóhoz</p>
+  <div *ngIf="!this.exercisesLoaded">
+    <div class="wrapper">
+      <div class="inner center">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="this.exercisesLoaded">
+    <div *ngFor="let exercise of exercises" class="task-element">
+      <input (change)="exercise.checked = !exercise.checked" [checked]="exercise.checked" type="checkbox"
+             value="{{exercise.checked}}"> {{exercise.name}} - {{exercise.comment}}
+      - {{exercise.lastModified}}
+    </div>
+    <div mat-dialog-actions style="float: right">
+      <button [mat-dialog-close] mat-button>Mégsem</button>
+      <button (click)="saveExercises()" [mat-dialog-close] mat-button>Hozzáadás</button>
+    </div>
+  </div>
+</form>

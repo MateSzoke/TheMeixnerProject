@@ -1,5 +1,5 @@
 <div class="container">
-  <mat-card class="my-card">
+  <mat-card class="new-user-card">
     <mat-card-title>
       Regisztráció
     </mat-card-title>
@@ -32,3 +32,16 @@
     </mat-card-actions>
   </mat-card>
 </div>
+<mat-card *ngFor="let user of users; index as i" class="user-card right-aligned-header">
+  <div fxLayout="row">
+    <div class="float-left">
+      {{user.username}} - {{user.role}}
+    </div>
+    <div *ngIf="isStudent(user)" class="float-right">
+      <i (click)="openMyExercises(user)" class="fa fa-plus-square small-menu-button"
+         style="margin-right: 8px"></i>
+      <i (click)="deleteUser(user.id)" class="fa fa-trash"></i>
+      <a (click)="openUserResults(user.id)" mat-button>Eredmények megtekintése</a>
+    </div>
+  </div>
+</mat-card>

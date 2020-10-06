@@ -2,7 +2,6 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {ExercisesService, TaskResponse, TaskService} from "../../swagger-api";
 import {DateUtils} from "../util/date";
 import {TypeEnumUtil} from "../util/typeEnumUtil";
-import {ModalComponent} from "../modal/modal.component";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 import TypeEnum = TaskResponse.TypeEnum;
 
@@ -17,7 +16,6 @@ export class ExerciseTaskListComponent implements OnInit {
   public tasksLoaded = false;
 
   constructor(
-    private modalComponent: ModalComponent,
     private exerciseService: ExercisesService,
     private taskService: TaskService,
     @Inject(MAT_DIALOG_DATA) public params: any
