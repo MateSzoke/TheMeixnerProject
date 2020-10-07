@@ -28,9 +28,9 @@ import {Configuration} from '../configuration';
 })
 export class ResultsService {
 
+  protected basePath = 'https://meixner.herokuapp.com';
   public defaultHeaders = new HttpHeaders();
   public configuration = new Configuration();
-  protected basePath = 'http://meixner.herokuapp.com';
 
   constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
 
@@ -91,6 +91,46 @@ export class ResultsService {
   }
 
   /**
+   * Delete student and user by user id
+   *
+   * @param userId userId
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public deleteUserByIdUsingDELETE(userId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+
+  public deleteUserByIdUsingDELETE(userId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+
+  public deleteUserByIdUsingDELETE(userId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+
+  public deleteUserByIdUsingDELETE(userId: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    if (userId === null || userId === undefined) {
+      throw new Error('Required parameter userId was null or undefined when calling deleteUserByIdUsingDELETE.');
+    }
+
+    let headers = this.defaultHeaders;
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [];
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = [];
+
+    return this.httpClient.delete<any>(`${this.configuration.basePath}/results/student/${encodeURIComponent(String(userId))}`,
+      {
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress
+      }
+    );
+  }
+
+  /**
    * Get all students
    *
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -105,7 +145,6 @@ export class ResultsService {
   public getAllStudentsUsingGET(observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
     let headers = this.defaultHeaders;
-
 
     // to determine the Accept header
     let httpHeaderAccepts: string[] = [
@@ -144,7 +183,6 @@ export class ResultsService {
   public getAllUsersUsingGET(observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
     let headers = this.defaultHeaders;
-
 
     // to determine the Accept header
     let httpHeaderAccepts: string[] = [
@@ -233,7 +271,6 @@ export class ResultsService {
     }
 
     let headers = this.defaultHeaders;
-
 
     // to determine the Accept header
     let httpHeaderAccepts: string[] = [

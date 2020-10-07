@@ -13,6 +13,7 @@ export class Path {
   static TASKS = 'feladatok'
   static EXERCISES = 'feladatsorok'
   static USERS = 'felhasznalok'
+  static USER_DETAILS = 'felhasznalo'
   static LOGIN = 'login'
   static BLINDMAP: 'vakterkep';
   static FREE_TEXT: 'szabadszoveges';

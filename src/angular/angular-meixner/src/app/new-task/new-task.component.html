@@ -2,7 +2,7 @@
   <h2 class="mat-dialog-title" mat-dialog-title>Feladat hozzáadása</h2>
   <div class="mat-dialog-content" mat-dialog-content>
 
-    <form #formGroup (ngSubmit)="saveData()" [formGroup]="newTaskForm">
+    <form (ngSubmit)="saveData()" [formGroup]="newTaskForm">
       <mat-form-field class="example-full-width">
         <mat-label>Feladat neve</mat-label>
         <input formControlName="title" matInput
