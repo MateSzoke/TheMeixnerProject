@@ -76,7 +76,7 @@ export class UsersComponent implements OnInit {
       data: {user: user}
     })
     this.dialog.afterAllClosed.subscribe(() => {
-      window.location.reload()
+      this.loadUsers()
     })
   }
 

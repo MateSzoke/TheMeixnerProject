@@ -47,6 +47,13 @@ class ResultService(
         studentRepository.deleteById(userId)
     }
 
+    fun changeClassLevelByUserId(userId: Long, classLevel: Int): StudentResponse? {
+        val student = studentRepository.findById(userId).toNullable ?: return null
+        val user = userRepository.findById(userId).toNullable ?: return null
+        return studentRepository.save(student.copy(classLevel = classLevel))
+                .toDomainModel(user = user, exercises = student.getExercises())
+    }
+
     private fun StudentEntity.getExercises() = exerciseIds.mapNotNull { id -> exerciseService.getExercisesById(id) }
 
 }

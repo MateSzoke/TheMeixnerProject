@@ -7,5 +7,32 @@
 </div>
 <div *ngIf="studentLoaded">
   <p class="title">{{student.user.username}} adatlapja</p>
-
+  <div class="classLevel" fxLayout="row" fxLayoutAlign="center center">
+    <div>Osztály:</div>
+    <mat-select [(ngModel)]="student.classLevel" style="width: 90px">
+      <mat-option *ngFor="let classLevel of classes" [value]="classLevel">
+        {{classLevel}}
+      </mat-option>
+    </mat-select>
+    <button (click)="changeClass()" mat-button>módosítás</button>
+  </div>
+  <button (click)="showExerciseList()" class="addbtn" mat-raised-button type="button">
+    Feladatsor hozzáadása
+  </button>
+  <div *ngIf="student.exercises.length == 0">
+    <p>Nincs még feladatsor hozzárendelve</p>
+  </div>
+  <div *ngIf="student.exercises.length > 0">
+    <mat-card *ngFor="let exercise of student.exercises" class="user-card">
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <div class="float-left">
+          <b>{{exercise.name}}</b> - {{exercise.comment}}
+        </div>
+        <div class="float-right">
+          <a (click)="openExerciseResults(exercise)" mat-button>Eredmények megtekintése</a>
+          <i (click)="deleteExerciseFromUser(exercise.id)" class="fa fa-trash"></i>
+        </div>
+      </div>
+    </mat-card>
+  </div>
 </div>
