@@ -46,6 +46,7 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {UserResultsComponent} from './users/user-results/user-results.component';
 import {ExerciseListComponent} from './users/excercise-list/exercise-list.component';
+import {NotFoundComponent} from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import {ExerciseListComponent} from './users/excercise-list/exercise-list.compon
     SortingGroupingComponent,
     ExerciseTaskListComponent,
     UserResultsComponent,
-    ExerciseListComponent
+    ExerciseListComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
