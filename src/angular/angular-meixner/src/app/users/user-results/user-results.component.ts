@@ -14,6 +14,7 @@ export class UserResultsComponent implements OnInit {
   studentLoaded: boolean = false
   student: StudentResponse
   userId: number
+  classes: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 
   constructor(
     private router: Router,
@@ -56,5 +57,9 @@ export class UserResultsComponent implements OnInit {
     this.resultsService.getStudentByIdUsingGET(this.userId).subscribe(student => {
       this.student = student
     })
+  }
+
+  changeClass() {
+    console.log(`TODO change ${this.student.user.username} class to ${this.student.classLevel} `)
   }
 }
