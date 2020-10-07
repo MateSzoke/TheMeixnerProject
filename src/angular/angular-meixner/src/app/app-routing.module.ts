@@ -17,6 +17,7 @@ import {PairingComponent} from './task_types/pairing/pairing.component';
 import {GroupingComponent} from './task_types/grouping/grouping.component';
 import {UserResultsComponent} from "./users/user-results/user-results.component";
 import {Path} from "./path";
+import {NotFoundComponent} from "./not-found/not-found.component";
 
 
 const routes: Routes = [
@@ -101,7 +102,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: LoginComponent,
+    component: NotFoundComponent,
     canActivate: [RouteGuardService]
   },
   {
