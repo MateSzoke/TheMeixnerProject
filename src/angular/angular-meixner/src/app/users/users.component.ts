@@ -85,7 +85,13 @@ export class UsersComponent implements OnInit {
   }
 
   deleteUser(userId: number) {
-    // TODO delete user
+    this.resultsService.deleteUserByIdUsingDELETE(userId).subscribe(() => {
+      },
+      () => {
+      },
+      () => {
+        this.loadUsers()
+      })
   }
 
   isStudent(user: UserResponse): boolean {
