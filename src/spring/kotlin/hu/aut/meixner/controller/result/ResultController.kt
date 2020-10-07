@@ -35,7 +35,7 @@ class ResultController(
         return ResponseEntity.ok(student)
     }
 
-    @PostMapping("/{userId}/{exercisesId}")
+    @PostMapping("/exercises/{userId}/{exercisesId}")
     @ApiOperation("Add exercise to a user by id")
     fun addExercisesToUser(
             @PathVariable("userId") userId: Long,
@@ -46,13 +46,24 @@ class ResultController(
         return ResponseEntity.ok(result)
     }
 
-    @DeleteMapping("/{userId}/{exercisesId}")
+    @DeleteMapping("/exercises/{userId}/{exercisesId}")
     @ApiOperation("Remove exercise from a user by id")
     fun removeExercisesFromUser(
             @PathVariable("userId") userId: Long,
             @PathVariable("exercisesId") exercisesId: Long
     ): ResponseEntity<StudentResponse> {
         val result = resultService.changeExercisesToStudent(userId = userId, exerciseId = exercisesId, isAdd = false)
+                ?: return ResponseEntity.notFound().build()
+        return ResponseEntity.ok(result)
+    }
+
+    @PostMapping("/classLevel/{userId}/{classLevel}")
+    @ApiOperation("Change class level to a student by user id")
+    fun changeClassLevelByUserId(
+            @PathVariable("userId") userId: Long,
+            @PathVariable("classLevel") classLevel: Int
+    ): ResponseEntity<StudentResponse> {
+        val result = resultService.changeClassLevelByUserId(userId = userId, classLevel = classLevel)
                 ?: return ResponseEntity.notFound().build()
         return ResponseEntity.ok(result)
     }

@@ -32,16 +32,16 @@ export class ResultsService {
   public defaultHeaders = new HttpHeaders();
   public configuration = new Configuration();
 
-  constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
 
-    if (configuration) {
-      this.configuration = configuration;
-      this.configuration.basePath = configuration.basePath || basePath || this.basePath;
+      if (configuration) {
+        this.configuration = configuration;
+        this.configuration.basePath = configuration.basePath || basePath || this.basePath;
 
-    } else {
-      this.configuration.basePath = basePath || this.basePath;
+      } else {
+        this.configuration.basePath = basePath || this.basePath;
+      }
     }
-  }
 
   /**
    * Add exercise to a user by id
@@ -79,7 +79,54 @@ export class ResultsService {
     // to determine the Content-Type header
     const consumes: string[] = [];
 
-    return this.httpClient.post<StudentResponse>(`${this.configuration.basePath}/results/${encodeURIComponent(String(userId))}/${encodeURIComponent(String(exercisesId))}`,
+    return this.httpClient.post<StudentResponse>(`${this.configuration.basePath}/results/exercises/${encodeURIComponent(String(userId))}/${encodeURIComponent(String(exercisesId))}`,
+      null,
+      {
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress
+      }
+    );
+  }
+
+  /**
+   * Change class level to a student by user id
+   *
+   * @param classLevel classLevel
+   * @param userId userId
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public changeClassLevelByUserIdUsingPOST(classLevel: number, userId: number, observe?: 'body', reportProgress?: boolean): Observable<StudentResponse>;
+
+  public changeClassLevelByUserIdUsingPOST(classLevel: number, userId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<StudentResponse>>;
+
+  public changeClassLevelByUserIdUsingPOST(classLevel: number, userId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<StudentResponse>>;
+
+  public changeClassLevelByUserIdUsingPOST(classLevel: number, userId: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    if (classLevel === null || classLevel === undefined) {
+      throw new Error('Required parameter classLevel was null or undefined when calling changeClassLevelByUserIdUsingPOST.');
+    }
+    if (userId === null || userId === undefined) {
+      throw new Error('Required parameter userId was null or undefined when calling changeClassLevelByUserIdUsingPOST.');
+    }
+
+    let headers = this.defaultHeaders;
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [
+      '*/*'
+    ];
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = [];
+
+    return this.httpClient.post<StudentResponse>(`${this.configuration.basePath}/results/classLevel/${encodeURIComponent(String(userId))}/${encodeURIComponent(String(classLevel))}`,
       null,
       {
         withCredentials: this.configuration.withCredentials,
@@ -284,7 +331,7 @@ export class ResultsService {
     // to determine the Content-Type header
     const consumes: string[] = [];
 
-    return this.httpClient.delete<StudentResponse>(`${this.configuration.basePath}/results/${encodeURIComponent(String(userId))}/${encodeURIComponent(String(exercisesId))}`,
+    return this.httpClient.delete<StudentResponse>(`${this.configuration.basePath}/results/exercises/${encodeURIComponent(String(userId))}/${encodeURIComponent(String(exercisesId))}`,
       {
         withCredentials: this.configuration.withCredentials,
         headers: headers,

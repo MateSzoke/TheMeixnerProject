@@ -34,7 +34,7 @@
 </div>
 
 <mat-card *ngFor="let user of users" class="user-card right-aligned-header">
-  <div fxLayout="row">
+  <div fxLayout="row" fxLayoutAlign="center center">
     <div class="float-left">
       {{user.username}} - {{user.role}}
     </div>
@@ -42,7 +42,7 @@
       <i (click)="openMyExercises(user)" class="fa fa-plus-square small-menu-button"
          style="margin-right: 8px"></i>
       <i (click)="deleteUser(user.id)" class="fa fa-trash"></i>
-      <a (click)="openUserResults(user.id)" mat-button>Eredmények megtekintése</a>
+      <a (click)="openUserResults(user.id)" mat-button>Tanuló megtekintése</a>
     </div>
   </div>
 </mat-card>
