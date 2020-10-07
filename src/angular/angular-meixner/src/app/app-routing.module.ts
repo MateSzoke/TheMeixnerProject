@@ -17,6 +17,7 @@ import {PairingComponent} from './task_types/pairing/pairing.component';
 import {GroupingComponent} from './task_types/grouping/grouping.component';
 import {UserResultsComponent} from "./users/user-results/user-results.component";
 import {Path} from "./path";
+import {NotFoundComponent} from "./not-found/not-found.component";
 import {MyResultsComponent} from "./student/my-results/my-results.component";
 import {MyExercisesComponent} from "./student/my-exercises/my-exercises.component";
 
@@ -113,7 +114,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: LoginComponent,
+    component: NotFoundComponent,
     canActivate: [RouteGuardService]
   },
   {
