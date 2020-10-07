@@ -60,6 +60,6 @@ export class UserResultsComponent implements OnInit {
   }
 
   changeClass() {
-    console.log(`TODO change ${this.student.user.username} class to ${this.student.classLevel} `)
+    this.resultsService.changeClassLevelByUserIdUsingPOST(this.student.classLevel, this.userId).subscribe()
   }
 }
