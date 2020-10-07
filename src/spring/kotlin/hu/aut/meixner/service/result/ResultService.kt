@@ -36,9 +36,15 @@ class ResultService(
     fun changeExercisesToStudent(userId: Long, exerciseId: Long, isAdd: Boolean): StudentResponse? {
         val user = userRepository.findById(userId).toNullable ?: return null
         val studentEntity = studentRepository.findById(userId).toNullable ?: return null
-        // TODO handle if student already has this exercise
-        if (isAdd) studentEntity.exerciseIds += exerciseId else studentEntity.exerciseIds -= exerciseId
+        if (isAdd && studentEntity.exerciseIds.contains(exerciseId).not())
+            studentEntity.exerciseIds += exerciseId
+        else
+            studentEntity.exerciseIds -= exerciseId
         return studentRepository.save(studentEntity).toDomainModel(user = user, exercises = studentEntity.getExercises())
+    }
+
+    fun deleteUserById(userId: Long) {
+        studentRepository.deleteById(userId)
     }
 
     private fun StudentEntity.getExercises() = exerciseIds.mapNotNull { id -> exerciseService.getExercisesById(id) }
