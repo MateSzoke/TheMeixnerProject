@@ -1,38 +1,39 @@
 <div class="container">
   <mat-card class="new-user-card">
-    <mat-card-title>
-      Regisztráció
-    </mat-card-title>
+    <mat-card-title>Regisztráció</mat-card-title>
+
     <mat-card-content>
-      <div *ngIf='this.wrongUser' class="alert alert-warning">Rossz adatok lettek megadva!</div>
-      <form class="my-form">
+      <form (ngSubmit)="register()" [formGroup]="userForm">
         <mat-form-field class="full-width">
           <mat-label>felhasználónév</mat-label>
-          <input [(ngModel)]="username" matInput name="felhasználónév" placeholder="felhasználónév">
+          <input formControlName="username" matInput placeholder="felhasználónév">
+          <mat-error>Felhasználónév nem lehet üres</mat-error>
         </mat-form-field>
-        <br>
+
         <mat-form-field class="full-width">
           <mat-label>jelszó</mat-label>
-          <input (keyup.enter)="register()" [(ngModel)]="password" matInput name="jelszó" placeholder="jelszó"
+          <input formControlName="password" matInput placeholder="jelszó"
                  type="password">
+          <mat-error>Jelszó nem lehet üres</mat-error>
         </mat-form-field>
-        <mat-form-field>
+
+        <mat-form-field class="full-width">
           <mat-label>Jogok</mat-label>
-          <mat-select (selectionChange)="this.roleChange($event)">
-            <mat-option *ngFor="let role of roles; let roleIndex=index" [value]="roleIndex">
+          <mat-select formControlName="role">
+            <mat-option *ngFor="let role of roles" [value]="role">
               {{role}}
             </mat-option>
           </mat-select>
+          <mat-error>Válassz jogosultságot</mat-error>
         </mat-form-field>
 
+        <button class="loginbtn" mat-raised-button type="submit">REGISZTRÁLÁS</button>
       </form>
     </mat-card-content>
-    <mat-card-actions>
-      <button (click)="register()" class="loginbtn" mat-raised-button>REGISZTRÁLÁS</button>
-    </mat-card-actions>
   </mat-card>
 </div>
-<mat-card *ngFor="let user of users; index as i" class="user-card right-aligned-header">
+
+<mat-card *ngFor="let user of users" class="user-card right-aligned-header">
   <div fxLayout="row">
     <div class="float-left">
       {{user.username}} - {{user.role}}

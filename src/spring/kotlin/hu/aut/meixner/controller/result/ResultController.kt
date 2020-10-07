@@ -57,4 +57,10 @@ class ResultController(
         return ResponseEntity.ok(result)
     }
 
+    @DeleteMapping("/student/{userId}")
+    @ApiOperation("Delete student and user by user id")
+    fun deleteUserById(@PathVariable("userId") userId: Long) {
+        resultService.deleteUserById(userId)
+    }
+
 }

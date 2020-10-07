@@ -27,4 +27,10 @@ class UserController(
         val role = userService.getUser() ?: return ResponseEntity.badRequest().build()
         return ResponseEntity.ok(role)
     }
+
+    @DeleteMapping("/{userId}")
+    @ApiOperation("Delete user by user id")
+    fun deleteUserById(@PathVariable("userId") userId: Long) {
+        userService.deleteUser(userId)
+    }
 }

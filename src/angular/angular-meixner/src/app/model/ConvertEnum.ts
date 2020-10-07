@@ -1,6 +1,7 @@
 import {GroupingResponse, TaskResponse, UserRequest} from '../../swagger-api';
 import {Path} from "../path";
 import TypeEnum = TaskResponse.TypeEnum;
+import RoleEnum = UserRequest.RoleEnum;
 
 export class ConvertEnum {
 
@@ -110,16 +111,22 @@ export class ConvertEnum {
     }
   }
 
-  public static convertRole(input: string): string {
+  public static convertRoleToString(input: string): string {
     switch (input) {
-      case UserRequest.RoleEnum.ADMIN.toString(): {
+      case UserRequest.RoleEnum.ADMIN.toString():
         return 'Admin';
-      }
-      case UserRequest.RoleEnum.STUDENT.toString(): {
-        return 'Diák';
-      }
+      case UserRequest.RoleEnum.STUDENT.toString():
+        return 'Tanuló';
     }
   }
 
+  public static convertStringToRoleEnum(input: string): RoleEnum {
+    switch (input) {
+      case 'Admin':
+        return RoleEnum.ADMIN;
+      case 'Tanuló':
+        return RoleEnum.STUDENT;
+    }
+  }
 
 }
