@@ -9,3 +9,27 @@
   font-size: x-large;
   margin-top: 16px;
 }
+
+.float-right {
+  margin-left: auto;
+  margin-right: 20px;
+  float: right;
+}
+
+.float-left {
+  float: left;
+  margin-left: 20px;
+}
+
+.user-card {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+  margin-top: 8px;
+}
+
+.addbtn {
+  background-color: #90a4ae;
+  color: white;
+}

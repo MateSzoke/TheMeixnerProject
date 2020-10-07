@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {ResultsService, StudentResponse} from "../../../swagger-api";
+import {ActivatedRoute, Router} from "@angular/router";
+import {ExercisesResponse, ResultsService, StudentResponse} from "../../../swagger-api";
+import {ExerciseListComponent} from "../excercise-list/exercise-list.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-user-results',
@@ -14,6 +16,8 @@ export class UserResultsComponent implements OnInit {
   userId: number
 
   constructor(
+    private router: Router,
+    private dialog: MatDialog,
     private route: ActivatedRoute,
     private resultsService: ResultsService
   ) {
@@ -29,4 +33,28 @@ export class UserResultsComponent implements OnInit {
     })
   }
 
+  showExerciseList() {
+    this.dialog.open(ExerciseListComponent, {
+      data: {user: this.student.user}
+    })
+    this.dialog.afterAllClosed.subscribe(() => {
+      this.loadExercises()
+    })
+  }
+
+  deleteExerciseFromUser(exerciseId: number) {
+    this.resultsService.removeExercisesFromUserUsingDELETE(exerciseId, this.userId).subscribe(() => {
+      this.loadExercises()
+    })
+  }
+
+  openExerciseResults(exercise: ExercisesResponse) {
+    console.log(`TODO open ${exercise.name} results to ${this.student.user.username}`)
+  }
+
+  loadExercises() {
+    this.resultsService.getStudentByIdUsingGET(this.userId).subscribe(student => {
+      this.student = student
+    })
+  }
 }
