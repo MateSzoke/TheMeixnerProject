@@ -28,9 +28,9 @@ import {Configuration} from '../configuration';
 })
 export class ResultsService {
 
+  protected basePath = 'https://meixner.herokuapp.com';
   public defaultHeaders = new HttpHeaders();
   public configuration = new Configuration();
-  protected basePath = 'http://localhost:3000';
 
   constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
 
@@ -145,11 +145,6 @@ export class ResultsService {
   public getAllStudentsUsingGET(observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
     let headers = this.defaultHeaders;
-
-    // authentication (apiKey) required
-    if (this.configuration.apiKeys["Authorization"]) {
-      headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
-    }
 
     // to determine the Accept header
     let httpHeaderAccepts: string[] = [
