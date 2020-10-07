@@ -47,6 +47,8 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {UserResultsComponent} from './users/user-results/user-results.component';
 import {ExerciseListComponent} from './users/excercise-list/exercise-list.component';
 import {NotFoundComponent} from './not-found/not-found.component';
+import {MyExercisesComponent} from './student/my-exercises/my-exercises.component';
+import {MyResultsComponent} from './student/my-results/my-results.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +74,9 @@ import {NotFoundComponent} from './not-found/not-found.component';
     ExerciseTaskListComponent,
     UserResultsComponent,
     ExerciseListComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    MyExercisesComponent,
+    MyResultsComponent
   ],
   imports: [
     BrowserModule,

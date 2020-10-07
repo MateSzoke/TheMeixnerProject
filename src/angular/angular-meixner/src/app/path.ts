@@ -15,9 +15,11 @@ export class Path {
   static USERS = 'felhasznalok'
   static USER_DETAILS = 'felhasznalo'
   static LOGIN = 'login'
-  static BLINDMAP: 'vakterkep';
-  static FREE_TEXT: 'szabadszoveges';
-  static ODD_ONE_OUT: 'kakukktojas';
-  static TIMELINE: 'idovonal';
-  static MEMORY_GAME: 'memoria';
+  static BLINDMAP = 'vakterkep'
+  static FREE_TEXT = 'szabadszoveges'
+  static ODD_ONE_OUT = 'kakukktojas'
+  static TIMELINE = 'idovonal'
+  static MEMORY_GAME = 'memoria'
+  static STUDENT_EXERCISES = 'feladatsoraim'
+  static STUDENT_RESULTS = 'eredmenyeim'
 }

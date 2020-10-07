@@ -18,6 +18,8 @@ import {GroupingComponent} from './task_types/grouping/grouping.component';
 import {UserResultsComponent} from "./users/user-results/user-results.component";
 import {Path} from "./path";
 import {NotFoundComponent} from "./not-found/not-found.component";
+import {MyResultsComponent} from "./student/my-results/my-results.component";
+import {MyExercisesComponent} from "./student/my-exercises/my-exercises.component";
 
 
 const routes: Routes = [
@@ -92,8 +94,18 @@ const routes: Routes = [
     canActivate: [RouteGuardService]
   },
   {
-    path: `${Path.USER_DETAILS}`,
+    path: Path.USER_DETAILS,
     component: UserResultsComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: Path.STUDENT_RESULTS,
+    component: MyResultsComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: Path.STUDENT_EXERCISES,
+    component: MyExercisesComponent,
     canActivate: [RouteGuardService]
   },
   {
