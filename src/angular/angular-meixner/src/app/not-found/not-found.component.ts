@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AccountService} from "../../swagger-api";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-not-found',
@@ -12,7 +13,8 @@ export class NotFoundComponent implements OnInit {
   loggedIn: boolean = false
 
   constructor(
-    private accountService: AccountService
+    private accountService: AccountService,
+    private router: Router
   ) {
   }
 
@@ -28,4 +30,7 @@ export class NotFoundComponent implements OnInit {
     );
   }
 
+  navigateToLogin() {
+    this.router.navigate(['login'])
+  }
 }

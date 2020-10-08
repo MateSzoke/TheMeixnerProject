@@ -9,7 +9,7 @@
   <mat-card class="not-found-card">
     <mat-card-content><h1>A keresett oldal nem található</h1></mat-card-content>
     <mat-card-actions>
-      <a *ngIf="!loggedIn" href="#" mat-button routerLink="login">Jelentkezz be</a>
+      <button (click)="navigateToLogin()" *ngIf="!loggedIn" mat-button>Jelentkezz be</button>
     </mat-card-actions>
   </mat-card>
 </div>
