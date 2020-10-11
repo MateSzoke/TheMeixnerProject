@@ -38,6 +38,8 @@ export class PairingComponent implements OnInit, AfterViewChecked {
   @ViewChildren('pairchild') pairs: QueryList<ElementRef>;
   pairElements: any;
   loaded: boolean = false
+  newPairing = true;
+  pairingId = 0;
   indexOfPrevFocus = -1;
   indexOfCurrentFocus = -2;
 
@@ -55,9 +57,9 @@ export class PairingComponent implements OnInit, AfterViewChecked {
     if (isNaN(this.taskId)) {
       this.initNewPairingRequest()
     } else {
+      this.newPairing = false;
       this.initPairingRequestById()
     }
-    console.log(`TaskId: ${this.taskId}`)
   }
 
   initNewPairingRequest() {
@@ -86,7 +88,7 @@ export class PairingComponent implements OnInit, AfterViewChecked {
           subject: pairingResponse.subject
         }
         this.loaded = true
-        console.log(this.pairingRequest)
+        this.pairingId = pairingResponse.id;
       },
       (error) => {
         console.log(error)
@@ -100,7 +102,6 @@ export class PairingComponent implements OnInit, AfterViewChecked {
 
   public updatePairElement(newValue, indexService, indexPair) {
     this.pairingRequest.pairs[indexService].pair[indexPair].content = newValue;
-    console.log(this.pairingRequest.pairs);
   }
 
   public deletePair(indexService) {
@@ -114,9 +115,6 @@ export class PairingComponent implements OnInit, AfterViewChecked {
     for (let i = 0; i < indexPair + 1; i++) {
       jumpToElementIndex = jumpToElementIndex + this.pairingRequest.pairs[i].pair.length;
     }
-    console.log("addPairElement");
-    console.log(jumpToElementIndex);
-    console.log(this.indexOfPrevFocus);
     this.pairingRequest.pairs[indexPair].pair.push(newRow);
     this.indexOfCurrentFocus = jumpToElementIndex;
     /*    this.easyTasksService.createPairingUsingPOST(this.pairingRequest)
@@ -139,7 +137,6 @@ export class PairingComponent implements OnInit, AfterViewChecked {
   }
 
   public selectPair(jumpToElementIndex) {
-    console.log(jumpToElementIndex);
     this.pairElements[jumpToElementIndex].focus();
   }
 
@@ -159,7 +156,6 @@ export class PairingComponent implements OnInit, AfterViewChecked {
 
   mediaItemResponseToRequest(response: MediaItemResponse): MediaItemRequest {
     return {
-      mediaItemId: response.id,
       content: response.content
     }
   }
@@ -172,9 +168,19 @@ export class PairingComponent implements OnInit, AfterViewChecked {
   }
 
   saveData() {
-    this.easyTasksService.createPairingUsingPOST(this.pairingRequest)
-      .subscribe(data => {
-        this.router.navigate([Path.TASKS]);
-      });
+    console.log("saveData");
+    console.log(this.pairingRequest);
+    console.log(this.newPairing);
+    if(this.newPairing) {
+      this.easyTasksService.createPairingUsingPOST(this.pairingRequest)
+        .subscribe(data => {
+          this.router.navigate([Path.TASKS]);
+        });
+    } else {
+      this.easyTasksService.updatePairingByIdUsingPATCH(this.pairingId,this.pairingRequest)
+        .subscribe(data => {
+          this.router.navigate([Path.TASKS]);
+        });
+    }
   }
 }

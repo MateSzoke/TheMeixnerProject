@@ -23,6 +23,10 @@ class PairingService(
 ) {
 
     fun createPairing(pairing: PairingRequest): PairingResponse? {
+        println("createPairing")
+        println(pairing.difficulty)
+        println(pairing.subject)
+        println(pairing.pairs[0].pair[0].content)
         val result = pairing.toEntity(owner = currentUser, pairs = pairing.pairs.map { pair ->
             PairEntity(
                     pair = pair.pair.map {
@@ -30,6 +34,9 @@ class PairingService(
                     }.toMutableList()
             )
         })
+        println(result.difficulty)
+        println(result.subject)
+        println(result.pairs[0].pair[0].content)
         return pairingRepository.save(result).toDomainModel()
     }
 
@@ -45,29 +52,6 @@ class PairingService(
                     )
                 }).apply { this.id = id }
         ).toDomainModel()
-    }
-
-    fun addElementToPairing(id: Long): PairingResponse? {
-        println(id)
-        val pairing = pairingRepository.findById(id).toNullable ?: return null
-        if (!pairing.ownerIsTheCurrentUser) return null
-        val pairEntity = PairEntity()
-        pairEntity.pairingEntity = pairing
-        pairing.pairs.add(pairEntity)
-        return pairingRepository.save(pairing.apply { this.id = id }).toDomainModel()
-    }
-
-    fun addElementToPairElementInPairing(id: Long): PairElementResponse? {
-        println(id)
-        val pair = pairRepository.findById(id).toNullable ?: return null
-        println("addElementToPairElementInPairing")
-        println(pair.pair.size)
-        val mediaItemEntity = MediaItemEntity()
-        mediaItemEntity.content = "hello"
-        pair.pair.add(mediaItemEntity)
-        println("addElementToPairElementInPairing 2")
-        println(pair.pair.size)
-        return pairRepository.save(pair).toDomainModel()
     }
 
 }

@@ -8,7 +8,7 @@ data class MediaItemEntity(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long = 0,
         val type: MediaItemType = MediaItemType.TEXT,
-        var content: String = "",
+        val content: String = "",
         val fileExtension: String? = null,
         val contentType: String? = null,
         @Lob

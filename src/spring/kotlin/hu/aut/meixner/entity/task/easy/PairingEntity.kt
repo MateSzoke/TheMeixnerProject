@@ -2,16 +2,17 @@ package hu.aut.meixner.entity.task.easy
 
 import hu.aut.meixner.dto.SubjectEnum
 import hu.aut.meixner.entity.task.TaskEntity
-import javax.persistence.CascadeType
+import org.hibernate.annotations.Cascade
+import org.hibernate.annotations.CascadeType
 import java.time.OffsetDateTime
 import javax.persistence.Entity
-import javax.persistence.FetchType
 import javax.persistence.OneToMany
 
 @Entity
 data class PairingEntity(
-        @OneToMany(mappedBy = "pairingEntity", cascade = arrayOf(CascadeType.ALL), fetch = FetchType.EAGER)
-        val pairs: MutableList<PairEntity> = mutableListOf(),
+        @OneToMany
+        @Cascade(CascadeType.ALL)
+        val pairs: List<PairEntity> = emptyList(),
         override val title: String = "",
         override val owner: String = "",
         override val difficulty: Int = 0,

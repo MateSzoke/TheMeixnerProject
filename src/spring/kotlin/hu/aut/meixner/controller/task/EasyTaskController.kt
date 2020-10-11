@@ -39,26 +39,6 @@ class EasyTaskController(
         val pairing = pairingService.updatePairing(taskId, pairingRequest) ?: return ResponseEntity.notFound().build()
         return ResponseEntity.ok(pairing)
     }
-
-    @PatchMapping("/pairing/newelement/{elementId}")
-    @ApiOperation("Adds a new Pair element to pairing by id")
-    @CrossOrigin(exposedHeaders=["Access-Control-Allow-Origin"])
-    fun addElementToPairingById(
-            @PathVariable("elementId") elementId: Long
-    ): ResponseEntity<PairingResponse> {
-        val pairing = pairingService.addElementToPairing(elementId) ?: return ResponseEntity.notFound().build()
-        return ResponseEntity.ok(pairing)
-    }
-
-    @PatchMapping("/pairing/newpairelement/{elementId}")
-    @ApiOperation("Adds a new Pair element to pairing by id")
-    @CrossOrigin(exposedHeaders=["Access-Control-Allow-Origin"])
-    fun addElementToPairElementInPairingById(
-            @PathVariable("elementId") elementId: Long
-    ): ResponseEntity<Boolean> {
-        pairingService.addElementToPairElementInPairing(elementId) ?: return ResponseEntity.notFound().build()
-        return ResponseEntity.ok(true)
-    }
     //endregion
 
     //region Grouping

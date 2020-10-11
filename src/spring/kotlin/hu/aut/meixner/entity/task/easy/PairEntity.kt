@@ -1,14 +1,15 @@
 package hu.aut.meixner.entity.task.easy
 
 import hu.aut.meixner.entity.task.MediaItemEntity
+import org.hibernate.annotations.Cascade
+import org.hibernate.annotations.CascadeType
 import javax.persistence.*
 
 @Entity
 data class PairEntity(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long = 0,
-        @ManyToOne(fetch = FetchType.EAGER)
-        var pairingEntity: PairingEntity? = null,
-        @OneToMany(cascade = arrayOf(CascadeType.ALL), fetch = FetchType.EAGER)
+        @OneToMany
+        @Cascade(CascadeType.ALL)
         val pair: MutableList<MediaItemEntity> = mutableListOf()
 )
