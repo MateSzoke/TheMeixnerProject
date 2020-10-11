@@ -38,38 +38,34 @@ export class EvaluateService {
   public configuration = new Configuration();
   protected basePath = 'https://meixner.herokuapp.com';
 
-  constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
 
-    if (configuration) {
-      this.configuration = configuration;
-      this.configuration.basePath = configuration.basePath || basePath || this.basePath;
+      if (configuration) {
+        this.configuration = configuration;
+        this.configuration.basePath = configuration.basePath || basePath || this.basePath;
 
-    } else {
-      this.configuration.basePath = basePath || this.basePath;
+      } else {
+        this.configuration.basePath = basePath || this.basePath;
+      }
     }
-  }
 
   /**
    * Evaluate grouping request by taskId to a student by user id
    *
    * @param taskId taskId
-   * @param userId userId
    * @param groupingRequest taskRequest
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public evaluateGroupingUsingPOST(taskId: number, userId: number, groupingRequest: GroupingRequest, observe?: 'body', reportProgress?: boolean): Observable<TaskResultResponse>;
+  public evaluateGroupingUsingPOST(taskId: number, groupingRequest: GroupingRequest, observe?: 'body', reportProgress?: boolean): Observable<TaskResultResponse>;
 
-  public evaluateGroupingUsingPOST(taskId: number, userId: number, groupingRequest: GroupingRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TaskResultResponse>>;
+  public evaluateGroupingUsingPOST(taskId: number, groupingRequest: GroupingRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TaskResultResponse>>;
 
-  public evaluateGroupingUsingPOST(taskId: number, userId: number, groupingRequest: GroupingRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TaskResultResponse>>;
+  public evaluateGroupingUsingPOST(taskId: number, groupingRequest: GroupingRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TaskResultResponse>>;
 
-  public evaluateGroupingUsingPOST(taskId: number, userId: number, groupingRequest: GroupingRequest, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+  public evaluateGroupingUsingPOST(taskId: number, groupingRequest: GroupingRequest, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
     if (taskId === null || taskId === undefined) {
       throw new Error('Required parameter taskId was null or undefined when calling evaluateGroupingUsingPOST.');
-    }
-    if (userId === null || userId === undefined) {
-      throw new Error('Required parameter userId was null or undefined when calling evaluateGroupingUsingPOST.');
     }
     if (groupingRequest === null || groupingRequest === undefined) {
       throw new Error('Required parameter groupingRequest was null or undefined when calling evaluateGroupingUsingPOST.');
@@ -95,7 +91,7 @@ export class EvaluateService {
       headers = headers.set('Content-Type', httpContentTypeSelected);
     }
 
-    return this.httpClient.post<TaskResultResponse>(`${this.configuration.basePath}/evaluate/grouping/${encodeURIComponent(String(userId))}/${encodeURIComponent(String(taskId))}`,
+    return this.httpClient.post<TaskResultResponse>(`${this.configuration.basePath}/evaluate/grouping/${encodeURIComponent(String(taskId))}`,
       groupingRequest,
       {
         withCredentials: this.configuration.withCredentials,
@@ -110,23 +106,19 @@ export class EvaluateService {
    * Evaluate memory game request by taskId to a student by user id
    *
    * @param taskId taskId
-   * @param userId userId
    * @param memoryGameRequest taskRequest
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public evaluateMemoryGameUsingPOST(taskId: number, userId: number, memoryGameRequest: MemoryGameRequest, observe?: 'body', reportProgress?: boolean): Observable<TaskResultResponse>;
+  public evaluateMemoryGameUsingPOST(taskId: number, memoryGameRequest: MemoryGameRequest, observe?: 'body', reportProgress?: boolean): Observable<TaskResultResponse>;
 
-  public evaluateMemoryGameUsingPOST(taskId: number, userId: number, memoryGameRequest: MemoryGameRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TaskResultResponse>>;
+  public evaluateMemoryGameUsingPOST(taskId: number, memoryGameRequest: MemoryGameRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TaskResultResponse>>;
 
-  public evaluateMemoryGameUsingPOST(taskId: number, userId: number, memoryGameRequest: MemoryGameRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TaskResultResponse>>;
+  public evaluateMemoryGameUsingPOST(taskId: number, memoryGameRequest: MemoryGameRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TaskResultResponse>>;
 
-  public evaluateMemoryGameUsingPOST(taskId: number, userId: number, memoryGameRequest: MemoryGameRequest, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+  public evaluateMemoryGameUsingPOST(taskId: number, memoryGameRequest: MemoryGameRequest, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
     if (taskId === null || taskId === undefined) {
       throw new Error('Required parameter taskId was null or undefined when calling evaluateMemoryGameUsingPOST.');
-    }
-    if (userId === null || userId === undefined) {
-      throw new Error('Required parameter userId was null or undefined when calling evaluateMemoryGameUsingPOST.');
     }
     if (memoryGameRequest === null || memoryGameRequest === undefined) {
       throw new Error('Required parameter memoryGameRequest was null or undefined when calling evaluateMemoryGameUsingPOST.');
@@ -152,7 +144,7 @@ export class EvaluateService {
       headers = headers.set('Content-Type', httpContentTypeSelected);
     }
 
-    return this.httpClient.post<TaskResultResponse>(`${this.configuration.basePath}/evaluate/memory/${encodeURIComponent(String(userId))}/${encodeURIComponent(String(taskId))}`,
+    return this.httpClient.post<TaskResultResponse>(`${this.configuration.basePath}/evaluate/memory/${encodeURIComponent(String(taskId))}`,
       memoryGameRequest,
       {
         withCredentials: this.configuration.withCredentials,
@@ -167,23 +159,19 @@ export class EvaluateService {
    * Evaluate pairing request by taskId to a student by user id
    *
    * @param taskId taskId
-   * @param userId userId
    * @param pairingRequest taskRequest
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public evaluatePairingUsingPOST(taskId: number, userId: number, pairingRequest: PairingRequest, observe?: 'body', reportProgress?: boolean): Observable<TaskResultResponse>;
+  public evaluatePairingUsingPOST(taskId: number, pairingRequest: PairingRequest, observe?: 'body', reportProgress?: boolean): Observable<TaskResultResponse>;
 
-  public evaluatePairingUsingPOST(taskId: number, userId: number, pairingRequest: PairingRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TaskResultResponse>>;
+  public evaluatePairingUsingPOST(taskId: number, pairingRequest: PairingRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TaskResultResponse>>;
 
-  public evaluatePairingUsingPOST(taskId: number, userId: number, pairingRequest: PairingRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TaskResultResponse>>;
+  public evaluatePairingUsingPOST(taskId: number, pairingRequest: PairingRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TaskResultResponse>>;
 
-  public evaluatePairingUsingPOST(taskId: number, userId: number, pairingRequest: PairingRequest, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+  public evaluatePairingUsingPOST(taskId: number, pairingRequest: PairingRequest, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
     if (taskId === null || taskId === undefined) {
       throw new Error('Required parameter taskId was null or undefined when calling evaluatePairingUsingPOST.');
-    }
-    if (userId === null || userId === undefined) {
-      throw new Error('Required parameter userId was null or undefined when calling evaluatePairingUsingPOST.');
     }
     if (pairingRequest === null || pairingRequest === undefined) {
       throw new Error('Required parameter pairingRequest was null or undefined when calling evaluatePairingUsingPOST.');
@@ -209,7 +197,7 @@ export class EvaluateService {
       headers = headers.set('Content-Type', httpContentTypeSelected);
     }
 
-    return this.httpClient.post<TaskResultResponse>(`${this.configuration.basePath}/evaluate/pairing/${encodeURIComponent(String(userId))}/${encodeURIComponent(String(taskId))}`,
+    return this.httpClient.post<TaskResultResponse>(`${this.configuration.basePath}/evaluate/pairing/${encodeURIComponent(String(taskId))}`,
       pairingRequest,
       {
         withCredentials: this.configuration.withCredentials,
@@ -224,23 +212,19 @@ export class EvaluateService {
    * Evaluate sentence completion request by taskId to a student by user id
    *
    * @param taskId taskId
-   * @param userId userId
    * @param sentenceCompletionRequest taskRequest
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public evaluateSentenceCompletionUsingPOST(taskId: number, userId: number, sentenceCompletionRequest: SentenceCompletionRequest, observe?: 'body', reportProgress?: boolean): Observable<TaskResultResponse>;
+  public evaluateSentenceCompletionUsingPOST(taskId: number, sentenceCompletionRequest: SentenceCompletionRequest, observe?: 'body', reportProgress?: boolean): Observable<TaskResultResponse>;
 
-  public evaluateSentenceCompletionUsingPOST(taskId: number, userId: number, sentenceCompletionRequest: SentenceCompletionRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TaskResultResponse>>;
+  public evaluateSentenceCompletionUsingPOST(taskId: number, sentenceCompletionRequest: SentenceCompletionRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TaskResultResponse>>;
 
-  public evaluateSentenceCompletionUsingPOST(taskId: number, userId: number, sentenceCompletionRequest: SentenceCompletionRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TaskResultResponse>>;
+  public evaluateSentenceCompletionUsingPOST(taskId: number, sentenceCompletionRequest: SentenceCompletionRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TaskResultResponse>>;
 
-  public evaluateSentenceCompletionUsingPOST(taskId: number, userId: number, sentenceCompletionRequest: SentenceCompletionRequest, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+  public evaluateSentenceCompletionUsingPOST(taskId: number, sentenceCompletionRequest: SentenceCompletionRequest, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
     if (taskId === null || taskId === undefined) {
       throw new Error('Required parameter taskId was null or undefined when calling evaluateSentenceCompletionUsingPOST.');
-    }
-    if (userId === null || userId === undefined) {
-      throw new Error('Required parameter userId was null or undefined when calling evaluateSentenceCompletionUsingPOST.');
     }
     if (sentenceCompletionRequest === null || sentenceCompletionRequest === undefined) {
       throw new Error('Required parameter sentenceCompletionRequest was null or undefined when calling evaluateSentenceCompletionUsingPOST.');
@@ -266,7 +250,7 @@ export class EvaluateService {
       headers = headers.set('Content-Type', httpContentTypeSelected);
     }
 
-    return this.httpClient.post<TaskResultResponse>(`${this.configuration.basePath}/evaluate/sentenceCompletion/${encodeURIComponent(String(userId))}/${encodeURIComponent(String(taskId))}`,
+    return this.httpClient.post<TaskResultResponse>(`${this.configuration.basePath}/evaluate/sentenceCompletion/${encodeURIComponent(String(taskId))}`,
       sentenceCompletionRequest,
       {
         withCredentials: this.configuration.withCredentials,
@@ -281,23 +265,19 @@ export class EvaluateService {
    * Evaluate sentence creation request by taskId to a student by user id
    *
    * @param taskId taskId
-   * @param userId userId
    * @param sentenceCreationRequest taskRequest
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public evaluateSentenceCreationUsingPOST(taskId: number, userId: number, sentenceCreationRequest: SentenceCreationRequest, observe?: 'body', reportProgress?: boolean): Observable<TaskResultResponse>;
+  public evaluateSentenceCreationUsingPOST(taskId: number, sentenceCreationRequest: SentenceCreationRequest, observe?: 'body', reportProgress?: boolean): Observable<TaskResultResponse>;
 
-  public evaluateSentenceCreationUsingPOST(taskId: number, userId: number, sentenceCreationRequest: SentenceCreationRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TaskResultResponse>>;
+  public evaluateSentenceCreationUsingPOST(taskId: number, sentenceCreationRequest: SentenceCreationRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TaskResultResponse>>;
 
-  public evaluateSentenceCreationUsingPOST(taskId: number, userId: number, sentenceCreationRequest: SentenceCreationRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TaskResultResponse>>;
+  public evaluateSentenceCreationUsingPOST(taskId: number, sentenceCreationRequest: SentenceCreationRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TaskResultResponse>>;
 
-  public evaluateSentenceCreationUsingPOST(taskId: number, userId: number, sentenceCreationRequest: SentenceCreationRequest, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+  public evaluateSentenceCreationUsingPOST(taskId: number, sentenceCreationRequest: SentenceCreationRequest, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
     if (taskId === null || taskId === undefined) {
       throw new Error('Required parameter taskId was null or undefined when calling evaluateSentenceCreationUsingPOST.');
-    }
-    if (userId === null || userId === undefined) {
-      throw new Error('Required parameter userId was null or undefined when calling evaluateSentenceCreationUsingPOST.');
     }
     if (sentenceCreationRequest === null || sentenceCreationRequest === undefined) {
       throw new Error('Required parameter sentenceCreationRequest was null or undefined when calling evaluateSentenceCreationUsingPOST.');
@@ -323,7 +303,7 @@ export class EvaluateService {
       headers = headers.set('Content-Type', httpContentTypeSelected);
     }
 
-    return this.httpClient.post<TaskResultResponse>(`${this.configuration.basePath}/evaluate/sentenceCreation/${encodeURIComponent(String(userId))}/${encodeURIComponent(String(taskId))}`,
+    return this.httpClient.post<TaskResultResponse>(`${this.configuration.basePath}/evaluate/sentenceCreation/${encodeURIComponent(String(taskId))}`,
       sentenceCreationRequest,
       {
         withCredentials: this.configuration.withCredentials,
@@ -338,23 +318,19 @@ export class EvaluateService {
    * Evaluate sorting request by taskId to a student by user id
    *
    * @param taskId taskId
-   * @param userId userId
    * @param sortingRequest taskRequest
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public evaluateSortingUsingPOST(taskId: number, userId: number, sortingRequest: SortingRequest, observe?: 'body', reportProgress?: boolean): Observable<TaskResultResponse>;
+  public evaluateSortingUsingPOST(taskId: number, sortingRequest: SortingRequest, observe?: 'body', reportProgress?: boolean): Observable<TaskResultResponse>;
 
-  public evaluateSortingUsingPOST(taskId: number, userId: number, sortingRequest: SortingRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TaskResultResponse>>;
+  public evaluateSortingUsingPOST(taskId: number, sortingRequest: SortingRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TaskResultResponse>>;
 
-  public evaluateSortingUsingPOST(taskId: number, userId: number, sortingRequest: SortingRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TaskResultResponse>>;
+  public evaluateSortingUsingPOST(taskId: number, sortingRequest: SortingRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TaskResultResponse>>;
 
-  public evaluateSortingUsingPOST(taskId: number, userId: number, sortingRequest: SortingRequest, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+  public evaluateSortingUsingPOST(taskId: number, sortingRequest: SortingRequest, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
     if (taskId === null || taskId === undefined) {
       throw new Error('Required parameter taskId was null or undefined when calling evaluateSortingUsingPOST.');
-    }
-    if (userId === null || userId === undefined) {
-      throw new Error('Required parameter userId was null or undefined when calling evaluateSortingUsingPOST.');
     }
     if (sortingRequest === null || sortingRequest === undefined) {
       throw new Error('Required parameter sortingRequest was null or undefined when calling evaluateSortingUsingPOST.');
@@ -380,7 +356,7 @@ export class EvaluateService {
       headers = headers.set('Content-Type', httpContentTypeSelected);
     }
 
-    return this.httpClient.post<TaskResultResponse>(`${this.configuration.basePath}/evaluate/sorting/${encodeURIComponent(String(userId))}/${encodeURIComponent(String(taskId))}`,
+    return this.httpClient.post<TaskResultResponse>(`${this.configuration.basePath}/evaluate/sorting/${encodeURIComponent(String(taskId))}`,
       sortingRequest,
       {
         withCredentials: this.configuration.withCredentials,
@@ -395,23 +371,19 @@ export class EvaluateService {
    * Evaluate true false request by taskId to a student by user id
    *
    * @param taskId taskId
-   * @param userId userId
    * @param trueFalseRequest taskRequest
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public evaluateTrueFalseUsingPOST(taskId: number, userId: number, trueFalseRequest: TrueFalseRequest, observe?: 'body', reportProgress?: boolean): Observable<TaskResultResponse>;
+  public evaluateTrueFalseUsingPOST(taskId: number, trueFalseRequest: TrueFalseRequest, observe?: 'body', reportProgress?: boolean): Observable<TaskResultResponse>;
 
-  public evaluateTrueFalseUsingPOST(taskId: number, userId: number, trueFalseRequest: TrueFalseRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TaskResultResponse>>;
+  public evaluateTrueFalseUsingPOST(taskId: number, trueFalseRequest: TrueFalseRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TaskResultResponse>>;
 
-  public evaluateTrueFalseUsingPOST(taskId: number, userId: number, trueFalseRequest: TrueFalseRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TaskResultResponse>>;
+  public evaluateTrueFalseUsingPOST(taskId: number, trueFalseRequest: TrueFalseRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TaskResultResponse>>;
 
-  public evaluateTrueFalseUsingPOST(taskId: number, userId: number, trueFalseRequest: TrueFalseRequest, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+  public evaluateTrueFalseUsingPOST(taskId: number, trueFalseRequest: TrueFalseRequest, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
     if (taskId === null || taskId === undefined) {
       throw new Error('Required parameter taskId was null or undefined when calling evaluateTrueFalseUsingPOST.');
-    }
-    if (userId === null || userId === undefined) {
-      throw new Error('Required parameter userId was null or undefined when calling evaluateTrueFalseUsingPOST.');
     }
     if (trueFalseRequest === null || trueFalseRequest === undefined) {
       throw new Error('Required parameter trueFalseRequest was null or undefined when calling evaluateTrueFalseUsingPOST.');
@@ -437,7 +409,7 @@ export class EvaluateService {
       headers = headers.set('Content-Type', httpContentTypeSelected);
     }
 
-    return this.httpClient.post<TaskResultResponse>(`${this.configuration.basePath}/evaluate/truefalse/${encodeURIComponent(String(userId))}/${encodeURIComponent(String(taskId))}`,
+    return this.httpClient.post<TaskResultResponse>(`${this.configuration.basePath}/evaluate/truefalse/${encodeURIComponent(String(taskId))}`,
       trueFalseRequest,
       {
         withCredentials: this.configuration.withCredentials,

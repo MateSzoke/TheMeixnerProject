@@ -1,5 +1,6 @@
 package hu.aut.meixner.mapping
 
+import hu.aut.meixner.dto.task.common.MediaItemRequest
 import hu.aut.meixner.dto.task.common.MediaItemResponse
 import hu.aut.meixner.entity.task.MediaItemEntity
 import hu.aut.meixner.entity.task.MediaItemType.FILE
@@ -16,6 +17,14 @@ fun MediaItemEntity.toDomainModel(): MediaItemResponse {
                 TEXT -> content
                 FILE -> file.toContent(id)
             }
+    )
+}
+
+fun MediaItemRequest.toDomainModel(): MediaItemResponse {
+    return MediaItemResponse(
+            id = mediaItemId ?: 0,
+            content = content ?: "",
+            type = if (mediaItemId != null) FILE else TEXT
     )
 }
 
