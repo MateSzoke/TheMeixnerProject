@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {ExercisesService, UserResponse} from "../../../swagger-api";
+import {ExercisesService, ResultsService, UserResponse} from "../../../swagger-api";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {DateUtils} from "../../util/date";
 
@@ -16,6 +16,7 @@ export class ExerciseListComponent implements OnInit {
 
   constructor(
     private exerciseService: ExercisesService,
+    private resultsService: ResultsService,
     @Inject(MAT_DIALOG_DATA) public params: any
   ) {
     this.user = params.user
@@ -38,7 +39,7 @@ export class ExerciseListComponent implements OnInit {
   saveExercises() {
     this.exercises.forEach(exercise => {
       if (exercise.checked) {
-        // TODO uncomment if backend ready this.exerciseService.addTaskToExercisesUsingPOST(this.user.id, exercise.id).subscribe();
+        this.resultsService.addExercisesToUserUsingPOST(exercise.id, this.user.id).subscribe();
       }
     });
   }

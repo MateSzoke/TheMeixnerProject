@@ -18,8 +18,6 @@ import SubjectEnum = TaskResponse.SubjectEnum;
 })
 export class NewTaskComponent implements OnInit {
 
-  submitted = false;
-
   public types: Array<string>;
   public subjects: Array<string>;
   public classes: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -66,7 +64,6 @@ export class NewTaskComponent implements OnInit {
   }
 
   saveData() {
-    this.submitted = true;
     if (!this.newTaskForm.valid) {
       return
     }

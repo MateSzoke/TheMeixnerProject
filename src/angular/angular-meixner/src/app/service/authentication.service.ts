@@ -2,9 +2,10 @@ import {EventEmitter, Injectable, Output} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {RouteSelectorService} from './route-selector.service';
-import {AccountService} from '../../swagger-api';
+import {AccountService, UserRequest} from '../../swagger-api';
 import {LoginDTO} from "../model/LoginDTO";
 import {Path} from "../path";
+import RoleEnum = UserRequest.RoleEnum;
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +13,16 @@ import {Path} from "../path";
 export class AuthenticationService {
 
   @Output() userLoggedIn = new EventEmitter<boolean>(false);
+  @Output() userRole = new EventEmitter<RoleEnum>(false);
 
   loginError = false;
+
   constructor(
     private http: HttpClient,
     private router: Router,
     private service: AccountService,
-    private routeSelectorService: RouteSelectorService
+    private routeSelectorService: RouteSelectorService,
+    private accountService: AccountService
   ) {
     if (this.getAuthenticatedUser()) {
       this.userLoggedIn.emit(true);
@@ -31,6 +35,12 @@ export class AuthenticationService {
       this.userLoggedIn.emit(true);
     } else {
       this.userLoggedIn.emit(false);
+    }
+    if (sessionStorage.getItem('role') == 'ADMIN') {
+      console.log(sessionStorage.getItem('role'))
+      this.userRole.emit(RoleEnum.ADMIN)
+    } else {
+      this.userRole.emit(RoleEnum.STUDENT)
     }
   }
 
@@ -51,41 +61,42 @@ export class AuthenticationService {
   }
 
   public login(username: string, password: string) {
-    let loginDTO = {username: username , password:  password  } as LoginDTO;
-    const observable = this.service.loginUsingPOST(
-      JSON.stringify(loginDTO), 'response'
-    );
-    //this.router.navigate([this.routeSelectorService.getLastRequestedRouteUrl()]);
-    observable
-          .subscribe(resp => {
-                sessionStorage.setItem('authenticatedUser', username);
-                sessionStorage.setItem('token', resp.headers.get("Authorization"));
-                //sessionStorage.setItem('userid', resp.id);
-                this.userLoggedIn.emit(true);
-                if (this.routeSelectorService.getLastRequestedRouteUrl()) {
-                  this.router.navigate([this.routeSelectorService.getLastRequestedRouteUrl()]);
-                } else {
-                  this.router.navigate([`${Path.TASKS}/my`]);
-                }
-              this.loginError = false;
-            },
-            error1 => {
-              this.loginError = true;
-            });
-    return observable;
+    let loginDTO = {username: username, password: password} as LoginDTO;
+    this.service.loginUsingPOST(JSON.stringify(loginDTO), 'response').subscribe(resp => {
+        sessionStorage.setItem('authenticatedUser', username);
+        sessionStorage.setItem('token', resp.headers.get("Authorization"));
+        this.saveRole()
+        this.userLoggedIn.emit(true);
+        if (this.routeSelectorService.getLastRequestedRouteUrl()) {
+          this.router.navigate([this.routeSelectorService.getLastRequestedRouteUrl()]);
+        } else {
+          this.router.navigate([`${Path.TASKS}/my`]);
+        }
+        this.loginError = false;
+      },
+      () => {
+        this.loginError = true;
+      });
   }
 
 
   logout() {
-/*    this.service.logoutUsingGET()
-      .subscribe(() => {
-          sessionStorage.clear();
-          this.router.navigate(['login']);
-        }
-      );*/
+    /*    this.service.logoutUsingGET()
+          .subscribe(() => {
+              sessionStorage.clear();
+              this.router.navigate(['login']);
+            }
+          );*/
     this.userLoggedIn.emit(false);
     sessionStorage.clear();
     this.router.navigate([Path.LOGIN]);
+  }
+
+  private saveRole() {
+    this.accountService.getCurrentUserUsingGET().subscribe(user => {
+      sessionStorage.setItem('role', user.role)
+      this.userRole.emit(user.role)
+    })
   }
 
 }
