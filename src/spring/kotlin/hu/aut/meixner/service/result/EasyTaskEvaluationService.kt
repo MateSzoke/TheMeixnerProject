@@ -7,8 +7,6 @@ import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.mapping.toDomainModel
 import hu.aut.meixner.repository.result.StudentRepository
 import hu.aut.meixner.repository.result.TaskResultRepository
-import hu.aut.meixner.repository.task.easy.PairingRepository
-import hu.aut.meixner.repository.task.easy.SortingRepository
 import hu.aut.meixner.service.task.TaskService
 import org.springframework.stereotype.Service
 
@@ -16,9 +14,7 @@ import org.springframework.stereotype.Service
 class EasyTaskEvaluationService(
         private val taskService: TaskService,
         private val taskResultRepository: TaskResultRepository,
-        private val studentRepository: StudentRepository,
-        private val pairingRepository: PairingRepository,
-        private val sortingRepository: SortingRepository
+        private val studentRepository: StudentRepository
 ) {
 
     fun evaluatePairing(userId: Long, taskId: Long, taskRequest: PairingRequest): TaskResultResponse? {
