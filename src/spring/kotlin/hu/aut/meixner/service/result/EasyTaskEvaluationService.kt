@@ -3,6 +3,7 @@ package hu.aut.meixner.service.result
 import hu.aut.meixner.dto.result.TaskResultResponse
 import hu.aut.meixner.dto.task.common.TaskResponse
 import hu.aut.meixner.dto.task.easy.*
+import hu.aut.meixner.dto.task.student.easy.*
 import hu.aut.meixner.entity.result.StudentEntity
 import hu.aut.meixner.entity.result.TaskResultEntity
 import hu.aut.meixner.extensions.toNullable
@@ -21,7 +22,7 @@ class EasyTaskEvaluationService(
         private val userService: UserService
 ) {
 
-    fun evaluatePairing(taskId: Long, taskRequest: PairingRequest): TaskResultResponse? {
+    fun evaluatePairing(taskId: Long, taskRequest: PairingTaskRequest): TaskResultResponse? {
         val (student, taskResult) = getStudentAndTask<PairingResponse>(taskId) ?: return null
         var match = 0
         taskResult.pairs.forEach { resultPair ->
@@ -32,7 +33,7 @@ class EasyTaskEvaluationService(
         return saveTaskRequest(student, taskId, taskResult, calculateResultPercentage(taskRequest.pairs, taskResult.pairs, match))
     }
 
-    fun evaluateGrouping(taskId: Long, taskRequest: GroupingRequest): TaskResultResponse? {
+    fun evaluateGrouping(taskId: Long, taskRequest: GroupingTaskRequest): TaskResultResponse? {
         val (student, taskResult) = getStudentAndTask<GroupingResponse>(taskId) ?: return null
         var match = 0
         taskResult.groups.forEach { groupResult ->
@@ -43,13 +44,13 @@ class EasyTaskEvaluationService(
         return saveTaskRequest(student, taskId, taskResult, calculateResultPercentage(taskRequest.groups, taskResult.groups, match))
     }
 
-    fun evaluateSorting(taskId: Long, taskRequest: SortingRequest): TaskResultResponse? {
+    fun evaluateSorting(taskId: Long, taskRequest: SortingTaskRequest): TaskResultResponse? {
         val (student, taskResult) = getStudentAndTask<SortingResponse>(taskId) ?: return null
         val resultPercentage = taskRequest.elements.compareSortedResultMediaItems(taskResult.elements)
         return saveTaskRequest(student, taskId, taskResult, resultPercentage)
     }
 
-    fun evaluateSentenceCreation(taskId: Long, taskRequest: SentenceCreationRequest): TaskResultResponse? {
+    fun evaluateSentenceCreation(taskId: Long, taskRequest: SentenceCreationTaskRequest): TaskResultResponse? {
         val (student, taskResult) = getStudentAndTask<SentenceCreationResponse>(taskId) ?: return null
         var match = 0
         taskResult.sentences.forEach { sentenceResult ->
@@ -60,7 +61,7 @@ class EasyTaskEvaluationService(
         return saveTaskRequest(student, taskId, taskResult, calculateResultPercentage(taskRequest.sentences, taskResult.sentences, match))
     }
 
-    fun evaluateSentenceCompletion(taskId: Long, taskRequest: SentenceCompletionRequest): TaskResultResponse? {
+    fun evaluateSentenceCompletion(taskId: Long, taskRequest: SentenceCompletionTaskRequest): TaskResultResponse? {
         val (student, taskResult) = getStudentAndTask<SentenceCompletionResponse>(taskId) ?: return null
         var match = 0
         taskRequest.options.zip(taskResult.options).forEach { (requestOption, resultOption) ->
@@ -73,14 +74,14 @@ class EasyTaskEvaluationService(
         return saveTaskRequest(student, taskId, taskResult, resultPercentage)
     }
 
-    fun evaluateTrueFalse(taskId: Long, taskRequest: TrueFalseRequest): TaskResultResponse? {
+    fun evaluateTrueFalse(taskId: Long, taskRequest: TrueFalseTaskRequest): TaskResultResponse? {
         val (student, taskResult) = getStudentAndTask<TrueFalseResponse>(taskId) ?: return null
         val resultPercentage = (taskRequest.trueItems.compareResultMediaItems(taskResult.trueItems)
                 + taskRequest.falseItems.compareResultMediaItems(taskResult.falseItems)) / 2.0
         return saveTaskRequest(student, taskId, taskResult, resultPercentage)
     }
 
-    fun evaluateMemoryGame(taskId: Long, taskRequest: MemoryGameRequest): TaskResultResponse? {
+    fun evaluateMemoryGame(taskId: Long, taskRequest: MemoryGameTaskRequest): TaskResultResponse? {
         val (student, taskResult) = getStudentAndTask<MemoryGameResponse>(taskId) ?: return null
         var match = 0
         taskResult.pairs.forEach { resultPair ->
