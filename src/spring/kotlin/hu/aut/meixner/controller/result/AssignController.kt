@@ -1,5 +1,6 @@
 package hu.aut.meixner.controller.result
 
+import hu.aut.meixner.dto.result.AssignedExercise
 import hu.aut.meixner.dto.task.student.easy.AssignTask
 import hu.aut.meixner.service.result.AssignService
 import io.swagger.annotations.Api
@@ -21,6 +22,13 @@ class AssignController(
     @ApiOperation("Get assigned tasks by exercise id")
     fun getTasksByExerciseId(@PathVariable("exerciseId") exerciseId: Long): ResponseEntity<List<AssignTask>> {
         val result = assignService.getTasksByExerciseId(exerciseId) ?: return ResponseEntity.badRequest().build()
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/myExercises")
+    @ApiOperation("Get assigned exercises for the current student (user)")
+    fun getMyExercises(): ResponseEntity<List<AssignedExercise>> {
+        val result = assignService.getMyExercises() ?: return ResponseEntity.badRequest().build()
         return ResponseEntity.ok(result)
     }
 
