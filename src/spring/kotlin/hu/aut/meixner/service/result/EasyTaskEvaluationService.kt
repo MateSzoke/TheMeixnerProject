@@ -22,7 +22,6 @@ class EasyTaskEvaluationService(
 ) {
 
     fun evaluatePairing(taskId: Long, taskRequest: PairingRequest): TaskResultResponse? {
-
         val (student, taskResult) = getStudentAndTask<PairingResponse>(taskId) ?: return null
         var match = 0
         taskResult.pairs.forEach { resultPair ->
@@ -35,8 +34,13 @@ class EasyTaskEvaluationService(
 
     fun evaluateGrouping(taskId: Long, taskRequest: GroupingRequest): TaskResultResponse? {
         val (student, taskResult) = getStudentAndTask<GroupingResponse>(taskId) ?: return null
-        // TODO evaluate
-        return saveTaskRequest(student, taskId, taskResult, 0.0)
+        var match = 0
+        taskResult.groups.forEach { groupResult ->
+            taskRequest.groups.find { it.name == groupResult.name }?.let {
+                if (it.elements.equalsResultMediaItems(groupResult.elements)) match++
+            }
+        }
+        return saveTaskRequest(student, taskId, taskResult, calculateResultPercentage(taskRequest.groups, taskResult.groups, match))
     }
 
     fun evaluateSorting(taskId: Long, taskRequest: SortingRequest): TaskResultResponse? {

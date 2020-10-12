@@ -2,19 +2,24 @@ package hu.aut.meixner.service.result
 
 import hu.aut.meixner.dto.auth.UserResponse
 import hu.aut.meixner.dto.result.StudentResponse
+import hu.aut.meixner.dto.result.TaskResultResponse
 import hu.aut.meixner.entity.result.StudentEntity
 import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.mapping.toDomainModel
 import hu.aut.meixner.repository.auth.UserRepository
 import hu.aut.meixner.repository.result.StudentRepository
+import hu.aut.meixner.repository.result.TaskResultRepository
 import hu.aut.meixner.service.exercises.ExerciseService
+import hu.aut.meixner.service.task.TaskService
 import org.springframework.stereotype.Service
 
 @Service
 class ResultService(
         private val userRepository: UserRepository,
         private val exerciseService: ExerciseService,
-        private val studentRepository: StudentRepository
+        private val studentRepository: StudentRepository,
+        private val taskResultRepository: TaskResultRepository,
+        private val taskService: TaskService
 ) {
 
     fun getAllUsers(): List<UserResponse> {
@@ -52,6 +57,18 @@ class ResultService(
         val user = userRepository.findById(userId).toNullable ?: return null
         return studentRepository.save(student.copy(classLevel = classLevel))
                 .toDomainModel(user = user, exercises = student.getExercises())
+    }
+
+    fun getResults(): List<TaskResultResponse>? {
+        return taskResultRepository.findAll().map {
+            it.toDomainModel(taskService.getTaskById(it.resultTaskId) ?: return null)
+        }
+    }
+
+    fun getResultsByUserId(userId: Long): List<TaskResultResponse>? {
+        return taskResultRepository.findAll().filter { it.student.id == userId }.map {
+            it.toDomainModel(taskService.getTaskById(it.resultTaskId) ?: return null)
+        }
     }
 
     private fun StudentEntity.getExercises() = exerciseIds.mapNotNull { id -> exerciseService.getExercisesById(id) }
