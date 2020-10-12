@@ -1,5 +1,6 @@
 package hu.aut.meixner.mapping
 
+import hu.aut.meixner.dto.auth.UserResponse
 import hu.aut.meixner.dto.exercises.ExercisesResponse
 import hu.aut.meixner.dto.result.StudentResponse
 import hu.aut.meixner.dto.result.TaskResultResponse
@@ -17,10 +18,11 @@ fun StudentEntity.toDomainModel(user: UserEntity, exercises: List<ExercisesRespo
     )
 }
 
-fun TaskResultEntity.toDomainModel(taskResult: TaskResponse): TaskResultResponse {
+fun TaskResultEntity.toDomainModel(taskResult: TaskResponse, user: UserResponse): TaskResultResponse {
     return TaskResultResponse(
             id = id,
             taskResult = taskResult,
-            resultPercentage = resultPercentage
+            resultPercentage = resultPercentage,
+            user = user
     )
 }

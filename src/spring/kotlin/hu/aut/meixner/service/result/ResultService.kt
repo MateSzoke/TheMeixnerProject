@@ -9,6 +9,7 @@ import hu.aut.meixner.mapping.toDomainModel
 import hu.aut.meixner.repository.auth.UserRepository
 import hu.aut.meixner.repository.result.StudentRepository
 import hu.aut.meixner.repository.result.TaskResultRepository
+import hu.aut.meixner.service.auth.UserService
 import hu.aut.meixner.service.exercises.ExerciseService
 import hu.aut.meixner.service.task.TaskService
 import org.springframework.stereotype.Service
@@ -19,7 +20,8 @@ class ResultService(
         private val exerciseService: ExerciseService,
         private val studentRepository: StudentRepository,
         private val taskResultRepository: TaskResultRepository,
-        private val taskService: TaskService
+        private val taskService: TaskService,
+        private val userService: UserService
 ) {
 
     fun getAllUsers(): List<UserResponse> {
@@ -60,14 +62,27 @@ class ResultService(
     }
 
     fun getResults(): List<TaskResultResponse>? {
-        return taskResultRepository.findAll().map {
-            it.toDomainModel(taskService.getTaskById(it.resultTaskId) ?: return null)
+        return taskResultRepository.findAll().map { taskResultEntity ->
+            taskResultEntity.toDomainModel(
+                    taskResult = taskService.getTaskById(taskResultEntity.resultTaskId) ?: return null,
+                    user = taskResultEntity.student.user.toDomainModel())
         }
     }
 
     fun getResultsByUserId(userId: Long): List<TaskResultResponse>? {
-        return taskResultRepository.findAll().filter { it.student.id == userId }.map {
-            it.toDomainModel(taskService.getTaskById(it.resultTaskId) ?: return null)
+        return taskResultRepository.findAll().filter { it.student.id == userId }.map { taskResultEntity ->
+            taskResultEntity.toDomainModel(
+                    taskResult = taskService.getTaskById(taskResultEntity.resultTaskId) ?: return null,
+                    user = taskResultEntity.student.user.toDomainModel())
+        }
+    }
+
+    fun getMyResults(): List<TaskResultResponse>? {
+        val user = userService.getUser() ?: return null
+        return taskResultRepository.findAll().filter { it.student.id == user.id }.map {
+            it.toDomainModel(
+                    taskResult = taskService.getTaskById(it.resultTaskId) ?: return null,
+                    user = user)
         }
     }
 

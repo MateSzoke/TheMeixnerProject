@@ -94,6 +94,6 @@ class EasyTaskEvaluationService(
                 student = student,
                 resultTaskId = taskId,
                 resultPercentage = resultPercentage
-        )).toDomainModel(taskResult)
+        )).toDomainModel(taskResult = taskResult, user = student.user.toDomainModel())
     }
 }
