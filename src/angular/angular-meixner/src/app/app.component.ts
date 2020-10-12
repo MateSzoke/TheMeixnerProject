@@ -1,5 +1,7 @@
 import {Component} from '@angular/core';
 import {AuthenticationService} from './service/authentication.service';
+import {UserRequest} from "../swagger-api";
+import RoleEnum = UserRequest.RoleEnum;
 
 @Component({
   selector: 'app-root',
@@ -8,29 +10,33 @@ import {AuthenticationService} from './service/authentication.service';
 })
 export class AppComponent {
   title = 'angular-meixner';
-  public logInStatus = false;
+  logInStatus = false;
+  userRole: RoleEnum = null
 
   constructor(
     public authenticationService: AuthenticationService
   ) {
-      this.authenticationService.userLoggedIn.subscribe(
-        data => {
-          this.logInStatus = data;
-        },
-        err => {
-
-        },
-        fin => {
-
-        }
-      );
-      this.authenticationService.emitCurrentData();
+    this.authenticationService.userLoggedIn.subscribe(loggedIn => {
+        this.logInStatus = loggedIn;
+      }
+    );
+    this.authenticationService.userRole.subscribe(role => {
+      console.log(role)
+      this.userRole = role
+    })
+    this.authenticationService.emitCurrentData();
   }
 
   onLogout() {
     this.authenticationService.logout();
   }
 
+  isAdmin(): boolean {
+    if (this.userRole == null) {
+      return false
+    }
+    return this.userRole == RoleEnum.ADMIN
+  }
 
 }
 

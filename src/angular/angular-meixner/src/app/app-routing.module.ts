@@ -11,12 +11,15 @@ import {SentenceCreationComponent} from "./task_types/sentence-creation/sentence
 import {GroupingSortingComponent} from "./task_types/grouping-sorting/grouping-sorting.component";
 import {SentencecompletionGroupingComponent} from "./task_types/sentencecompletion-grouping/sentencecompletion-grouping.component";
 import {SentencecompletionSortingComponent} from "./task_types/sentencecompletion-sorting/sentencecompletion-sorting.component";
-import {SentenceCreationSortingComponent} from "./task_types/sentencecreation-sorting/sentence-creation-sorting.component";
+import {SentencecreationSortingComponent} from "./task_types/sentencecreation-sorting/sentencecreation-sorting.component";
 import {SortingGroupingComponent} from "./task_types/sorting-grouping/sorting-grouping.component";
 import {PairingComponent} from './task_types/pairing/pairing.component';
 import {GroupingComponent} from './task_types/grouping/grouping.component';
 import {UserResultsComponent} from "./users/user-results/user-results.component";
 import {Path} from "./path";
+import {NotFoundComponent} from "./not-found/not-found.component";
+import {MyResultsComponent} from "./student/my-results/my-results.component";
+import {MyExercisesComponent} from "./student/my-exercises/my-exercises.component";
 
 
 const routes: Routes = [
@@ -67,7 +70,7 @@ const routes: Routes = [
   },
   {
     path: Path.SENTENCE_CREATION_SORTING,
-    component: SentenceCreationSortingComponent,
+    component: SentencecreationSortingComponent,
     canActivate: [RouteGuardService]
   },
   {
@@ -91,8 +94,18 @@ const routes: Routes = [
     canActivate: [RouteGuardService]
   },
   {
-    path: `${Path.USER_DETAILS}`,
+    path: Path.USER_DETAILS,
     component: UserResultsComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: Path.STUDENT_RESULTS,
+    component: MyResultsComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: Path.STUDENT_EXERCISES,
+    component: MyExercisesComponent,
     canActivate: [RouteGuardService]
   },
   {
@@ -101,7 +114,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: LoginComponent,
+    component: NotFoundComponent,
     canActivate: [RouteGuardService]
   },
   {

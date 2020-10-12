@@ -17,6 +17,7 @@ import {HttpClient, HttpEvent, HttpHeaders, HttpResponse} from '@angular/common/
 import {Observable} from 'rxjs';
 
 import {StudentResponse} from '../model/studentResponse';
+import {TaskResultResponse} from '../model/taskResultResponse';
 import {UserResponse} from '../model/userResponse';
 
 import {BASE_PATH} from '../variables';
@@ -32,16 +33,16 @@ export class ResultsService {
   public defaultHeaders = new HttpHeaders();
   public configuration = new Configuration();
 
-    constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+  constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
 
-      if (configuration) {
-        this.configuration = configuration;
-        this.configuration.basePath = configuration.basePath || basePath || this.basePath;
+    if (configuration) {
+      this.configuration = configuration;
+      this.configuration.basePath = configuration.basePath || basePath || this.basePath;
 
-      } else {
-        this.configuration.basePath = basePath || this.basePath;
-      }
+    } else {
+      this.configuration.basePath = basePath || this.basePath;
     }
+  }
 
   /**
    * Add exercise to a user by id
@@ -244,6 +245,124 @@ export class ResultsService {
     const consumes: string[] = [];
 
     return this.httpClient.get<Array<UserResponse>>(`${this.configuration.basePath}/results/users`,
+      {
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress
+      }
+    );
+  }
+
+  /**
+   * Get my results as student
+   *
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getMyResultsUsingGET(observe?: 'body', reportProgress?: boolean): Observable<Array<TaskResultResponse>>;
+
+  public getMyResultsUsingGET(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<TaskResultResponse>>>;
+
+  public getMyResultsUsingGET(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<TaskResultResponse>>>;
+
+  public getMyResultsUsingGET(observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+
+    let headers = this.defaultHeaders;
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [
+      '*/*'
+    ];
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = [];
+
+    return this.httpClient.get<Array<TaskResultResponse>>(`${this.configuration.basePath}/results/my`,
+      {
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress
+      }
+    );
+  }
+
+  /**
+   * Get all results from student by userId
+   *
+   * @param userId userId
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getResultsByUserIdUsingGET(userId: number, observe?: 'body', reportProgress?: boolean): Observable<Array<TaskResultResponse>>;
+
+  public getResultsByUserIdUsingGET(userId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<TaskResultResponse>>>;
+
+  public getResultsByUserIdUsingGET(userId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<TaskResultResponse>>>;
+
+  public getResultsByUserIdUsingGET(userId: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    if (userId === null || userId === undefined) {
+      throw new Error('Required parameter userId was null or undefined when calling getResultsByUserIdUsingGET.');
+    }
+
+    let headers = this.defaultHeaders;
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [
+      '*/*'
+    ];
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = [];
+
+    return this.httpClient.get<Array<TaskResultResponse>>(`${this.configuration.basePath}/results/${encodeURIComponent(String(userId))}`,
+      {
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress
+      }
+    );
+  }
+
+  /**
+   * Get all student&#39;s all results
+   *
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getResultsUsingGET(observe?: 'body', reportProgress?: boolean): Observable<Array<TaskResultResponse>>;
+
+  public getResultsUsingGET(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<TaskResultResponse>>>;
+
+  public getResultsUsingGET(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<TaskResultResponse>>>;
+
+  public getResultsUsingGET(observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+
+    let headers = this.defaultHeaders;
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [
+      '*/*'
+    ];
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = [];
+
+    return this.httpClient.get<Array<TaskResultResponse>>(`${this.configuration.basePath}/results/all`,
       {
         withCredentials: this.configuration.withCredentials,
         headers: headers,

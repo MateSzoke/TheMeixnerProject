@@ -36,7 +36,7 @@ import {GroupingSortingComponent} from './task_types/grouping-sorting/grouping-s
 import {SentencecompletionGroupingComponent} from './task_types/sentencecompletion-grouping/sentencecompletion-grouping.component';
 import {SentencecompletionSortingComponent} from './task_types/sentencecompletion-sorting/sentencecompletion-sorting.component';
 import {SentencecreationGroupingComponent} from './task_types/sentencecreation-grouping/sentencecreation-grouping.component';
-import {SentenceCreationSortingComponent} from './task_types/sentencecreation-sorting/sentence-creation-sorting.component';
+import {SentencecreationSortingComponent} from './task_types/sentencecreation-sorting/sentencecreation-sorting.component';
 import {SortingGroupingComponent} from './task_types/sorting-grouping/sorting-grouping.component';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -46,6 +46,9 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {UserResultsComponent} from './users/user-results/user-results.component';
 import {ExerciseListComponent} from './users/excercise-list/exercise-list.component';
+import {NotFoundComponent} from './not-found/not-found.component';
+import {MyExercisesComponent} from './student/my-exercises/my-exercises.component';
+import {MyResultsComponent} from './student/my-results/my-results.component';
 
 @NgModule({
   declarations: [
@@ -66,11 +69,14 @@ import {ExerciseListComponent} from './users/excercise-list/exercise-list.compon
     SentencecompletionGroupingComponent,
     SentencecompletionSortingComponent,
     SentencecreationGroupingComponent,
-    SentenceCreationSortingComponent,
+    SentencecreationSortingComponent,
     SortingGroupingComponent,
     ExerciseTaskListComponent,
     UserResultsComponent,
-    ExerciseListComponent
+    ExerciseListComponent,
+    NotFoundComponent,
+    MyExercisesComponent,
+    MyResultsComponent
   ],
   imports: [
     BrowserModule,
