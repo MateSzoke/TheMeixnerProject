@@ -45,8 +45,8 @@ class EasyTaskEvaluationService(
 
     fun evaluateSorting(taskId: Long, taskRequest: SortingRequest): TaskResultResponse? {
         val (student, taskResult) = getStudentAndTask<SortingResponse>(taskId) ?: return null
-        // TODO evaluate
-        return saveTaskRequest(student, taskId, taskResult, 0.0)
+        val resultPercentage = taskRequest.elements.compareSortedResultMediaItems(taskResult.elements)
+        return saveTaskRequest(student, taskId, taskResult, resultPercentage)
     }
 
     fun evaluateSentenceCreation(taskId: Long, taskRequest: SentenceCreationRequest): TaskResultResponse? {
