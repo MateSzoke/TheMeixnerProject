@@ -62,20 +62,33 @@ class EasyTaskEvaluationService(
 
     fun evaluateSentenceCompletion(taskId: Long, taskRequest: SentenceCompletionRequest): TaskResultResponse? {
         val (student, taskResult) = getStudentAndTask<SentenceCompletionResponse>(taskId) ?: return null
-        // TODO evaluate
-        return saveTaskRequest(student, taskId, taskResult, 0.0)
+        var match = 0
+        taskRequest.options.zip(taskResult.options).forEach { (requestOption, resultOption) ->
+            if (requestOption == resultOption) match++
+        }
+        val resultPercentage = if (taskRequest.options.size <= taskResult.options.size)
+            match / taskRequest.options.size.toDouble()
+        else
+            match / taskResult.options.size.toDouble()
+        return saveTaskRequest(student, taskId, taskResult, resultPercentage)
     }
 
     fun evaluateTrueFalse(taskId: Long, taskRequest: TrueFalseRequest): TaskResultResponse? {
         val (student, taskResult) = getStudentAndTask<TrueFalseResponse>(taskId) ?: return null
-        // TODO evaluate
-        return saveTaskRequest(student, taskId, taskResult, 0.0)
+        val resultPercentage = (taskRequest.trueItems.compareResultMediaItems(taskResult.trueItems)
+                + taskRequest.falseItems.compareResultMediaItems(taskResult.falseItems)) / 2.0
+        return saveTaskRequest(student, taskId, taskResult, resultPercentage)
     }
 
     fun evaluateMemoryGame(taskId: Long, taskRequest: MemoryGameRequest): TaskResultResponse? {
         val (student, taskResult) = getStudentAndTask<MemoryGameResponse>(taskId) ?: return null
-        // TODO evaluate
-        return saveTaskRequest(student, taskId, taskResult, 0.0)
+        var match = 0
+        taskResult.pairs.forEach { resultPair ->
+            taskRequest.pairs.forEach { requestPair ->
+                if (requestPair.pair.equalsResultMediaItems(resultPair.pair)) match++
+            }
+        }
+        return saveTaskRequest(student, taskId, taskResult, calculateResultPercentage(taskRequest.pairs, taskResult.pairs, match))
     }
 
     private fun <T : TaskResponse> getStudentAndTask(taskId: Long): Pair<StudentEntity, T>? {
