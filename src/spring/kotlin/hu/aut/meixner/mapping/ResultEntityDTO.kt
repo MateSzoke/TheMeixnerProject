@@ -22,7 +22,7 @@ fun TaskResultEntity.toDomainModel(taskResult: TaskResponse, user: UserResponse)
     return TaskResultResponse(
             id = id,
             taskResult = taskResult,
-            resultPercentage = resultPercentage,
+            resultPercentage = resultPercentage * 100,
             user = user
     )
 }
