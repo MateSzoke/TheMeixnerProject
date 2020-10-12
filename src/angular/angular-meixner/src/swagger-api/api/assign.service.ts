@@ -17,6 +17,7 @@ import {HttpClient, HttpEvent, HttpHeaders, HttpResponse} from '@angular/common/
 import {Observable} from 'rxjs';
 
 import {AssignTask} from '../model/assignTask';
+import {AssignedExercise} from '../model/assignedExercise';
 
 import {BASE_PATH} from '../variables';
 import {Configuration} from '../configuration';
@@ -40,6 +41,44 @@ export class AssignService {
     } else {
       this.configuration.basePath = basePath || this.basePath;
     }
+  }
+
+  /**
+   * Get assigned exercises for the current student (user)
+   *
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getMyExercisesUsingGET(observe?: 'body', reportProgress?: boolean): Observable<Array<AssignedExercise>>;
+
+  public getMyExercisesUsingGET(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<AssignedExercise>>>;
+
+  public getMyExercisesUsingGET(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<AssignedExercise>>>;
+
+  public getMyExercisesUsingGET(observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+
+    let headers = this.defaultHeaders;
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [
+      '*/*'
+    ];
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = [];
+
+    return this.httpClient.get<Array<AssignedExercise>>(`${this.configuration.basePath}/assign/myExercises`,
+      {
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress
+      }
+    );
   }
 
   /**
