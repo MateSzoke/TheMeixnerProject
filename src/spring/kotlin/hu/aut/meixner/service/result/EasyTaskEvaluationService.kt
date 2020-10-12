@@ -51,8 +51,13 @@ class EasyTaskEvaluationService(
 
     fun evaluateSentenceCreation(taskId: Long, taskRequest: SentenceCreationRequest): TaskResultResponse? {
         val (student, taskResult) = getStudentAndTask<SentenceCreationResponse>(taskId) ?: return null
-        // TODO evaluate
-        return saveTaskRequest(student, taskId, taskResult, 0.0)
+        var match = 0
+        taskResult.sentences.forEach { sentenceResult ->
+            taskRequest.sentences.find { it.sentenceTitle == sentenceResult.sentenceTitle }?.let {
+                if (it.parts == sentenceResult.parts) match++
+            }
+        }
+        return saveTaskRequest(student, taskId, taskResult, calculateResultPercentage(taskRequest.sentences, taskResult.sentences, match))
     }
 
     fun evaluateSentenceCompletion(taskId: Long, taskRequest: SentenceCompletionRequest): TaskResultResponse? {
