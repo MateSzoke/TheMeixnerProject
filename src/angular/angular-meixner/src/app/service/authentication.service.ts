@@ -99,11 +99,13 @@ export class AuthenticationService {
   }
 
   private navigateToStartPage() {
-    if (sessionStorage.getItem('role') == 'ADMIN') {
-      this.router.navigate([`${Path.TASKS}/my`]);
-    } else {
-      this.router.navigate([Path.STUDENT_EXERCISES]);
-    }
+    this.userRole.subscribe(role => {
+      if (role == RoleEnum.ADMIN) {
+        this.router.navigate([`${Path.TASKS}/sajat`]);
+      } else {
+        this.router.navigate([Path.STUDENT_EXERCISES]);
+      }
+    })
   }
 
 }
