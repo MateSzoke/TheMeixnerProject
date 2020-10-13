@@ -1,4 +1,4 @@
-import {GroupingResponse, TaskResponse, UserRequest} from '../../swagger-api';
+import {TaskResponse, UserRequest} from '../../swagger-api';
 import {Path} from "../path";
 import TypeEnum = TaskResponse.TypeEnum;
 import RoleEnum = UserRequest.RoleEnum;
@@ -7,55 +7,55 @@ export class ConvertEnum {
 
   public static convertType(input: string): string {
     switch (input) {
-      case GroupingResponse.TypeEnum.Grouping.toString(): {
+      case TypeEnum.Grouping.toString(): {
         return 'csoportosítás';
       }
-      case GroupingResponse.TypeEnum.Pairing.toString(): {
+      case TypeEnum.Pairing.toString(): {
         return 'párosítás';
       }
-      case GroupingResponse.TypeEnum.SentenceCompletion.toString(): {
+      case TypeEnum.SentenceCompletion.toString(): {
         return 'mondatkiegészítés';
       }
-      case GroupingResponse.TypeEnum.SentenceCreation.toString(): {
+      case TypeEnum.SentenceCreation.toString(): {
         return 'mondatkészítés';
       }
-      case GroupingResponse.TypeEnum.Sorting.toString(): {
+      case TypeEnum.Sorting.toString(): {
         return 'sorrendezés';
       }
-      case GroupingResponse.TypeEnum.TrueFalse.toString(): {
+      case TypeEnum.TrueFalse.toString(): {
         return 'igaz-hamis';
       }
-      case GroupingResponse.TypeEnum.MemoryGame.toString(): {
+      case TypeEnum.MemoryGame.toString(): {
         return 'memóriajáték';
       }
-      case GroupingResponse.TypeEnum.GroupingAndSorting.toString(): {
+      case TypeEnum.GroupingAndSorting.toString(): {
         return 'csoportosítás és sorrendezés';
       }
-      case GroupingResponse.TypeEnum.SentenceCompletionAndGrouping.toString(): {
+      case TypeEnum.SentenceCompletionAndGrouping.toString(): {
         return 'mondatkiegészítés és csoportosítás';
       }
-      case GroupingResponse.TypeEnum.SentenceCompletionAndSorting.toString(): {
+      case TypeEnum.SentenceCompletionAndSorting.toString(): {
         return 'mondatkiegészítés és sorrendezés';
       }
-      case GroupingResponse.TypeEnum.SentenceCreationAndGrouping.toString(): {
+      case TypeEnum.SentenceCreationAndGrouping.toString(): {
         return 'mondatkészítés és csoportosítás';
       }
-      case GroupingResponse.TypeEnum.SentenceCreationAndSorting.toString(): {
+      case TypeEnum.SentenceCreationAndSorting.toString(): {
         return 'mondatkészítés és sorrendezés';
       }
-      case GroupingResponse.TypeEnum.SortingAndGrouping.toString(): {
+      case TypeEnum.SortingAndGrouping.toString(): {
         return 'sorrendezés és csoportosítás';
       }
-      case GroupingResponse.TypeEnum.BlindMap.toString(): {
+      case TypeEnum.BlindMap.toString(): {
         return 'memóriajáték';
       }
-      case GroupingResponse.TypeEnum.FreeText.toString(): {
+      case TypeEnum.FreeText.toString(): {
         return 'szabadszöveges feladatok';
       }
-      case GroupingResponse.TypeEnum.OddOneOut.toString(): {
+      case TypeEnum.OddOneOut.toString(): {
         return 'kakukktojás';
       }
-      case GroupingResponse.TypeEnum.TimeLine.toString(): {
+      case TypeEnum.TimeLine.toString(): {
         return 'időszalag';
       }
     }
@@ -77,6 +77,9 @@ export class ConvertEnum {
       }
       case TypeEnum.Sorting.toString(): {
         return Path.SORTING;
+      }
+      case TypeEnum.TrueFalse.toString(): {
+        return Path.TRUEFALSE;
       }
       case TypeEnum.GroupingAndSorting.toString(): {
         return Path.GROUPING_SORTING;
@@ -108,6 +111,43 @@ export class ConvertEnum {
       case TypeEnum.TimeLine.toString(): {
         return Path.TIMELINE;
       }
+    }
+  }
+
+  public static convertTypeToStudentRouterLink(input: string): string {
+    switch (input) {
+      case TypeEnum.Grouping.toString():
+        return Path.STUDENT_GROUPING;
+      case TypeEnum.Pairing.toString():
+        return Path.STUDENT_PAIRING;
+      case TypeEnum.SentenceCompletion.toString():
+        return Path.STUDENT_SENTENCE_COMPLETION;
+      case TypeEnum.SentenceCreation.toString():
+        return Path.STUDENT_SENTENCE_CREATION;
+      case TypeEnum.Sorting.toString():
+        return Path.STUDENT_SORTING;
+      case TypeEnum.TrueFalse.toString():
+        return Path.STUDENT_TRUEFALSE;
+      case TypeEnum.GroupingAndSorting.toString():
+        return Path.STUDENT_GROUPING_SORTING;
+      case TypeEnum.SentenceCompletionAndGrouping.toString():
+        return Path.STUDENT_SENTENCE_COMPLETION_GROUPING;
+      case TypeEnum.SentenceCompletionAndSorting.toString():
+        return Path.STUDENT_SENTENCE_COMPLETION_SORTING;
+      case TypeEnum.SentenceCreationAndGrouping.toString():
+        return Path.STUDENT_SENTENCE_CREATION_GROUPING;
+      case TypeEnum.SentenceCreationAndSorting.toString():
+        return Path.STUDENT_SENTENCE_CREATION_SORTING;
+      case TypeEnum.SortingAndGrouping.toString():
+        return Path.STUDENT_SORTING_GROUPING;
+      case TypeEnum.BlindMap.toString():
+        return Path.STUDENT_MEMORY_GAME;
+      case TypeEnum.FreeText.toString():
+        return Path.STUDENT_FREE_TEXT;
+      case TypeEnum.OddOneOut.toString():
+        return Path.STUDENT_ODD_ONE_OUT;
+      case TypeEnum.TimeLine.toString():
+        return Path.STUDENT_TIMELINE;
     }
   }
 

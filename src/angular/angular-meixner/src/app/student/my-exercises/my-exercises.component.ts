@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {AssignedExercise} from "../../../swagger-api/model/assignedExercise";
 import {AssignService} from "../../../swagger-api";
+import {Router} from "@angular/router";
+import {ConvertEnum} from "../../model/ConvertEnum";
 
 @Component({
   selector: 'app-my-exercises',
@@ -13,7 +15,8 @@ export class MyExercisesComponent implements OnInit {
   exercises: Array<AssignedExercise> = new Array<AssignedExercise>()
 
   constructor(
-    private assignService: AssignService
+    private assignService: AssignService,
+    private router: Router
   ) {
   }
 
@@ -27,6 +30,7 @@ export class MyExercisesComponent implements OnInit {
   solveExercise(exercise: AssignedExercise) {
     this.assignService.getTasksByExerciseIdUsingGET(exercise.id).subscribe(tasks => {
       console.log(tasks)
+      this.router.navigate([ConvertEnum.convertTypeToStudentRouterLink(tasks[0].type), tasks[0]])
     })
   }
 }
