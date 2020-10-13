@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 
 // @ts-ignore
@@ -9,7 +9,7 @@ export class RouteSelectorService {
 
   private messageSource = new BehaviorSubject('feladatsorok');
   selectedRoute = this.messageSource.asObservable();
-  private lastRequestedRouteUrl = "feladatsorok";
+  private lastRequestedRouteUrl: string = null;
 
   constructor() { }
 

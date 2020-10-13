@@ -37,7 +37,6 @@ export class AuthenticationService {
       this.userLoggedIn.emit(false);
     }
     if (sessionStorage.getItem('role') == 'ADMIN') {
-      console.log(sessionStorage.getItem('role'))
       this.userRole.emit(RoleEnum.ADMIN)
     } else {
       this.userRole.emit(RoleEnum.STUDENT)
@@ -70,7 +69,7 @@ export class AuthenticationService {
         if (this.routeSelectorService.getLastRequestedRouteUrl()) {
           this.router.navigate([this.routeSelectorService.getLastRequestedRouteUrl()]);
         } else {
-          this.router.navigate([`${Path.TASKS}/my`]);
+          this.navigateToStartPage();
         }
         this.loginError = false;
       },
@@ -97,6 +96,15 @@ export class AuthenticationService {
       sessionStorage.setItem('role', user.role)
       this.userRole.emit(user.role)
     })
+  }
+
+  private navigateToStartPage() {
+    if (sessionStorage.getItem('role') == 'ADMIN') {
+      this.router.navigate([`${Path.TASKS}/my`]);
+    } else {
+      this.router.navigate([Path.STUDENT_EXERCISES]);
+    }
+    debugger
   }
 
 }
