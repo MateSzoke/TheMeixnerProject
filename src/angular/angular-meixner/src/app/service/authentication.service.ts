@@ -104,7 +104,6 @@ export class AuthenticationService {
     } else {
       this.router.navigate([Path.STUDENT_EXERCISES]);
     }
-    debugger
   }
 
 }
