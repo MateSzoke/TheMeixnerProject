@@ -57,6 +57,7 @@ import {StudentSentenceCreationComponent} from './student/tasks/student-sentence
 import {StudentSentenceCompletionComponent} from './student/tasks/student-sentence-completion/student-sentence-completion.component';
 import {StudentTrueFalseComponent} from './student/tasks/student-true-false/student-true-false.component';
 import {StudentMemoryGameComponent} from './student/tasks/student-memory-game/student-memory-game.component';
+import {DragDropModule} from "@angular/cdk/drag-drop";
 
 @NgModule({
   declarations: [
@@ -116,7 +117,8 @@ import {StudentMemoryGameComponent} from './student/tasks/student-memory-game/st
     MatSliderModule,
     MatProgressSpinnerModule,
     NgbModule,
-    MatDialogModule
+    MatDialogModule,
+    DragDropModule
   ],
   providers: [
     DomService,
