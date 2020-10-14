@@ -33,7 +33,7 @@ fun List<MediaItemRequest>.equalsSortedResultMediaItems(resultMediaItems: List<M
     return map { it.toDomainModel() } == resultMediaItems
 }
 
-fun TaskResponse.toAssignClass(): AssignTask? {
+fun TaskResponse.toAssignTask(): AssignTask? {
     return when (type) {
         Grouping -> {
             val task = this as? GroupingResponse ?: return null

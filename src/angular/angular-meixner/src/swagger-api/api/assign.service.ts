@@ -85,25 +85,64 @@ export class AssignService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<Array<AssignedExercise>>(`${this.configuration.basePath}/assign/myExercises`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
+      return this.httpClient.get<Array<AssignedExercise>>(`${this.configuration.basePath}/assign/myExercises`,
+        {
+          withCredentials: this.configuration.withCredentials,
+          headers: headers,
+          observe: observe,
+          reportProgress: reportProgress
+        }
+      );
     }
 
-    /**
-     * Get assigned tasks by exercise id
-     *
-     * @param exerciseId exerciseId
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public getTasksByExerciseIdUsingGET(exerciseId: number, observe?: 'body', reportProgress?: boolean): Observable<Array<AssignTask>>;
-    public getTasksByExerciseIdUsingGET(exerciseId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<AssignTask>>>;
+  /**
+   * Get student task by task id
+   *
+   * @param taskId taskId
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getStudentTaskByIdUsingGET(taskId: number, observe?: 'body', reportProgress?: boolean): Observable<AssignTask>;
+  public getStudentTaskByIdUsingGET(taskId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<AssignTask>>;
+  public getStudentTaskByIdUsingGET(taskId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<AssignTask>>;
+  public getStudentTaskByIdUsingGET(taskId: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    if (taskId === null || taskId === undefined) {
+      throw new Error('Required parameter taskId was null or undefined when calling getStudentTaskByIdUsingGET.');
+    }
+
+    let headers = this.defaultHeaders;
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [
+      '*/*'
+    ];
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = [];
+
+    return this.httpClient.get<AssignTask>(`${this.configuration.basePath}/assign/task/${encodeURIComponent(String(taskId))}`,
+      {
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress
+      }
+    );
+  }
+
+  /**
+   * Get assigned tasks by exercise id
+   *
+   * @param exerciseId exerciseId
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getTasksByExerciseIdUsingGET(exerciseId: number, observe?: 'body', reportProgress?: boolean): Observable<Array<AssignTask>>;
+  public getTasksByExerciseIdUsingGET(exerciseId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<AssignTask>>>;
     public getTasksByExerciseIdUsingGET(exerciseId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<AssignTask>>>;
     public getTasksByExerciseIdUsingGET(exerciseId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (exerciseId === null || exerciseId === undefined) {
