@@ -18,6 +18,7 @@ import {Observable} from 'rxjs';
 
 import {AssignTask} from '../model/assignTask';
 import {AssignedExercise} from '../model/assignedExercise';
+import {StartedExercise} from '../model/startedExercise';
 
 import {BASE_PATH} from '../variables';
 import {Configuration} from '../configuration';
@@ -32,109 +33,146 @@ export class AssignService {
   public configuration = new Configuration();
   protected basePath = 'https://meixner.herokuapp.com';
 
-  constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
 
-    if (configuration) {
-      this.configuration = configuration;
-      this.configuration.basePath = configuration.basePath || basePath || this.basePath;
+        if (configuration) {
+            this.configuration = configuration;
+            this.configuration.basePath = configuration.basePath || basePath || this.basePath;
 
-    } else {
-      this.configuration.basePath = basePath || this.basePath;
-    }
-  }
-
-  /**
-   * Get assigned exercises for the current student (user)
-   *
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public getMyExercisesUsingGET(observe?: 'body', reportProgress?: boolean): Observable<Array<AssignedExercise>>;
-
-  public getMyExercisesUsingGET(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<AssignedExercise>>>;
-
-  public getMyExercisesUsingGET(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<AssignedExercise>>>;
-
-  public getMyExercisesUsingGET(observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-
-    let headers = this.defaultHeaders;
-
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = [
-      '*/*'
-    ];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+        } else {
+            this.configuration.basePath = basePath || this.basePath;
+        }
     }
 
-    // to determine the Content-Type header
-    const consumes: string[] = [];
-
-    return this.httpClient.get<Array<AssignedExercise>>(`${this.configuration.basePath}/assign/myExercises`,
-      {
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress
-      }
-    );
-  }
-
-  /**
-   * Get assigned tasks by exercise id
-   *
-   * @param exerciseId exerciseId
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public getTasksByExerciseIdUsingGET(exerciseId: number, observe?: 'body', reportProgress?: boolean): Observable<Array<AssignTask>>;
-
-  public getTasksByExerciseIdUsingGET(exerciseId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<AssignTask>>>;
-
-  public getTasksByExerciseIdUsingGET(exerciseId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<AssignTask>>>;
-
-  public getTasksByExerciseIdUsingGET(exerciseId: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-    if (exerciseId === null || exerciseId === undefined) {
-      throw new Error('Required parameter exerciseId was null or undefined when calling getTasksByExerciseIdUsingGET.');
+    /**
+     * @param consumes string[] mime-types
+     * @return true: consumes contains 'multipart/form-data', false: otherwise
+     */
+    private canConsumeForm(consumes: string[]): boolean {
+        const form = 'multipart/form-data';
+        for (const consume of consumes) {
+            if (form === consume) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    let headers = this.defaultHeaders;
 
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = [
-      '*/*'
-    ];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    /**
+     * Get assigned exercises for the current student (user)
+     *
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getMyExercisesUsingGET(observe?: 'body', reportProgress?: boolean): Observable<Array<AssignedExercise>>;
+    public getMyExercisesUsingGET(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<AssignedExercise>>>;
+    public getMyExercisesUsingGET(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<AssignedExercise>>>;
+    public getMyExercisesUsingGET(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.get<Array<AssignedExercise>>(`${this.configuration.basePath}/assign/myExercises`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
     }
 
-    // to determine the Content-Type header
-    const consumes: string[] = [];
+    /**
+     * Get assigned tasks by exercise id
+     *
+     * @param exerciseId exerciseId
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getTasksByExerciseIdUsingGET(exerciseId: number, observe?: 'body', reportProgress?: boolean): Observable<Array<AssignTask>>;
+    public getTasksByExerciseIdUsingGET(exerciseId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<AssignTask>>>;
+    public getTasksByExerciseIdUsingGET(exerciseId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<AssignTask>>>;
+    public getTasksByExerciseIdUsingGET(exerciseId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (exerciseId === null || exerciseId === undefined) {
+            throw new Error('Required parameter exerciseId was null or undefined when calling getTasksByExerciseIdUsingGET.');
+        }
 
-    return this.httpClient.get<Array<AssignTask>>(`${this.configuration.basePath}/assign/${encodeURIComponent(String(exerciseId))}`,
-      {
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress
-      }
-    );
-  }
+        let headers = this.defaultHeaders;
 
-  /**
-   * @param consumes string[] mime-types
-   * @return true: consumes contains 'multipart/form-data', false: otherwise
-   */
-  private canConsumeForm(consumes: string[]): boolean {
-    const form = 'multipart/form-data';
-    for (const consume of consumes) {
-      if (form === consume) {
-        return true;
-      }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.get<Array<AssignTask>>(`${this.configuration.basePath}/assign/${encodeURIComponent(String(exerciseId))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
     }
-    return false;
-  }
+
+    /**
+     * Start solving exercise by exercise id
+     *
+     * @param exerciseId exerciseId
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public startExerciseUsingGET(exerciseId: number, observe?: 'body', reportProgress?: boolean): Observable<StartedExercise>;
+    public startExerciseUsingGET(exerciseId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<StartedExercise>>;
+    public startExerciseUsingGET(exerciseId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<StartedExercise>>;
+    public startExerciseUsingGET(exerciseId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (exerciseId === null || exerciseId === undefined) {
+            throw new Error('Required parameter exerciseId was null or undefined when calling startExerciseUsingGET.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.get<StartedExercise>(`${this.configuration.basePath}/assign/start/${encodeURIComponent(String(exerciseId))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
 
 }
