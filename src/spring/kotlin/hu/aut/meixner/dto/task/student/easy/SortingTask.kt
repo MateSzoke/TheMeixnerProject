@@ -5,6 +5,7 @@ import hu.aut.meixner.dto.task.common.TaskTypeEnum
 
 class SortingTask(
         override val taskId: Long,
+        override val title: String,
         override val type: TaskTypeEnum = TaskTypeEnum.Sorting,
         val elements: List<MediaItemResponse>
 ) : AssignTask()
