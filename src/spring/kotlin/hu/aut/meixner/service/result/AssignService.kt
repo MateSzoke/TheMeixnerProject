@@ -61,7 +61,7 @@ class AssignService(
                 taskIds = taskIds,
                 solvedTaskIds = solvedExercise.solvedTaskIds,
                 taskResult = taskResult,
-                nextTask = exercise.tasks.first { it.id == nextTaskId }.toAssignTask()
+                nextTask = exercise.tasks.firstOrNull { it.id == nextTaskId }?.toAssignTask()
         )
     }
 
