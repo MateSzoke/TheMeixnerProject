@@ -63,7 +63,7 @@ class AssignService(
         return student.exercises.map { exercise ->
             AssignedExercise(
                     id = exercise.id,
-                    name = exercise.name,
+                    name = exercise.name
             )
         }
     }

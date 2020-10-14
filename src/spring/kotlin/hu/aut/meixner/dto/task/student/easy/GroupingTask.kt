@@ -8,5 +8,5 @@ class GroupingTask(
         override val title: String,
         override val type: TaskTypeEnum = TaskTypeEnum.Grouping,
         val groups: List<String>,
-        val elements: List<MediaItemResponse>,
+        val elements: List<MediaItemResponse>
 ) : AssignTask()
