@@ -20,6 +20,14 @@ import {Path} from "./path";
 import {NotFoundComponent} from "./not-found/not-found.component";
 import {MyResultsComponent} from "./student/my-results/my-results.component";
 import {MyExercisesComponent} from "./student/my-exercises/my-exercises.component";
+import {TrueFalseComponent} from "./task_types/true-false/true-false.component";
+import {StudentMemoryGameComponent} from "./student/tasks/student-memory-game/student-memory-game.component";
+import {StudentGroupingComponent} from "./student/tasks/student-grouping/student-grouping.component";
+import {StudentPairingComponent} from "./student/tasks/student-pairing/student-pairing.component";
+import {StudentSentenceCompletionComponent} from "./student/tasks/student-sentence-completion/student-sentence-completion.component";
+import {StudentSentenceCreationComponent} from "./student/tasks/student-sentence-creation/student-sentence-creation.component";
+import {StudentSortingComponent} from "./student/tasks/student-sorting/student-sorting.component";
+import {StudentTrueFalseComponent} from "./student/tasks/student-true-false/student-true-false.component";
 
 
 const routes: Routes = [
@@ -51,6 +59,11 @@ const routes: Routes = [
   {
     path: Path.SORTING,
     component: SortingComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: Path.TRUEFALSE,
+    component: TrueFalseComponent,
     canActivate: [RouteGuardService]
   },
   {
@@ -106,6 +119,41 @@ const routes: Routes = [
   {
     path: Path.STUDENT_EXERCISES,
     component: MyExercisesComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: Path.STUDENT_GROUPING,
+    component: StudentGroupingComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: Path.STUDENT_PAIRING,
+    component: StudentPairingComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: Path.STUDENT_MEMORY_GAME,
+    component: StudentMemoryGameComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: Path.STUDENT_SENTENCE_COMPLETION,
+    component: StudentSentenceCompletionComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: Path.STUDENT_SENTENCE_CREATION,
+    component: StudentSentenceCreationComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: Path.STUDENT_SORTING,
+    component: StudentSortingComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: Path.STUDENT_TRUEFALSE,
+    component: StudentTrueFalseComponent,
     canActivate: [RouteGuardService]
   },
   {

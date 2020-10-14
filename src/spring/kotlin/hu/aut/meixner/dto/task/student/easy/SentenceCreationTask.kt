@@ -4,7 +4,8 @@ import hu.aut.meixner.dto.task.common.TaskTypeEnum
 
 class SentenceCreationTask(
         override val taskId: Long,
+        override val title: String,
         override val type: TaskTypeEnum = TaskTypeEnum.SentenceCreation,
-        val titles: List<String>,
+        val sentenceTitles: List<String>,
         val parts: List<String>
 ) : AssignTask()
