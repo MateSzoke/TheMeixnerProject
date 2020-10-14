@@ -12,6 +12,8 @@ export class Path {
   static SENTENCE_CREATION_GROUPING = 'mondatkeszites_csoportositas'
   static SENTENCE_CREATION_SORTING = 'mondatkeszites_sorrendezes'
   static TASKS = 'feladatok'
+  static TASKS_ALL = 'feladatok/osszes'
+  static TASKS_MY = 'feladatok/sajat'
   static EXERCISES = 'feladatsorok'
   static USERS = 'felhasznalok'
   static USER_DETAILS = 'felhasznalo'

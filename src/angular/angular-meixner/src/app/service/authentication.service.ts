@@ -101,7 +101,7 @@ export class AuthenticationService {
   private navigateToStartPage() {
     this.userRole.subscribe(role => {
       if (role == RoleEnum.ADMIN) {
-        this.router.navigate([`${Path.TASKS}/sajat`]);
+        this.router.navigate([Path.TASKS_MY]);
       } else {
         this.router.navigate([Path.STUDENT_EXERCISES]);
       }
