@@ -33,6 +33,13 @@ class AssignController(
         return ResponseEntity.ok(result)
     }
 
+    @GetMapping("/task/{taskId}")
+    @ApiOperation("Get student task by task id")
+    fun getStudentTaskById(@PathVariable("taskId") taskId: Long): ResponseEntity<AssignTask> {
+        val result = assignService.getStudentTasksById(taskId) ?: return ResponseEntity.badRequest().build()
+        return ResponseEntity.ok(result)
+    }
+
     @GetMapping("/myExercises")
     @ApiOperation("Get assigned exercises for the current student (user)")
     fun getMyExercises(): ResponseEntity<List<AssignedExercise>> {

@@ -9,6 +9,7 @@ import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.repository.result.SolvedExerciseRepository
 import hu.aut.meixner.service.auth.UserService
 import hu.aut.meixner.service.exercises.ExerciseService
+import hu.aut.meixner.service.task.TaskService
 import org.springframework.stereotype.Service
 
 @Service
@@ -16,12 +17,18 @@ class AssignService(
         private val exerciseService: ExerciseService,
         private val resultService: ResultService,
         private val userService: UserService,
-        private val solvedExerciseRepository: SolvedExerciseRepository
+        private val solvedExerciseRepository: SolvedExerciseRepository,
+        private val taskService: TaskService
 ) {
 
     fun getTasksByExerciseId(exerciseId: Long): List<AssignTask>? {
         val exercise = exerciseService.getExercisesById(exerciseId) ?: return null
-        return exercise.tasks.map { it.toAssignClass() ?: return null }
+        return exercise.tasks.map { it.toAssignTask() ?: return null }
+    }
+
+    fun getStudentTasksById(taskId: Long): AssignTask? {
+        val task = taskService.getTaskById(taskId) ?: return null
+        return task.toAssignTask()
     }
 
     fun startExercise(exerciseId: Long): StartedExercise? {
@@ -35,7 +42,7 @@ class AssignService(
                 taskIds = taskIds,
                 solvedTaskIds = emptyList(),
                 taskResult = null,
-                nextTask = exercise.tasks.first { it.id == nextTaskId }.toAssignClass()
+                nextTask = exercise.tasks.first { it.id == nextTaskId }.toAssignTask()
         )
     }
 
@@ -54,7 +61,7 @@ class AssignService(
                 taskIds = taskIds,
                 solvedTaskIds = solvedExercise.solvedTaskIds,
                 taskResult = taskResult,
-                nextTask = exercise.tasks.first { it.id == nextTaskId }.toAssignClass()
+                nextTask = exercise.tasks.first { it.id == nextTaskId }.toAssignTask()
         )
     }
 
