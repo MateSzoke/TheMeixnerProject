@@ -33,12 +33,13 @@ fun List<MediaItemRequest>.equalsSortedResultMediaItems(resultMediaItems: List<M
     return map { it.toDomainModel() } == resultMediaItems
 }
 
-fun TaskResponse.toAssignClass(): AssignTask? {
+fun TaskResponse.toAssignTask(): AssignTask? {
     return when (type) {
         Grouping -> {
             val task = this as? GroupingResponse ?: return null
             GroupingTask(
                     taskId = id,
+                    title = title,
                     groups = task.groups.map { it.name },
                     elements = task.groups.flatMap { it.elements }.shuffled()
             )
@@ -47,6 +48,7 @@ fun TaskResponse.toAssignClass(): AssignTask? {
             val task = this as? PairingResponse ?: return null
             PairingTask(
                     taskId = id,
+                    title = title,
                     elements = task.pairs.flatMap { it.pair }.shuffled()
             )
         }
@@ -54,6 +56,7 @@ fun TaskResponse.toAssignClass(): AssignTask? {
             val task = this as? SentenceCompletionResponse ?: return null
             SentenceCompletionTask(
                     taskId = id,
+                    title = title,
                     sentence = task.sentence,
                     options = task.options.shuffled()
             )
@@ -62,7 +65,8 @@ fun TaskResponse.toAssignClass(): AssignTask? {
             val task = this as? SentenceCreationResponse ?: return null
             SentenceCreationTask(
                     taskId = id,
-                    titles = task.sentences.map { it.sentenceTitle },
+                    title = title,
+                    sentenceTitles = task.sentences.map { it.sentenceTitle },
                     parts = task.sentences.flatMap { it.parts }.shuffled()
             )
         }
@@ -70,6 +74,7 @@ fun TaskResponse.toAssignClass(): AssignTask? {
             val task = this as? SortingResponse ?: return null
             SortingTask(
                     taskId = id,
+                    title = title,
                     elements = task.elements.shuffled()
             )
         }
@@ -77,6 +82,7 @@ fun TaskResponse.toAssignClass(): AssignTask? {
             val task = this as? TrueFalseResponse ?: return null
             TrueFalseTask(
                     taskId = id,
+                    title = title,
                     elements = (task.trueItems + task.falseItems).shuffled()
             )
         }
@@ -84,6 +90,7 @@ fun TaskResponse.toAssignClass(): AssignTask? {
             val task = this as? MemoryGameResponse ?: return null
             MemoryGameTask(
                     taskId = id,
+                    title = title,
                     elements = task.pairs.flatMap { it.pair }.shuffled()
             )
         }
