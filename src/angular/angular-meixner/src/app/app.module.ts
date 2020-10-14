@@ -49,6 +49,15 @@ import {ExerciseListComponent} from './users/excercise-list/exercise-list.compon
 import {NotFoundComponent} from './not-found/not-found.component';
 import {MyExercisesComponent} from './student/my-exercises/my-exercises.component';
 import {MyResultsComponent} from './student/my-results/my-results.component';
+import {TrueFalseComponent} from './task_types/true-false/true-false.component';
+import {StudentPairingComponent} from './student/tasks/student-pairing/student-pairing.component';
+import {StudentGroupingComponent} from './student/tasks/student-grouping/student-grouping.component';
+import {StudentSortingComponent} from './student/tasks/student-sorting/student-sorting.component';
+import {StudentSentenceCreationComponent} from './student/tasks/student-sentence-creation/student-sentence-creation.component';
+import {StudentSentenceCompletionComponent} from './student/tasks/student-sentence-completion/student-sentence-completion.component';
+import {StudentTrueFalseComponent} from './student/tasks/student-true-false/student-true-false.component';
+import {StudentMemoryGameComponent} from './student/tasks/student-memory-game/student-memory-game.component';
+import {DragDropModule} from "@angular/cdk/drag-drop";
 
 @NgModule({
   declarations: [
@@ -76,7 +85,15 @@ import {MyResultsComponent} from './student/my-results/my-results.component';
     ExerciseListComponent,
     NotFoundComponent,
     MyExercisesComponent,
-    MyResultsComponent
+    MyResultsComponent,
+    TrueFalseComponent,
+    StudentPairingComponent,
+    StudentGroupingComponent,
+    StudentSortingComponent,
+    StudentSentenceCreationComponent,
+    StudentSentenceCompletionComponent,
+    StudentTrueFalseComponent,
+    StudentMemoryGameComponent
   ],
   imports: [
     BrowserModule,
@@ -100,7 +117,8 @@ import {MyResultsComponent} from './student/my-results/my-results.component';
     MatSliderModule,
     MatProgressSpinnerModule,
     NgbModule,
-    MatDialogModule
+    MatDialogModule,
+    DragDropModule
   ],
   providers: [
     DomService,
