@@ -1,9 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {SortingTaskRequest} from "../../../../swagger-api/model/sortingTaskRequest";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {AssignService, EvaluateService} from "../../../../swagger-api";
 import {SortingTask} from "../../../../swagger-api/model/sortingTask";
+import {Path} from "../../../path";
+import {ConvertEnum} from "../../../model/ConvertEnum";
+import {MyExercisesComponent} from "../../my-exercises/my-exercises.component";
 
 @Component({
   selector: 'app-student-sorting',
@@ -18,6 +21,7 @@ export class StudentSortingComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private evaluateService: EvaluateService,
     private assignService: AssignService
   ) {
@@ -40,6 +44,11 @@ export class StudentSortingComponent implements OnInit {
   evaluateTask() {
     this.evaluateService.evaluateSortingUsingPOST(this.startedExerciseId, this.taskId, this.createTaskRequest()).subscribe(response => {
       console.log(response)
+      if (response.nextTask == undefined) {
+        this.router.navigate([Path.STUDENT_EXERCISE_RESULT, {startedExerciseId: this.startedExerciseId}])
+      } else {
+        this.router.navigate([ConvertEnum.convertTypeToStudentRouterLink(response.nextTask.type), MyExercisesComponent.getNavigationData(response)])
+      }
     })
   }
 

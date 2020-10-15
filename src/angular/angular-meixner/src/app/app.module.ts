@@ -58,6 +58,7 @@ import {StudentSentenceCompletionComponent} from './student/tasks/student-senten
 import {StudentTrueFalseComponent} from './student/tasks/student-true-false/student-true-false.component';
 import {StudentMemoryGameComponent} from './student/tasks/student-memory-game/student-memory-game.component';
 import {DragDropModule} from "@angular/cdk/drag-drop";
+import {ExerciseResultComponent} from './student/exercise-result/exercise-result.component';
 
 @NgModule({
   declarations: [
@@ -93,7 +94,8 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
     StudentSentenceCreationComponent,
     StudentSentenceCompletionComponent,
     StudentTrueFalseComponent,
-    StudentMemoryGameComponent
+    StudentMemoryGameComponent,
+    ExerciseResultComponent
   ],
   imports: [
     BrowserModule,

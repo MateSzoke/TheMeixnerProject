@@ -28,6 +28,7 @@ import {StudentSentenceCompletionComponent} from "./student/tasks/student-senten
 import {StudentSentenceCreationComponent} from "./student/tasks/student-sentence-creation/student-sentence-creation.component";
 import {StudentSortingComponent} from "./student/tasks/student-sorting/student-sorting.component";
 import {StudentTrueFalseComponent} from "./student/tasks/student-true-false/student-true-false.component";
+import {ExerciseResultComponent} from "./student/exercise-result/exercise-result.component";
 
 
 const routes: Routes = [
@@ -154,6 +155,11 @@ const routes: Routes = [
   {
     path: Path.STUDENT_TRUEFALSE,
     component: StudentTrueFalseComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: Path.STUDENT_EXERCISE_RESULT,
+    component: ExerciseResultComponent,
     canActivate: [RouteGuardService]
   },
   {

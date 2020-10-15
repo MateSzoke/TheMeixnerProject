@@ -28,7 +28,7 @@ export class MyExercisesComponent implements OnInit {
     })
   }
 
-  private static getNavigationData(startedExercise: StartedExercise) {
+  static getNavigationData(startedExercise: StartedExercise) {
     return {
       startedExerciseId: startedExercise.id,
       taskId: startedExercise.nextTask.taskId
