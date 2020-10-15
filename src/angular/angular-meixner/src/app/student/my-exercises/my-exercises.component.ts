@@ -3,6 +3,7 @@ import {AssignedExercise} from "../../../swagger-api/model/assignedExercise";
 import {AssignService} from "../../../swagger-api";
 import {Router} from "@angular/router";
 import {ConvertEnum} from "../../model/ConvertEnum";
+import {StartedExercise} from "../../../swagger-api/model/startedExercise";
 
 @Component({
   selector: 'app-my-exercises',
@@ -27,10 +28,17 @@ export class MyExercisesComponent implements OnInit {
     })
   }
 
+  static getNavigationData(startedExercise: StartedExercise) {
+    return {
+      startedExerciseId: startedExercise.id,
+      taskId: startedExercise.nextTask.taskId
+    }
+  }
+
   solveExercise(exercise: AssignedExercise) {
-    this.assignService.getTasksByExerciseIdUsingGET(exercise.id).subscribe(tasks => {
-      console.log(tasks)
-      this.router.navigate([ConvertEnum.convertTypeToStudentRouterLink(tasks[0].type), tasks[0]])
+    this.assignService.startExerciseUsingGET(exercise.id).subscribe(startedExercise => {
+      console.log(startedExercise)
+      this.router.navigate([ConvertEnum.convertTypeToStudentRouterLink(startedExercise.nextTask.type), MyExercisesComponent.getNavigationData(startedExercise)])
     })
   }
 }

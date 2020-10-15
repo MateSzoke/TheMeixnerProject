@@ -1,1 +1,43 @@
-<p>student-pairing works!</p>
+<div *ngIf="!loaded">
+  <div class="wrapper">
+    <div class="center">
+      <mat-spinner diameter="70"></mat-spinner>
+    </div>
+  </div>
+</div>
+<div *ngIf="loaded">
+  <p class="title"><b>Párosítás</b> - {{pairing.title}}</p>
+  <button (click)="evaluateTask()" class="addbtn" mat-raised-button type="button">
+    Kész, beküldöm a megoldást
+  </button>
+
+  <div cdkDropListGroup>
+    <div class="example-container">
+      <h2 class="subtitle">Elérhető elemek</h2>
+
+      <div
+        (cdkDropListDropped)="drop($event)"
+        [cdkDropListData]="pairing.elements"
+        cdkDropList
+        cdkDropListSortingDisabled
+        class="example-list">
+        <div *ngFor="let element of pairing.elements" cdkDrag class="example-box">{{element.content}}</div>
+      </div>
+
+      <button (click)="addPairElement()" class="addbtn" mat-raised-button type="button">
+        Új pár hozzáadása
+      </button>
+    </div>
+
+    <div *ngFor="let pair of pairingRequest.pairs" class="example-container">
+      <div
+        (cdkDropListDropped)="drop($event)"
+        [cdkDropListData]="pair.pair"
+        cdkDropList
+        cdkDropListSortingDisabled
+        class="example-list">
+        <div *ngFor="let element of pair.pair" cdkDrag class="example-box">{{element.content}}</div>
+      </div>
+    </div>
+  </div>
+</div>

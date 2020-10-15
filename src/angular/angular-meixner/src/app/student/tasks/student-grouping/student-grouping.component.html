@@ -1,1 +1,41 @@
-<p>student-grouping works!</p>
+<div *ngIf="!loaded">
+  <div class="wrapper">
+    <div class="center">
+      <mat-spinner diameter="70"></mat-spinner>
+    </div>
+  </div>
+</div>
+<div *ngIf="loaded">
+  <p class="title"><b>Csoportosítás</b> - {{grouping.title}}</p>
+  <button (click)="evaluateTask()" class="addbtn" mat-raised-button type="button">
+    Kész, beküldöm a megoldást
+  </button>
+
+  <div cdkDropListGroup>
+    <div class="example-container">
+      <h2 class="subtitle">Elérhető elemek</h2>
+
+      <div
+        (cdkDropListDropped)="drop($event)"
+        [cdkDropListData]="grouping.elements"
+        cdkDropList
+        cdkDropListSortingDisabled
+        class="example-list">
+        <div *ngFor="let element of grouping.elements" cdkDrag class="example-box">{{element.content}}</div>
+      </div>
+    </div>
+
+    <div *ngFor="let group of groupingRequest.groups" class="example-container">
+      <h2 class="subtitle">{{group.name}}</h2>
+
+      <div
+        (cdkDropListDropped)="drop($event)"
+        [cdkDropListData]="group.elements"
+        cdkDropList
+        cdkDropListSortingDisabled
+        class="example-list">
+        <div *ngFor="let element of group.elements" cdkDrag class="example-box">{{element.content}}</div>
+      </div>
+    </div>
+  </div>
+</div>
