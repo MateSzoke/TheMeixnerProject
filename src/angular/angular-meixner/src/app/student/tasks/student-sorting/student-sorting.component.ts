@@ -11,7 +11,7 @@ import {MyExercisesComponent} from "../../my-exercises/my-exercises.component";
 @Component({
   selector: 'app-student-sorting',
   templateUrl: './student-sorting.component.html',
-  styleUrls: ['./student-sorting.component.scss']
+  styleUrls: ['../student-tasks.scss']
 })
 export class StudentSortingComponent implements OnInit {
   loaded: boolean = false
@@ -27,7 +27,7 @@ export class StudentSortingComponent implements OnInit {
   ) {
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.taskId = Number.parseInt(this.route.snapshot.paramMap.get("taskId"))
     this.startedExerciseId = Number.parseInt(this.route.snapshot.paramMap.get("startedExerciseId"))
     this.assignService.getStudentTaskByIdUsingGET(this.taskId).subscribe(task => {
