@@ -7,7 +7,13 @@
 .title {
   text-align: center;
   font-size: x-large;
-  margin-top: 16px;
+  margin-top: 24px;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: large;
+  margin-top: 24px;
 }
 
 .addbtn {
@@ -16,9 +22,17 @@
   margin-top: 24px;
 }
 
+.example-container {
+  width: 400px;
+  max-width: 100%;
+  margin: 0 25px 25px 0;
+  display: inline-block;
+  vertical-align: top;
+}
+
 .example-list {
-  width: 500px;
-  margin-top: 60px;
+  width: 100%;
+  margin-top: 20px;
   max-width: 100%;
   border: solid 1px #ccc;
   min-height: 60px;
