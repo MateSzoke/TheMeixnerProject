@@ -14,7 +14,6 @@ import {GroupingTaskRequest} from "../../../../swagger-api/model/groupingTaskReq
   styleUrls: ['../student-tasks.scss']
 })
 export class StudentGroupingComponent implements OnInit {
-
   loaded: boolean = false
   startedExerciseId: number = null
   taskId: number = null
