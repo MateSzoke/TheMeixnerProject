@@ -16,6 +16,7 @@ import {HttpClient, HttpEvent, HttpHeaders, HttpResponse} from '@angular/common/
 
 import {Observable} from 'rxjs';
 
+import {ExerciseResult} from '../model/exerciseResult';
 import {StudentResponse} from '../model/studentResponse';
 import {TaskResultResponse} from '../model/taskResultResponse';
 import {UserResponse} from '../model/userResponse';
@@ -363,6 +364,48 @@ export class ResultsService {
     const consumes: string[] = [];
 
     return this.httpClient.get<Array<TaskResultResponse>>(`${this.configuration.basePath}/results/all`,
+      {
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress
+      }
+    );
+  }
+
+  /**
+   * Get results of a solved exercise by started exercise id
+   *
+   * @param solvedExerciseId solvedExerciseId
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getSolvedExerciseResultsUsingGET(solvedExerciseId: number, observe?: 'body', reportProgress?: boolean): Observable<ExerciseResult>;
+
+  public getSolvedExerciseResultsUsingGET(solvedExerciseId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ExerciseResult>>;
+
+  public getSolvedExerciseResultsUsingGET(solvedExerciseId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ExerciseResult>>;
+
+  public getSolvedExerciseResultsUsingGET(solvedExerciseId: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    if (solvedExerciseId === null || solvedExerciseId === undefined) {
+      throw new Error('Required parameter solvedExerciseId was null or undefined when calling getSolvedExerciseResultsUsingGET.');
+    }
+
+    let headers = this.defaultHeaders;
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [
+      '*/*'
+    ];
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = [];
+
+    return this.httpClient.get<ExerciseResult>(`${this.configuration.basePath}/results/solved/${encodeURIComponent(String(solvedExerciseId))}`,
       {
         withCredentials: this.configuration.withCredentials,
         headers: headers,
