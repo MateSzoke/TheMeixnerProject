@@ -92,7 +92,7 @@ class ResultController(
 
     @GetMapping("/my")
     @ApiOperation("Get my results as student")
-    fun getMyResults(): ResponseEntity<List<TaskResultResponse>> {
+    fun getMyResults(): ResponseEntity<List<ExerciseResult>> {
         val result = resultService.getMyResults() ?: return ResponseEntity.badRequest().build()
         return ResponseEntity.ok(result)
     }

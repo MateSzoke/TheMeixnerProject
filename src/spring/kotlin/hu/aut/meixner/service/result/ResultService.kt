@@ -80,12 +80,19 @@ class ResultService(
         }
     }
 
-    fun getMyResults(): List<TaskResultResponse>? {
+    fun getMyResults(): List<ExerciseResult>? {
         val user = userService.getUser() ?: return null
-        return taskResultRepository.findAll().filter { it.student.id == user.id }.mapNotNull {
-            it.toDomainModel(
-                    taskResult = taskService.getTaskById(it.resultTaskId) ?: return@mapNotNull null,
-                    user = user)
+        val taskResults = taskResultRepository.findAll().filter { it.student.id == user.id }
+        return solvedExerciseRepository.findAll().map { solvedExercise ->
+            ExerciseResult(
+                    taskResults = taskResults.filter { it.id in solvedExercise.taskResultIds }.mapNotNull { taskResult ->
+                        taskResult.toDomainModel(
+                                taskResult = taskService.getTaskById(taskResult.resultTaskId) ?: return@mapNotNull null,
+                                user = user)
+                    },
+                    exerciseName = exerciseService.getExercisesById(solvedExercise.id)?.name ?: return null,
+                    resultPercentage = solvedExercise.resultPercentages.average()
+            )
         }
     }
 
