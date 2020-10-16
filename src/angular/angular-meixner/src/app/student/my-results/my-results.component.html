@@ -1,1 +1,41 @@
-<p>my-results works!</p>
+<p class="title">Eredményeim</p>
+<div *ngIf="!loaded">
+  <div class="wrapper">
+    <div class="center">
+      <mat-spinner diameter="70"></mat-spinner>
+    </div>
+  </div>
+</div>
+<div *ngIf="loaded">
+  <div *ngIf="exercises.length == 0">
+    <p>Nincs még kitöltött feladatsorod</p>
+  </div>
+  <div *ngIf="exercises.length > 0">
+
+    <mat-expansion-panel *ngFor="let exercise of exercises" style="margin-top: 16px">
+      <mat-expansion-panel-header>
+        <div>
+          <mat-panel-title style="font-size: large">
+            {{exercise.exerciseName}}&nbsp; -
+          </mat-panel-title>
+        </div>
+        <div class="float-right">
+          <p><b>Eredmény:</b> {{exercise.resultPercentage}} </p>
+        </div>
+      </mat-expansion-panel-header>
+
+      <mat-card *ngFor="let task of exercise.taskResults" class="right-aligned-header" style="margin-top: 8px">
+        <div fxLayout="row" fxLayout.xs="column-reverse" fxLayoutGap="8px">
+          <div class="float-left">
+            {{task.taskResult.title}}&nbsp; -
+            <img class="image1" src="assets/icons/bars_lv2.png">
+          </div>
+          <div class="float-right">
+            Eredmény: {{task.resultPercentage }}
+            &nbsp;<button (click)="showExerciseResult(task)" mat-button>Megoldás</button>&nbsp;
+          </div>
+        </div>
+      </mat-card>
+    </mat-expansion-panel>
+  </div>
+</div>

@@ -11,7 +11,6 @@ import {StartedExercise} from "../../../swagger-api/model/startedExercise";
   styleUrls: ['./my-exercises.component.scss']
 })
 export class MyExercisesComponent implements OnInit {
-
   loaded: boolean = false
   exercises: Array<AssignedExercise> = new Array<AssignedExercise>()
 
