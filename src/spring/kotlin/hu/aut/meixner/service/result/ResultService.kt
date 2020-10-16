@@ -90,7 +90,7 @@ class ResultService(
                                 taskResult = taskService.getTaskById(taskResult.resultTaskId) ?: return@mapNotNull null,
                                 user = user)
                     },
-                    exerciseName = exerciseService.getExercisesById(solvedExercise.id)?.name ?: return null,
+                    exerciseName = exerciseService.getExercisesById(solvedExercise.exerciseId)?.name ?: return null,
                     resultPercentage = solvedExercise.resultPercentages.average()
             )
         }
