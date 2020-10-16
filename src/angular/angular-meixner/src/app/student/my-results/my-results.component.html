@@ -12,26 +12,21 @@
   </div>
   <div *ngIf="exercises.length > 0">
 
-    <mat-expansion-panel *ngFor="let exercise of exercises" style="margin-top: 16px">
+    <mat-expansion-panel *ngFor="let exercise of exercises" style="margin: 16px">
       <mat-expansion-panel-header>
         <div>
-          <mat-panel-title style="font-size: large">
-            {{exercise.exerciseName}}&nbsp; -
-          </mat-panel-title>
+          <mat-panel-title style="font-size: large">{{exercise.exerciseName}}</mat-panel-title>
         </div>
         <div class="float-right">
-          <p><b>Eredmény:</b> {{exercise.resultPercentage}} </p>
+          <p><b>Eredmény:</b> {{getPercentage(exercise.resultPercentage)}}</p>
         </div>
       </mat-expansion-panel-header>
 
       <mat-card *ngFor="let task of exercise.taskResults" class="right-aligned-header" style="margin-top: 8px">
         <div fxLayout="row" fxLayout.xs="column-reverse" fxLayoutGap="8px">
-          <div class="float-left">
-            {{task.taskResult.title}}&nbsp; -
-            <img class="image1" src="assets/icons/bars_lv2.png">
-          </div>
+          <div class="float-left">{{task.taskResult.title}}</div>
           <div class="float-right">
-            Eredmény: {{task.resultPercentage }}
+            Eredmény: {{getPercentage(task.resultPercentage)}}
             &nbsp;<button (click)="showExerciseResult(task)" mat-button>Megoldás</button>&nbsp;
           </div>
         </div>

@@ -30,4 +30,12 @@ export class MyResultsComponent implements OnInit {
   showExerciseResult(task: TaskResultResponse) {
 
   }
+
+  getPercentage(percentage: number): string {
+    if (isNaN(percentage)) {
+      return "-"
+    } else {
+      return `${Math.round(percentage)} %`
+    }
+  }
 }
