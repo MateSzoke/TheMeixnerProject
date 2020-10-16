@@ -24,13 +24,13 @@ class ExerciseService(
 
     fun getMyExercises(): List<ExercisesResponse> {
         return exerciseRepository.findAll().filter { it.owner == currentUser }.map { exercise ->
-            exercise.toDomainModel(tasks = getTaskEntitiesFromExercises(exercise) ?: emptyList())
+            exercise.toDomainModel(tasks = getTaskEntitiesFromExercises(exercise))
         }
     }
 
     fun getExercisesById(exercisesId: Long): ExercisesResponse? {
         val exercise = exerciseRepository.findById(exercisesId).toNullable ?: return null
-        return exercise.toDomainModel(tasks = getTaskEntitiesFromExercises(exercise) ?: return null)
+        return exercise.toDomainModel(tasks = getTaskEntitiesFromExercises(exercise))
     }
 
     fun addTaskToExercises(exercisesId: Long, taskId: Long): ExercisesResponse? {
@@ -51,12 +51,12 @@ class ExerciseService(
                 id = exercisesId,
                 name = exerciseRequest.name,
                 comment = exerciseRequest.comment
-        )).toDomainModel(tasks = getTaskEntitiesFromExercises(exercise) ?: return null)
+        )).toDomainModel(tasks = getTaskEntitiesFromExercises(exercise))
     }
 
-    private fun getTaskEntitiesFromExercises(exercise: ExercisesEntity): List<TaskResponse>? {
-        return exercise.taskIds.map { taskId ->
-            taskService.getTaskById(taskId) ?: return null
+    private fun getTaskEntitiesFromExercises(exercise: ExercisesEntity): List<TaskResponse> {
+        return exercise.taskIds.mapNotNull { taskId ->
+            taskService.getTaskById(taskId) ?: return@mapNotNull null
         }
     }
 
@@ -65,7 +65,7 @@ class ExerciseService(
         val exercise = exerciseRepository.findById(exercisesId).toNullable ?: return null
         if (isAdd) exercise.taskIds += task.id else exercise.taskIds -= task.id
         return exerciseRepository.save(exercise)
-                .toDomainModel(tasks = getTaskEntitiesFromExercises(exercise) ?: return null)
+                .toDomainModel(tasks = getTaskEntitiesFromExercises(exercise))
     }
 
 }

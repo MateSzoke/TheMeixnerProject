@@ -22,8 +22,8 @@ class MemoryGameService(
         if (request.pairs.any { it.pair.size !in 1..2 }) return null
         val result = request.toEntity(owner = currentUser, pairs = request.pairs.map { pair ->
             PairEntity(
-                    pair = pair.pair.map {
-                        mediaItemService.mediaItemRequestToEntity(it) ?: return null
+                    pair = pair.pair.mapNotNull {
+                        mediaItemService.mediaItemRequestToEntity(it) ?: return@mapNotNull null
                     }.toMutableList()
             )
         })
@@ -37,8 +37,8 @@ class MemoryGameService(
         return memoryGameRepository.save(
                 request.toEntity(owner = currentUser, pairs = request.pairs.map { pair ->
                     PairEntity(
-                            pair = pair.pair.map {
-                                mediaItemService.mediaItemRequestToEntity(it) ?: return null
+                            pair = pair.pair.mapNotNull {
+                                mediaItemService.mediaItemRequestToEntity(it) ?: return@mapNotNull null
                             }.toMutableList()
                     )
                 }).apply { this.id = id }
