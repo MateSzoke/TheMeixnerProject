@@ -76,14 +76,13 @@ export class AssignService {
         let httpHeaderAccepts: string[] = [
             '*/*'
         ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
+      const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+      if (httpHeaderAcceptSelected !== undefined) {
+        headers = headers.set('Accept', httpHeaderAcceptSelected);
+      }
 
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
+      // to determine the Content-Type header
+      const consumes: string[] = [];
 
       return this.httpClient.get<Array<AssignedExercise>>(`${this.configuration.basePath}/assign/myExercises`,
         {
@@ -143,16 +142,16 @@ export class AssignService {
    */
   public getTasksByExerciseIdUsingGET(exerciseId: number, observe?: 'body', reportProgress?: boolean): Observable<Array<AssignTask>>;
   public getTasksByExerciseIdUsingGET(exerciseId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<AssignTask>>>;
-    public getTasksByExerciseIdUsingGET(exerciseId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<AssignTask>>>;
-    public getTasksByExerciseIdUsingGET(exerciseId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-        if (exerciseId === null || exerciseId === undefined) {
-            throw new Error('Required parameter exerciseId was null or undefined when calling getTasksByExerciseIdUsingGET.');
-        }
+  public getTasksByExerciseIdUsingGET(exerciseId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<AssignTask>>>;
+  public getTasksByExerciseIdUsingGET(exerciseId: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    if (exerciseId === null || exerciseId === undefined) {
+      throw new Error('Required parameter exerciseId was null or undefined when calling getTasksByExerciseIdUsingGET.');
+    }
 
-        let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders;
 
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [
             '*/*'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);

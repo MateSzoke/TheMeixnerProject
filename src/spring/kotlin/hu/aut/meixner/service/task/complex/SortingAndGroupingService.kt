@@ -22,8 +22,8 @@ class SortingAndGroupingService(
         return repository.save(request.toEntity(owner = currentUser, groups = request.groups.map { grouping ->
             GroupElementEntity(
                     name = "",
-                    elements = grouping.elements.map {
-                        mediaItemService.mediaItemRequestToEntity(it) ?: return null
+                    elements = grouping.elements.mapNotNull {
+                        mediaItemService.mediaItemRequestToEntity(it) ?: return@mapNotNull null
                     }.toMutableList()
             )
         })).toDomainModel()
@@ -36,8 +36,8 @@ class SortingAndGroupingService(
                 request.toEntity(owner = currentUser, groups = request.groups.map { grouping ->
                     GroupElementEntity(
                             name = "",
-                            elements = grouping.elements.map {
-                                mediaItemService.mediaItemRequestToEntity(it) ?: return null
+                            elements = grouping.elements.mapNotNull {
+                                mediaItemService.mediaItemRequestToEntity(it) ?: return@mapNotNull null
                             }.toMutableList()
                     )
                 }).apply { this.id = id }

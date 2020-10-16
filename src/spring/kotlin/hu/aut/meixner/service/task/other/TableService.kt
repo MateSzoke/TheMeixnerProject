@@ -18,7 +18,7 @@ class TableService(
 ) {
     fun createTable(request: TableRequest): TableResponse? {
         return repository.save(request.toEntity(owner = currentUser, table = request.table.map { col ->
-            col.map { mediaItemService.mediaItemRequestToEntity(it) ?: return null }
+            col.mapNotNull { mediaItemService.mediaItemRequestToEntity(it) ?: return@mapNotNull null }
         })).toDomainModel()
     }
 
@@ -26,7 +26,7 @@ class TableService(
         val oddOneOutEntity = repository.findById(id).toNullable ?: return null
         if (!oddOneOutEntity.ownerIsTheCurrentUser) return null
         return repository.save(request.toEntity(owner = currentUser, table = request.table.map { col ->
-            col.map { mediaItemService.mediaItemRequestToEntity(it) ?: return null }
+            col.mapNotNull { mediaItemService.mediaItemRequestToEntity(it) ?: return@mapNotNull null }
         })).apply { this.id = id }.toDomainModel()
     }
 }

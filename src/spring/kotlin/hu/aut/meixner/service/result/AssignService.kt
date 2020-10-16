@@ -23,7 +23,7 @@ class AssignService(
 
     fun getTasksByExerciseId(exerciseId: Long): List<AssignTask>? {
         val exercise = exerciseService.getExercisesById(exerciseId) ?: return null
-        return exercise.tasks.map { it.toAssignTask() ?: return null }
+        return exercise.tasks.mapNotNull { it.toAssignTask() ?: return@mapNotNull null }
     }
 
     fun getStudentTasksById(taskId: Long): AssignTask? {
@@ -49,8 +49,11 @@ class AssignService(
     fun getStartedExercise(startedExerciseId: Long, solvedTaskId: Long, taskResult: TaskResultResponse): StartedExercise? {
         val solvedExercise = solvedExerciseRepository.findById(startedExerciseId).toNullable ?: return null
         val exercise = exerciseService.getExercisesById(solvedExercise.exerciseId) ?: return null
-        solvedExercise.solvedTaskIds += solvedTaskId
-        solvedExercise.resultPercentages += taskResult.resultPercentage
+        with(solvedExercise) {
+            solvedTaskIds += solvedTaskId
+            resultPercentages += taskResult.resultPercentage
+            taskResultIds += taskResult.id
+        }
         solvedExerciseRepository.save(solvedExercise)
         val taskIds = exercise.tasks.map { it.id }
         val nextTaskIds = taskIds - solvedExercise.solvedTaskIds

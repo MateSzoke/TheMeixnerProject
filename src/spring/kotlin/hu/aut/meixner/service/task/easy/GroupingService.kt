@@ -22,8 +22,8 @@ class GroupingService(
         return groupingRepository.save(groupingRequest.toEntity(owner = currentUser, groups = groupingRequest.groups.map { grouping ->
             GroupElementEntity(
                     name = grouping.name,
-                    elements = grouping.elements.map {
-                        mediaItemService.mediaItemRequestToEntity(it) ?: return null
+                    elements = grouping.elements.mapNotNull {
+                        mediaItemService.mediaItemRequestToEntity(it) ?: return@mapNotNull null
                     }.toMutableList()
             )
         })).toDomainModel()
@@ -35,8 +35,8 @@ class GroupingService(
         return groupingRepository.save(groupingRequest.toEntity(owner = currentUser, groups = groupingRequest.groups.map { grouping ->
             GroupElementEntity(
                     name = grouping.name,
-                    elements = grouping.elements.map {
-                        mediaItemService.mediaItemRequestToEntity(it) ?: return null
+                    elements = grouping.elements.mapNotNull {
+                        mediaItemService.mediaItemRequestToEntity(it) ?: return@mapNotNull null
                     }.toMutableList()
             )
         }).apply { this.id = id }
