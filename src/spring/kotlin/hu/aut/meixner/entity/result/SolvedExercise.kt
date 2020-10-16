@@ -9,6 +9,8 @@ class SolvedExercise(
         val exerciseId: Long = 0,
         @ElementCollection(targetClass = Long::class)
         val solvedTaskIds: MutableList<Long> = mutableListOf(),
+        @ElementCollection(targetClass = Long::class)
+        val taskResultIds: MutableList<Long> = mutableListOf(),
         @ElementCollection(targetClass = Double::class)
         val resultPercentages: MutableList<Double> = mutableListOf()
 )
