@@ -21,8 +21,8 @@ class PairingService(
     fun createPairing(pairing: PairingRequest): PairingResponse? {
         val result = pairing.toEntity(owner = currentUser, pairs = pairing.pairs.map { pair ->
             PairEntity(
-                    pair = pair.pair.map {
-                        mediaItemService.mediaItemRequestToEntity(it) ?: return null
+                    pair = pair.pair.mapNotNull {
+                        mediaItemService.mediaItemRequestToEntity(it) ?: return@mapNotNull null
                     }.toMutableList()
             )
         })
@@ -35,8 +35,8 @@ class PairingService(
         return pairingRepository.save(
                 pairingRequest.toEntity(owner = currentUser, pairs = pairingRequest.pairs.map { pair ->
                     PairEntity(
-                            pair = pair.pair.map {
-                                mediaItemService.mediaItemRequestToEntity(it) ?: return null
+                            pair = pair.pair.mapNotNull {
+                                mediaItemService.mediaItemRequestToEntity(it) ?: return@mapNotNull null
                             }.toMutableList()
                     )
                 }).apply { this.id = id }
