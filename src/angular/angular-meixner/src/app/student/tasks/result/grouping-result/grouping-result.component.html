@@ -6,7 +6,7 @@
   </div>
 </div>
 <div *ngIf="loaded">
-  <p class="title">{{groupingResult.title}} megoldás</p>
+  <p class="title">Csoportosítás - {{groupingResult.title}} - megoldás</p>
   <div *ngIf="getPercentage()" [ngStyle]="{'color': getPercentage() > 50 ? 'darkgreen' : 'brown'}" class="subtitle">
     Eredmény: {{getPercentageText()}}</div>
   <div *ngFor="let group of groupingResult.groups" class="task-element">

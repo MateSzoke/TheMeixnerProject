@@ -6,7 +6,7 @@
   </div>
 </div>
 <div *ngIf="loaded">
-  <p class="title">{{trueFalse.title}} megoldás</p>
+  <p class="title">Igaz-hamis - {{trueFalse.title}} - megoldás</p>
   <div *ngIf="getPercentage()" [ngStyle]="{'color': getPercentage() > 50 ? 'darkgreen' : 'brown'}" class="subtitle">
     Eredmény: {{getPercentageText()}}</div>
   <div class="subtitle">Igaz elemek</div>
