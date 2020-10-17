@@ -7,13 +7,16 @@
 </div>
 <div *ngIf="loaded">
   <p class="title">{{sentenceCreation.title}} megoldás</p>
-  <div [ngStyle]="{'color': startedExercise.taskResult.resultPercentage > 50 ? 'darkgreen' : 'brown'}" class="subtitle">
-    Eredmény: {{getPercentage()}}</div>
+  <div *ngIf="getPercentage()" [ngStyle]="{'color': getPercentage() > 50 ? 'darkgreen' : 'brown'}" class="subtitle">
+    Eredmény: {{getPercentageText()}}</div>
   <div *ngFor="let sentence of sentenceCreation.sentences">
     <div *ngFor="let element of sentence.parts">{{element}}</div>
   </div>
   <div mat-dialog-actions style="float: right">
-    <button (click)="finishExercise()" mat-button style="margin-top: 24px">Feladatsor befejezése</button>
-    <button [mat-dialog-close] class="addbtn" mat-button>Következő feladat</button>
+    <button (click)="finishExercise()" *ngIf="getPercentage()" mat-button style="margin-top: 24px">Feladatsor
+      befejezése
+    </button>
+    <button *ngIf="getPercentage()" [mat-dialog-close] class="addbtn" mat-button>Következő feladat</button>
+    <button *ngIf="!getPercentage()" [mat-dialog-close] class="addbtn" mat-button>Vissza</button>
   </div>
 </div>

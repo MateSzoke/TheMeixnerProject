@@ -18,19 +18,31 @@ export class SortingResultComponent implements OnInit {
     private router: Router,
     @Inject(MAT_DIALOG_DATA) public params: any
   ) {
-    this.startedExercise = params.startedExercise
-    this.sortingResponse = this.startedExercise.taskResult.taskResult as SortingResponse
+    if (params.startedExercise == undefined) {
+      this.sortingResponse = params.taskResult
+    } else {
+      this.startedExercise = params.startedExercise
+      this.sortingResponse = this.startedExercise.taskResult.taskResult as SortingResponse
+    }
     this.loaded = true
   }
 
   ngOnInit(): void {
   }
 
-  getPercentage(): string {
-    if (isNaN(this.startedExercise.taskResult.resultPercentage)) {
-      return "-"
+  getPercentageText(): string {
+    if (isNaN(this.getPercentage())) {
+      return ""
     } else {
-      return `${Math.round(this.startedExercise.taskResult.resultPercentage)} %`
+      return `${Math.round(this.getPercentage())} %`
+    }
+  }
+
+  getPercentage(): number {
+    if (this.startedExercise == undefined) {
+      return NaN
+    } else {
+      return this.startedExercise.taskResult.resultPercentage
     }
   }
 

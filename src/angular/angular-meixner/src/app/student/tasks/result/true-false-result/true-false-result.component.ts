@@ -18,19 +18,31 @@ export class TrueFalseResultComponent implements OnInit {
     private router: Router,
     @Inject(MAT_DIALOG_DATA) public params: any
   ) {
-    this.startedExercise = params.startedExercise
-    this.trueFalse = this.startedExercise.taskResult.taskResult as TrueFalseResponse
+    if (params.startedExercise == undefined) {
+      this.trueFalse = params.taskResult
+    } else {
+      this.startedExercise = params.startedExercise
+      this.trueFalse = this.startedExercise.taskResult.taskResult as TrueFalseResponse
+    }
     this.loaded = true
   }
 
   ngOnInit(): void {
   }
 
-  getPercentage(): string {
-    if (isNaN(this.startedExercise.taskResult.resultPercentage)) {
-      return "-"
+  getPercentageText(): string {
+    if (isNaN(this.getPercentage())) {
+      return ""
     } else {
-      return `${Math.round(this.startedExercise.taskResult.resultPercentage)} %`
+      return `${Math.round(this.getPercentage())} %`
+    }
+  }
+
+  getPercentage(): number {
+    if (this.startedExercise == undefined) {
+      return NaN
+    } else {
+      return this.startedExercise.taskResult.resultPercentage
     }
   }
 

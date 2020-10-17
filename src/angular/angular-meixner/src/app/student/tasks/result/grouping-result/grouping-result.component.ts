@@ -18,19 +18,31 @@ export class GroupingResultComponent implements OnInit {
     private router: Router,
     @Inject(MAT_DIALOG_DATA) public params: any
   ) {
-    this.startedExercise = params.startedExercise
-    this.groupingResult = this.startedExercise.taskResult.taskResult as GroupingResponse
+    if (params.startedExercise == undefined) {
+      this.groupingResult = params.taskResult
+    } else {
+      this.startedExercise = params.startedExercise
+      this.groupingResult = this.startedExercise.taskResult.taskResult as GroupingResponse
+    }
     this.loaded = true
   }
 
   ngOnInit(): void {
   }
 
-  getPercentage(): string {
-    if (isNaN(this.startedExercise.taskResult.resultPercentage)) {
-      return "-"
+  getPercentageText(): string {
+    if (isNaN(this.getPercentage())) {
+      return ""
     } else {
-      return `${Math.round(this.startedExercise.taskResult.resultPercentage)} %`
+      return `${Math.round(this.getPercentage())} %`
+    }
+  }
+
+  getPercentage(): number {
+    if (this.startedExercise == undefined) {
+      return NaN
+    } else {
+      return this.startedExercise.taskResult.resultPercentage
     }
   }
 
