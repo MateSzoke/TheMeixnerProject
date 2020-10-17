@@ -4,9 +4,9 @@ import {SortingTaskRequest} from "../../../../swagger-api/model/sortingTaskReque
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {AssignService, EvaluateService} from "../../../../swagger-api";
 import {SortingTask} from "../../../../swagger-api/model/sortingTask";
-import {Path} from "../../../path";
-import {ConvertEnum} from "../../../model/ConvertEnum";
 import {MyExercisesComponent} from "../../my-exercises/my-exercises.component";
+import {SortingResultComponent} from "../result/sorting-result/sorting-result.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-student-sorting',
@@ -23,6 +23,7 @@ export class StudentSortingComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private evaluateService: EvaluateService,
+    private dialog: MatDialog,
     private assignService: AssignService
   ) {
   }
@@ -44,11 +45,12 @@ export class StudentSortingComponent implements OnInit {
   evaluateTask() {
     this.evaluateService.evaluateSortingUsingPOST(this.startedExerciseId, this.taskId, this.createTaskRequest()).subscribe(response => {
       console.log(response)
-      if (response.nextTask == undefined) {
-        this.router.navigate([Path.STUDENT_EXERCISE_RESULT, {startedExerciseId: this.startedExerciseId}])
-      } else {
-        this.router.navigate([ConvertEnum.convertTypeToStudentRouterLink(response.nextTask.type), MyExercisesComponent.getNavigationData(response)])
-      }
+      this.dialog.open(SortingResultComponent, {
+        data: {startedExercise: response}
+      })
+      this.dialog.afterAllClosed.subscribe(() => {
+        MyExercisesComponent.navigateNextTask(response, this.router)
+      })
     })
   }
 

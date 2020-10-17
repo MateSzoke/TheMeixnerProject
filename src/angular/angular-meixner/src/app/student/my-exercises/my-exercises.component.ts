@@ -4,6 +4,7 @@ import {AssignService} from "../../../swagger-api";
 import {Router} from "@angular/router";
 import {ConvertEnum} from "../../model/ConvertEnum";
 import {StartedExercise} from "../../../swagger-api/model/startedExercise";
+import {Path} from "../../path";
 
 @Component({
   selector: 'app-my-exercises',
@@ -31,6 +32,14 @@ export class MyExercisesComponent implements OnInit {
     return {
       startedExerciseId: startedExercise.id,
       taskId: startedExercise.nextTask.taskId
+    }
+  }
+
+  static navigateNextTask(response: StartedExercise, router: Router) {
+    if (response.nextTask == undefined) {
+      router.navigate([Path.STUDENT_EXERCISE_RESULT, {startedExerciseId: response.id}])
+    } else {
+      router.navigate([ConvertEnum.convertTypeToStudentRouterLink(response.nextTask.type), MyExercisesComponent.getNavigationData(response)])
     }
   }
 
