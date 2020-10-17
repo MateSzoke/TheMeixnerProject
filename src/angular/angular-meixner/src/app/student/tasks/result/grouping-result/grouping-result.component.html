@@ -7,17 +7,17 @@
 </div>
 <div *ngIf="loaded">
   <p class="title">Csoportosítás - {{groupingResult.title}} - megoldás</p>
-  <div *ngIf="getPercentage()" [ngStyle]="{'color': getPercentage() > 50 ? 'darkgreen' : 'brown'}" class="subtitle">
+  <div *ngIf="startedExercise" [ngStyle]="{'color': getPercentage() > 50 ? 'darkgreen' : 'brown'}" class="subtitle">
     Eredmény: {{getPercentageText()}}</div>
   <div *ngFor="let group of groupingResult.groups" class="task-element">
     <p class="subtitle">{{group.name}}</p>
     <div *ngFor="let element of group.elements">{{element.content}}</div>
   </div>
   <div mat-dialog-actions style="float: right">
-    <button (click)="finishExercise()" *ngIf="getPercentage()" mat-button style="margin-top: 24px">Feladatsor
+    <button (click)="finishExercise()" *ngIf="startedExercise" mat-button style="margin-top: 24px">Feladatsor
       befejezése
     </button>
-    <button *ngIf="getPercentage()" [mat-dialog-close] class="addbtn" mat-button>Következő feladat</button>
-    <button *ngIf="!getPercentage()" [mat-dialog-close] class="addbtn" mat-button>Vissza</button>
+    <button *ngIf="startedExercise" [mat-dialog-close] class="addbtn" mat-button>Következő feladat</button>
+    <button *ngIf="!startedExercise" [mat-dialog-close] class="addbtn" mat-button>Vissza</button>
   </div>
 </div>
