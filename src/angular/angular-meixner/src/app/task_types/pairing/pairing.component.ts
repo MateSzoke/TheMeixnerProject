@@ -72,6 +72,8 @@ export class PairingComponent implements OnInit, AfterViewChecked {
       pairs = new Array<PairElementRequest>()
       subject = SubjectEnumUtil.stringToSubject(params.get("subject"))
     };
+    console.log("initNewPairingRequest");
+    console.log(this.pairingRequest);
     this.loaded = true
   }
 

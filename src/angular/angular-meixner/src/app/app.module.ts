@@ -50,6 +50,7 @@ import {NotFoundComponent} from './not-found/not-found.component';
 import {MyExercisesComponent} from './student/my-exercises/my-exercises.component';
 import {MyResultsComponent} from './student/my-results/my-results.component';
 import {TypeEnumUtil} from "./util/typeEnumUtil";
+import { EasyTaskCardComponent } from './components/easy-task-card/easy-task-card.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +78,8 @@ import {TypeEnumUtil} from "./util/typeEnumUtil";
     ExerciseListComponent,
     NotFoundComponent,
     MyExercisesComponent,
-    MyResultsComponent
+    MyResultsComponent,
+    EasyTaskCardComponent
   ],
   imports: [
     BrowserModule,

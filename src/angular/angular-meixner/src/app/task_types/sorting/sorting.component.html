@@ -1,28 +1,71 @@
+<html>
+<body>
 <div class="container">
-  <mat-card class="mat-card-controls">
-    <mat-card-content>
-      <div class="flex-layout">
-        <button (click)="newItem()" class="plusButton" mat-button>
+  <mat-card class="mat-card-controls mat-card-base">
+    <mat-toolbar-row>
+      <div class="flex-layout-center">
+        <button
+          href="#"
+          routerLink="feladatok/sajat"
+          type="button"
+          mat-flat-button
+          class="background-color color-white">
+          Mégsem
+        </button>
+        <button
+          type="submit"
+          mat-stroked-button
+          class="color-mat"
+          (click)="saveData()">
+          Mentés
+        </button>
+      </div>
+      <div class="flex-layout-end">
+        <button (click)="newPair()" class="plusButton" mat-button>
           <i class="fa fa-plus"></i>
         </button>
       </div>
-    </mat-card-content>
+    </mat-toolbar-row>
   </mat-card>
   <br>
 </div>
-<div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-around center" fxLayoutGap="25px">
-  <mat-card *ngFor="let member of members; let i = index" fxFlex="calc(33%-25px)" fxFlex.sm="calc(50%-25px)" >
-    <mat-card-header>
-      <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>Cím</mat-card-title>
-      <button (click)="deleteItem(i)" class="plusButton" mat-button>
-        <i class="fa fa-trash"></i>
-      </button>
-    </mat-card-header>
-    <mat-card-content *ngFor="let member of members; let i = index">
-      <mat-form-field class="full-width">
-        <input matInput [ngModel]="member.content">
-      </mat-form-field>
-    </mat-card-content>
-  </mat-card>
+<div *ngIf="!this.loaded">
+  <div class="wrapper">
+    <div class="inner">
+      <mat-spinner diameter="70"></mat-spinner>
+    </div>
+  </div>
 </div>
+<div *ngIf="this.loaded" class="mat-card-base">
+  <ng-container *ngFor="let member of this.pairingRequest.pairs; let i = index">
+    <mat-card  class="mat-width mat-card-list">
+      <mat-card-content>
+        <mat-toolbar-row>
+          <div class="flex-layout-center">
+          </div>
+          <div class="flex-layout-end">
+            <i (click)="this.deletePair(i)" class="fa fa-trash fa-lg"></i>&nbsp;
+          </div>
+        </mat-toolbar-row>
+        <form *ngFor="let pair of member.pair; let j = index" class="my-form">
+          <mat-form-field #pairchild class="width-and-trash">
+            <input [ngModel]="pair.content"
+                   (ngModelChange)="updatePairElement($event, i, j)" matInput name="username">
+          </mat-form-field>
+          <i (click)="this.deletePairElement(i,j)" class="fa fa-trash"></i>&nbsp;
+          <br>
+        </form>
+        <button
+          type="submit"
+          mat-flat-button
+          class="color-mat"
+          (click)="addPairElement(i)">
+          Új elem
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+</div>
+
+</body>
+</html>

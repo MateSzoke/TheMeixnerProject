@@ -37,34 +37,34 @@
   </div>
 </div>
 <div *ngIf="this.loaded" class="mat-card-base">
-  <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-around center" fxLayoutGap="25px">
-    <mat-card *ngFor="let member of this.pairingRequest.pairs; let i = index" class="mat-width">
-      <mat-card-content>
-        <mat-toolbar-row>
-          <div class="flex-layout-center">
-          </div>
-          <div class="flex-layout-end">
-            <i (click)="this.deletePair(i)" class="fa fa-trash fa-lg"></i>&nbsp;
-          </div>
-        </mat-toolbar-row>
-        <form *ngFor="let pair of member.pair; let j = index" class="my-form">
-          <mat-form-field #pairchild class="width-and-trash">
-            <input [ngModel]="pair.content"
-                   (ngModelChange)="updatePairElement($event, i, j)" matInput name="username">
-          </mat-form-field>
-          <i (click)="this.deletePairElement(i,j)" class="fa fa-trash"></i>&nbsp;
-          <br>
-        </form>
-        <button
-          type="submit"
-          mat-flat-button
-          class="color-mat"
-          (click)="addPairElement(i)">
-          Új elem
-        </button>
-      </mat-card-content>
-    </mat-card>
-  </div>
+  <ng-container *ngFor="let member of this.pairingRequest.pairs; let i = index">
+      <mat-card  class="mat-width mat-card-list">
+        <mat-card-content>
+          <mat-toolbar-row>
+            <div class="flex-layout-center">
+            </div>
+            <div class="flex-layout-end">
+              <i (click)="this.deletePair(i)" class="fa fa-trash fa-lg"></i>&nbsp;
+            </div>
+          </mat-toolbar-row>
+          <form *ngFor="let pair of member.pair; let j = index" class="my-form">
+            <mat-form-field #pairchild class="width-and-trash">
+              <input [ngModel]="pair.content"
+                     (ngModelChange)="updatePairElement($event, i, j)" matInput name="username">
+            </mat-form-field>
+            <i (click)="this.deletePairElement(i,j)" class="fa fa-trash"></i>&nbsp;
+            <br>
+          </form>
+          <button
+            type="submit"
+            mat-flat-button
+            class="color-mat"
+            (click)="addPairElement(i)">
+            Új elem
+          </button>
+        </mat-card-content>
+      </mat-card>
+  </ng-container>
 </div>
 
 </body>

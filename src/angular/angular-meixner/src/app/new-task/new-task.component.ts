@@ -59,7 +59,8 @@ export class NewTaskComponent implements OnInit {
       title: this.newTaskForm.value.title,
       difficulty: this.newTaskForm.value.difficulty,
       recommendedMinClass: this.newTaskForm.value.classFrom,
-      recommendedMaxClass: this.newTaskForm.value.classTo
+      recommendedMaxClass: this.newTaskForm.value.classTo,
+      subject: this.newTaskForm.value.subject
     }
   }
 
