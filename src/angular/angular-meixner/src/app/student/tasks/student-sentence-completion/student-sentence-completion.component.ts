@@ -49,8 +49,9 @@ export class StudentSentenceCompletionComponent implements OnInit {
       this.dialog.open(SentenceCompletionResultComponent, {
         data: {startedExercise: response}
       })
-      this.dialog.afterAllClosed.subscribe(() => {
-        MyExercisesComponent.navigateNextTask(response, this.router)
+      let subscription = this.dialog.afterAllClosed.subscribe(() => {
+        MyExercisesComponent.navigateNextTask(response, this.router, this.dialog)
+        subscription.unsubscribe()
       })
     })
   }

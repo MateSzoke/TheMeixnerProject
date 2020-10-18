@@ -154,6 +154,7 @@ import {MemoryGameResultComponent} from './student/tasks/result/memory-game-resu
     LoginComponent,
     ModalComponent,
     ExerciseListComponent,
+    ExerciseResultComponent,
     PairingResultComponent,
     GroupingResultComponent,
     SortingResultComponent,

@@ -48,8 +48,9 @@ export class StudentSortingComponent implements OnInit {
       this.dialog.open(SortingResultComponent, {
         data: {startedExercise: response}
       })
-      this.dialog.afterAllClosed.subscribe(() => {
-        MyExercisesComponent.navigateNextTask(response, this.router)
+      let subscription = this.dialog.afterAllClosed.subscribe(() => {
+        MyExercisesComponent.navigateNextTask(response, this.router, this.dialog)
+        subscription.unsubscribe()
       })
     })
   }
@@ -59,4 +60,5 @@ export class StudentSortingComponent implements OnInit {
       elements: this.sorting.elements.map(element => ({content: element.content}))
     }
   }
+
 }
