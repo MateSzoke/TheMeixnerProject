@@ -36,7 +36,7 @@
   <br>
 </div>
 
-<div *ngIf="this.taskAngularService.tasksLoaded==false" >
+<div *ngIf="this.taskAngularService.tasksLoaded==false">
   <div class="wrapper">
     <div class="inner">
       <mat-spinner diameter="70"></mat-spinner>
@@ -46,19 +46,21 @@
 
 
 <div *ngIf="this.taskAngularService.tasksLoaded">
-  <mat-card *ngFor="let task of this.taskAngularService.tasks; index as i" class="right-aligned-header">
-    <div fxLayout="row" fxLayout.xs="column-reverse" fxLayoutGap="8px">
+  <mat-card *ngFor="let task of this.taskAngularService.tasks; index as i" class="right-aligned-header"
+            style="margin-top: 16px">
+    <mat-card fxLayout="row" fxLayout.xs="column-reverse" fxLayoutGap="8px">
       <div class="float-left">
-        {{task.title}} - {{this.convertEnum(task.type)}} -
-        <img class="image1" src="{{this.diffImServ.convertNumToPath100(task.difficulty)}}">
+        {{task.title}} - {{this.convertEnum(task.type)}}
+        <mat-progress-bar mode="determinate" style="width: 100px" value="{{task.difficulty}}"></mat-progress-bar>
       </div>
       <div class="float-right">
         {{getFormattedDate(task.lastModified)}}
-        &nbsp;&#8196;
-        <i (click)="this.deleteTask(+task.id)" class="fa fa-trash"></i>&nbsp;
-        <a (click)="this.openTask(task.type,i)" class="fa fa-edit"></a>&nbsp;&nbsp;
+        <div>
+          <i (click)="this.deleteTask(+task.id)" class="fa fa-trash"></i>
+          <a (click)="this.openTask(task.type,i)" class="fa fa-edit" style="margin-left: 16px"></a>
+        </div>
       </div>
-    </div>
+    </mat-card>
   </mat-card>
 </div>
 
