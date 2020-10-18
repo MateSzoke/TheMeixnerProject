@@ -6,6 +6,7 @@ import hu.aut.meixner.dto.task.common.TaskResponse
 import hu.aut.meixner.dto.task.common.TaskTypeEnum.*
 import hu.aut.meixner.dto.task.easy.*
 import hu.aut.meixner.dto.task.student.easy.*
+import hu.aut.meixner.mapping.getSentenceTask
 import hu.aut.meixner.mapping.toDomainModel
 
 fun List<MediaItemRequest>.compareResultMediaItems(resultMediaItems: List<MediaItemResponse>): Double {
@@ -57,7 +58,7 @@ fun TaskResponse.toAssignTask(): AssignTask? {
             SentenceCompletionTask(
                     taskId = id,
                     title = title,
-                    sentence = task.sentence,
+                    sentence = task.getSentenceTask(),
                     options = task.options.shuffled()
             )
         }

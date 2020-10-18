@@ -8,7 +8,8 @@ import javax.persistence.Entity
 
 @Entity
 data class SentenceCompletionEntity(
-        val sentence: String = "",
+        @ElementCollection(targetClass = String::class)
+        val sentence: MutableList<String> = mutableListOf(),
         @ElementCollection(targetClass = String::class)
         val options: MutableList<String> = mutableListOf(),
         override val title: String = "",

@@ -11,14 +11,14 @@
  */
 
 
-export interface SentenceCompletionRequest { 
-    title: string;
-    difficulty?: number;
-    subject: SentenceCompletionRequest.SubjectEnum;
-    recommendedMinClass?: number;
-    recommendedMaxClass?: number;
-    sentence: string;
-    options: Array<string>;
+export interface SentenceCompletionRequest {
+  title: string;
+  difficulty?: number;
+  subject: SentenceCompletionRequest.SubjectEnum;
+  recommendedMinClass?: number;
+  recommendedMaxClass?: number;
+  sentence: Array<string>;
+  options: Array<string>;
 }
 export namespace SentenceCompletionRequest {
     export type SubjectEnum = 'None' | 'Hungarian_grammar_and_literature' | 'Foreign_language' | 'Mathematics' | 'Ethics_religion' | 'Knowledge_environment' | 'Music' | 'Visual_culture' | 'Technique' | 'Sport' | 'History' | 'Biology' | 'Physics';

@@ -59,6 +59,13 @@ import {StudentTrueFalseComponent} from './student/tasks/student-true-false/stud
 import {StudentMemoryGameComponent} from './student/tasks/student-memory-game/student-memory-game.component';
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import {ExerciseResultComponent} from './student/exercise-result/exercise-result.component';
+import {PairingResultComponent} from './student/tasks/result/pairing-result/pairing-result.component';
+import {GroupingResultComponent} from './student/tasks/result/grouping-result/grouping-result.component';
+import {SortingResultComponent} from './student/tasks/result/sorting-result/sorting-result.component';
+import {SentenceCompletionResultComponent} from './student/tasks/result/sentence-completion-result/sentence-completion-result.component';
+import {SentenceCreationResultComponent} from './student/tasks/result/sentence-creation-result/sentence-creation-result.component';
+import {TrueFalseResultComponent} from './student/tasks/result/true-false-result/true-false-result.component';
+import {MemoryGameResultComponent} from './student/tasks/result/memory-game-result/memory-game-result.component';
 
 @NgModule({
   declarations: [
@@ -95,7 +102,14 @@ import {ExerciseResultComponent} from './student/exercise-result/exercise-result
     StudentSentenceCompletionComponent,
     StudentTrueFalseComponent,
     StudentMemoryGameComponent,
-    ExerciseResultComponent
+    ExerciseResultComponent,
+    PairingResultComponent,
+    GroupingResultComponent,
+    SortingResultComponent,
+    SentenceCompletionResultComponent,
+    SentenceCreationResultComponent,
+    TrueFalseResultComponent,
+    MemoryGameResultComponent
   ],
   imports: [
     BrowserModule,
@@ -139,7 +153,15 @@ import {ExerciseResultComponent} from './student/exercise-result/exercise-result
     ExerciseTaskListComponent,
     LoginComponent,
     ModalComponent,
-    ExerciseListComponent]
+    ExerciseListComponent,
+    ExerciseResultComponent,
+    PairingResultComponent,
+    GroupingResultComponent,
+    SortingResultComponent,
+    SentenceCompletionResultComponent,
+    SentenceCreationResultComponent,
+    TrueFalseResultComponent,
+    MemoryGameResultComponent]
 })
 export class AppModule {
 }
