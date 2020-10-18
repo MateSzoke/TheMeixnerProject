@@ -21,15 +21,9 @@ export class SentenceCompletionResultComponent implements OnInit {
 
     if (params.startedExercise == undefined) {
       this.sentenceCompletion = params.taskResult
-      this.sentenceCompletion.options.forEach(option => {
-        this.sentenceCompletion.sentence = this.sentenceCompletion.sentence.replace("%s", option)
-      })
     } else {
       this.startedExercise = params.startedExercise
       this.sentenceCompletion = this.startedExercise.taskResult.taskResult as SentenceCompletionResponse
-      this.sentenceCompletion.options.forEach(option => {
-        this.sentenceCompletion.sentence = this.sentenceCompletion.sentence.replace("%s", option)
-      })
     }
     this.loaded = true
   }
