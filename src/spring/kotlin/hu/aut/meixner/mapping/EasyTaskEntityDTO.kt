@@ -106,10 +106,11 @@ fun SentenceCompletionEntity.toDomainModel(): SentenceCompletionResponse {
 }
 
 fun SentenceCompletionResponse.getSentenceTask(): String {
+    var sentenceText = sentence
     options.forEach { option ->
-        sentence.replaceFirst(option, "_________")
+        sentenceText = sentenceText.replaceFirst(option, "_________")
     }
-    return sentence
+    return sentenceText
 }
 
 fun SentenceCompletionEntity.getSentenceResult(): String {
