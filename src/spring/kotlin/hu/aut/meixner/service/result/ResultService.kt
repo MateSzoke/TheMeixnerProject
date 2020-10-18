@@ -91,7 +91,8 @@ class ResultService(
                                 user = user)
                     },
                     exerciseName = exerciseService.getExercisesById(solvedExercise.exerciseId)?.name ?: return null,
-                    resultPercentage = solvedExercise.resultPercentages.average()
+                    resultPercentage = solvedExercise.resultPercentages.average(),
+                    lastModified = solvedExercise.lastModified
             )
         }
     }
@@ -108,7 +109,8 @@ class ResultService(
         return ExerciseResult(
                 taskResults = taskResults,
                 exerciseName = exerciseService.getExercisesById(solvedExercise.exerciseId)?.name ?: return null,
-                resultPercentage = solvedExercise.resultPercentages.average()
+                resultPercentage = solvedExercise.resultPercentages.average(),
+                lastModified = solvedExercise.lastModified
         )
     }
 
