@@ -15,7 +15,8 @@
     <mat-expansion-panel *ngFor="let exercise of exercises" style="margin: 16px">
       <mat-expansion-panel-header>
         <div>
-          <mat-panel-title style="font-size: large">{{exercise.exerciseName}}</mat-panel-title>
+          <mat-panel-title style="font-size: large">{{exercise.exerciseName}}
+            - {{exercise.lastModified}}</mat-panel-title>
         </div>
         <div class="float-right">
           <p><b>Eredmény:</b> {{getPercentage(exercise.resultPercentage)}}</p>
