@@ -15,6 +15,7 @@ import {UserResponse} from './userResponse';
 
 export interface TaskResultResponse {
   id: number;
+  lastModified: Date;
   resultPercentage: number;
   taskResult: TaskResponse;
   user: UserResponse;

@@ -1,5 +1,6 @@
 package hu.aut.meixner.entity.result
 
+import java.time.OffsetDateTime
 import javax.persistence.*
 
 @Entity
@@ -12,5 +13,6 @@ class SolvedExercise(
         @ElementCollection(targetClass = Long::class)
         val taskResultIds: MutableList<Long> = mutableListOf(),
         @ElementCollection(targetClass = Double::class)
-        val resultPercentages: MutableList<Double> = mutableListOf()
+        val resultPercentages: MutableList<Double> = mutableListOf(),
+        var lastModified: OffsetDateTime = OffsetDateTime.now()
 )
