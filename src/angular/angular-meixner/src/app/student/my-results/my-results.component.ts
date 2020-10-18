@@ -38,7 +38,7 @@ export class MyResultsComponent implements OnInit {
     })
   }
 
-  getFormattedDate(date: Date): string {
+  getFormattedDateTime(date: Date): string {
     return DateUtils.getFormattedDateTime(date)
   }
 

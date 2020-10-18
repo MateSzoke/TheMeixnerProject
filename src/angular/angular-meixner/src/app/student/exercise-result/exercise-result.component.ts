@@ -23,15 +23,20 @@ export class ExerciseResultComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.startedExerciseId = this.params.startedExerciseId
-    this.resultService.getSolvedExerciseResultsUsingGET(this.startedExerciseId).subscribe(result => {
-      this.exerciseResult = result as ExerciseResult
-      this.exerciseResult.taskResults.forEach(task => {
-        // @ts-ignore
-        task.taskResult.type = ConvertEnum.convertType(task.taskResult.type)
-      })
+    if (this.params.exerciseResult != undefined) {
+      this.exerciseResult = this.params.exerciseResult
       this.loaded = true
-    })
+    } else {
+      this.startedExerciseId = this.params.startedExerciseId
+      this.resultService.getSolvedExerciseResultsUsingGET(this.startedExerciseId).subscribe(result => {
+        this.exerciseResult = result as ExerciseResult
+        this.exerciseResult.taskResults.forEach(task => {
+          // @ts-ignore
+          task.taskResult.type = ConvertEnum.convertType(task.taskResult.type)
+        })
+        this.loaded = true
+      })
+    }
   }
 
   getPercentage(): number {
