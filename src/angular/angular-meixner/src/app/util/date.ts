@@ -1,8 +1,10 @@
+import {DatePipe} from "@angular/common";
+
 export class DateUtils {
+  static datePipe = new DatePipe('en-US')
 
   public static getFormattedDate(date: Date): string {
-    let formattedDate = new Date(date);
-    return `${formattedDate.getFullYear()}.${formattedDate.getMonth().toString().padStart(2, '0')}.${formattedDate.getDay().toString().padStart(2, '0')}.`
+    return this.datePipe.transform(date, 'yyyy. MM. dd.')
   }
 
 }
