@@ -83,7 +83,7 @@ class ResultService(
     fun getMyResults(): List<ExerciseResult>? {
         val user = userService.getUser() ?: return null
         val taskResults = taskResultRepository.findAll().filter { it.student.id == user.id }
-        return solvedExerciseRepository.findAll().map { solvedExercise ->
+        return solvedExerciseRepository.findAll().filter { it.userId == user.id }.map { solvedExercise ->
             ExerciseResult(
                     taskResults = taskResults.filter { it.id in solvedExercise.taskResultIds }.mapNotNull { taskResult ->
                         taskResult.toDomainModel(
