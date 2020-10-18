@@ -61,6 +61,7 @@ import {StudentTrueFalseComponent} from './student/tasks/student-true-false/stud
 import {StudentMemoryGameComponent} from './student/tasks/student-memory-game/student-memory-game.component';
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import {ExerciseResultComponent} from './student/exercise-result/exercise-result.component';
+import { EasyTaskComponent } from './task_types/easy-task/easy-task.component';
 
 @NgModule({
   declarations: [
@@ -89,7 +90,7 @@ import {ExerciseResultComponent} from './student/exercise-result/exercise-result
     NotFoundComponent,
     MyExercisesComponent,
     MyResultsComponent,
-    EasyTaskCardComponent
+    EasyTaskCardComponent,
     MyResultsComponent,
     TrueFalseComponent,
     StudentPairingComponent,
@@ -99,7 +100,8 @@ import {ExerciseResultComponent} from './student/exercise-result/exercise-result
     StudentSentenceCompletionComponent,
     StudentTrueFalseComponent,
     StudentMemoryGameComponent,
-    ExerciseResultComponent
+    ExerciseResultComponent,
+    EasyTaskComponent
   ],
   imports: [
     BrowserModule,

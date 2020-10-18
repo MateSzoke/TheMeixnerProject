@@ -22,7 +22,7 @@ export class MyExercisesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.assignService.getMyExercisesUsingGET().subscribe(exercises => {
+    this.assignService.getMyExercisesUsingGET1().subscribe(exercises => {
       this.exercises = exercises
       this.loaded = true
     })
