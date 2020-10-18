@@ -33,7 +33,6 @@ export class StudentSentenceCompletionComponent implements OnInit {
     this.startedExerciseId = Number.parseInt(this.route.snapshot.paramMap.get("startedExerciseId"))
     this.assignService.getStudentTaskByIdUsingGET(this.taskId).subscribe(task => {
       this.sentenceCompletion = task as SentenceCompletionTask
-      this.sentenceCompletion.sentence = this.sentenceCompletion.sentence.split("%s").join("_____________")
       this.loaded = true
     })
   }

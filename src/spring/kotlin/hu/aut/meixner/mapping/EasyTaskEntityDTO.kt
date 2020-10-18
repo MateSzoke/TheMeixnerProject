@@ -106,10 +106,9 @@ fun SentenceCompletionEntity.toDomainModel(): SentenceCompletionResponse {
 }
 
 fun SentenceCompletionResponse.getSentenceTask(): String {
-    var sentenceText = ""
-    sentence.forEachIndexed { index, part ->
-        sentenceText += part
-        if (index != sentence.lastIndex) sentenceText += " _________ "
+    var sentenceText = sentence
+    options.forEach { option ->
+        sentenceText = sentenceText.replaceFirst(option, "_________")
     }
     return sentenceText
 }
