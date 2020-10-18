@@ -34,7 +34,7 @@ class AssignService(
 
     fun startExercise(exerciseId: Long): StartedExercise? {
         val exercise = exerciseService.getExercisesById(exerciseId) ?: return null
-        val solvedExercise = solvedExerciseRepository.save(SolvedExercise(exerciseId = exerciseId))
+        val solvedExercise = solvedExerciseRepository.save(SolvedExercise(exerciseId = exerciseId, lastModified = OffsetDateTime.now()))
         val taskIds = exercise.tasks.map { it.id }
         val nextTaskId = if (taskIds.isNotEmpty()) taskIds.random() else null
         return StartedExercise(

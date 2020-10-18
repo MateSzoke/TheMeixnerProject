@@ -20,7 +20,7 @@
     Feladatsor hozzáadása
   </button>
   <div *ngIf="student.exercises.length == 0">
-    <p>Nincs még feladatsor hozzárendelve</p>
+    <p class="subtitle">Nincs még feladatsor hozzárendelve</p>
   </div>
   <div *ngIf="student.exercises.length > 0">
     <mat-card *ngFor="let exercise of student.exercises" class="user-card">
