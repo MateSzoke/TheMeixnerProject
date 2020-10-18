@@ -7,6 +7,7 @@ import javax.persistence.*
 class SolvedExercise(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long = 0,
+        val userId: Long = 0,
         val exerciseId: Long = 0,
         @ElementCollection(targetClass = Long::class)
         val solvedTaskIds: MutableList<Long> = mutableListOf(),
