@@ -1,15 +1,17 @@
 import {ChangeDetectorRef, Component, ElementRef, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {
-  EasyTasksService, MediaItemRequest,
+  BlindMapRequest,
+  EasyTasksService, GroupingRequest, MediaItemRequest,
   MediaItemResponse,
   PairElementRequest, PairElementResponse,
-  PairingRequest, PairingResponse,
-  TaskService
+  PairingRequest, PairingResponse, SentenceCompletionRequest, SentenceCreationRequest, SortingRequest, TaskResponse,
+  TaskService, TrueFalseRequest
 } from "../../../swagger-api";
 import {TaskAngularService} from "../../data/task-angular.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {SubjectEnumUtil} from "../../util/subjectEnumUtil";
 import {Path} from "../../path";
+import TypeEnum = TaskResponse.TypeEnum;
 
 @Component({
   selector: 'app-easy-task',
@@ -18,8 +20,16 @@ import {Path} from "../../path";
 })
 export class EasyTaskComponent implements OnInit {
 
+  public groupingRequest: GroupingRequest;
   public pairingRequest: PairingRequest;
+  public sentenceCompletion: SentenceCompletionRequest;
+  public sentenceCreationRequest: SentenceCreationRequest;
+  public sortingRequest: SortingRequest;
+  public trueFalseRequest: TrueFalseRequest;
+  public blindMapRequest: BlindMapRequest;
+
   public taskId: number = null
+  public type: string = null
   public selectedMediaItem: MediaItemResponse;
   @ViewChildren('pairchild') pairs: QueryList<ElementRef>;
   pairElements: any;
@@ -40,11 +50,60 @@ export class EasyTaskComponent implements OnInit {
 
   ngOnInit(): void {
     this.taskId = Number.parseInt(this.route.snapshot.paramMap.get("taskId"))
+    this.type = this.route.snapshot.paramMap.get("type")
+    console.log("ngOnInit")
+    console.log(this.type);
     if (isNaN(this.taskId)) {
       this.initNewPairingRequest()
     } else {
       this.newPairing = false;
-      this.initPairingRequestById()
+      this.initEasyTaskById()
+    }
+  }
+
+  initEasyTaskById() {
+    switch (this.type) {
+      case TypeEnum.Grouping.toString(): {
+        console.log("case Grouping")
+        return Path.EASY_TASK;
+      }
+      case TypeEnum.Pairing.toString(): {
+        console.log("case Pairing")
+        this.tasksService.getTaskByIdUsingGET(this.taskId).subscribe(
+          (taskResponse) => {
+            let pairingResponse = taskResponse as PairingResponse
+            this.pairingRequest = {
+              title: pairingResponse.title,
+              difficulty: pairingResponse.difficulty,
+              recommendedMinClass: pairingResponse.recommendedMinClass,
+              recommendedMaxClass: pairingResponse.recommendedMaxClass,
+              pairs: pairingResponse.pairs.map(pair => this.pairingElementResponseToRequest(pair)),
+              subject: pairingResponse.subject
+            }
+            this.loaded = true
+            this.pairingId = pairingResponse.id;
+          },
+          (error) => {
+            console.log(error)
+          }
+        );
+      }
+      case TypeEnum.SentenceCompletion.toString(): {
+        return Path.EASY_TASK;
+      }
+      case TypeEnum.SentenceCreation.toString(): {
+        return Path.EASY_TASK;
+      }
+      case TypeEnum.Sorting.toString(): {
+        return Path.EASY_TASK;
+      }
+      case TypeEnum.TrueFalse.toString(): {
+        return Path.EASY_TASK;
+      }
+      case TypeEnum.BlindMap.toString(): {
+        return Path.EASY_TASK;
+      }
+
     }
   }
 
@@ -105,16 +164,6 @@ export class EasyTaskComponent implements OnInit {
     }
     this.pairingRequest.pairs[indexPair].pair.push(newRow);
     this.indexOfCurrentFocus = jumpToElementIndex;
-    /*    this.easyTasksService.createPairingUsingPOST(this.pairingRequest)
-          .subscribe(data => {
-            this.taskAngularService.finishedLoading.pipe(take(1)).subscribe(() => {
-                this.pairElements = this.pairs.map(pair => {
-                  return pair.nativeElement;
-                });
-                this.selectPair(indexService, this.pairingRequest.pairs[indexService].pair.length);
-              }
-            );
-          });*/
   }
 
   public newPair() {

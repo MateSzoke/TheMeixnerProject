@@ -3,7 +3,7 @@ import {
   EasyTasksService, MediaItemRequest,
   MediaItemResponse,
   PairElementRequest, PairElementResponse,
-  PairingRequest, PairingResponse,
+  PairingRequest, PairingResponse, Sentence, SentenceCreationRequest, SentenceCreationResponse,
   TaskService
 } from "../../../swagger-api";
 import {TaskAngularService} from "../../data/task-angular.service";
@@ -18,20 +18,16 @@ import {Path} from "../../path";
 })
 export class SentenceCreationComponent implements OnInit {
 
-  public pairingRequest: PairingRequest;
+  public sentenceCreationRequest: SentenceCreationRequest;
   public taskId: number = null
-  public selectedMediaItem: MediaItemResponse;
-  @ViewChildren('pairchild') pairs: QueryList<ElementRef>;
-  pairElements: any;
+  @ViewChildren('sentencechild') sentences: QueryList<ElementRef>;
+  sentenceParts: any;
   loaded: boolean = false
-  newPairing = true;
-  pairingId = 0;
-  indexOfPrevFocus = -1;
-  indexOfCurrentFocus = -2;
+  newSentence = true;
+  sentenceId = 0;
 
   constructor(public easyTasksService: EasyTasksService,
               public tasksService: TaskService,
-              public taskAngularService: TaskAngularService,
               private route: ActivatedRoute,
               private cdRef:ChangeDetectorRef,
               private router : Router) {
@@ -41,42 +37,40 @@ export class SentenceCreationComponent implements OnInit {
   ngOnInit(): void {
     this.taskId = Number.parseInt(this.route.snapshot.paramMap.get("taskId"))
     if (isNaN(this.taskId)) {
-      this.initNewPairingRequest()
+      this.initNewSentenceCreationRequest()
     } else {
-      this.newPairing = false;
-      this.initPairingRequestById()
+      this.newSentence = false;
+      this.initSentenceCreationRequestById()
     }
   }
 
-  initNewPairingRequest() {
+  initNewSentenceCreationRequest() {
     let params = this.route.snapshot.paramMap;
-    this.pairingRequest = new class implements PairingRequest {
+    this.sentenceCreationRequest = new class implements SentenceCreationRequest {
       title = params.get("title")
       difficulty = Number.parseInt(params.get("difficulty"))
       recommendedMaxClass = Number.parseInt(params.get("recommendedMaxClass"))
       recommendedMinClass = Number.parseInt(params.get("recommendedMinClass"))
-      pairs = new Array<PairElementRequest>()
+      sentences = new Array<Sentence>()
       subject = SubjectEnumUtil.stringToSubject(params.get("subject"))
     };
-    console.log("initNewPairingRequest");
-    console.log(this.pairingRequest);
     this.loaded = true
   }
 
-  initPairingRequestById() {
+  initSentenceCreationRequestById() {
     this.tasksService.getTaskByIdUsingGET(this.taskId).subscribe(
       (taskResponse) => {
-        let pairingResponse = taskResponse as PairingResponse
-        this.pairingRequest = {
-          title: pairingResponse.title,
-          difficulty: pairingResponse.difficulty,
-          recommendedMinClass: pairingResponse.recommendedMinClass,
-          recommendedMaxClass: pairingResponse.recommendedMaxClass,
-          pairs: pairingResponse.pairs.map(pair => this.pairingElementResponseToRequest(pair)),
-          subject: pairingResponse.subject
+        let sentenceCreationResponse = taskResponse as SentenceCreationResponse
+        this.sentenceCreationRequest = {
+          title: sentenceCreationResponse.title,
+          difficulty: sentenceCreationResponse.difficulty,
+          recommendedMinClass: sentenceCreationResponse.recommendedMinClass,
+          recommendedMaxClass: sentenceCreationResponse.recommendedMaxClass,
+          sentences: sentenceCreationResponse.sentences,
+          subject: sentenceCreationResponse.subject
         }
         this.loaded = true
-        this.pairingId = pairingResponse.id;
+        this.sentenceId = sentenceCreationResponse.id;
       },
       (error) => {
         console.log(error)
@@ -84,92 +78,57 @@ export class SentenceCreationComponent implements OnInit {
     );
   }
 
-  ngAfterViewChecked() {
-
+  public updateSentenceCreationRequest(newValue, indexService, indexSentence) {
+    console.log("updateSentenceCreationRequest");
+    console.log(newValue);
+    console.log(indexSentence);
+    this.sentenceCreationRequest.sentences[indexService].parts[indexSentence] = newValue.toString();
   }
 
-  public updatePairElement(newValue, indexService, indexPair) {
-    this.pairingRequest.pairs[indexService].pair[indexPair].content = newValue;
+  public deleteSentence(indexService) {
+    this.sentenceCreationRequest.sentences.splice(indexService, 1);
   }
 
-  public deletePair(indexService) {
-    this.pairingRequest.pairs.splice(indexService, 1);
+  public addSentenceRequest(indexElement) {
+    const newRow = '';
+    this.sentenceCreationRequest.sentences[indexElement].parts.push(newRow);
   }
 
-  public addPairElement(indexPair) {
-    const newRow: MediaItemRequest = {content: ''};
-    const lastIndex = this.pairingRequest.pairs[indexPair].pair.length - 1;
-    let jumpToElementIndex = 0;
-    for (let i = 0; i < indexPair + 1; i++) {
-      jumpToElementIndex = jumpToElementIndex + this.pairingRequest.pairs[i].pair.length;
-    }
-    this.pairingRequest.pairs[indexPair].pair.push(newRow);
-    this.indexOfCurrentFocus = jumpToElementIndex;
-    /*    this.easyTasksService.createPairingUsingPOST(this.pairingRequest)
-          .subscribe(data => {
-            this.taskAngularService.finishedLoading.pipe(take(1)).subscribe(() => {
-                this.pairElements = this.pairs.map(pair => {
-                  return pair.nativeElement;
-                });
-                this.selectPair(indexService, this.pairingRequest.pairs[indexService].pair.length);
-              }
-            );
-          });*/
-  }
-
-  public newPair() {
-    const newRow: PairElementRequest = {
-      pair: new Array<MediaItemRequest>()
+  public newSentenceCreation() {
+    const newRow: Sentence = {
+      sentenceTitle: '',
+      parts: new Array<string>()
     };
-    this.pairingRequest.pairs.push(newRow);
+    this.sentenceCreationRequest.sentences.push(newRow);
   }
 
-  public selectPair(jumpToElementIndex) {
-    this.pairElements[jumpToElementIndex].focus();
+  public deletePart(indexService, indexSentence) {
+    this.sentenceCreationRequest.sentences[indexService].parts.splice(indexSentence, 1);
   }
 
-  public elementClicked(indexPair, mediaId) {
-
-  }
-
-  public deletePairElement(indexService, indexPair) {
-    this.pairingRequest.pairs[indexService].pair.splice(indexPair, 1);
-  }
-
-  pairingElementResponseToRequest(response: PairElementResponse): PairElementRequest {
+  sentenceCreationResponseToRequest(response: Sentence): Sentence {
     return {
-      pair: response.pair.map(mediaItem => this.mediaItemResponseToRequest(mediaItem))
-    }
-  }
-
-  mediaItemResponseToRequest(response: MediaItemResponse): MediaItemRequest {
-    return {
-      content: response.content
-    }
-  }
-
-  initMediaItemRequest(): MediaItemRequest {
-    return {
-      mediaItemId: 0,
-      content: ''
+      sentenceTitle: response.sentenceTitle,
+      parts: response.parts
     }
   }
 
   saveData() {
-    console.log("saveData");
-    console.log(this.pairingRequest);
-    console.log(this.newPairing);
-    if(this.newPairing) {
-      this.easyTasksService.createPairingUsingPOST(this.pairingRequest)
+    if(this.newSentence) {
+      this.easyTasksService.createSentenceCreationUsingPOST(this.sentenceCreationRequest)
         .subscribe(data => {
           this.router.navigate([Path.TASKS]);
         });
     } else {
-      this.easyTasksService.updatePairingByIdUsingPATCH(this.pairingId,this.pairingRequest)
+      this.easyTasksService.updateSentenceCreationByIdUsingPATCH(this.sentenceId,this.sentenceCreationRequest)
         .subscribe(data => {
           this.router.navigate([Path.TASKS]);
         });
     }
+  }
+
+  customTrackBy(index: number, obj: any): any {
+    return index;
   }
 
 }

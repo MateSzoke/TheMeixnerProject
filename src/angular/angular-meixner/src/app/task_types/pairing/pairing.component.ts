@@ -119,16 +119,6 @@ export class PairingComponent implements OnInit, AfterViewChecked {
     }
     this.pairingRequest.pairs[indexPair].pair.push(newRow);
     this.indexOfCurrentFocus = jumpToElementIndex;
-    /*    this.easyTasksService.createPairingUsingPOST(this.pairingRequest)
-          .subscribe(data => {
-            this.taskAngularService.finishedLoading.pipe(take(1)).subscribe(() => {
-                this.pairElements = this.pairs.map(pair => {
-                  return pair.nativeElement;
-                });
-                this.selectPair(indexService, this.pairingRequest.pairs[indexService].pair.length);
-              }
-            );
-          });*/
   }
 
   public newPair() {

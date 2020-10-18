@@ -29,9 +29,15 @@ import {StudentSentenceCreationComponent} from "./student/tasks/student-sentence
 import {StudentSortingComponent} from "./student/tasks/student-sorting/student-sorting.component";
 import {StudentTrueFalseComponent} from "./student/tasks/student-true-false/student-true-false.component";
 import {ExerciseResultComponent} from "./student/exercise-result/exercise-result.component";
+import {EasyTaskComponent} from "./task_types/easy-task/easy-task.component";
 
 
 const routes: Routes = [
+  {
+    path: Path.EASY_TASK,
+    component: EasyTaskComponent,
+    canActivate: [RouteGuardService]
+  },
   {
     path: Path.GROUPING,
     component: GroupingComponent,
@@ -39,11 +45,6 @@ const routes: Routes = [
   },
   {
     path: Path.PAIRING,
-    component: PairingComponent,
-    canActivate: [RouteGuardService]
-  },
-  {
-    path: `${Path.PAIRING}/:id`,
     component: PairingComponent,
     canActivate: [RouteGuardService]
   },

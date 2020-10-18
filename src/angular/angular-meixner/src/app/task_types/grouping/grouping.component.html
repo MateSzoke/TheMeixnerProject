@@ -1,1 +1,74 @@
-<p>grouping works!</p>
+<html>
+<body>
+<div class="container">
+  <mat-card class="mat-card-controls mat-card-base">
+    <mat-toolbar-row>
+      <div class="flex-layout-center">
+        <button
+          href="#"
+          routerLink="feladatok/sajat"
+          type="button"
+          mat-flat-button
+          class="background-color color-white">
+          Mégsem
+        </button>
+        <button
+          type="submit"
+          mat-stroked-button
+          class="color-mat"
+          (click)="saveData()">
+          Mentés
+        </button>
+      </div>
+      <div class="flex-layout-center">
+        {{this.groupingRequest.title}}
+      </div>
+      <div class="flex-layout-end">
+        <button (click)="newGroup()" class="plusButton" mat-button>
+          <i class="fa fa-plus"></i>
+        </button>
+      </div>
+    </mat-toolbar-row>
+  </mat-card>
+  <br>
+</div>
+<div *ngIf="!this.loaded">
+  <div class="wrapper">
+    <div class="inner">
+      <mat-spinner diameter="70"></mat-spinner>
+    </div>
+  </div>
+</div>
+<div *ngIf="this.loaded" class="mat-card-base">
+  <ng-container *ngFor="let member of this.groupingRequest.groups; let i = index">
+    <mat-card class="mat-width mat-card-list">
+      <mat-card-content>
+        <mat-toolbar-row>
+          <div class="flex-layout-center">
+          </div>
+          <div class="flex-layout-end">
+            <i (click)="this.deleteGroup(i)" class="fa fa-trash fa-lg"></i>&nbsp;
+          </div>
+        </mat-toolbar-row>
+        <form *ngFor="let group of member.elements; let j = index" class="my-form">
+          <mat-form-field #groupchild class="width-and-trash">
+            <input [ngModel]="group.content"
+                   (ngModelChange)="updateGroupRequest($event, i, j)" matInput name="username">
+          </mat-form-field>
+          <i (click)="this.deleteGroupElement(i,j)" class="fa fa-trash"></i>&nbsp;
+          <br>
+        </form>
+        <button
+          type="submit"
+          mat-flat-button
+          class="color-mat"
+          (click)="addGroupRequest(i)">
+          Új elem
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+</div>
+
+</body>
+</html>
