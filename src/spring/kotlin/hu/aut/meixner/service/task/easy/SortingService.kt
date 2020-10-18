@@ -18,8 +18,8 @@ class SortingService(
 ) {
 
     fun createSorting(sortingRequest: SortingRequest): SortingResponse? {
-        return sortingRepository.save(sortingRequest.toEntity(owner = currentUser, elements = sortingRequest.elements.map {
-            mediaItemService.mediaItemRequestToEntity(it) ?: return null
+        return sortingRepository.save(sortingRequest.toEntity(owner = currentUser, elements = sortingRequest.elements.mapNotNull {
+            mediaItemService.mediaItemRequestToEntity(it) ?: return@mapNotNull null
         })).toDomainModel()
     }
 
@@ -27,8 +27,8 @@ class SortingService(
         val sorting = sortingRepository.findById(id).toNullable ?: return null
         if (!sorting.ownerIsTheCurrentUser) return null
         return sortingRepository.save(
-                sortingRequest.toEntity(owner = currentUser, elements = sortingRequest.elements.map {
-                    mediaItemService.mediaItemRequestToEntity(it) ?: return null
+                sortingRequest.toEntity(owner = currentUser, elements = sortingRequest.elements.mapNotNull {
+                    mediaItemService.mediaItemRequestToEntity(it) ?: return@mapNotNull null
                 }).apply { this.id = id }
         ).toDomainModel()
     }

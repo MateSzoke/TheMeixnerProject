@@ -1,17 +1,23 @@
+.header {
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
 
 .spacer {
 }
 
-.button{
+.button {
   color: white;
   margin-left: 2em;
 }
 
-.username{
+.username {
   margin-right: 1em;
 }
 
-.menuIcon{
+.menuIcon {
   display: flex;
   align-items: center;
 }
@@ -20,7 +26,7 @@
   color: white;
 }
 
-.mat-toolbar-row{
+.mat-toolbar-row {
   justify-content: space-between;
 }
 
@@ -32,7 +38,7 @@
   }
 }
 
-.mat-sidenav-content{
+.mat-sidenav-content {
   background-color: white;
   align-content: center;
 
@@ -55,7 +61,7 @@
   right: 0px;
 }
 
-.mat-card-content{
+.mat-card-content {
   margin-bottom: 0px;
 }
 

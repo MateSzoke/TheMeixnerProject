@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {AuthenticationService} from './service/authentication.service';
 import {UserRequest} from "../swagger-api";
+import {Path} from "./path";
 import RoleEnum = UserRequest.RoleEnum;
 
 @Component({
@@ -12,6 +13,13 @@ export class AppComponent {
   title = 'angular-meixner';
   logInStatus = false;
   userRole: RoleEnum = null
+
+  allTasksPath = Path.TASKS_ALL
+  myTasksPath = Path.TASKS_MY
+  exercisesPath = Path.EXERCISES
+  usersPath = Path.USERS
+  studentExercisesPath = Path.STUDENT_EXERCISES
+  studentResultsPath = Path.STUDENT_RESULTS
 
   constructor(
     public authenticationService: AuthenticationService

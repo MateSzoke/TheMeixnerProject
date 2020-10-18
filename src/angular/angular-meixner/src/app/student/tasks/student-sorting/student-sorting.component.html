@@ -1,0 +1,18 @@
+<div *ngIf="!loaded">
+  <div class="wrapper">
+    <div class="center">
+      <mat-spinner diameter="70"></mat-spinner>
+    </div>
+  </div>
+</div>
+<div *ngIf="loaded">
+  <p class="title"><b>Sorrendezés</b> - {{sorting.title}}</p>
+  <button (click)="evaluateTask()" class="addbtn" mat-raised-button type="button">
+    Kész, beküldöm a megoldást
+  </button>
+  <div (cdkDropListDropped)="drop($event)" cdkDropList class="example-list">
+    <div *ngFor="let element of sorting.elements" cdkDrag class="example-box"
+         fxLayoutAlign="center center">{{element.content}}</div>
+  </div>
+</div>
+

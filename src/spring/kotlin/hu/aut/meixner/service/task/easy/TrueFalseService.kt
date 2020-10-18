@@ -20,11 +20,11 @@ class TrueFalseService(
     fun createTrueFalse(request: TrueFalseRequest): TrueFalseResponse? {
         return trueFalseRepository.save(request.toEntity(
                 owner = currentUser,
-                trueItems = request.trueItems.map {
-                    mediaItemService.mediaItemRequestToEntity(it) ?: return null
+                trueItems = request.trueItems.mapNotNull {
+                    mediaItemService.mediaItemRequestToEntity(it) ?: return@mapNotNull null
                 },
-                falseItems = request.falseItems.map {
-                    mediaItemService.mediaItemRequestToEntity(it) ?: return null
+                falseItems = request.falseItems.mapNotNull {
+                    mediaItemService.mediaItemRequestToEntity(it) ?: return@mapNotNull null
                 }
         )).toDomainModel()
     }
@@ -34,11 +34,11 @@ class TrueFalseService(
         if (!result.ownerIsTheCurrentUser) return null
         return trueFalseRepository.save(request.toEntity(
                 owner = currentUser,
-                trueItems = request.trueItems.map {
-                    mediaItemService.mediaItemRequestToEntity(it) ?: return null
+                trueItems = request.trueItems.mapNotNull {
+                    mediaItemService.mediaItemRequestToEntity(it) ?: return@mapNotNull null
                 },
-                falseItems = request.falseItems.map {
-                    mediaItemService.mediaItemRequestToEntity(it) ?: return null
+                falseItems = request.falseItems.mapNotNull {
+                    mediaItemService.mediaItemRequestToEntity(it) ?: return@mapNotNull null
                 }
         )).apply { this.id = id }.toDomainModel()
     }

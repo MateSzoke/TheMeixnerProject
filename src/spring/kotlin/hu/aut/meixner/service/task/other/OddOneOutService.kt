@@ -18,8 +18,8 @@ class OddOneOutService(
 ) {
     fun createOddOneOut(request: OddOneOutRequest): OddOneOutResponse? {
         if (request.correctAnswerIndex !in 0..request.options.lastIndex) return null
-        return repository.save(request.toEntity(owner = currentUser, options = request.options.map {
-            mediaItemService.mediaItemRequestToEntity(it) ?: return null
+        return repository.save(request.toEntity(owner = currentUser, options = request.options.mapNotNull {
+            mediaItemService.mediaItemRequestToEntity(it) ?: return@mapNotNull null
         })).toDomainModel()
     }
 
@@ -28,8 +28,8 @@ class OddOneOutService(
         if (!oddOneOutEntity.ownerIsTheCurrentUser) return null
         if (request.correctAnswerIndex !in 0..request.options.lastIndex) return null
         return repository.save(
-                request.toEntity(owner = currentUser, options = request.options.map {
-                    mediaItemService.mediaItemRequestToEntity(it) ?: return null
+                request.toEntity(owner = currentUser, options = request.options.mapNotNull {
+                    mediaItemService.mediaItemRequestToEntity(it) ?: return@mapNotNull null
                 }).apply { this.id = id }
         ).toDomainModel()
     }

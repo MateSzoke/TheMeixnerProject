@@ -1,7 +1,9 @@
 package hu.aut.meixner.controller.result
 
 import hu.aut.meixner.dto.auth.UserResponse
+import hu.aut.meixner.dto.result.ExerciseResult
 import hu.aut.meixner.dto.result.StudentResponse
+import hu.aut.meixner.dto.result.TaskResultResponse
 import hu.aut.meixner.service.result.ResultService
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
@@ -72,6 +74,35 @@ class ResultController(
     @ApiOperation("Delete student and user by user id")
     fun deleteUserById(@PathVariable("userId") userId: Long) {
         resultService.deleteUserById(userId)
+    }
+
+    @GetMapping("/all")
+    @ApiOperation("Get all student's all results")
+    fun getResults(): ResponseEntity<List<TaskResultResponse>> {
+        val result = resultService.getResults() ?: return ResponseEntity.badRequest().build()
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/{userId}")
+    @ApiOperation("Get all results from student by userId")
+    fun getResultsByUserId(@PathVariable("userId") userId: Long): ResponseEntity<List<TaskResultResponse>> {
+        val result = resultService.getResultsByUserId(userId) ?: return ResponseEntity.badRequest().build()
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/my")
+    @ApiOperation("Get my results as student")
+    fun getMyResults(): ResponseEntity<List<ExerciseResult>> {
+        val result = resultService.getMyResults() ?: return ResponseEntity.badRequest().build()
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/solved/{solvedExerciseId}")
+    @ApiOperation("Get results of a solved exercise by started exercise id")
+    fun getSolvedExerciseResults(@PathVariable("solvedExerciseId") solvedExerciseId: Long): ResponseEntity<ExerciseResult> {
+        val result = resultService.getSolvedExerciseResults(solvedExerciseId)
+                ?: return ResponseEntity.badRequest().build()
+        return ResponseEntity.ok(result)
     }
 
 }

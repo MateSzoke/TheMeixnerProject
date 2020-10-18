@@ -1,0 +1,48 @@
+<div *ngIf="!loaded">
+  <div class="wrapper">
+    <div class="center">
+      <mat-spinner diameter="70"></mat-spinner>
+    </div>
+  </div>
+</div>
+<div *ngIf="loaded">
+  <p class="title"><b>Igaz-hamis</b> - {{trueFalse.title}}</p>
+  <button (click)="evaluateTask()" class="addbtn" mat-raised-button type="button">
+    Kész, beküldöm a megoldást
+  </button>
+
+  <div cdkDropListGroup>
+    <div class="example-container">
+      <h2 class="subtitle">Elérhető elemek</h2>
+
+      <div
+        (cdkDropListDropped)="drop($event)"
+        [cdkDropListData]="trueFalse.elements"
+        cdkDropList
+        cdkDropListSortingDisabled
+        class="example-list">
+        <div *ngFor="let element of trueFalse.elements" cdkDrag class="example-box">{{element.content}}</div>
+      </div>
+    </div>
+
+    <h2 class="subtitle">Igaz állítások</h2>
+    <div
+      (cdkDropListDropped)="drop($event)"
+      [cdkDropListData]="trueFalseRequest.trueItems"
+      cdkDropList
+      cdkDropListSortingDisabled
+      class="example-list">
+      <div *ngFor="let element of trueFalseRequest.trueItems" cdkDrag class="example-box">{{element.content}}</div>
+    </div>
+
+    <h2 class="subtitle">Hamis állítások</h2>
+    <div
+      (cdkDropListDropped)="drop($event)"
+      [cdkDropListData]="trueFalseRequest.falseItems"
+      cdkDropList
+      cdkDropListSortingDisabled
+      class="example-list">
+      <div *ngFor="let element of trueFalseRequest.falseItems" cdkDrag class="example-box">{{element.content}}</div>
+    </div>
+  </div>
+</div>

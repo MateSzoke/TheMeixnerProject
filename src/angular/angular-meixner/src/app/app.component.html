@@ -1,4 +1,4 @@
-<div style="height: 100vh">
+<div class="header">
   <mat-toolbar color="primary">
     <mat-toolbar-row>
       <div class="centered-nav">
@@ -10,15 +10,15 @@
           <span class="menu-spacer"></span>
           <div *ngIf="isAdmin()" fxHide.lt-md fxShow="true">
             <!-- The following menu items will be hidden on both SM and XS screen sizes -->
-            <a href="#" mat-button routerLink="feladatok/sajat">Feladataim</a>
-            <a href="#" mat-button routerLink="feladatsorok">Feladatsorok</a>
-            <a href="#" mat-button routerLink="felhasznalok">Felhasználók</a>
-            <a href="#" mat-button routerLink="feladatok/osszes">Minden feladat</a>
+            <a href="#" mat-button routerLink="{{myTasksPath}}">Feladataim</a>
+            <a href="#" mat-button routerLink="{{exercisesPath}}">Feladatsorok</a>
+            <a href="#" mat-button routerLink="{{usersPath}}">Felhasználók</a>
+            <a href="#" mat-button routerLink="{{allTasksPath}}">Minden feladat</a>
           </div>
           <div *ngIf="!isAdmin()" fxHide.lt-md fxShow="true">
             <!-- The following menu items will be hidden on both SM and XS screen sizes -->
-            <a href="#" mat-button routerLink="feladatsoraim">Feladatsoraim</a>
-            <a href="#" mat-button routerLink="eredmenyeim">Eredményeim</a>
+            <a href="#" mat-button routerLink="{{studentExercisesPath}}">Feladatsoraim</a>
+            <a href="#" mat-button routerLink="{{studentResultsPath}}">Eredményeim</a>
           </div>
         </ng-template>
       </div>
@@ -34,18 +34,19 @@
   <mat-sidenav-container fxFlexFill>
     <mat-sidenav #sidenav>
       <mat-nav-list (click)="sidenav.toggle()" *ngIf="isAdmin()">
-        <a href="#" mat-list-item routerLink="feladatok/sajat">Feladataim</a>
-        <a href="#" mat-list-item routerLink="feladatsorok">Feladatsorok</a>
-        <a href="#" mat-list-item routerLink="felhasznalok">Felhasználók</a>
-        <a href="#" mat-list-item routerLink="feladatok/osszes">Minden feladat</a>
+        <a href="#" mat-list-item routerLink="{{myTasksPath}}">Feladataim</a>
+        <a href="#" mat-list-item routerLink="{{exercisesPath}}">Feladatsorok</a>
+        <a href="#" mat-list-item routerLink="{{usersPath}}">Felhasználók</a>
+        <a href="#" mat-list-item routerLink="{{allTasksPath}}">Minden feladat</a>
       </mat-nav-list>
       <mat-nav-list (click)="sidenav.toggle()" *ngIf="!isAdmin()">
-        <a href="#" mat-list-item routerLink="feladatsoraim">Feladatsoraim</a>
-        <a href="#" mat-list-item routerLink="eredmenyeim">Eredményeim</a>
+        <a href="#" mat-list-item routerLink="{{studentExercisesPath}}">Feladatsoraim</a>
+        <a href="#" mat-list-item routerLink="{{studentResultsPath}}}">Eredményeim</a>
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content align="center" fxFlexFill>
       <router-outlet></router-outlet>
+      <footer style="padding-bottom: 100px"></footer>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>

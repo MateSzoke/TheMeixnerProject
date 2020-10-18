@@ -4,9 +4,11 @@ import {HttpClient} from '@angular/common/http';
 
 
 import {AccountService} from './api/account.service';
+import {AssignService} from './api/assign.service';
 import {BasicErrorControllerService} from './api/basicErrorController.service';
 import {ComplexTasksService} from './api/complexTasks.service';
 import {EasyTasksService} from './api/easyTasks.service';
+import {EvaluateService} from './api/evaluate.service';
 import {ExercisesService} from './api/exercises.service';
 import {FilesService} from './api/files.service';
 import {OtherTasksService} from './api/otherTasks.service';
@@ -19,9 +21,11 @@ import {TaskService} from './api/task.service';
   exports: [],
   providers: [
     AccountService,
+    AssignService,
     BasicErrorControllerService,
     ComplexTasksService,
     EasyTasksService,
+    EvaluateService,
     ExercisesService,
     FilesService,
     OtherTasksService,
