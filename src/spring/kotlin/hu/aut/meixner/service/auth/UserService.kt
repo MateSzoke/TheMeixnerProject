@@ -41,6 +41,10 @@ class UserService(
         return userRepository.findAll().firstOrNull { it.username == currentUser }?.toDomainModel()
     }
 
+    fun getUserById(userId: Long): UserResponse? {
+        return userRepository.findById(userId).toNullable?.toDomainModel()
+    }
+
     override fun loadUserByUsername(userName: String): UserDetails? {
         val user = userRepository.findByUsername(userName) ?: return null
         return User(user.username, user.password, emptyList())
