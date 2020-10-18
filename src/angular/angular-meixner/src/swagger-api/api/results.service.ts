@@ -300,11 +300,11 @@ export class ResultsService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getResultsByUserIdUsingGET(userId: number, observe?: 'body', reportProgress?: boolean): Observable<Array<TaskResultResponse>>;
+  public getResultsByUserIdUsingGET(userId: number, observe?: 'body', reportProgress?: boolean): Observable<Array<ExerciseResult>>;
 
-  public getResultsByUserIdUsingGET(userId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<TaskResultResponse>>>;
+  public getResultsByUserIdUsingGET(userId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<ExerciseResult>>>;
 
-  public getResultsByUserIdUsingGET(userId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<TaskResultResponse>>>;
+  public getResultsByUserIdUsingGET(userId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<ExerciseResult>>>;
 
   public getResultsByUserIdUsingGET(userId: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
     if (userId === null || userId === undefined) {
@@ -325,7 +325,7 @@ export class ResultsService {
     // to determine the Content-Type header
     const consumes: string[] = [];
 
-    return this.httpClient.get<Array<TaskResultResponse>>(`${this.configuration.basePath}/results/${encodeURIComponent(String(userId))}`,
+    return this.httpClient.get<Array<ExerciseResult>>(`${this.configuration.basePath}/results/${encodeURIComponent(String(userId))}`,
       {
         withCredentials: this.configuration.withCredentials,
         headers: headers,

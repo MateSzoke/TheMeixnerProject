@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ExercisesResponse, ResultsService, StudentResponse} from "../../../swagger-api";
 import {ExerciseListComponent} from "../excercise-list/exercise-list.component";
 import {MatDialog} from "@angular/material/dialog";
+import {StartedExercise} from "../../../swagger-api/model/startedExercise";
 
 @Component({
   selector: 'app-user-results',
@@ -15,6 +16,7 @@ export class UserResultsComponent implements OnInit {
   student: StudentResponse
   userId: number
   classes: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+  exerciseResults: Array<StartedExercise> = new Array<StartedExercise>()
 
   constructor(
     private router: Router,
@@ -29,8 +31,10 @@ export class UserResultsComponent implements OnInit {
     this.userId = Number.parseInt(params.get("userId"))
     this.resultsService.getStudentByIdUsingGET(this.userId).subscribe(student => {
       this.student = student
-      this.studentLoaded = true
-      console.log(this.student)
+      this.resultsService.getResultsByUserIdUsingGET(student.user.id).subscribe(exerciseResults => {
+        this.exerciseResults = exerciseResults
+        this.studentLoaded = true
+      })
     })
   }
 
