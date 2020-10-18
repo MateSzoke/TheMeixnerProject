@@ -7,5 +7,9 @@ export class DateUtils {
     return this.datePipe.transform(date, 'yyyy. MM. dd.')
   }
 
+  public static getFormattedDateTime(date: Date): string {
+    return this.datePipe.transform(date, 'yyyy. MM. dd. HH:mm')
+  }
+
 }
 
