@@ -107,7 +107,7 @@ class ResultService(
         }
         return ExerciseResult(
                 taskResults = taskResults,
-                exerciseName = exerciseService.getExercisesById(solvedExercise.id)?.name ?: return null,
+                exerciseName = exerciseService.getExercisesById(solvedExercise.exerciseId)?.name ?: return null,
                 resultPercentage = solvedExercise.resultPercentages.average()
         )
     }
