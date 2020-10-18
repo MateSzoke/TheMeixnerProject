@@ -1,9 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {ExercisesResponse, ResultsService, StudentResponse} from "../../../swagger-api";
+import {ResultsService, StudentResponse} from "../../../swagger-api";
 import {ExerciseListComponent} from "../excercise-list/exercise-list.component";
 import {MatDialog} from "@angular/material/dialog";
-import {StartedExercise} from "../../../swagger-api/model/startedExercise";
+import {ExerciseResult} from "../../../swagger-api/model/exerciseResult";
+import {DateUtils} from "../../util/date";
+import {ExerciseResultComponent} from "../../student/exercise-result/exercise-result.component";
 
 @Component({
   selector: 'app-user-results',
@@ -16,7 +18,7 @@ export class UserResultsComponent implements OnInit {
   student: StudentResponse
   userId: number
   classes: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-  exerciseResults: Array<StartedExercise> = new Array<StartedExercise>()
+  exerciseResults: Array<ExerciseResult> = new Array<ExerciseResult>()
 
   constructor(
     private router: Router,
@@ -47,14 +49,20 @@ export class UserResultsComponent implements OnInit {
     })
   }
 
+  getFormattedDateTime(date: Date): string {
+    return DateUtils.getFormattedDateTime(date)
+  }
+
   deleteExerciseFromUser(exerciseId: number) {
     this.resultsService.removeExercisesFromUserUsingDELETE(exerciseId, this.userId).subscribe(() => {
       this.loadExercises()
     })
   }
 
-  openExerciseResults(exercise: ExercisesResponse) {
-    console.log(`TODO open ${exercise.name} results to ${this.student.user.username}`)
+  openExerciseResults(exerciseResult: ExerciseResult) {
+    this.dialog.open(ExerciseResultComponent, {
+      data: {exerciseResult: exerciseResult}
+    })
   }
 
   loadExercises() {

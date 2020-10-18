@@ -19,7 +19,7 @@
   <button (click)="showExerciseList()" class="addbtn" mat-raised-button type="button">
     Feladatsor hozzáadása
   </button>
-  <p class="title">Feladatsorok</p>
+  <p class="title" style="margin-top: 32px">Feladatsorok</p>
   <div *ngIf="student.exercises.length == 0">
     <p class="subtitle">Nincs még feladatsor hozzárendelve</p>
   </div>
@@ -36,19 +36,18 @@
     </mat-card>
   </div>
 
-  <p class="title">Eredmények</p>
-  <div *ngIf="student.exercises.length == 0">
+  <p class="title" style="margin-top: 32px">Eredmények</p>
+  <div *ngIf="exerciseResults.length == 0">
     <p class="subtitle">Nincs még kitöltött feladatsor {{student.user.username}} felhasználónak</p>
   </div>
-  <div *ngIf="student.exercises.length > 0">
-    <mat-card *ngFor="let exercise of student.exercises" class="user-card">
+  <div *ngIf="exerciseResults.length > 0">
+    <mat-card *ngFor="let exerciseResult of exerciseResults" class="user-card">
       <div fxLayout="row" fxLayoutAlign="center center">
         <div class="float-left">
-          <b>{{exercise.name}}</b> - {{exercise.comment}}
+          <b>{{exerciseResult.exerciseName}}</b> - {{getFormattedDateTime(exerciseResult.lastModified)}}
         </div>
         <div class="float-right">
-          <a (click)="openExerciseResults(exercise)" mat-button>Eredmények megtekintése</a>
-          <i (click)="deleteExerciseFromUser(exercise.id)" class="fa fa-trash"></i>
+          <a (click)="openExerciseResults(exerciseResult)" mat-button>Eredmények megtekintése</a>
         </div>
       </div>
     </mat-card>

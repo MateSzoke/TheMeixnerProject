@@ -8,7 +8,7 @@
 </div>
 <div *ngIf="loaded">
   <div *ngIf="exercises.length == 0">
-    <p>Nincs még kitöltött feladatsorod</p>
+    <p class="subtitle">Nincs még kitöltött feladatsorod</p>
   </div>
   <div *ngIf="exercises.length > 0">
 
@@ -16,7 +16,7 @@
       <mat-expansion-panel-header>
         <div>
           <mat-panel-title style="font-size: large">{{exercise.exerciseName}}
-            - {{exercise.lastModified}}</mat-panel-title>
+            - {{getFormattedDateTime(exercise.lastModified)}}</mat-panel-title>
         </div>
         <div class="float-right">
           <p><b>Eredmény:</b> {{getPercentage(exercise.resultPercentage)}}</p>

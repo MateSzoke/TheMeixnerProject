@@ -12,6 +12,7 @@ import {SentenceCreationResultComponent} from "../tasks/result/sentence-creation
 import {SortingResultComponent} from "../tasks/result/sorting-result/sorting-result.component";
 import {TrueFalseResultComponent} from "../tasks/result/true-false-result/true-false-result.component";
 import {ComponentType} from "@angular/cdk/overlay";
+import {DateUtils} from "../../util/date";
 import TypeEnum = AssignTask.TypeEnum;
 
 @Component({
@@ -35,6 +36,10 @@ export class MyResultsComponent implements OnInit {
       this.exercises = exercises
       this.loaded = true
     })
+  }
+
+  getFormattedDateTime(date: Date): string {
+    return DateUtils.getFormattedDateTime(date)
   }
 
   private static getResultComponentByType(type: string): ComponentType<any> {

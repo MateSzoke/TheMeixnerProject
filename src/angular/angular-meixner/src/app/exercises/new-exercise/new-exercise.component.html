@@ -1,0 +1,21 @@
+<form class="exercises-form" style="margin: 24px">
+  <p class="title-left">Feladatsor hozzáadása</p>
+
+  <form (ngSubmit)="createExercise()" [formGroup]="exercisesForm">
+    <mat-form-field class="full-width">
+      <mat-label>Feladatsor neve</mat-label>
+      <input formControlName="name" matInput placeholder="Feladatsor neve">
+      <mat-error>A feladatsor neve nem lehet üres</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Megjegyzés</mat-label>
+      <textarea formControlName="comment" matInput placeholder="pl.: 2020-as ötödikesek"
+                style="height: 60px"></textarea>
+    </mat-form-field>
+
+    <button [mat-dialog-close] class="loginbtn" mat-raised-button style="float: right" type="submit">Feladatsor
+      hozzáadása
+    </button>
+  </form>
+</form>
