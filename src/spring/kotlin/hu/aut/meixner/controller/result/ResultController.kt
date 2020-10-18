@@ -85,7 +85,7 @@ class ResultController(
 
     @GetMapping("/{userId}")
     @ApiOperation("Get all results from student by userId")
-    fun getResultsByUserId(@PathVariable("userId") userId: Long): ResponseEntity<List<TaskResultResponse>> {
+    fun getResultsByUserId(@PathVariable("userId") userId: Long): ResponseEntity<List<ExerciseResult>> {
         val result = resultService.getResultsByUserId(userId) ?: return ResponseEntity.badRequest().build()
         return ResponseEntity.ok(result)
     }

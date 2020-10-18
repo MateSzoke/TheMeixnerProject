@@ -19,8 +19,26 @@
   <button (click)="showExerciseList()" class="addbtn" mat-raised-button type="button">
     Feladatsor hozzáadása
   </button>
+  <p class="title">Feladatsorok</p>
   <div *ngIf="student.exercises.length == 0">
     <p class="subtitle">Nincs még feladatsor hozzárendelve</p>
+  </div>
+  <div *ngIf="student.exercises.length > 0">
+    <mat-card *ngFor="let exercise of student.exercises" class="user-card">
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <div class="float-left">
+          <b>{{exercise.name}}</b> - {{exercise.comment}}
+        </div>
+        <div class="float-right">
+          <i (click)="deleteExerciseFromUser(exercise.id)" class="fa fa-trash"></i>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <p class="title">Eredmények</p>
+  <div *ngIf="student.exercises.length == 0">
+    <p class="subtitle">Nincs még kitöltött feladatsor {{student.user.username}} felhasználónak</p>
   </div>
   <div *ngIf="student.exercises.length > 0">
     <mat-card *ngFor="let exercise of student.exercises" class="user-card">

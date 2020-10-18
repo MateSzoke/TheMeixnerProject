@@ -72,29 +72,12 @@ class ResultService(
         }
     }
 
-    fun getResultsByUserId(userId: Long): List<TaskResultResponse>? {
-        return taskResultRepository.findAll().filter { it.student.id == userId }.mapNotNull { taskResultEntity ->
-            taskResultEntity.toDomainModel(
-                    taskResult = taskService.getTaskById(taskResultEntity.resultTaskId) ?: return@mapNotNull null,
-                    user = taskResultEntity.student.user.toDomainModel())
-        }
+    fun getResultsByUserId(userId: Long): List<ExerciseResult>? {
+        return getExerciseResults(userService.getUserById(userId) ?: return null)
     }
 
     fun getMyResults(): List<ExerciseResult>? {
-        val user = userService.getUser() ?: return null
-        val taskResults = taskResultRepository.findAll().filter { it.student.id == user.id }
-        return solvedExerciseRepository.findAll().filter { it.userId == user.id }.map { solvedExercise ->
-            ExerciseResult(
-                    taskResults = taskResults.filter { it.id in solvedExercise.taskResultIds }.mapNotNull { taskResult ->
-                        taskResult.toDomainModel(
-                                taskResult = taskService.getTaskById(taskResult.resultTaskId) ?: return@mapNotNull null,
-                                user = user)
-                    },
-                    exerciseName = exerciseService.getExercisesById(solvedExercise.exerciseId)?.name ?: return null,
-                    resultPercentage = solvedExercise.resultPercentages.average(),
-                    lastModified = solvedExercise.lastModified
-            )
-        }
+        return getExerciseResults(userService.getUser() ?: return null)
     }
 
     fun getSolvedExerciseResults(solvedExerciseId: Long): ExerciseResult? {
@@ -112,6 +95,22 @@ class ResultService(
                 resultPercentage = solvedExercise.resultPercentages.average(),
                 lastModified = solvedExercise.lastModified
         )
+    }
+
+    private fun getExerciseResults(user: UserResponse): List<ExerciseResult>? {
+        val taskResults = taskResultRepository.findAll().filter { it.student.id == user.id }
+        return solvedExerciseRepository.findAll().filter { it.userId == user.id }.map { solvedExercise ->
+            ExerciseResult(
+                    taskResults = taskResults.filter { it.id in solvedExercise.taskResultIds }.mapNotNull { taskResult ->
+                        taskResult.toDomainModel(
+                                taskResult = taskService.getTaskById(taskResult.resultTaskId) ?: return@mapNotNull null,
+                                user = user)
+                    },
+                    exerciseName = exerciseService.getExercisesById(solvedExercise.exerciseId)?.name ?: return null,
+                    resultPercentage = solvedExercise.resultPercentages.average(),
+                    lastModified = solvedExercise.lastModified
+            )
+        }
     }
 
     private fun StudentEntity.getExercises() = exerciseIds.mapNotNull { id -> exerciseService.getExercisesById(id) }
