@@ -3,9 +3,9 @@ import {DomService} from '../service/dom.service';
 import {ModalService} from '../service/modal.service';
 import {DateUtils} from '../util/date';
 import {ModalComponent} from '../modal/modal.component';
-import {ActivatedRoute, Params, Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {ExercisesResponse, ExercisesService, TaskResponse} from "../../swagger-api";
-import {NewExerciseComponent} from "../new-exercise/new-exercise.component";
+import {NewExerciseComponent} from "./new-exercise/new-exercise.component";
 import {ExerciseTaskListComponent} from "../exercise-task-list/exercise-task-list.component";
 import {MatDialog} from "@angular/material/dialog";
 
@@ -33,7 +33,7 @@ export class ExercisesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe((params: Params) => {
+    this.route.params.subscribe(() => {
       this.getAllTasks = true;
       this.getMyExercises();
       ModalComponent.closeBtnPressed.subscribe(
@@ -54,7 +54,8 @@ export class ExercisesComponent implements OnInit {
       new TaskResponseUI(
         task.id,
         task.title,
-        DateUtils.getFormattedDate(task.lastModified)
+        DateUtils.getFormattedDate(task.lastModified),
+        task.difficulty
       )
     )
   }
@@ -64,7 +65,10 @@ export class ExercisesComponent implements OnInit {
   }
 
   newExercise() {
-    this.dom.show(NewExerciseComponent);
+    this.dialog.open(NewExerciseComponent)
+    this.dialog.afterAllClosed.subscribe(() => {
+      this.getMyExercises()
+    })
   }
 
   openMyTasks(exerciseId: number) {
@@ -72,7 +76,7 @@ export class ExercisesComponent implements OnInit {
       data: {exerciseId: exerciseId}
     })
     this.dialog.afterAllClosed.subscribe(() => {
-      window.location.reload()
+      this.getMyExercises()
     })
   }
 
@@ -85,7 +89,7 @@ export class ExercisesComponent implements OnInit {
       () => {
       },
       () => {
-        window.location.reload()
+        this.getMyExercises()
       }
     );
   }
@@ -99,7 +103,7 @@ export class ExercisesComponent implements OnInit {
       () => {
       },
       () => {
-        window.location.reload()
+        this.getMyExercises()
       }
     )
   }
@@ -125,16 +129,12 @@ export class ExercisesComponent implements OnInit {
             owner: exercise.owner,
             comment: exercise.comment,
             name: exercise.name,
+            difficulty: exercise.averageDifficulty,
             tasks: this.mapTaskResponse(exercise.tasks),
           } as ExerciseUI);
         });
-        this.exercisesLoaded = true;
-      },
-      error => {
-
-      },
-      () => {
-      });
+      this.exercisesLoaded = true;
+    })
   }
 
 }
@@ -147,16 +147,19 @@ class ExerciseUI {
   comment: string;
   name: string;
   tasks: Array<TaskResponseUI>;
+  difficulty: number
 }
 
 class TaskResponseUI {
   id: number;
   title: string;
   formattedLastModified: string;
+  difficulty: number
 
-  constructor(id: number, title: string, formattedLastModified: string) {
+  constructor(id: number, title: string, formattedLastModified: string, difficulty: number) {
     this.id = id;
     this.title = title;
     this.formattedLastModified = formattedLastModified
+    this.difficulty = difficulty
   }
 }

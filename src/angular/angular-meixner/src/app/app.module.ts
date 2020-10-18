@@ -22,7 +22,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatSelectModule} from '@angular/material/select';
-import {NewExerciseComponent} from './new-exercise/new-exercise.component';
+import {NewExerciseComponent} from './exercises/new-exercise/new-exercise.component';
 import {ModalComponent} from './modal/modal.component';
 import {DomService} from './service/dom.service';
 import {ModalService} from './service/modal.service';
@@ -66,6 +66,7 @@ import {SentenceCompletionResultComponent} from './student/tasks/result/sentence
 import {SentenceCreationResultComponent} from './student/tasks/result/sentence-creation-result/sentence-creation-result.component';
 import {TrueFalseResultComponent} from './student/tasks/result/true-false-result/true-false-result.component';
 import {MemoryGameResultComponent} from './student/tasks/result/memory-game-result/memory-game-result.component';
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 @NgModule({
   declarations: [
@@ -134,7 +135,8 @@ import {MemoryGameResultComponent} from './student/tasks/result/memory-game-resu
     MatProgressSpinnerModule,
     NgbModule,
     MatDialogModule,
-    DragDropModule
+    DragDropModule,
+    MatProgressBarModule
   ],
   providers: [
     DomService,
