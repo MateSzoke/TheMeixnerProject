@@ -11,6 +11,7 @@ import hu.aut.meixner.service.auth.UserService
 import hu.aut.meixner.service.exercises.ExerciseService
 import hu.aut.meixner.service.task.TaskService
 import org.springframework.stereotype.Service
+import java.time.OffsetDateTime
 
 @Service
 class AssignService(
@@ -53,6 +54,7 @@ class AssignService(
             solvedTaskIds += solvedTaskId
             resultPercentages += taskResult.resultPercentage
             taskResultIds += taskResult.id
+            lastModified = OffsetDateTime.now()
         }
         solvedExerciseRepository.save(solvedExercise)
         val taskIds = exercise.tasks.map { it.id }

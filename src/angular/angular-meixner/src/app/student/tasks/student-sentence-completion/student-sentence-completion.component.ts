@@ -3,10 +3,10 @@ import {SentenceCompletionTask} from "../../../../swagger-api/model/sentenceComp
 import {ActivatedRoute, Router} from "@angular/router";
 import {AssignService, EvaluateService} from "../../../../swagger-api";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
-import {Path} from "../../../path";
-import {ConvertEnum} from "../../../model/ConvertEnum";
 import {MyExercisesComponent} from "../../my-exercises/my-exercises.component";
 import {SentenceCompletionTaskRequest} from "../../../../swagger-api/model/sentenceCompletionTaskRequest";
+import {SentenceCompletionResultComponent} from "../result/sentence-completion-result/sentence-completion-result.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-student-sentence-completion',
@@ -23,6 +23,7 @@ export class StudentSentenceCompletionComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private evaluateService: EvaluateService,
+    private dialog: MatDialog,
     private assignService: AssignService
   ) {
   }
@@ -45,11 +46,13 @@ export class StudentSentenceCompletionComponent implements OnInit {
   evaluateTask() {
     this.evaluateService.evaluateSentenceCompletionUsingPOST(this.startedExerciseId, this.taskId, this.createTaskRequest()).subscribe(response => {
       console.log(response)
-      if (response.nextTask == undefined) {
-        this.router.navigate([Path.STUDENT_EXERCISE_RESULT, {startedExerciseId: this.startedExerciseId}])
-      } else {
-        this.router.navigate([ConvertEnum.convertTypeToStudentRouterLink(response.nextTask.type), MyExercisesComponent.getNavigationData(response)])
-      }
+      this.dialog.open(SentenceCompletionResultComponent, {
+        data: {startedExercise: response}
+      })
+      let subscription = this.dialog.afterAllClosed.subscribe(() => {
+        MyExercisesComponent.navigateNextTask(response, this.router, this.dialog)
+        subscription.unsubscribe()
+      })
     })
   }
 

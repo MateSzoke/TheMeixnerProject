@@ -4,6 +4,9 @@ import {AssignService} from "../../../swagger-api";
 import {Router} from "@angular/router";
 import {ConvertEnum} from "../../model/ConvertEnum";
 import {StartedExercise} from "../../../swagger-api/model/startedExercise";
+import {Path} from "../../path";
+import {MatDialog} from "@angular/material/dialog";
+import {ExerciseResultComponent} from "../exercise-result/exercise-result.component";
 
 @Component({
   selector: 'app-my-exercises',
@@ -11,7 +14,6 @@ import {StartedExercise} from "../../../swagger-api/model/startedExercise";
   styleUrls: ['./my-exercises.component.scss']
 })
 export class MyExercisesComponent implements OnInit {
-
   loaded: boolean = false
   exercises: Array<AssignedExercise> = new Array<AssignedExercise>()
 
@@ -32,6 +34,19 @@ export class MyExercisesComponent implements OnInit {
     return {
       startedExerciseId: startedExercise.id,
       taskId: startedExercise.nextTask.taskId
+    }
+  }
+
+  static navigateNextTask(response: StartedExercise, router: Router, dialog: MatDialog) {
+    if (response.nextTask == undefined) {
+      dialog.open(ExerciseResultComponent, {
+        data: {startedExerciseId: response.id}
+      })
+      dialog.afterAllClosed.subscribe(() => {
+        router.navigate([Path.STUDENT_RESULTS])
+      })
+    } else {
+      router.navigate([ConvertEnum.convertTypeToStudentRouterLink(response.nextTask.type), MyExercisesComponent.getNavigationData(response)])
     }
   }
 

@@ -4,9 +4,9 @@ import {PairingTaskRequest} from "../../../../swagger-api/model/pairingTaskReque
 import {ActivatedRoute, Router} from "@angular/router";
 import {AssignService, EvaluateService} from "../../../../swagger-api";
 import {CdkDragDrop, transferArrayItem} from "@angular/cdk/drag-drop";
-import {Path} from "../../../path";
-import {ConvertEnum} from "../../../model/ConvertEnum";
 import {MyExercisesComponent} from "../../my-exercises/my-exercises.component";
+import {PairingResultComponent} from "../result/pairing-result/pairing-result.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-student-pairing',
@@ -24,6 +24,7 @@ export class StudentPairingComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private evaluateService: EvaluateService,
+    private dialog: MatDialog,
     private assignService: AssignService
   ) {
   }
@@ -55,11 +56,13 @@ export class StudentPairingComponent implements OnInit {
   evaluateTask() {
     this.evaluateService.evaluatePairingUsingPOST(this.startedExerciseId, this.taskId, this.pairingRequest).subscribe(response => {
       console.log(response)
-      if (response.nextTask == undefined) {
-        this.router.navigate([Path.STUDENT_EXERCISE_RESULT, {startedExerciseId: this.startedExerciseId}])
-      } else {
-        this.router.navigate([ConvertEnum.convertTypeToStudentRouterLink(response.nextTask.type), MyExercisesComponent.getNavigationData(response)])
-      }
+      this.dialog.open(PairingResultComponent, {
+        data: {startedExercise: response}
+      })
+      let subscription = this.dialog.afterAllClosed.subscribe(() => {
+        MyExercisesComponent.navigateNextTask(response, this.router, this.dialog)
+        subscription.unsubscribe()
+      })
     })
   }
 }
