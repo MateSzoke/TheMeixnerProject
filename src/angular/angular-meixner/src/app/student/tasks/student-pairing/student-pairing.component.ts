@@ -19,6 +19,7 @@ export class StudentPairingComponent implements OnInit {
   taskId: number = null
   pairing: PairingTask = null
   pairingRequest: PairingTaskRequest = null
+  currentResult: Array<Boolean> = new Array<Boolean>()
 
   constructor(
     private route: ActivatedRoute,
@@ -55,14 +56,21 @@ export class StudentPairingComponent implements OnInit {
 
   evaluateTask() {
     this.evaluateService.evaluatePairingUsingPOST(this.startedExerciseId, this.taskId, this.pairingRequest).subscribe(response => {
-      console.log(response)
-      this.dialog.open(PairingResultComponent, {
-        data: {startedExercise: response}
-      })
-      let subscription = this.dialog.afterAllClosed.subscribe(() => {
-        MyExercisesComponent.navigateNextTask(response, this.router, this.dialog)
-        subscription.unsubscribe()
-      })
+      console.log(response.taskResult)
+      this.loaded = false
+      if (response.taskResult.taskResult == undefined) {
+        this.currentResult = response.taskResult.currentResult
+        this.pairingRequest.attempts = response.taskResult.attempts
+      } else {
+        this.dialog.open(PairingResultComponent, {
+          data: {startedExercise: response}
+        })
+        let subscription = this.dialog.afterAllClosed.subscribe(() => {
+          MyExercisesComponent.navigateNextTask(response, this.router, this.dialog)
+          subscription.unsubscribe()
+        })
+      }
+      this.loaded = true
     })
   }
 }

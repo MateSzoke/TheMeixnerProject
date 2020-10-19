@@ -7,8 +7,8 @@
 </div>
 <div *ngIf="loaded">
   <p class="title">Sorrendezés - {{sortingResponse.title}} - megoldás</p>
-  <div *ngIf="startedExercise" [ngStyle]="{'color': getPercentage() > 50 ? 'darkgreen' : 'brown'}" class="subtitle">
-    Eredmény: {{getPercentageText()}}</div>
+  <div *ngIf="startedExercise" [ngStyle]="{'color': getAttempts() > 3 ? 'darkgreen' : 'brown'}" class="subtitle">
+    Próbálkozások: {{getAttemptsText()}}</div>
   <div *ngFor="let element of sortingResponse.elements">{{element.content}}</div>
   <div mat-dialog-actions style="float: right">
     <button (click)="finishExercise()" *ngIf="startedExercise" mat-button style="margin-top: 24px">Feladatsor

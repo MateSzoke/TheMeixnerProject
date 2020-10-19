@@ -7,8 +7,8 @@
 </div>
 <div *ngIf="loaded">
   <p class="title">Mondat kiegészítés - {{sentenceCompletion.title}} - megoldás</p>
-  <div *ngIf="startedExercise" [ngStyle]="{'color': getPercentage() > 50 ? 'darkgreen' : 'brown'}" class="subtitle">
-    Eredmény: {{getPercentageText()}}</div>
+  <div *ngIf="startedExercise" [ngStyle]="{'color': getAttempts() > 3 ? 'darkgreen' : 'brown'}" class="subtitle">
+    Próbálkozások: {{getAttemptsText()}}</div>
   <div class="subtitle">{{sentenceCompletion.sentence}}</div>
   <div mat-dialog-actions style="float: right">
     <button (click)="finishExercise()" *ngIf="startedExercise" mat-button style="margin-top: 24px">Feladatsor

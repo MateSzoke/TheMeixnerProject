@@ -5,8 +5,8 @@ import {AssignService, EvaluateService} from "../../../../swagger-api";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {MyExercisesComponent} from "../../my-exercises/my-exercises.component";
 import {SentenceCompletionTaskRequest} from "../../../../swagger-api/model/sentenceCompletionTaskRequest";
-import {SentenceCompletionResultComponent} from "../result/sentence-completion-result/sentence-completion-result.component";
 import {MatDialog} from "@angular/material/dialog";
+import {GroupingResultComponent} from "../result/grouping-result/grouping-result.component";
 
 @Component({
   selector: 'app-student-sentence-completion',
@@ -18,6 +18,8 @@ export class StudentSentenceCompletionComponent implements OnInit {
   startedExerciseId: number = null
   taskId: number = null
   sentenceCompletion: SentenceCompletionTask = null
+  currentResult: Array<Boolean> = new Array<Boolean>()
+  attempts: number = 0
 
   constructor(
     private route: ActivatedRoute,
@@ -44,19 +46,27 @@ export class StudentSentenceCompletionComponent implements OnInit {
 
   evaluateTask() {
     this.evaluateService.evaluateSentenceCompletionUsingPOST(this.startedExerciseId, this.taskId, this.createTaskRequest()).subscribe(response => {
-      console.log(response)
-      this.dialog.open(SentenceCompletionResultComponent, {
-        data: {startedExercise: response}
-      })
-      let subscription = this.dialog.afterAllClosed.subscribe(() => {
-        MyExercisesComponent.navigateNextTask(response, this.router, this.dialog)
-        subscription.unsubscribe()
-      })
+      console.log(response.taskResult)
+      this.loaded = false
+      if (response.taskResult.taskResult == undefined) {
+        this.currentResult = response.taskResult.currentResult
+        this.attempts = response.taskResult.attempts
+      } else {
+        this.dialog.open(GroupingResultComponent, {
+          data: {startedExercise: response}
+        })
+        let subscription = this.dialog.afterAllClosed.subscribe(() => {
+          MyExercisesComponent.navigateNextTask(response, this.router, this.dialog)
+          subscription.unsubscribe()
+        })
+      }
+      this.loaded = true
     })
   }
 
   private createTaskRequest(): SentenceCompletionTaskRequest {
     return {
+      attempts: this.attempts,
       options: this.sentenceCompletion.options
     }
   }

@@ -18,6 +18,8 @@ export class StudentSortingComponent implements OnInit {
   startedExerciseId: number = null
   taskId: number = null
   sorting: SortingTask = null
+  currentResult: Array<Boolean> = new Array<Boolean>()
+  attempts: number = 0
 
   constructor(
     private route: ActivatedRoute,
@@ -44,19 +46,27 @@ export class StudentSortingComponent implements OnInit {
 
   evaluateTask() {
     this.evaluateService.evaluateSortingUsingPOST(this.startedExerciseId, this.taskId, this.createTaskRequest()).subscribe(response => {
-      console.log(response)
-      this.dialog.open(SortingResultComponent, {
-        data: {startedExercise: response}
-      })
-      let subscription = this.dialog.afterAllClosed.subscribe(() => {
-        MyExercisesComponent.navigateNextTask(response, this.router, this.dialog)
-        subscription.unsubscribe()
-      })
+      console.log(response.taskResult)
+      this.loaded = false
+      if (response.taskResult.taskResult == undefined) {
+        this.currentResult = response.taskResult.currentResult
+        this.attempts = response.taskResult.attempts
+      } else {
+        this.dialog.open(SortingResultComponent, {
+          data: {startedExercise: response}
+        })
+        let subscription = this.dialog.afterAllClosed.subscribe(() => {
+          MyExercisesComponent.navigateNextTask(response, this.router, this.dialog)
+          subscription.unsubscribe()
+        })
+      }
+      this.loaded = true
     })
   }
 
   private createTaskRequest(): SortingTaskRequest {
     return {
+      attempts: this.attempts,
       elements: this.sorting.elements.map(element => ({content: element.content}))
     }
   }

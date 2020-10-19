@@ -19,6 +19,7 @@ export class StudentSentenceCreationComponent implements OnInit {
   taskId: number = null
   sentenceCreation: SentenceCreationTask = null
   sentenceCreationRequest: SentenceCreationTaskRequest = null
+  currentResult: Array<Boolean> = new Array<Boolean>()
 
   constructor(
     private route: ActivatedRoute,
@@ -51,14 +52,21 @@ export class StudentSentenceCreationComponent implements OnInit {
 
   evaluateTask() {
     this.evaluateService.evaluateSentenceCreationUsingPOST(this.startedExerciseId, this.taskId, this.sentenceCreationRequest).subscribe(response => {
-      console.log(response)
-      this.dialog.open(SentenceCreationResultComponent, {
-        data: {startedExercise: response}
-      })
-      let subscription = this.dialog.afterAllClosed.subscribe(() => {
-        MyExercisesComponent.navigateNextTask(response, this.router, this.dialog)
-        subscription.unsubscribe()
-      })
+      console.log(response.taskResult)
+      this.loaded = false
+      if (response.taskResult.taskResult == undefined) {
+        this.currentResult = response.taskResult.currentResult
+        this.sentenceCreationRequest.attempts = response.taskResult.attempts
+      } else {
+        this.dialog.open(SentenceCreationResultComponent, {
+          data: {startedExercise: response}
+        })
+        let subscription = this.dialog.afterAllClosed.subscribe(() => {
+          MyExercisesComponent.navigateNextTask(response, this.router, this.dialog)
+          subscription.unsubscribe()
+        })
+      }
+      this.loaded = true
     })
   }
 

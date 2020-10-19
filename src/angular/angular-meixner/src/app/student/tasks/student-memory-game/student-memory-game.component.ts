@@ -19,6 +19,7 @@ export class StudentMemoryGameComponent implements OnInit {
   taskId: number = null
   memory: MemoryGameTask = null
   memoryRequest: MemoryGameTaskRequest = null
+  currentResult: Array<Boolean> = new Array<Boolean>()
 
   constructor(
     private route: ActivatedRoute,
@@ -55,14 +56,21 @@ export class StudentMemoryGameComponent implements OnInit {
 
   evaluateTask() {
     this.evaluateService.evaluateMemoryGameUsingPOST(this.startedExerciseId, this.taskId, this.memoryRequest).subscribe(response => {
-      console.log(response)
-      this.dialog.open(MemoryGameResultComponent, {
-        data: {startedExercise: response}
-      })
-      let subscription = this.dialog.afterAllClosed.subscribe(() => {
-        MyExercisesComponent.navigateNextTask(response, this.router, this.dialog)
-        subscription.unsubscribe()
-      })
+      console.log(response.taskResult)
+      this.loaded = false
+      if (response.taskResult.taskResult == undefined) {
+        this.currentResult = response.taskResult.currentResult
+        this.memoryRequest.attempts = response.taskResult.attempts
+      } else {
+        this.dialog.open(MemoryGameResultComponent, {
+          data: {startedExercise: response}
+        })
+        let subscription = this.dialog.afterAllClosed.subscribe(() => {
+          MyExercisesComponent.navigateNextTask(response, this.router, this.dialog)
+          subscription.unsubscribe()
+        })
+      }
+      this.loaded = true
     })
   }
 }
