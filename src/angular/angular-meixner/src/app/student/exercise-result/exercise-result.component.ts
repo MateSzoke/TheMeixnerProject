@@ -14,6 +14,7 @@ export class ExerciseResultComponent implements OnInit {
   loaded: boolean = false
   startedExerciseId: number = null
   exerciseResult: ExerciseResult
+  resultsButtonVisible: boolean = false
 
   constructor(
     private route: ActivatedRoute,
@@ -23,15 +24,22 @@ export class ExerciseResultComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.startedExerciseId = this.params.startedExerciseId
-    this.resultService.getSolvedExerciseResultsUsingGET(this.startedExerciseId).subscribe(result => {
-      this.exerciseResult = result as ExerciseResult
-      this.exerciseResult.taskResults.forEach(task => {
-        // @ts-ignore
-        task.taskResult.type = ConvertEnum.convertType(task.taskResult.type)
-      })
+    if (this.params.exerciseResult != undefined) {
+      this.exerciseResult = this.params.exerciseResult
+      this.resultsButtonVisible = false
       this.loaded = true
-    })
+    } else {
+      this.startedExerciseId = this.params.startedExerciseId
+      this.resultService.getSolvedExerciseResultsUsingGET(this.startedExerciseId).subscribe(result => {
+        this.exerciseResult = result as ExerciseResult
+        this.exerciseResult.taskResults.forEach(task => {
+          // @ts-ignore
+          task.taskResult.type = ConvertEnum.convertType(task.taskResult.type)
+        })
+        this.resultsButtonVisible = true
+        this.loaded = true
+      })
+    }
   }
 
   getPercentage(): number {

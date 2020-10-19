@@ -15,6 +15,6 @@
       eredménye: {{getPercentageTextByValue(task.resultPercentage)}}</p>
   </div>
   <div mat-dialog-actions style="float: right">
-    <button [mat-dialog-close] class="addbtn" mat-button>Eredményeim</button>
+    <button *ngIf="resultsButtonVisible" [mat-dialog-close] class="addbtn" mat-button>Eredményeim</button>
   </div>
 </div>
