@@ -5,6 +5,6 @@ import java.time.OffsetDateTime
 class ExerciseResult(
         val taskResults: List<TaskResultResponse>,
         val exerciseName: String,
-        val resultPercentage: Double,
+        val averageAttempts: Double,
         val lastModified: OffsetDateTime
 )

@@ -13,5 +13,6 @@ import {PairElementRequest} from './pairElementRequest';
 
 
 export interface MemoryGameTaskRequest {
+  attempts?: number;
   pairs: Array<PairElementRequest>;
 }

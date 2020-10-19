@@ -55,7 +55,7 @@ class AssignService(
         val exercise = exerciseService.getExercisesById(solvedExercise.exerciseId) ?: return null
         with(solvedExercise) {
             solvedTaskIds += solvedTaskId
-            resultPercentages += taskResult.resultPercentage
+            attempts += taskResult.attempts
             taskResultIds += taskResult.id
             lastModified = OffsetDateTime.now()
         }

@@ -13,5 +13,6 @@ import {Sentence} from './sentence';
 
 
 export interface SentenceCreationTaskRequest {
+  attempts?: number;
   sentences: Array<Sentence>;
 }

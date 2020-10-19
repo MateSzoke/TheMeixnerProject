@@ -13,6 +13,7 @@ import {MediaItemRequest} from './mediaItemRequest';
 
 
 export interface TrueFalseTaskRequest {
+  attempts?: number;
   trueItems: Array<MediaItemRequest>;
   falseItems: Array<MediaItemRequest>;
 }

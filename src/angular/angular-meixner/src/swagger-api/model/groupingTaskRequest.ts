@@ -13,5 +13,6 @@ import {GroupRequest} from './groupRequest';
 
 
 export interface GroupingTaskRequest {
+  attempts?: number;
   groups: Array<GroupRequest>;
 }

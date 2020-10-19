@@ -6,8 +6,9 @@ import java.time.OffsetDateTime
 
 class TaskResultResponse(
         val id: Long,
-        val taskResult: TaskResponse,
-        val resultPercentage: Double,
+        val taskResult: TaskResponse?,
+        val currentResult: List<Boolean>,
+        val attempts: Int,
         val user: UserResponse,
         val lastModified: OffsetDateTime
 )
