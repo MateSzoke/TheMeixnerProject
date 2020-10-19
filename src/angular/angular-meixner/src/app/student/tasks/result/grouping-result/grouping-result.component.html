@@ -7,7 +7,7 @@
 </div>
 <div *ngIf="loaded">
   <p class="title">Csoportosítás - {{groupingResult.title}} - megoldás</p>
-  <div *ngIf="startedExercise" [ngStyle]="{'color': getAttempts() > 3 ? 'darkgreen' : 'brown'}" class="subtitle">
+  <div *ngIf="startedExercise" [ngStyle]="{'color': getAttempts() <= 3 ? 'darkgreen' : 'brown'}" class="subtitle">
     Próbálkozások: {{getAttemptsText()}}</div>
   <div *ngFor="let group of groupingResult.groups" class="task-element">
     <p class="subtitle">{{group.name}}</p>

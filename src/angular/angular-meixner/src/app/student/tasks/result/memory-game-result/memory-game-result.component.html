@@ -7,7 +7,7 @@
 </div>
 <div *ngIf="loaded">
   <p class="title">Memória - {{memoryGameResult.title}} - megoldás</p>
-  <div *ngIf="startedExercise" [ngStyle]="{'color': getAttempts() > 3 ? 'darkgreen' : 'brown'}" class="subtitle">
+  <div *ngIf="startedExercise" [ngStyle]="{'color': getAttempts() <= 3 ? 'darkgreen' : 'brown'}" class="subtitle">
     Próbálkozások: {{getAttemptsText()}}</div>
   <div *ngFor="let pair of memoryGameResult.pairs" class="task-element">
     <div *ngFor="let element of pair.pair">{{element.content}}</div>
