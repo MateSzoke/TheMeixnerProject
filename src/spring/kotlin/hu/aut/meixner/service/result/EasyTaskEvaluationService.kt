@@ -121,7 +121,7 @@ class EasyTaskEvaluationService(
                 taskResult = taskResult,
                 currentResult = currentResult,
                 attempts = taskRequest.attempts,
-                resultPercentage = if (currentResult.all { it }) 100.0 else 0.0
+                resultPercentage = if (currentResult.all { it }) 1.0 else 0.0
         )
     }
 
