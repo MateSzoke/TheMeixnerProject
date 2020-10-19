@@ -30,7 +30,7 @@ class EasyTaskEvaluationService(
                 if (requestPair.pair.equalsResultMediaItems(resultPair.pair)) match++
             }
         }
-        return saveTaskRequest(student, taskId, taskResult, calculateResultPercentage(taskRequest.pairs, taskResult.pairs.filter { it.pair.isNotEmpty() }, match))
+        return saveTaskRequest(student, taskId, taskResult, calculateResultPercentage(taskRequest.pairs.filter { it.pair.isNotEmpty() }, taskResult.pairs, match))
     }
 
     fun evaluateGrouping(taskId: Long, taskRequest: GroupingTaskRequest): TaskResultResponse? {
