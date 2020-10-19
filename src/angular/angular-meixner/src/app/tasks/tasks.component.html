@@ -51,7 +51,8 @@
     <mat-card fxLayout="row" fxLayout.xs="column-reverse" fxLayoutGap="8px">
       <div class="float-left">
         {{task.title}} - {{this.convertEnum(task.type)}}
-        <mat-progress-bar mode="determinate" style="width: 100px" value="{{task.difficulty}}"></mat-progress-bar>
+        <mat-progress-bar mode="determinate" style="width: 100px; margin-bottom: 16px"
+                          value="{{task.difficulty}}"></mat-progress-bar>
       </div>
       <div class="float-right">
         {{getFormattedDate(task.lastModified)}}

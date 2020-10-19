@@ -25,7 +25,7 @@ class EasyTaskEvaluationService(
     fun evaluatePairing(taskId: Long, taskRequest: PairingTaskRequest): TaskResultResponse? {
         val (student, taskResult) = getStudentAndTask<PairingResponse>(taskId) ?: return null
         var match = 0
-        taskResult.pairs.forEach { resultPair ->
+        taskResult.pairs.filter { it.pair.isNotEmpty() }.forEach { resultPair ->
             taskRequest.pairs.forEach { requestPair ->
                 if (requestPair.pair.equalsResultMediaItems(resultPair.pair)) match++
             }

@@ -13,6 +13,7 @@ import {SortingResultComponent} from "../tasks/result/sorting-result/sorting-res
 import {TrueFalseResultComponent} from "../tasks/result/true-false-result/true-false-result.component";
 import {ComponentType} from "@angular/cdk/overlay";
 import {DateUtils} from "../../util/date";
+import {MemoryGameResultComponent} from "../tasks/result/memory-game-result/memory-game-result.component";
 import TypeEnum = AssignTask.TypeEnum;
 
 @Component({
@@ -48,6 +49,8 @@ export class MyResultsComponent implements OnInit {
         return GroupingResultComponent;
       case TypeEnum.Pairing.toString():
         return PairingResultComponent;
+      case TypeEnum.MemoryGame.toString():
+        return MemoryGameResultComponent;
       case TypeEnum.SentenceCompletion.toString():
         return SentenceCompletionResultComponent;
       case TypeEnum.SentenceCreation.toString():

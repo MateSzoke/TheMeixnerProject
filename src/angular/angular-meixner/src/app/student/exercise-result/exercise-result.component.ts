@@ -14,6 +14,7 @@ export class ExerciseResultComponent implements OnInit {
   loaded: boolean = false
   startedExerciseId: number = null
   exerciseResult: ExerciseResult
+  resultsButtonVisible: boolean = false
 
   constructor(
     private route: ActivatedRoute,
@@ -25,6 +26,7 @@ export class ExerciseResultComponent implements OnInit {
   ngOnInit(): void {
     if (this.params.exerciseResult != undefined) {
       this.exerciseResult = this.params.exerciseResult
+      this.resultsButtonVisible = false
       this.loaded = true
     } else {
       this.startedExerciseId = this.params.startedExerciseId
@@ -34,6 +36,7 @@ export class ExerciseResultComponent implements OnInit {
           // @ts-ignore
           task.taskResult.type = ConvertEnum.convertType(task.taskResult.type)
         })
+        this.resultsButtonVisible = true
         this.loaded = true
       })
     }
