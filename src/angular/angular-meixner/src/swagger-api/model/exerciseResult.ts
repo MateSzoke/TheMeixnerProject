@@ -13,8 +13,8 @@ import {TaskResultResponse} from './taskResultResponse';
 
 
 export interface ExerciseResult {
+  averageAttempts: number;
   exerciseName: string;
   lastModified: Date;
-  resultPercentage: number;
   taskResults: Array<TaskResultResponse>;
 }

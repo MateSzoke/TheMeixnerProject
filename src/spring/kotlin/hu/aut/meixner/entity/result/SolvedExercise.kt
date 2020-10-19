@@ -13,7 +13,7 @@ class SolvedExercise(
         val solvedTaskIds: MutableList<Long> = mutableListOf(),
         @ElementCollection(targetClass = Long::class)
         val taskResultIds: MutableList<Long> = mutableListOf(),
-        @ElementCollection(targetClass = Double::class)
-        val resultPercentages: MutableList<Double> = mutableListOf(),
+        @ElementCollection(targetClass = Int::class)
+        val attempts: MutableList<Int> = mutableListOf(),
         var lastModified: OffsetDateTime = OffsetDateTime.now()
 )

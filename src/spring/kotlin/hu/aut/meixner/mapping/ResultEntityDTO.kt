@@ -18,11 +18,12 @@ fun StudentEntity.toDomainModel(user: UserEntity, exercises: List<ExercisesRespo
     )
 }
 
-fun TaskResultEntity.toDomainModel(taskResult: TaskResponse, user: UserResponse): TaskResultResponse {
+fun TaskResultEntity.toDomainModel(taskResult: TaskResponse?, currentResult: List<Boolean>, user: UserResponse): TaskResultResponse {
     return TaskResultResponse(
             id = id,
-            taskResult = taskResult,
-            resultPercentage = resultPercentage * 100,
+            taskResult = if (resultPercentage == 1.0) taskResult else null,
+            currentResult = currentResult,
+            attempts = attempts,
             user = user,
             lastModified = lastModified
     )

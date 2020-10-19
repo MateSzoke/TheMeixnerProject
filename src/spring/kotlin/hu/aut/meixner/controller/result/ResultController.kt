@@ -3,7 +3,6 @@ package hu.aut.meixner.controller.result
 import hu.aut.meixner.dto.auth.UserResponse
 import hu.aut.meixner.dto.result.ExerciseResult
 import hu.aut.meixner.dto.result.StudentResponse
-import hu.aut.meixner.dto.result.TaskResultResponse
 import hu.aut.meixner.service.result.ResultService
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
@@ -74,13 +73,6 @@ class ResultController(
     @ApiOperation("Delete student and user by user id")
     fun deleteUserById(@PathVariable("userId") userId: Long) {
         resultService.deleteUserById(userId)
-    }
-
-    @GetMapping("/all")
-    @ApiOperation("Get all student's all results")
-    fun getResults(): ResponseEntity<List<TaskResultResponse>> {
-        val result = resultService.getResults() ?: return ResponseEntity.badRequest().build()
-        return ResponseEntity.ok(result)
     }
 
     @GetMapping("/{userId}")

@@ -13,5 +13,6 @@ import {MediaItemRequest} from './mediaItemRequest';
 
 
 export interface SortingTaskRequest {
+  attempts?: number;
   elements: Array<MediaItemRequest>;
 }

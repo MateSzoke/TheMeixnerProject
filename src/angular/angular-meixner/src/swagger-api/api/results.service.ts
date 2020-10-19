@@ -18,7 +18,6 @@ import {Observable} from 'rxjs';
 
 import {ExerciseResult} from '../model/exerciseResult';
 import {StudentResponse} from '../model/studentResponse';
-import {TaskResultResponse} from '../model/taskResultResponse';
 import {UserResponse} from '../model/userResponse';
 
 import {BASE_PATH} from '../variables';
@@ -326,44 +325,6 @@ export class ResultsService {
     const consumes: string[] = [];
 
     return this.httpClient.get<Array<ExerciseResult>>(`${this.configuration.basePath}/results/${encodeURIComponent(String(userId))}`,
-      {
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress
-      }
-    );
-  }
-
-  /**
-   * Get all student&#39;s all results
-   *
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public getResultsUsingGET(observe?: 'body', reportProgress?: boolean): Observable<Array<TaskResultResponse>>;
-
-  public getResultsUsingGET(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<TaskResultResponse>>>;
-
-  public getResultsUsingGET(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<TaskResultResponse>>>;
-
-  public getResultsUsingGET(observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-
-    let headers = this.defaultHeaders;
-
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = [
-      '*/*'
-    ];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
-    }
-
-    // to determine the Content-Type header
-    const consumes: string[] = [];
-
-    return this.httpClient.get<Array<TaskResultResponse>>(`${this.configuration.basePath}/results/all`,
       {
         withCredentials: this.configuration.withCredentials,
         headers: headers,

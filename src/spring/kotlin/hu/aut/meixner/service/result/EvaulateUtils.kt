@@ -9,21 +9,22 @@ import hu.aut.meixner.dto.task.student.easy.*
 import hu.aut.meixner.mapping.getSentenceTask
 import hu.aut.meixner.mapping.toDomainModel
 
-fun List<MediaItemRequest>.compareResultMediaItems(resultMediaItems: List<MediaItemResponse>): Double {
-    var match = 0
+fun List<MediaItemRequest>.compareResultMediaItems(resultMediaItems: List<MediaItemResponse>): Boolean {
     val requestMediaItems = map { it.toDomainModel() }
     resultMediaItems.forEach { resultMediaItem ->
-        if (requestMediaItems.contains(resultMediaItem)) match++
+        if (!requestMediaItems.contains(resultMediaItem)) {
+            return false
+        }
     }
-    return if (size <= resultMediaItems.size) match / size.toDouble() else match / resultMediaItems.size.toDouble()
+    return true
 }
 
-fun List<MediaItemRequest>.compareSortedResultMediaItems(resultMediaItems: List<MediaItemResponse>): Double {
-    var match = 0
+fun List<MediaItemRequest>.compareSortedResultMediaItems(resultMediaItems: List<MediaItemResponse>): List<Boolean> {
+    val currentResult = mutableListOf<Boolean>()
     zip(resultMediaItems).forEach { (requestMediaItem, resultMediaItem) ->
-        if (requestMediaItem.toDomainModel() == resultMediaItem) match++
+        currentResult.add(requestMediaItem.toDomainModel() == resultMediaItem)
     }
-    return if (size <= resultMediaItems.size) match / size.toDouble() else match / resultMediaItems.size.toDouble()
+    return currentResult
 }
 
 fun List<MediaItemRequest>.equalsResultMediaItems(resultMediaItems: List<MediaItemResponse>): Boolean {

@@ -13,6 +13,9 @@ class TaskResultEntity(
         @Cascade(CascadeType.DELETE)
         val student: StudentEntity = StudentEntity(),
         val resultTaskId: Long = 0,
-        val resultPercentage: Double = 0.0,
+        @ElementCollection(targetClass = Boolean::class)
+        val currentResults: MutableList<Boolean> = mutableListOf(),
+        var resultPercentage: Double = 0.0,
+        var attempts: Int = 0,
         val lastModified: OffsetDateTime = OffsetDateTime.now()
 )
