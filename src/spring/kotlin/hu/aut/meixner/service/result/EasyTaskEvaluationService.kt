@@ -25,10 +25,12 @@ class EasyTaskEvaluationService(
     fun evaluatePairing(taskId: Long, taskRequest: PairingTaskRequest): TaskResultResponse? {
         val (student, taskResult) = getStudentAndTask<PairingResponse>(taskId) ?: return null
         val currentResult = mutableListOf<Boolean>()
-        taskResult.pairs.forEach { resultPair ->
-            taskRequest.pairs.forEach { requestPair ->
-                currentResult.add(requestPair.pair.equalsResultMediaItems(resultPair.pair))
+        taskRequest.pairs.forEach { resultPair ->
+            var found = false
+            taskResult.pairs.forEach { requestPair ->
+                if (requestPair.pair.equalsResultMediaItems(resultPair.pair)) found = true
             }
+            currentResult.add(found)
         }
         return saveTaskRequest(
                 student = student,
@@ -43,10 +45,12 @@ class EasyTaskEvaluationService(
     fun evaluateGrouping(taskId: Long, taskRequest: GroupingTaskRequest): TaskResultResponse? {
         val (student, taskResult) = getStudentAndTask<GroupingResponse>(taskId) ?: return null
         val currentResult = mutableListOf<Boolean>()
-        taskResult.groups.forEach { groupResult ->
-            taskRequest.groups.find { it.name == groupResult.name }?.let {
-                currentResult.add(it.elements.equalsResultMediaItems(groupResult.elements))
+        taskRequest.groups.forEach { groupResult ->
+            var found = false
+            taskResult.groups.find { it.name == groupResult.name }?.let {
+                if (it.elements.equalsResultMediaItems(groupResult.elements)) found = true
             }
+            currentResult.add(found)
         }
         return saveTaskRequest(
                 student = student,
@@ -60,7 +64,7 @@ class EasyTaskEvaluationService(
 
     fun evaluateSorting(taskId: Long, taskRequest: SortingTaskRequest): TaskResultResponse? {
         val (student, taskResult) = getStudentAndTask<SortingResponse>(taskId) ?: return null
-        val currentResult = taskRequest.elements.compareSortedResultMediaItems(taskResult.elements)
+        val currentResult = taskResult.elements.compareSortedResultMediaItems(taskRequest.elements)
         return saveTaskRequest(
                 student = student,
                 taskId = taskId,
@@ -75,9 +79,11 @@ class EasyTaskEvaluationService(
         val (student, taskResult) = getStudentAndTask<SentenceCreationResponse>(taskId) ?: return null
         val currentResult = mutableListOf<Boolean>()
         taskResult.sentences.forEach { sentenceResult ->
+            var found = false
             taskRequest.sentences.find { it.sentenceTitle == sentenceResult.sentenceTitle }?.let {
-                currentResult.add(it.parts == sentenceResult.parts)
+                if (it.parts == sentenceResult.parts) found = true
             }
+            currentResult.add(found)
         }
         return saveTaskRequest(
                 student = student,
@@ -107,8 +113,8 @@ class EasyTaskEvaluationService(
 
     fun evaluateTrueFalse(taskId: Long, taskRequest: TrueFalseTaskRequest): TaskResultResponse? {
         val (student, taskResult) = getStudentAndTask<TrueFalseResponse>(taskId) ?: return null
-        val currentResult = listOf(taskRequest.trueItems.compareResultMediaItems(taskResult.trueItems),
-                taskRequest.falseItems.compareResultMediaItems(taskResult.falseItems))
+        val currentResult = listOf(taskResult.trueItems.compareResultMediaItems(taskRequest.trueItems),
+                taskResult.falseItems.compareResultMediaItems(taskRequest.falseItems))
         return saveTaskRequest(
                 student = student,
                 taskId = taskId,
@@ -122,10 +128,12 @@ class EasyTaskEvaluationService(
     fun evaluateMemoryGame(taskId: Long, taskRequest: MemoryGameTaskRequest): TaskResultResponse? {
         val (student, taskResult) = getStudentAndTask<MemoryGameResponse>(taskId) ?: return null
         val currentResult = mutableListOf<Boolean>()
-        taskResult.pairs.forEach { resultPair ->
-            taskRequest.pairs.forEach { requestPair ->
-                currentResult.add(requestPair.pair.equalsResultMediaItems(resultPair.pair))
+        taskRequest.pairs.forEach { resultPair ->
+            var found = false
+            taskResult.pairs.forEach { requestPair ->
+                if (requestPair.pair.equalsResultMediaItems(resultPair.pair)) found = true
             }
+            currentResult.add(found)
         }
         return saveTaskRequest(
                 student = student,
