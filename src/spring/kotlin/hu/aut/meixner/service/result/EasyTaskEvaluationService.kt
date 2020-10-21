@@ -113,8 +113,8 @@ class EasyTaskEvaluationService(
 
     fun evaluateTrueFalse(taskId: Long, taskRequest: TrueFalseTaskRequest): TaskResultResponse? {
         val (student, taskResult) = getStudentAndTask<TrueFalseResponse>(taskId) ?: return null
-        val currentResult = listOf(taskResult.trueItems.compareResultMediaItems(taskRequest.trueItems),
-                taskResult.falseItems.compareResultMediaItems(taskRequest.falseItems))
+        val currentResult = listOf(taskResult.trueItems.equalsResultMediaItems(taskRequest.trueItems),
+                taskResult.falseItems.equalsResultMediaItems(taskRequest.falseItems))
         return saveTaskRequest(
                 student = student,
                 taskId = taskId,
