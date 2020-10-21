@@ -58,7 +58,7 @@
         {{getFormattedDate(task.lastModified)}}
         <div>
           <i (click)="this.deleteTask(+task.id)" class="fa fa-trash"></i>
-          <a (click)="this.openTask(task.type,i)" class="fa fa-edit" style="margin-left: 16px"></a>
+          <a (click)="this.openTask(task)" class="fa fa-edit" style="margin-left: 16px"></a>
         </div>
       </div>
     </mat-card>

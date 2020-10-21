@@ -108,8 +108,8 @@ export class TasksComponent implements OnInit {
     return router;
   }
 
-  public openTask(taskType: string, id: number) {
-    this.router.navigate([ConvertEnum.convertTypeToRouterLink(taskType), {taskId: id}]);
+  public openTask(task: TaskResponse) {
+    this.router.navigate([ConvertEnum.convertTypeToRouterLink(task.type), {taskId: task.id}]);
   }
 
   public async newTask() {
