@@ -7,6 +7,7 @@ import java.time.OffsetDateTime
 
 class SentenceCompletionResponse(
         val sentence: String,
+        val sentenceTask: List<String>,
         val options: List<String>,
         override val id: Long,
         override val type: TaskTypeEnum = TaskTypeEnum.SentenceCompletion,

@@ -95,6 +95,7 @@ fun SentenceCompletionEntity.toDomainModel(): SentenceCompletionResponse {
             id = id,
             title = title,
             sentence = getSentenceResult(),
+            sentenceTask = sentence,
             options = options,
             difficulty = difficulty,
             owner = owner,
