@@ -10,6 +10,7 @@ import hu.aut.meixner.mapping.getSentenceTask
 import hu.aut.meixner.mapping.toDomainModel
 
 fun List<MediaItemResponse>.compareResultMediaItems(requestMediaItems: List<MediaItemRequest>): Boolean {
+    if (requestMediaItems.isEmpty()) return false
     requestMediaItems.forEach { requestMediaItem ->
         if (!contains(requestMediaItem.toDomainModel())) {
             return false
