@@ -6,6 +6,6 @@ class SentenceCompletionTask(
         override val taskId: Long,
         override val title: String,
         override val type: TaskTypeEnum = TaskTypeEnum.SentenceCompletion,
-        val sentence: String,
+        val sentence: List<String>,
         val options: List<String>
 ) : AssignTask()
