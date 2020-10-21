@@ -165,11 +165,15 @@ class EasyTaskEvaluationService(
             resultPercentage: Double,
             attempts: Int
     ): TaskResultResponse {
-        return taskResultRepository.save(TaskResultEntity(
+        val taskResultEntity = TaskResultEntity(
                 student = student,
                 resultTaskId = taskId,
                 attempts = attempts + 1,
                 resultPercentage = resultPercentage,
-        )).toDomainModel(taskResult = taskResult, currentResult = currentResult, user = student.user.toDomainModel())
+        )
+        if (resultPercentage == 1.0) {
+            taskResultRepository.save(taskResultEntity)
+        }
+        return taskResultEntity.toDomainModel(taskResult = taskResult, currentResult = currentResult, user = student.user.toDomainModel())
     }
 }
