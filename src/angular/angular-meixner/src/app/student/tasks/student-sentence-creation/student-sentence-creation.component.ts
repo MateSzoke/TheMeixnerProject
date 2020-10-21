@@ -42,6 +42,20 @@ export class StudentSentenceCreationComponent implements OnInit {
     })
   }
 
+  getSuccess(index: number): Boolean {
+    if (this.currentResult.length != 0)
+      return this.currentResult[index]
+    else
+      return false
+  }
+
+  getFail(index: number): Boolean {
+    if (this.currentResult.length != 0)
+      return !this.currentResult[index]
+    else
+      return false
+  }
+
   drop(event: CdkDragDrop<Array<any>, any>) {
     transferArrayItem(event.previousContainer.data,
       event.container.data,

@@ -20,6 +20,9 @@ export class StudentGroupingComponent implements OnInit {
   grouping: GroupingTask = null
   groupingRequest: GroupingTaskRequest = null
   currentResult: Array<Boolean> = new Array<Boolean>()
+  success: boolean
+  fail: boolean
+
 
   constructor(
     private route: ActivatedRoute,
@@ -48,6 +51,20 @@ export class StudentGroupingComponent implements OnInit {
       event.previousIndex,
       event.currentIndex);
     console.log(this.groupingRequest)
+  }
+
+  getSuccess(index: number): Boolean {
+    if (this.currentResult.length != 0)
+      return this.currentResult[index]
+    else
+      return false
+  }
+
+  getFail(index: number): Boolean {
+    if (this.currentResult.length != 0)
+      return !this.currentResult[index]
+    else
+      return false
   }
 
   evaluateTask() {

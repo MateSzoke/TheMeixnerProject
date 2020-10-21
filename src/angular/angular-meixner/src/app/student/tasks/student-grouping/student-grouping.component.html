@@ -25,7 +25,7 @@
       </div>
     </div>
 
-    <div *ngFor="let group of groupingRequest.groups" class="example-container">
+    <div *ngFor="let group of groupingRequest.groups; index as i" [ngClass]="" class="example-container">
       <h2 class="subtitle">{{group.name}}</h2>
 
       <div
@@ -33,7 +33,7 @@
         [cdkDropListData]="group.elements"
         cdkDropList
         cdkDropListSortingDisabled
-        class="example-list">
+        [ngClass]="{'border-success':getSuccess(i), 'border-fail':getFail(i)}" class="example-list">
         <div *ngFor="let element of group.elements" cdkDrag class="example-box">{{element.content}}</div>
       </div>
     </div>

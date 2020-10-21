@@ -10,7 +10,8 @@
   <button (click)="evaluateTask()" class="addbtn" mat-raised-button type="button">
     Kész, beküldöm a megoldást
   </button>
-  <div (cdkDropListDropped)="drop($event)" cdkDropList class="example-list">
+  <div (cdkDropListDropped)="drop($event)" [ngClass]="{'border-success':getSuccess(), 'border-fail':getFail()}"
+       cdkDropList class="example-list">
     <div *ngFor="let element of sorting.elements" cdkDrag class="example-box"
          fxLayoutAlign="center center">{{element.content}}</div>
   </div>

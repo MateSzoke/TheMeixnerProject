@@ -11,7 +11,7 @@ import {GroupingResultComponent} from "../result/grouping-result/grouping-result
 @Component({
   selector: 'app-student-sentence-completion',
   templateUrl: './student-sentence-completion.component.html',
-  styleUrls: ['./student-sentence-completion.component.scss']
+  styleUrls: ['../student-tasks.scss']
 })
 export class StudentSentenceCompletionComponent implements OnInit {
   loaded: boolean = false

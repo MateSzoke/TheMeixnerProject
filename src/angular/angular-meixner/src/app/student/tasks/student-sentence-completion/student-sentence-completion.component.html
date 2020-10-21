@@ -11,8 +11,19 @@
     Kész, beküldöm a megoldást
   </button>
   <h2 class="subtitle">{{sentenceCompletion.sentence}}</h2>
-  <div (cdkDropListDropped)="drop($event)" cdkDropList cdkDropListOrientation="horizontal" class="example-list center">
-    <div *ngFor="let element of sentenceCompletion.options" cdkDrag class="example-box">{{element}}</div>
+
+
+  <div class="example-container">
+    <h2 class="subtitle">Elérhető elemek</h2>
+
+    <div
+      (cdkDropListDropped)="drop($event)"
+      [cdkDropListData]="sentenceCompletion.options"
+      cdkDropList
+      cdkDropListSortingDisabled
+      class="example-list">
+      <div *ngFor="let element of sentenceCompletion.options" cdkDrag class="example-box">{{element}}</div>
+    </div>
   </div>
 </div>
 

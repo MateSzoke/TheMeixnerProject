@@ -25,14 +25,14 @@
       </div>
     </div>
 
-    <div *ngFor="let sentence of sentenceCreationRequest.sentences" class="example-container">
+    <div *ngFor="let sentence of sentenceCreationRequest.sentences; index as i" class="example-container">
       <h2 class="subtitle">{{sentence.sentenceTitle}}</h2>
 
       <div
         (cdkDropListDropped)="drop($event)"
         [cdkDropListData]="sentence.parts"
         cdkDropList
-        class="example-list">
+        [ngClass]="{'border-success':getSuccess(i), 'border-fail':getFail(i)}" class="example-list">
         <div *ngFor="let element of sentence.parts" cdkDrag class="example-box">{{element}}</div>
       </div>
     </div>

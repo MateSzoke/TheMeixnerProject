@@ -39,6 +39,20 @@ export class StudentSortingComponent implements OnInit {
     })
   }
 
+  getSuccess(): Boolean {
+    if (this.currentResult.length != 0)
+      return this.currentResult[0]
+    else
+      return false
+  }
+
+  getFail(): Boolean {
+    if (this.currentResult.length != 0)
+      return !this.currentResult[0]
+    else
+      return false
+  }
+
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.sorting.elements, event.previousIndex, event.currentIndex);
     console.log(this.sorting.elements)
