@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {SentenceCompletionTask} from "../../../../swagger-api/model/sentenceCompletionTask";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AssignService, EvaluateService} from "../../../../swagger-api";
-import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
+import {CdkDragDrop, transferArrayItem} from "@angular/cdk/drag-drop";
 import {MyExercisesComponent} from "../../my-exercises/my-exercises.component";
 import {SentenceCompletionTaskRequest} from "../../../../swagger-api/model/sentenceCompletionTaskRequest";
 import {MatDialog} from "@angular/material/dialog";
@@ -20,6 +20,7 @@ export class StudentSentenceCompletionComponent implements OnInit {
   sentenceCompletion: SentenceCompletionTask = null
   currentResult: Array<Boolean> = new Array<Boolean>()
   attempts: number = 0
+  sentenceResult: Array<Array<string>> = new Array<Array<string>>()
 
   constructor(
     private route: ActivatedRoute,
@@ -35,13 +36,32 @@ export class StudentSentenceCompletionComponent implements OnInit {
     this.startedExerciseId = Number.parseInt(this.route.snapshot.paramMap.get("startedExerciseId"))
     this.assignService.getStudentTaskByIdUsingGET(this.taskId).subscribe(task => {
       this.sentenceCompletion = task as SentenceCompletionTask
+      this.sentenceCompletion.options.forEach(() => {
+        this.sentenceResult.push([])
+      })
       this.loaded = true
     })
   }
 
-  drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.sentenceCompletion.options, event.previousIndex, event.currentIndex);
-    console.log(this.sentenceCompletion)
+  getSuccess(index: number): Boolean {
+    if (this.currentResult.length != 0)
+      return this.currentResult[index]
+    else
+      return false
+  }
+
+  getFail(index: number): Boolean {
+    if (this.currentResult.length != 0)
+      return !this.currentResult[index]
+    else
+      return false
+  }
+
+  drop(event: CdkDragDrop<Array<string>>) {
+    transferArrayItem(event.previousContainer.data,
+      event.container.data,
+      event.previousIndex,
+      event.currentIndex);
   }
 
   evaluateTask() {
@@ -67,7 +87,7 @@ export class StudentSentenceCompletionComponent implements OnInit {
   private createTaskRequest(): SentenceCompletionTaskRequest {
     return {
       attempts: this.attempts,
-      options: this.sentenceCompletion.options
+      options: this.sentenceResult.map(result => result[0])
     }
   }
 

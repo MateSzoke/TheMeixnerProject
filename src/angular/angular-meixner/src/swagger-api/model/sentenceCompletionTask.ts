@@ -13,7 +13,7 @@
 
 export interface SentenceCompletionTask {
   options: Array<string>;
-  sentence: string;
+  sentence: Array<string>;
   taskId: number;
   title: string;
   type: SentenceCompletionTask.TypeEnum;
