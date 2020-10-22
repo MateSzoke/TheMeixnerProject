@@ -2,13 +2,13 @@
 <div *ngIf="!loaded">
   <div class="wrapper">
     <div class="center">
-      <mat-spinner diameter="40"></mat-spinner>
+      <mat-spinner diameter="70"></mat-spinner>
     </div>
   </div>
 </div>
 <div *ngIf="loaded">
   <div *ngIf="exercises.length == 0">
-    <p>Nincs még feladatsor hozzárendelve</p>
+    <p class="subtitle">Nincs még feladatsor hozzárendelve</p>
   </div>
   <div *ngIf="exercises.length > 0">
     <mat-card *ngFor="let exercise of exercises" class="user-card">
@@ -22,5 +22,4 @@
       </div>
     </mat-card>
   </div>
-
 </div>

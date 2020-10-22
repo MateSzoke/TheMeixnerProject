@@ -24,72 +24,125 @@ class EasyTaskEvaluationService(
 
     fun evaluatePairing(taskId: Long, taskRequest: PairingTaskRequest): TaskResultResponse? {
         val (student, taskResult) = getStudentAndTask<PairingResponse>(taskId) ?: return null
-        var match = 0
-        taskResult.pairs.forEach { resultPair ->
-            taskRequest.pairs.forEach { requestPair ->
-                if (requestPair.pair.equalsResultMediaItems(resultPair.pair)) match++
+        val currentResult = mutableListOf<Boolean>()
+        taskRequest.pairs.forEach { resultPair ->
+            var found = false
+            taskResult.pairs.forEach { requestPair ->
+                if (requestPair.pair.equalsResultMediaItems(resultPair.pair)) found = true
             }
+            currentResult.add(found)
         }
-        return saveTaskRequest(student, taskId, taskResult, calculateResultPercentage(taskRequest.pairs, taskResult.pairs, match))
+        return saveTaskRequest(
+                student = student,
+                taskId = taskId,
+                taskResult = taskResult,
+                currentResult = currentResult,
+                attempts = taskRequest.attempts,
+                resultPercentage = calculateResultPercentage(taskRequest.pairs.filter { it.pair.isNotEmpty() }, taskResult.pairs, currentResult)
+        )
     }
 
     fun evaluateGrouping(taskId: Long, taskRequest: GroupingTaskRequest): TaskResultResponse? {
         val (student, taskResult) = getStudentAndTask<GroupingResponse>(taskId) ?: return null
-        var match = 0
-        taskResult.groups.forEach { groupResult ->
-            taskRequest.groups.find { it.name == groupResult.name }?.let {
-                if (it.elements.equalsResultMediaItems(groupResult.elements)) match++
+        val currentResult = mutableListOf<Boolean>()
+        taskRequest.groups.forEach { groupResult ->
+            var found = false
+            taskResult.groups.find { it.name == groupResult.name }?.let {
+                if (it.elements.equalsResultMediaItems(groupResult.elements)) found = true
             }
+            currentResult.add(found)
         }
-        return saveTaskRequest(student, taskId, taskResult, calculateResultPercentage(taskRequest.groups, taskResult.groups, match))
+        return saveTaskRequest(
+                student = student,
+                taskId = taskId,
+                taskResult = taskResult,
+                currentResult = currentResult,
+                attempts = taskRequest.attempts,
+                resultPercentage = calculateResultPercentage(taskRequest.groups, taskResult.groups, currentResult)
+        )
     }
 
     fun evaluateSorting(taskId: Long, taskRequest: SortingTaskRequest): TaskResultResponse? {
         val (student, taskResult) = getStudentAndTask<SortingResponse>(taskId) ?: return null
-        val resultPercentage = taskRequest.elements.compareSortedResultMediaItems(taskResult.elements)
-        return saveTaskRequest(student, taskId, taskResult, resultPercentage)
+        val currentResult = taskResult.elements.compareSortedResultMediaItems(taskRequest.elements)
+        return saveTaskRequest(
+                student = student,
+                taskId = taskId,
+                taskResult = taskResult,
+                currentResult = currentResult,
+                attempts = taskRequest.attempts,
+                resultPercentage = calculateResultPercentage(taskRequest.elements, taskResult.elements, currentResult)
+        )
     }
 
     fun evaluateSentenceCreation(taskId: Long, taskRequest: SentenceCreationTaskRequest): TaskResultResponse? {
         val (student, taskResult) = getStudentAndTask<SentenceCreationResponse>(taskId) ?: return null
-        var match = 0
+        val currentResult = mutableListOf<Boolean>()
         taskResult.sentences.forEach { sentenceResult ->
+            var found = false
             taskRequest.sentences.find { it.sentenceTitle == sentenceResult.sentenceTitle }?.let {
-                if (it.parts == sentenceResult.parts) match++
+                if (it.parts == sentenceResult.parts) found = true
             }
+            currentResult.add(found)
         }
-        return saveTaskRequest(student, taskId, taskResult, calculateResultPercentage(taskRequest.sentences, taskResult.sentences, match))
+        return saveTaskRequest(
+                student = student,
+                taskId = taskId,
+                taskResult = taskResult,
+                currentResult = currentResult,
+                attempts = taskRequest.attempts,
+                resultPercentage = calculateResultPercentage(taskRequest.sentences, taskResult.sentences, currentResult)
+        )
     }
 
     fun evaluateSentenceCompletion(taskId: Long, taskRequest: SentenceCompletionTaskRequest): TaskResultResponse? {
         val (student, taskResult) = getStudentAndTask<SentenceCompletionResponse>(taskId) ?: return null
-        var match = 0
+        val currentResult = mutableListOf<Boolean>()
         taskRequest.options.zip(taskResult.options).forEach { (requestOption, resultOption) ->
-            if (requestOption == resultOption) match++
+            currentResult.add(requestOption == resultOption)
         }
-        val resultPercentage = if (taskRequest.options.size <= taskResult.options.size)
-            match / taskRequest.options.size.toDouble()
-        else
-            match / taskResult.options.size.toDouble()
-        return saveTaskRequest(student, taskId, taskResult, resultPercentage)
+        return saveTaskRequest(
+                student = student,
+                taskId = taskId,
+                taskResult = taskResult,
+                currentResult = currentResult,
+                attempts = taskRequest.attempts,
+                resultPercentage = calculateResultPercentage(taskRequest.options, taskResult.options, currentResult)
+        )
     }
 
     fun evaluateTrueFalse(taskId: Long, taskRequest: TrueFalseTaskRequest): TaskResultResponse? {
         val (student, taskResult) = getStudentAndTask<TrueFalseResponse>(taskId) ?: return null
-        val resultPercentage = (taskRequest.trueItems.compareResultMediaItems(taskResult.trueItems)
-                + taskRequest.falseItems.compareResultMediaItems(taskResult.falseItems)) / 2.0
-        return saveTaskRequest(student, taskId, taskResult, resultPercentage)
+        val currentResult = listOf(taskResult.trueItems.equalsResultMediaItems(taskRequest.trueItems),
+                taskResult.falseItems.equalsResultMediaItems(taskRequest.falseItems))
+        return saveTaskRequest(
+                student = student,
+                taskId = taskId,
+                taskResult = taskResult,
+                currentResult = currentResult,
+                attempts = taskRequest.attempts,
+                resultPercentage = if (currentResult.all { it }) 1.0 else 0.0
+        )
     }
 
     fun evaluateMemoryGame(taskId: Long, taskRequest: MemoryGameTaskRequest): TaskResultResponse? {
         val (student, taskResult) = getStudentAndTask<MemoryGameResponse>(taskId) ?: return null
-        var match = 0
-        taskResult.pairs.forEach { resultPair ->
-            taskRequest.pairs.forEach { requestPair ->
-                if (requestPair.pair.equalsResultMediaItems(resultPair.pair)) match++
+        val currentResult = mutableListOf<Boolean>()
+        taskRequest.pairs.forEach { resultPair ->
+            var found = false
+            taskResult.pairs.forEach { requestPair ->
+                if (requestPair.pair.equalsResultMediaItems(resultPair.pair)) found = true
             }
+            currentResult.add(found)
         }
-        return saveTaskRequest(student, taskId, taskResult, calculateResultPercentage(taskRequest.pairs, taskResult.pairs, match))
+        return saveTaskRequest(
+                student = student,
+                taskId = taskId,
+                taskResult = taskResult,
+                currentResult = currentResult,
+                attempts = taskRequest.attempts,
+                resultPercentage = calculateResultPercentage(taskRequest.pairs, taskResult.pairs, currentResult)
+        )
     }
 
     private fun <T : TaskResponse> getStudentAndTask(taskId: Long): Pair<StudentEntity, T>? {
@@ -99,15 +152,28 @@ class EasyTaskEvaluationService(
         return Pair(student, taskResult)
     }
 
-    private fun calculateResultPercentage(request: List<Any>, result: List<Any>, match: Int): Double {
+    private fun calculateResultPercentage(request: List<Any>, result: List<Any>, currentResult: List<Boolean>): Double {
+        val match = currentResult.count { it }
         return if (request.size >= result.size) match / request.size.toDouble() else match / result.size.toDouble()
     }
 
-    private fun saveTaskRequest(student: StudentEntity, taskId: Long, taskResult: TaskResponse, resultPercentage: Double): TaskResultResponse {
-        return taskResultRepository.save(TaskResultEntity(
+    private fun saveTaskRequest(
+            student: StudentEntity,
+            taskId: Long,
+            taskResult: TaskResponse?,
+            currentResult: List<Boolean>,
+            resultPercentage: Double,
+            attempts: Int
+    ): TaskResultResponse {
+        val taskResultEntity = TaskResultEntity(
                 student = student,
                 resultTaskId = taskId,
-                resultPercentage = resultPercentage
-        )).toDomainModel(taskResult = taskResult, user = student.user.toDomainModel())
+                attempts = attempts + 1,
+                resultPercentage = resultPercentage,
+        )
+        if (resultPercentage == 1.0) {
+            taskResultRepository.save(taskResultEntity)
+        }
+        return taskResultEntity.toDomainModel(taskResult = taskResult, currentResult = currentResult, user = student.user.toDomainModel())
     }
 }

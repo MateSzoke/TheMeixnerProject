@@ -159,11 +159,6 @@ const routes: Routes = [
     canActivate: [RouteGuardService]
   },
   {
-    path: Path.STUDENT_EXERCISE_RESULT,
-    component: ExerciseResultComponent,
-    canActivate: [RouteGuardService]
-  },
-  {
     path: Path.LOGIN,
     component: LoginComponent
   },

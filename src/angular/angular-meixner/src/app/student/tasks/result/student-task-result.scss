@@ -1,0 +1,49 @@
+.center {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.title {
+  text-align: center;
+  font-size: x-large;
+  margin-top: 24px;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: large;
+  margin-top: 24px;
+}
+
+.addbtn {
+  background-color: #90a4ae;
+  color: white;
+  margin-top: 24px;
+}
+
+.task-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 95%;
+  margin: 24px;
+}
+
+.example-full-width {
+  width: 95%;
+}
+
+.title-left {
+  text-align: left;
+  font-size: x-large;
+}
+
+.task-element {
+  text-align: left;
+  font-size: medium;
+  margin: 8px;
+}
+
+mat-label {
+  color: rgb(17, 131, 181) !important;;
+}

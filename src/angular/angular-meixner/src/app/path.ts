@@ -45,5 +45,4 @@ export class Path {
   static STUDENT_ODD_ONE_OUT = 'kakukktojas_kitoltes'
   static STUDENT_TIMELINE = 'idovonal_kitoltes'
   static STUDENT_MEMORY_GAME = 'memoria_kitoltes'
-  static STUDENT_EXERCISE_RESULT = "feladatsor_eredmeny";
 }

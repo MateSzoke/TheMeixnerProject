@@ -9,6 +9,6 @@ class SentenceCompletionRequest(
         override val subject: SubjectEnum,
         override val recommendedMinClass: Int,
         override val recommendedMaxClass: Int,
-        val sentence: String,
+        val sentence: List<String>,
         val options: List<String>
 ): TaskRequest()

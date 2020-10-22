@@ -11,6 +11,7 @@ import hu.aut.meixner.service.auth.UserService
 import hu.aut.meixner.service.exercises.ExerciseService
 import hu.aut.meixner.service.task.TaskService
 import org.springframework.stereotype.Service
+import java.time.OffsetDateTime
 
 @Service
 class AssignService(
@@ -33,7 +34,10 @@ class AssignService(
 
     fun startExercise(exerciseId: Long): StartedExercise? {
         val exercise = exerciseService.getExercisesById(exerciseId) ?: return null
-        val solvedExercise = solvedExerciseRepository.save(SolvedExercise(exerciseId = exerciseId))
+        val solvedExercise = solvedExerciseRepository.save(SolvedExercise(
+                exerciseId = exerciseId,
+                userId = userService.getUser()?.id ?: return null)
+        )
         val taskIds = exercise.tasks.map { it.id }
         val nextTaskId = if (taskIds.isNotEmpty()) taskIds.random() else null
         return StartedExercise(
@@ -51,8 +55,9 @@ class AssignService(
         val exercise = exerciseService.getExercisesById(solvedExercise.exerciseId) ?: return null
         with(solvedExercise) {
             solvedTaskIds += solvedTaskId
-            resultPercentages += taskResult.resultPercentage
+            attempts += taskResult.attempts
             taskResultIds += taskResult.id
+            lastModified = OffsetDateTime.now()
         }
         solvedExerciseRepository.save(solvedExercise)
         val taskIds = exercise.tasks.map { it.id }

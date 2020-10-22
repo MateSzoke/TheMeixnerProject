@@ -120,6 +120,8 @@ export class ConvertEnum {
         return Path.STUDENT_GROUPING;
       case TypeEnum.Pairing.toString():
         return Path.STUDENT_PAIRING;
+      case TypeEnum.MemoryGame.toString():
+        return Path.STUDENT_MEMORY_GAME;
       case TypeEnum.SentenceCompletion.toString():
         return Path.STUDENT_SENTENCE_COMPLETION;
       case TypeEnum.SentenceCreation.toString():
@@ -141,7 +143,7 @@ export class ConvertEnum {
       case TypeEnum.SortingAndGrouping.toString():
         return Path.STUDENT_SORTING_GROUPING;
       case TypeEnum.BlindMap.toString():
-        return Path.STUDENT_MEMORY_GAME;
+        return Path.STUDENT_BLINDMAP;
       case TypeEnum.FreeText.toString():
         return Path.STUDENT_FREE_TEXT;
       case TypeEnum.OddOneOut.toString():

@@ -80,7 +80,7 @@ fun GroupElementEntity.toDomainModel(): GroupResponse {
 fun SentenceCompletionRequest.toEntity(owner: String): SentenceCompletionEntity {
     return SentenceCompletionEntity(
             title = title,
-            sentence = sentence,
+            sentence = sentence.toMutableList(),
             options = options.toMutableList(),
             owner = owner,
             difficulty = difficulty,
@@ -95,7 +95,8 @@ fun SentenceCompletionEntity.toDomainModel(): SentenceCompletionResponse {
     return SentenceCompletionResponse(
             id = id,
             title = title,
-            sentence = sentence,
+            sentence = getSentenceResult(),
+            sentenceTask = sentence,
             options = options,
             difficulty = difficulty,
             owner = owner,
@@ -104,6 +105,23 @@ fun SentenceCompletionEntity.toDomainModel(): SentenceCompletionResponse {
             recommendedMaxClass = recommendedMaxClass,
             lastModified = OffsetDateTime.now()
     )
+}
+
+fun SentenceCompletionResponse.getSentenceTask(): String {
+    var sentenceText = sentence
+    options.forEach { option ->
+        sentenceText = sentenceText.replaceFirst(option, "_________")
+    }
+    return sentenceText
+}
+
+fun SentenceCompletionEntity.getSentenceResult(): String {
+    var sentenceText = ""
+    sentence.forEachIndexed { index, part ->
+        sentenceText += part
+        if (index != sentence.lastIndex) sentenceText += " ${options[index]} "
+    }
+    return sentenceText
 }
 //endregion
 

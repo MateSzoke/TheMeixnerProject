@@ -14,8 +14,10 @@ import {UserResponse} from './userResponse';
 
 
 export interface TaskResultResponse {
+  attempts: number;
+  currentResult: Array<boolean>;
   id: number;
-  resultPercentage: number;
-  taskResult: TaskResponse;
+  lastModified: Date;
+  taskResult?: TaskResponse;
   user: UserResponse;
 }

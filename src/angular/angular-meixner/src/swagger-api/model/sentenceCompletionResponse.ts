@@ -11,7 +11,7 @@
  */
 
 
-export interface SentenceCompletionResponse { 
+export interface SentenceCompletionResponse {
     difficulty: number;
     id: number;
     lastModified: Date;
@@ -20,6 +20,7 @@ export interface SentenceCompletionResponse {
     recommendedMaxClass: number;
     recommendedMinClass: number;
     sentence: string;
+    sentenceTask: Array<string>;
     subject: SentenceCompletionResponse.SubjectEnum;
     title: string;
     type: SentenceCompletionResponse.TypeEnum;

@@ -8,29 +8,29 @@ import hu.aut.meixner.dto.task.easy.*
 import hu.aut.meixner.dto.task.student.easy.*
 import hu.aut.meixner.mapping.toDomainModel
 
-fun List<MediaItemRequest>.compareResultMediaItems(resultMediaItems: List<MediaItemResponse>): Double {
-    var match = 0
-    val requestMediaItems = map { it.toDomainModel() }
-    resultMediaItems.forEach { resultMediaItem ->
-        if (requestMediaItems.contains(resultMediaItem)) match++
+fun List<MediaItemResponse>.compareResultMediaItems(requestMediaItems: List<MediaItemRequest>): Boolean {
+    requestMediaItems.forEach { requestMediaItem ->
+        if (!contains(requestMediaItem.toDomainModel())) {
+            return false
+        }
     }
-    return if (size <= resultMediaItems.size) match / size.toDouble() else match / resultMediaItems.size.toDouble()
+    return true
 }
 
-fun List<MediaItemRequest>.compareSortedResultMediaItems(resultMediaItems: List<MediaItemResponse>): Double {
-    var match = 0
-    zip(resultMediaItems).forEach { (requestMediaItem, resultMediaItem) ->
-        if (requestMediaItem.toDomainModel() == resultMediaItem) match++
+fun List<MediaItemResponse>.compareSortedResultMediaItems(requestMediaItems: List<MediaItemRequest>): List<Boolean> {
+    val currentResult = mutableListOf<Boolean>()
+    zip(requestMediaItems).forEach { (requestMediaItem, resultMediaItem) ->
+        currentResult.add(requestMediaItem == resultMediaItem.toDomainModel())
     }
-    return if (size <= resultMediaItems.size) match / size.toDouble() else match / resultMediaItems.size.toDouble()
+    return currentResult
 }
 
-fun List<MediaItemRequest>.equalsResultMediaItems(resultMediaItems: List<MediaItemResponse>): Boolean {
-    return map { it.toDomainModel() }.sortedBy { it.hashCode() } == resultMediaItems.sortedBy { it.hashCode() }
+fun List<MediaItemResponse>.equalsResultMediaItems(requestMediaItems: List<MediaItemRequest>): Boolean {
+    return sortedBy { it.hashCode() } == requestMediaItems.map { it.toDomainModel() }.sortedBy { it.hashCode() }
 }
 
-fun List<MediaItemRequest>.equalsSortedResultMediaItems(resultMediaItems: List<MediaItemResponse>): Boolean {
-    return map { it.toDomainModel() } == resultMediaItems
+fun List<MediaItemResponse>.equalsSortedResultMediaItems(requestMediaItems: List<MediaItemRequest>): Boolean {
+    return this == requestMediaItems.map { it.toDomainModel() }
 }
 
 fun TaskResponse.toAssignTask(): AssignTask? {
@@ -57,7 +57,7 @@ fun TaskResponse.toAssignTask(): AssignTask? {
             SentenceCompletionTask(
                     taskId = id,
                     title = title,
-                    sentence = task.sentence,
+                    sentence = task.sentenceTask,
                     options = task.options.shuffled()
             )
         }

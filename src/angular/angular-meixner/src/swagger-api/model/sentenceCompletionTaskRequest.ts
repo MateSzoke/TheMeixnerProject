@@ -12,5 +12,6 @@
 
 
 export interface SentenceCompletionTaskRequest {
+  attempts?: number;
   options: Array<string>;
 }

@@ -13,5 +13,6 @@ import {PairElementRequest} from './pairElementRequest';
 
 
 export interface PairingTaskRequest {
+  attempts?: number;
   pairs: Array<PairElementRequest>;
 }
