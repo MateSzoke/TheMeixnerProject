@@ -1,0 +1,32 @@
+<div class="container">
+  <mat-card class="mat-card-controls mat-card-base">
+    <mat-toolbar-row>
+      <div class="flex-layout-center">
+        <button
+          href="#"
+          routerLink="feladatok/sajat"
+          type="button"
+          mat-flat-button
+          class="background-color color-white">
+          Mégsem
+        </button>
+        <button
+          type="submit"
+          mat-stroked-button
+          class="color-mat"
+          (click)="saveData()">
+          Mentés
+        </button>
+      </div>
+      <div class="flex-layout-center">
+        {{this.title}}&nbsp;-&nbsp;{{this.type}}
+      </div>
+      <div *ngIf="plusButton" class="flex-layout-end">
+        <button (click)="newElement()" class="plusButton" mat-button>
+          <i class="fa fa-plus"></i>
+        </button>
+      </div>
+    </mat-toolbar-row>
+  </mat-card>
+  <br>
+</div>

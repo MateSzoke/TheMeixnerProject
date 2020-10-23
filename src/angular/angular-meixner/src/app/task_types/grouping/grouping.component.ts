@@ -8,6 +8,7 @@ import {TaskAngularService} from "../../data/task-angular.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {SubjectEnumUtil} from "../../util/subjectEnumUtil";
 import {Path} from "../../path";
+import {UpdateBlock} from "../../model/updateBlock";
 
 @Component({
   selector: 'app-grouping',
@@ -80,8 +81,10 @@ export class GroupingComponent implements OnInit {
 
   }
 
-  public updateGroupRequest(newValue, indexService, indexGroup) {
-    this.groupingRequest.groups[indexService].elements[indexGroup].content = newValue;
+  public updateGroupRequest(indexService, newValue: UpdateBlock ) {
+    console.log("updateGroupRequest");
+    console.log(this.groupingRequest);
+    this.groupingRequest.groups[indexService].elements[newValue.id].content = newValue.content;
   }
 
   public deleteGroup(indexService) {
@@ -93,7 +96,7 @@ export class GroupingComponent implements OnInit {
     this.groupingRequest.groups[indexElement].elements.push(newRow);
   }
 
-  public newGroup() {
+  public addGroup() {
     const newRow: GroupRequest = {
       name: '',
       elements: new Array<MediaItemRequest>()
@@ -146,4 +149,7 @@ export class GroupingComponent implements OnInit {
     }
   }
 
+  onTitleChange(index,$event: string) {
+    this.groupingRequest.groups[index].name = $event;
+  }
 }

@@ -24,6 +24,7 @@ import {TaskAngularService} from "../../data/task-angular.service";
 import {take} from "rxjs/operators";
 import {SubjectEnumUtil} from "../../util/subjectEnumUtil";
 import {Path} from "../../path";
+import {UpdateBlock} from "../../model/updateBlock";
 
 @Component({
   selector: 'app-pairing',
@@ -35,7 +36,6 @@ export class PairingComponent implements OnInit, AfterViewChecked {
   public pairingRequest: PairingRequest;
   public taskId: number = null
   public selectedMediaItem: MediaItemResponse;
-  @ViewChildren('pairchild') pairs: QueryList<ElementRef>;
   pairElements: any;
   loaded: boolean = false
   newPairing = true;
@@ -45,7 +45,6 @@ export class PairingComponent implements OnInit, AfterViewChecked {
 
   constructor(public easyTasksService: EasyTasksService,
               public tasksService: TaskService,
-              public taskAngularService: TaskAngularService,
               private route: ActivatedRoute,
               private cdRef:ChangeDetectorRef,
               private router : Router) {
@@ -72,8 +71,6 @@ export class PairingComponent implements OnInit, AfterViewChecked {
       pairs = new Array<PairElementRequest>()
       subject = SubjectEnumUtil.stringToSubject(params.get("subject"))
     };
-    console.log("initNewPairingRequest");
-    console.log(this.pairingRequest);
     this.loaded = true
   }
 
@@ -102,8 +99,8 @@ export class PairingComponent implements OnInit, AfterViewChecked {
 
   }
 
-  public updatePairElement(newValue, indexService, indexPair) {
-    this.pairingRequest.pairs[indexService].pair[indexPair].content = newValue;
+  public updatePairElement(indexService, event: UpdateBlock) {
+    this.pairingRequest.pairs[indexService].pair[event.id].content = event.content;
   }
 
   public deletePair(indexService) {
@@ -121,7 +118,7 @@ export class PairingComponent implements OnInit, AfterViewChecked {
     this.indexOfCurrentFocus = jumpToElementIndex;
   }
 
-  public newPair() {
+  public addPair() {
     const newRow: PairElementRequest = {
       pair: new Array<MediaItemRequest>()
     };
@@ -160,9 +157,6 @@ export class PairingComponent implements OnInit, AfterViewChecked {
   }
 
   saveData() {
-    console.log("saveData");
-    console.log(this.pairingRequest);
-    console.log(this.newPairing);
     if(this.newPairing) {
       this.easyTasksService.createPairingUsingPOST(this.pairingRequest)
         .subscribe(data => {

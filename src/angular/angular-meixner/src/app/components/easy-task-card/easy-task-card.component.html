@@ -1,1 +1,46 @@
-<p>easy-task-card works!</p>
+<mat-card class="mat-card-list" [ngClass]="singleton ? 'mat-width-singleton' : 'mat-width'">
+  <mat-card-content>
+    <mat-toolbar-row>
+      <div class="flex-layout-center">
+      </div>
+      <ng-container *ngIf="!singleton && !deleteDisable">
+        <div class="flex-layout-end">
+          <i (click)="this.deleteBlock()" class="fa fa-trash fa-lg"></i>&nbsp;
+        </div>
+      </ng-container>
+    </mat-toolbar-row>
+    <div *ngIf="titleExists">
+      <mat-form-field class="width-and-trash">
+        <input [ngModel]="this.title"
+               (ngModelChange)="onTitleChange($event)" matInput name="title">
+      </mat-form-field>
+    </div>
+    <ng-container *ngIf="!isListItemsString(); else listItemsMedia">
+      <form *ngFor="let mediaItem of listItems; let j = index; trackBy:customTrackBy" class="my-form">
+        <mat-form-field class="width-and-trash">
+          <input [ngModel]="mediaItem.content"
+                 (ngModelChange)="updateBlockElement($event, j)" matInput name="username">
+        </mat-form-field>
+        <i (click)="this.deleteBlockElement(j)" class="fa fa-trash"></i>&nbsp;
+        <br>
+      </form>
+    </ng-container>
+    <ng-template #listItemsMedia>
+      <form *ngFor="let mediaItem of listItems; let j = index; trackBy:customTrackBy" class="my-form">
+        <mat-form-field class="width-and-trash">
+          <input [ngModel]="mediaItem"
+                 (ngModelChange)="updateBlockElement($event, j)" matInput name="username">
+        </mat-form-field>
+        <i (click)="this.deleteBlockElement(j)" class="fa fa-trash"></i>&nbsp;
+        <br>
+      </form>
+    </ng-template>
+    <button
+      type="submit"
+      mat-flat-button
+      class="color-mat"
+      (click)="addBlockElement()">
+      Új elem
+    </button>
+  </mat-card-content>
+</mat-card>

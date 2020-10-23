@@ -70,6 +70,8 @@ import {TrueFalseResultComponent} from './student/tasks/result/true-false-result
 import {MemoryGameResultComponent} from './student/tasks/result/memory-game-result/memory-game-result.component';
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import { EasyTaskComponent } from './task_types/easy-task/easy-task.component';
+import { TaskTopRowComponent } from './components/task-top-row/task-top-row.component';
+import { MemoryGameComponent } from './task_types/memory-game/memory-game.component';
 
 @NgModule({
   declarations: [
@@ -117,7 +119,9 @@ import { EasyTaskComponent } from './task_types/easy-task/easy-task.component';
     SentenceCompletionResultComponent,
     SentenceCreationResultComponent,
     TrueFalseResultComponent,
-    MemoryGameResultComponent
+    MemoryGameResultComponent,
+    TaskTopRowComponent,
+    MemoryGameComponent
   ],
   imports: [
     BrowserModule,

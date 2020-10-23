@@ -9,6 +9,7 @@ import {
 import {ActivatedRoute, Router} from "@angular/router";
 import {SubjectEnumUtil} from "../../util/subjectEnumUtil";
 import {Path} from "../../path";
+import {UpdateBlock} from "../../model/updateBlock";
 
 @Component({
   selector: 'app-sorting',
@@ -76,12 +77,12 @@ export class SortingComponent implements OnInit {
     );
   }
 
-  public updateElement(newValue, indexService) {
-    this.sortingRequest.elements[indexService].content = newValue;
+  public updateElement(newValue: UpdateBlock) {
+    this.sortingRequest.elements[newValue.id].content = newValue.content;
   }
 
-  public deleteElement(indexService) {
-    this.sortingRequest.elements.splice(indexService, 1);
+  public deleteElement(id) {
+    this.sortingRequest.elements.splice(id, 1);
   }
 
   public addElement() {

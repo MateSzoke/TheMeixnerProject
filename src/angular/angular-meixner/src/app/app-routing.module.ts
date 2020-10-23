@@ -30,6 +30,7 @@ import {StudentSortingComponent} from "./student/tasks/student-sorting/student-s
 import {StudentTrueFalseComponent} from "./student/tasks/student-true-false/student-true-false.component";
 import {ExerciseResultComponent} from "./student/exercise-result/exercise-result.component";
 import {EasyTaskComponent} from "./task_types/easy-task/easy-task.component";
+import {MemoryGameComponent} from "./task_types/memory-game/memory-game.component";
 
 
 const routes: Routes = [
@@ -91,6 +92,11 @@ const routes: Routes = [
   {
     path: Path.SORTING_GROUPING,
     component: SortingGroupingComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: Path.MEMORY_GAME,
+    component: MemoryGameComponent,
     canActivate: [RouteGuardService]
   },
   {

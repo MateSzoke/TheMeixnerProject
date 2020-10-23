@@ -10,6 +10,7 @@ import {TaskAngularService} from "../../data/task-angular.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {SubjectEnumUtil} from "../../util/subjectEnumUtil";
 import {Path} from "../../path";
+import {UpdateBlock} from "../../model/updateBlock";
 
 @Component({
   selector: 'app-sentence-creation',
@@ -20,8 +21,6 @@ export class SentenceCreationComponent implements OnInit {
 
   public sentenceCreationRequest: SentenceCreationRequest;
   public taskId: number = null
-  @ViewChildren('sentencechild') sentences: QueryList<ElementRef>;
-  sentenceParts: any;
   loaded: boolean = false
   newSentence = true;
   sentenceId = 0;
@@ -78,11 +77,8 @@ export class SentenceCreationComponent implements OnInit {
     );
   }
 
-  public updateSentenceCreationRequest(newValue, indexService, indexSentence) {
-    console.log("updateSentenceCreationRequest");
-    console.log(newValue);
-    console.log(indexSentence);
-    this.sentenceCreationRequest.sentences[indexService].parts[indexSentence] = newValue.toString();
+  public updateSentenceCreationRequest(newValue: UpdateBlock, indexService) {
+    this.sentenceCreationRequest.sentences[indexService].parts[newValue.id] = newValue.content;
   }
 
   public deleteSentence(indexService) {
@@ -94,7 +90,7 @@ export class SentenceCreationComponent implements OnInit {
     this.sentenceCreationRequest.sentences[indexElement].parts.push(newRow);
   }
 
-  public newSentenceCreation() {
+  public addSentenceCreation() {
     const newRow: Sentence = {
       sentenceTitle: '',
       parts: new Array<string>()
@@ -131,4 +127,7 @@ export class SentenceCreationComponent implements OnInit {
     return index;
   }
 
+  onTitleChange(index: number, $event: string) {
+    this.sentenceCreationRequest.sentences[index].sentenceTitle = $event;
+  }
 }
