@@ -126,12 +126,12 @@ export class MemoryGameComponent implements OnInit {
     if(this.newMemGame) {
       this.easyTasksService.createMemoryGameUsingPOST(this.memoryGameRequest)
         .subscribe(data => {
-          this.router.navigate([Path.TASKS]);
+          this.router.navigate([Path.TASKS_MY]);
         });
     } else {
       this.easyTasksService.updateMemoryGamedUsingPATCH(this.memGameId,this.memoryGameRequest)
         .subscribe(data => {
-          this.router.navigate([Path.TASKS]);
+          this.router.navigate([Path.TASKS_MY]);
         });
     }
   }

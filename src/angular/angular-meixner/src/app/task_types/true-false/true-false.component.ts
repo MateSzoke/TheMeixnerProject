@@ -115,12 +115,12 @@ export class TrueFalseComponent implements OnInit {
     if (this.newTrueFalse) {
       this.easyTasksService.createTrueFalseUsingPOST(this.trueFalseRequest)
         .subscribe(data => {
-          this.router.navigate([Path.TASKS]);
+          this.router.navigate([Path.TASKS_MY]);
         });
     } else {
       this.easyTasksService.updateTrueFalseByIdUsingPATCH(this.trueFalseId, this.trueFalseRequest)
         .subscribe(data => {
-          this.router.navigate([Path.TASKS]);
+          this.router.navigate([Path.TASKS_MY]);
         });
     }
   }

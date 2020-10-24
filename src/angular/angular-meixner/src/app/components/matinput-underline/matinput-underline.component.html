@@ -1,0 +1,4 @@
+<mat-form-field [ngClass]="trashActive ? 'width-and-trash' : 'full-width-component'">
+  <input [ngModel]="inputData"
+         (ngModelChange)="emitData($event)" matInput name="kieg">
+</mat-form-field>

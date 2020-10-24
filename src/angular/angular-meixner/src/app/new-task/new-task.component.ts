@@ -73,6 +73,9 @@ export class NewTaskComponent implements OnInit {
   }
 
   private navigateToTaskTypeComponent(taskType: TypeEnum) {
+    console.log("navigateToTaskTypeComponent");
+    console.log(taskType);
+
     this.router.navigate([ConvertEnum.convertTypeToRouterLink(taskType), this.getTaskParams()])
   }
 }

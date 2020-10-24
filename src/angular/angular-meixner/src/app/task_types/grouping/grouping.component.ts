@@ -82,8 +82,6 @@ export class GroupingComponent implements OnInit {
   }
 
   public updateGroupRequest(indexService, newValue: UpdateBlock ) {
-    console.log("updateGroupRequest");
-    console.log(this.groupingRequest);
     this.groupingRequest.groups[indexService].elements[newValue.id].content = newValue.content;
   }
 
@@ -104,10 +102,6 @@ export class GroupingComponent implements OnInit {
     this.groupingRequest.groups.push(newRow);
   }
 
-  public selectGroup(jumpToElementIndex) {
-    this.groupElements[jumpToElementIndex].focus();
-  }
-
   public deleteGroupElement(indexService, indexGroup) {
     this.groupingRequest.groups[indexService].elements.splice(indexGroup, 1);
   }
@@ -125,26 +119,16 @@ export class GroupingComponent implements OnInit {
     }
   }
 
-  initMediaItemRequest(): MediaItemRequest {
-    return {
-      mediaItemId: 0,
-      content: ''
-    }
-  }
-
   saveData() {
-    console.log("saveData");
-    console.log(this.groupingRequest);
-    console.log(this.newGrouping);
     if(this.newGrouping) {
       this.easyTasksService.createGroupingUsingPOST(this.groupingRequest)
         .subscribe(data => {
-          this.router.navigate([Path.TASKS]);
+          this.router.navigate([Path.TASKS_MY]);
         });
     } else {
       this.easyTasksService.updateGroupingByIdUsingPATCH(this.groupingId,this.groupingRequest)
         .subscribe(data => {
-          this.router.navigate([Path.TASKS]);
+          this.router.navigate([Path.TASKS_MY]);
         });
     }
   }

@@ -111,12 +111,12 @@ export class SortingComponent implements OnInit {
     if(this.newSorting) {
       this.easyTasksService.createSortingUsingPOST(this.sortingRequest)
         .subscribe(data => {
-          this.router.navigate([Path.TASKS]);
+          this.router.navigate([Path.TASKS_MY]);
         });
     } else {
       this.easyTasksService.updateSortingByIdUsingPATCH(this.sortingId,this.sortingRequest)
         .subscribe(data => {
-          this.router.navigate([Path.TASKS]);
+          this.router.navigate([Path.TASKS_MY]);
         });
     }
   }

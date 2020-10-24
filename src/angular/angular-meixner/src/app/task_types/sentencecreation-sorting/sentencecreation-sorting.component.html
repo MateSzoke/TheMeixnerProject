@@ -1,1 +1,32 @@
-<p>sentencecreation-sorting works!</p>
+<html>
+<body>
+<app-task-top-row
+  [title]="this.sentenceCreationAndSortingRequest.title"
+  [type]="'sorrendezés'"
+  (saveDataEmit)="this.saveData()"
+  (newElementEmit)="this.addSentenceCreation()">
+</app-task-top-row>
+<div *ngIf="!this.loaded">
+  <div class="wrapper">
+    <div class="inner">
+      <mat-spinner diameter="70"></mat-spinner>
+    </div>
+  </div>
+</div>
+<div *ngIf="this.loaded" class="mat-card-base">
+  <ng-container *ngFor="let member of this.sentenceCreationAndSortingRequest.sentences; let i = index">
+    <app-easy-task-card
+      [titleExists]="true"
+      [title]="member.sentenceTitle"
+      [listItems]="member.parts"
+      (titleChange)="onTitleChange(i,$event)"
+      (deleteBlockEmit)="deleteSentence(i)"
+      (deleteBlockElementEmit)="deletePart(i, $event)"
+      (updateBlockElementEmit)="updateSentenceCreationRequest($event, i)"
+      (addBlockElementEmit)="addSentenceRequest(i)">
+    </app-easy-task-card>
+  </ng-container>
+</div>
+
+</body>
+</html>

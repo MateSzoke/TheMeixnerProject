@@ -1,4 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Path} from "../../path";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-task-top-row',
@@ -13,7 +15,7 @@ export class TaskTopRowComponent implements OnInit {
   @Input() type = '';
   @Input() plusButton = true;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -24,5 +26,9 @@ export class TaskTopRowComponent implements OnInit {
 
   newElement() {
     this.newElementEmit.emit(true);
+  }
+
+  cancel() {
+    this.router.navigate([Path.TASKS_MY]);
   }
 }

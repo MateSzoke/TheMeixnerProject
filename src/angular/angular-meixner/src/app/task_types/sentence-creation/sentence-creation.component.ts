@@ -1,12 +1,9 @@
 import {ChangeDetectorRef, Component, ElementRef, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {
-  EasyTasksService, MediaItemRequest,
-  MediaItemResponse,
-  PairElementRequest, PairElementResponse,
-  PairingRequest, PairingResponse, Sentence, SentenceCreationRequest, SentenceCreationResponse,
+  EasyTasksService,
+  Sentence, SentenceCreationRequest, SentenceCreationResponse,
   TaskService
 } from "../../../swagger-api";
-import {TaskAngularService} from "../../data/task-angular.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {SubjectEnumUtil} from "../../util/subjectEnumUtil";
 import {Path} from "../../path";
@@ -28,8 +25,8 @@ export class SentenceCreationComponent implements OnInit {
   constructor(public easyTasksService: EasyTasksService,
               public tasksService: TaskService,
               private route: ActivatedRoute,
-              private cdRef:ChangeDetectorRef,
-              private router : Router) {
+              private cdRef: ChangeDetectorRef,
+              private router: Router) {
 
   }
 
@@ -102,23 +99,16 @@ export class SentenceCreationComponent implements OnInit {
     this.sentenceCreationRequest.sentences[indexService].parts.splice(indexSentence, 1);
   }
 
-  sentenceCreationResponseToRequest(response: Sentence): Sentence {
-    return {
-      sentenceTitle: response.sentenceTitle,
-      parts: response.parts
-    }
-  }
-
   saveData() {
-    if(this.newSentence) {
+    if (this.newSentence) {
       this.easyTasksService.createSentenceCreationUsingPOST(this.sentenceCreationRequest)
         .subscribe(data => {
-          this.router.navigate([Path.TASKS]);
+          this.router.navigate([Path.TASKS_MY]);
         });
     } else {
-      this.easyTasksService.updateSentenceCreationByIdUsingPATCH(this.sentenceId,this.sentenceCreationRequest)
+      this.easyTasksService.updateSentenceCreationByIdUsingPATCH(this.sentenceId, this.sentenceCreationRequest)
         .subscribe(data => {
-          this.router.navigate([Path.TASKS]);
+          this.router.navigate([Path.TASKS_MY]);
         });
     }
   }

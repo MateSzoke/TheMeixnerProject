@@ -100,6 +100,9 @@ export class ConvertEnum {
         return Path.SORTING_GROUPING;
       }
       case TypeEnum.BlindMap.toString(): {
+        return Path.BLINDMAP;
+      }
+      case TypeEnum.MemoryGame.toString(): {
         return Path.MEMORY_GAME;
       }
       case TypeEnum.FreeText.toString(): {
@@ -144,6 +147,8 @@ export class ConvertEnum {
         return Path.STUDENT_SORTING_GROUPING;
       case TypeEnum.BlindMap.toString():
         return Path.STUDENT_BLINDMAP;
+      case TypeEnum.MemoryGame.toString():
+        return Path.MEMORY_GAME;
       case TypeEnum.FreeText.toString():
         return Path.STUDENT_FREE_TEXT;
       case TypeEnum.OddOneOut.toString():

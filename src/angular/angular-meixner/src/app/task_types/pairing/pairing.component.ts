@@ -160,12 +160,12 @@ export class PairingComponent implements OnInit, AfterViewChecked {
     if(this.newPairing) {
       this.easyTasksService.createPairingUsingPOST(this.pairingRequest)
         .subscribe(data => {
-          this.router.navigate([Path.TASKS]);
+          this.router.navigate([Path.TASKS_MY]);
         });
     } else {
       this.easyTasksService.updatePairingByIdUsingPATCH(this.pairingId,this.pairingRequest)
         .subscribe(data => {
-          this.router.navigate([Path.TASKS]);
+          this.router.navigate([Path.TASKS_MY]);
         });
     }
   }
