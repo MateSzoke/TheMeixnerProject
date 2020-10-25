@@ -31,9 +31,6 @@ class TaskController(
     @ApiOperation("Returns the specific task by it's taskId.")
     fun getTaskById(@PathVariable("taskId") taskId: Long): ResponseEntity<TaskResponse> {
         val task = taskService.getTaskById(taskId) ?: return ResponseEntity.notFound().build()
-        println("getTaskById")
-        println(task.difficulty)
-        //println((task as PairingEntity).pairs[0].pair[0].content)
         return ResponseEntity.ok(task)
     }
 

@@ -8,7 +8,7 @@ import java.time.OffsetDateTime
 //region Pairing
 fun PairingRequest.toEntity(owner: String, pairs: List<PairEntity>): PairingEntity {
     return PairingEntity(
-            pairs = pairs.toMutableList(),
+            pairs = pairs,
             title = title,
             difficulty = difficulty,
             owner = owner,
@@ -34,7 +34,6 @@ fun PairingEntity.toDomainModel(): PairingResponse {
 
 fun PairEntity.toDomainModel(): PairElementResponse {
     return PairElementResponse(
-            id = id,
             pair = pair.map { it.toDomainModel() }
     )
 }

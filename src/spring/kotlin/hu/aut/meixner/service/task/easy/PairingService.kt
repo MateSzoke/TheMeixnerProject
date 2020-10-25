@@ -18,15 +18,10 @@ import org.springframework.stereotype.Service
 @Service
 class PairingService(
         private val pairingRepository: PairingRepository,
-        private val pairRepository: PairRepository,
         private val mediaItemService: MediaItemService
 ) {
 
     fun createPairing(pairing: PairingRequest): PairingResponse? {
-        println("createPairing")
-        println(pairing.difficulty)
-        println(pairing.subject)
-        println(pairing.pairs[0].pair[0].content)
         val result = pairing.toEntity(owner = currentUser, pairs = pairing.pairs.map { pair ->
             PairEntity(
                     pair = pair.pair.mapNotNull {
@@ -34,9 +29,6 @@ class PairingService(
                     }.toMutableList()
             )
         })
-        println(result.difficulty)
-        println(result.subject)
-        println(result.pairs[0].pair[0].content)
         return pairingRepository.save(result).toDomainModel()
     }
 
