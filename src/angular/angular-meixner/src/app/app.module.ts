@@ -74,6 +74,7 @@ import { TaskTopRowComponent } from './components/task-top-row/task-top-row.comp
 import { MemoryGameComponent } from './task_types/memory-game/memory-game.component';
 import { MatinputUnderlineComponent } from './components/matinput-underline/matinput-underline.component';
 import {SecurePipe} from "./model/SecurePipe";
+import {TypeofPipe} from "./model/TypeofPipe";
 
 @NgModule({
   declarations: [
@@ -125,7 +126,8 @@ import {SecurePipe} from "./model/SecurePipe";
     TaskTopRowComponent,
     MemoryGameComponent,
     MatinputUnderlineComponent,
-    SecurePipe
+    SecurePipe,
+    TypeofPipe
   ],
   imports: [
     BrowserModule,

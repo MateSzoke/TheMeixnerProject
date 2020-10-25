@@ -17,7 +17,7 @@
     </div>
     <ng-container *ngIf="isMediaList; else listItemsString">
       <form *ngFor="let mediaItem of listItemsMedia; let j = index; trackBy:customTrackBy" class="my-form">
-        <ng-container *ngIf="mediaIdUndef(mediaItem); else mediaItemRef">
+        <ng-container *ngIf="(mediaItem.mediaItemId | typeof) === 'undefined' ; else mediaItemRef">
           <mat-form-field class="width-and-trash">
             <input [ngModel]="mediaItem.content"
                    (ngModelChange)="updateBlockElement($event, j)" matInput name="username">
