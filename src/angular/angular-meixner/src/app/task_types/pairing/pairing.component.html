@@ -2,7 +2,7 @@
 <body>
 <app-task-top-row
   [title]="this.pairingRequest.title"
-  [type]="'sorrendezés'"
+  [type]="'párosítás'"
   (saveDataEmit)="this.saveData()"
   (newElementEmit)="this.addPair()">
 </app-task-top-row>
@@ -16,7 +16,7 @@
 <div *ngIf="this.loaded" class="mat-card-base">
   <ng-container *ngFor="let member of this.pairingRequest.pairs; let i = index">
     <app-easy-task-card
-      [listItems]="member.pair"
+      [listItemsMedia]="member.pair"
       (deleteBlockEmit)="deletePair(i)"
       (deleteBlockElementEmit)="deletePairElement(i, $event)"
       (updateBlockElementEmit)="updatePairElement(i, $event)"

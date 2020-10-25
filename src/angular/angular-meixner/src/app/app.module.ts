@@ -73,6 +73,7 @@ import { EasyTaskComponent } from './task_types/easy-task/easy-task.component';
 import { TaskTopRowComponent } from './components/task-top-row/task-top-row.component';
 import { MemoryGameComponent } from './task_types/memory-game/memory-game.component';
 import { MatinputUnderlineComponent } from './components/matinput-underline/matinput-underline.component';
+import {SecurePipe} from "./model/SecurePipe";
 
 @NgModule({
   declarations: [
@@ -123,7 +124,8 @@ import { MatinputUnderlineComponent } from './components/matinput-underline/mati
     MemoryGameResultComponent,
     TaskTopRowComponent,
     MemoryGameComponent,
-    MatinputUnderlineComponent
+    MatinputUnderlineComponent,
+    SecurePipe
   ],
   imports: [
     BrowserModule,

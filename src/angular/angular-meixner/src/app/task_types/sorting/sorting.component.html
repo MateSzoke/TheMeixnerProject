@@ -16,7 +16,7 @@
 <div *ngIf="this.loaded" class="mat-card-base">
   <app-easy-task-card
     [singleton]="true"
-    [listItems]="sortingRequest.elements"
+    [listItemsMedia]="sortingRequest.elements"
     (deleteBlockElementEmit)="deleteElement($event)"
     (updateBlockElementEmit)="updateElement($event)"
     (addBlockElementEmit)="addElement()">

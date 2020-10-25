@@ -29,6 +29,10 @@
   width: 42%;
 }
 
+.hide-upload {
+  display: none;
+}
+
 .mat-width-singleton {
   width: 95%;
 }
@@ -118,4 +122,8 @@ mat-form-field {
 
 i {
   display:inline-block;
+}
+
+.max-height {
+  max-height: 100px;
 }

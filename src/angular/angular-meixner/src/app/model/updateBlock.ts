@@ -4,5 +4,6 @@ import SubjectEnum = TaskResponse.SubjectEnum;
 
 export interface UpdateBlock {
   id: number;
+  mediaId: number;
   content: string;
 }

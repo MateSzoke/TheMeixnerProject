@@ -114,18 +114,28 @@ export class GroupingComponent implements OnInit {
   }
 
   mediaItemResponseToRequest(response: MediaItemResponse): MediaItemRequest {
-    return {
-      content: response.content
+    if(response.type === MediaItemResponse.TypeEnum.FILE) {
+      return {
+        mediaItemId: response.id,
+        content: response.content
+      }
+    } else {
+      return {
+        content: response.content
+      }
     }
   }
 
   saveData() {
+    console.log("saveData");
     if(this.newGrouping) {
+      console.log("createGroupingUsingPOST");
       this.easyTasksService.createGroupingUsingPOST(this.groupingRequest)
         .subscribe(data => {
           this.router.navigate([Path.TASKS_MY]);
         });
     } else {
+      console.log("updateGroupingByIdUsingPATCH");
       this.easyTasksService.updateGroupingByIdUsingPATCH(this.groupingId,this.groupingRequest)
         .subscribe(data => {
           this.router.navigate([Path.TASKS_MY]);
@@ -135,5 +145,9 @@ export class GroupingComponent implements OnInit {
 
   onTitleChange(index,$event: string) {
     this.groupingRequest.groups[index].name = $event;
+  }
+
+  addImageId(i: number, $event: UpdateBlock) {
+    this.groupingRequest.groups[i].elements[$event.id].mediaItemId = $event.mediaId;
   }
 }

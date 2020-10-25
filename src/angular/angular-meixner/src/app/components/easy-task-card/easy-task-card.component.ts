@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {MediaItemRequest} from "../../../swagger-api";
+import {FilesService, MediaItemRequest, MediaItemResponse} from "../../../swagger-api";
 import {UpdateBlock} from "../../model/updateBlock";
 import {strict} from "assert";
 
@@ -15,16 +15,21 @@ export class EasyTaskCardComponent implements OnInit {
   @Output() updateBlockElementEmit = new EventEmitter<UpdateBlock>();
   @Output() addBlockElementEmit = new EventEmitter<number>();
   @Output() titleChange = new EventEmitter<string>();
+  @Output() imageId = new EventEmitter<UpdateBlock>();
 
-  @Input() listItems: MediaItemRequest[] | string[];
+  @Input() listItemsMedia: MediaItemRequest[];
+  @Input() listItemsString: string[];
+  @Input() isMediaList = true;
   @Input() singleton = false;
   @Input() deleteDisable = false;
   @Input() titleExists = false;
   @Input() title = '';
 
-  constructor() { }
+  constructor(public filesService: FilesService) {
+  }
 
   ngOnInit(): void {
+
   }
 
   public deleteBlock() {
@@ -33,10 +38,6 @@ export class EasyTaskCardComponent implements OnInit {
 
   customTrackBy(index: number, obj: any): any {
     return index;
-  }
-
-  isListItemsString(): boolean {
-    return typeof this.listItems[0] === 'string';
   }
 
   updateBlockElement($event: string, j: number) {
@@ -53,5 +54,19 @@ export class EasyTaskCardComponent implements OnInit {
 
   onTitleChange($event: string) {
     this.titleChange.emit($event);
+  }
+
+  uploadFileToElement(j: number, event) {
+    let reader = new FileReader(); // HTML5 FileReader API
+    let file = event.target.files[0];
+    if (event.target.files && event.target.files[0]) {
+      this.filesService.uploadUsingPOST(file).subscribe(data => {
+        this.imageId.emit({id: j, mediaId: data.id} as UpdateBlock);
+      });
+    }
+  }
+
+  mediaIdUndef(mediaItem): boolean {
+    return typeof mediaItem === 'undefined';
   }
 }

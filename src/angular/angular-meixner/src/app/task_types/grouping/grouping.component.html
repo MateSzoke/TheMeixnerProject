@@ -2,7 +2,7 @@
 <body>
 <app-task-top-row
   [title]="this.groupingRequest.title"
-  [type]="'sorrendezés'"
+  [type]="'csoportosítás'"
   (saveDataEmit)="this.saveData()"
   (newElementEmit)="this.addGroup()">
 </app-task-top-row>
@@ -18,8 +18,9 @@
     <app-easy-task-card
       [titleExists]="true"
       [title]="member.name"
-      [listItems]="member.elements"
+      [listItemsMedia]="member.elements"
       (titleChange)="onTitleChange(i,$event)"
+      (imageId)="addImageId(i, $event)"
       (deleteBlockEmit)="deleteGroup(i)"
       (deleteBlockElementEmit)="deleteGroupElement(i, $event)"
       (updateBlockElementEmit)="updateGroupRequest(i, $event)"

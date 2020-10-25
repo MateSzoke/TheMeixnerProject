@@ -18,7 +18,7 @@
       [deleteDisable]="true"
       [titleExists]="true"
       [title]="'igaz'"
-      [listItems]="this.trueFalseRequest.trueItems"
+      [listItemsMedia]="this.trueFalseRequest.trueItems"
       (deleteBlockElementEmit)="deleteElement($event, true)"
       (updateBlockElementEmit)="updateTrueFalseRequest($event, true)"
       (addBlockElementEmit)="addItemRequest($event, true)">
@@ -27,7 +27,7 @@
       [deleteDisable]="true"
       [titleExists]="true"
       [title]="'hamis'"
-      [listItems]="this.trueFalseRequest.falseItems"
+      [listItemsMedia]="this.trueFalseRequest.falseItems"
       (deleteBlockEmit)="deleteElement($event, false)"
       (deleteBlockElementEmit)="deleteElement($event, false)"
       (updateBlockElementEmit)="updateTrueFalseRequest($event, false)"

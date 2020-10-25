@@ -15,18 +15,28 @@
                (ngModelChange)="onTitleChange($event)" matInput name="title">
       </mat-form-field>
     </div>
-    <ng-container *ngIf="!isListItemsString(); else listItemsString">
-      <form *ngFor="let mediaItem of listItems; let j = index; trackBy:customTrackBy" class="my-form">
-        <mat-form-field class="width-and-trash">
-          <input [ngModel]="mediaItem.content"
-                 (ngModelChange)="updateBlockElement($event, j)" matInput name="username">
-        </mat-form-field>
-        <i (click)="this.deleteBlockElement(j)" class="fa fa-trash"></i>&nbsp;
+    <ng-container *ngIf="isMediaList; else listItemsString">
+      <form *ngFor="let mediaItem of listItemsMedia; let j = index; trackBy:customTrackBy" class="my-form">
+        <ng-container *ngIf="mediaIdUndef(mediaItem); else mediaItemRef">
+          <mat-form-field class="width-and-trash">
+            <input [ngModel]="mediaItem.content"
+                   (ngModelChange)="updateBlockElement($event, j)" matInput name="username">
+          </mat-form-field>
+        </ng-container>
+        <ng-template #mediaItemRef>
+          <img class="max-height" [attr.src]="'http://localhost:3000/files/download/' + mediaItem.mediaItemId | secure | async"/>
+        </ng-template>
+        <div class="hide-upload">
+          <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" #fileInput
+                 (change)="uploadFileToElement(j, $event)"/>
+        </div>
+        <i (click)="fileInput.click()" class="fa fa-picture-o"></i>&nbsp;
+        <i (click)="deleteBlockElement(j)" class="fa fa-trash"></i>&nbsp;
         <br>
       </form>
     </ng-container>
     <ng-template #listItemsString>
-      <form *ngFor="let mediaItem of listItems; let j = index; trackBy:customTrackBy" class="my-form">
+      <form *ngFor="let mediaItem of listItemsString; let j = index; trackBy:customTrackBy" class="my-form">
         <mat-form-field class="width-and-trash">
           <input [ngModel]="mediaItem"
                  (ngModelChange)="updateBlockElement($event, j)" matInput name="username">

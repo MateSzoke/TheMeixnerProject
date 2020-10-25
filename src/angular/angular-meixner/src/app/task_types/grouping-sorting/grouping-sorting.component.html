@@ -18,7 +18,7 @@
     <app-easy-task-card
       [titleExists]="true"
       [title]="member.name"
-      [listItems]="member.elements"
+      [listItemsMedia]="member.elements"
       (titleChange)="onTitleChange(i,$event)"
       (deleteBlockEmit)="deleteGroup(i)"
       (deleteBlockElementEmit)="deleteGroupElement(i, $event)"

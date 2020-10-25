@@ -17,7 +17,7 @@
   <ng-container *ngFor="let member of this.sortingAndGroupingRequest.groups; let i = index">
     <app-easy-task-card
       [titleExists]="false"
-      [listItems]="member.elements"
+      [listItemsMedia]="member.elements"
       (deleteBlockEmit)="deleteGroup(i)"
       (deleteBlockElementEmit)="deleteGroupElement(i, $event)"
       (updateBlockElementEmit)="updateGroupRequest(i, $event)"
