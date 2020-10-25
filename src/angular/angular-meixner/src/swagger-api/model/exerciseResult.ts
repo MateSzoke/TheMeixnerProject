@@ -17,4 +17,5 @@ export interface ExerciseResult {
   exerciseName: string;
   lastModified: Date;
   taskResults: Array<TaskResultResponse>;
+  resultPercentage: number;
 }

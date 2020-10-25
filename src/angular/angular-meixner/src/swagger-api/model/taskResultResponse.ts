@@ -20,4 +20,5 @@ export interface TaskResultResponse {
   lastModified: Date;
   taskResult?: TaskResponse;
   user: UserResponse;
+  resultPercentage: number;
 }

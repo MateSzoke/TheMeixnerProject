@@ -109,7 +109,7 @@ export class ExercisesComponent implements OnInit {
   }
 
   private getMyExercises() {
-    this.exerciseService.getMyExercisesUsingGET1().subscribe(data => {
+    this.exerciseService.getMyExercisesUsingGET().subscribe(data => {
         this.exercises = new Array<ExercisesResponse>();
         this.exercisesUI = new Array<ExerciseUI>();
         data.forEach(exercise => {
