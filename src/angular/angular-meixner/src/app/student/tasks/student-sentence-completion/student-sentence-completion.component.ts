@@ -20,7 +20,8 @@ export class StudentSentenceCompletionComponent implements OnInit {
   sentenceCompletion: SentenceCompletionTask = null
   currentResult: Array<Boolean> = new Array<Boolean>()
   attempts: number = 0
-  sentenceResult: Array<Array<string>> = new Array<Array<string>>()
+  sentenceResult: Array<Array<ElementUI>> = new Array<Array<ElementUI>>()
+  options: Array<ElementUI> = new Array<ElementUI>()
 
   constructor(
     private route: ActivatedRoute,
@@ -36,6 +37,9 @@ export class StudentSentenceCompletionComponent implements OnInit {
     this.startedExerciseId = Number.parseInt(this.route.snapshot.paramMap.get("startedExerciseId"))
     this.assignService.getStudentTaskByIdUsingGET(this.taskId).subscribe(task => {
       this.sentenceCompletion = task as SentenceCompletionTask
+      this.sentenceCompletion.options.forEach(option => {
+        this.options.push(new ElementUI(true, option))
+      })
       this.sentenceCompletion.options.forEach(() => {
         this.sentenceResult.push([])
       })
@@ -57,11 +61,19 @@ export class StudentSentenceCompletionComponent implements OnInit {
       return false
   }
 
-  drop(event: CdkDragDrop<Array<string>>) {
-    transferArrayItem(event.previousContainer.data,
-      event.container.data,
-      event.previousIndex,
-      event.currentIndex);
+  drop(event: CdkDragDrop<Array<ElementUI>>, isFromAvailable: boolean) {
+    console.log(event)
+    console.log(isFromAvailable)
+    let fromData = event.previousContainer.data
+    let toData = event.container.data
+    let fromIndex = event.previousIndex
+    let toIndex = event.currentIndex
+    if (event.container.data.length >= 1 && !isFromAvailable) {
+      transferArrayItem(toData, fromData, 0, 0);
+      transferArrayItem(fromData, toData, 2, 1);
+    } else {
+      transferArrayItem(fromData, toData, fromIndex, toIndex);
+    }
   }
 
   evaluateTask() {
@@ -87,8 +99,18 @@ export class StudentSentenceCompletionComponent implements OnInit {
   private createTaskRequest(): SentenceCompletionTaskRequest {
     return {
       attempts: this.attempts,
-      options: this.sentenceResult.map(result => result[0])
+      options: this.sentenceResult.map(result => result[0].value)
     }
   }
 
+}
+
+class ElementUI {
+  isAvailable: boolean
+  value: string
+
+  constructor(isAvailable: boolean, value: string) {
+    this.isAvailable = isAvailable
+    this.value = value
+  }
 }
