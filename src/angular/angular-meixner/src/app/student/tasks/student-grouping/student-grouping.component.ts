@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {GroupingTask} from "../../../../swagger-api/model/groupingTask";
 import {ActivatedRoute, Router} from "@angular/router";
-import {AssignService, EvaluateService} from "../../../../swagger-api";
+import {AssignService, EvaluateService, MediaItemRequest} from "../../../../swagger-api";
 import {CdkDragDrop, transferArrayItem} from "@angular/cdk/drag-drop";
 import {GroupingTaskRequest} from "../../../../swagger-api/model/groupingTaskRequest";
 import {MatDialog} from "@angular/material/dialog";
@@ -50,6 +50,10 @@ export class StudentGroupingComponent implements OnInit {
       event.previousIndex,
       event.currentIndex);
     console.log(this.groupingRequest)
+  }
+
+  isMediaItem(request: MediaItemRequest): boolean {
+    return request.content.includes("/files/download")
   }
 
   getSuccess(index: number): Boolean {

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {PairingTask} from "../../../../swagger-api/model/pairingTask";
 import {PairingTaskRequest} from "../../../../swagger-api/model/pairingTaskRequest";
 import {ActivatedRoute, Router} from "@angular/router";
-import {AssignService, EvaluateService} from "../../../../swagger-api";
+import {AssignService, EvaluateService, MediaItemRequest} from "../../../../swagger-api";
 import {CdkDragDrop, transferArrayItem} from "@angular/cdk/drag-drop";
 import {PairingResultComponent} from "../result/pairing-result/pairing-result.component";
 import {MatDialog} from "@angular/material/dialog";
@@ -61,6 +61,10 @@ export class StudentPairingComponent implements OnInit {
       event.previousIndex,
       event.currentIndex);
     console.log(this.pairingRequest)
+  }
+
+  isMediaItem(request: MediaItemRequest): boolean {
+    return request.content.includes("/files/download")
   }
 
   addPairElement() {
