@@ -1,11 +1,23 @@
-.mat-card{
+.mat-card {
   width: 230px;
   text-align: center;
   display: block;
-  margin-left:auto;
-  margin-right:auto;
-  vertical-align:middle;
+  margin-left: auto;
+  margin-right: auto;
+  vertical-align: middle;
   margin-top: 3em;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: large;
+  margin-top: 24px;
 }
 
 .loginbtn {
