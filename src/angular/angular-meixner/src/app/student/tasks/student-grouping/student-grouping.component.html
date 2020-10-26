@@ -21,7 +21,10 @@
         cdkDropList
         cdkDropListSortingDisabled
         class="example-list">
-        <div *ngFor="let element of grouping.elements" cdkDrag class="example-box">{{element.content}}</div>
+        <div *ngFor="let element of grouping.elements" cdkDrag class="example-box">
+          <img *ngIf="element.type == 'FILE'" [src]="element.content | secure | async" class="max-height"/>
+          <p *ngIf="element.type == 'TEXT'">{{element.content}}</p>
+        </div>
       </div>
     </div>
 
@@ -34,7 +37,10 @@
         cdkDropList
         cdkDropListSortingDisabled
         [ngClass]="{'border-success':getSuccess(i), 'border-fail':getFail(i)}" class="example-list">
-        <div *ngFor="let element of group.elements" cdkDrag class="example-box">{{element.content}}</div>
+        <div *ngFor="let element of group.elements" cdkDrag class="example-box">
+          <img *ngIf="element.mediaItemId != null" [src]="element.content" class="max-height"/>
+          <p *ngIf="element.mediaItemId == null">{{element.content}}</p>
+        </div>
       </div>
     </div>
   </div>
