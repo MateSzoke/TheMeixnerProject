@@ -10,7 +10,10 @@
   <p class="title">Sorrendezés - {{sortingResponse.title}} - megoldás</p>
   <div *ngIf="startedExercise" [ngStyle]="{'color': getAttempts() <= 3 ? 'darkgreen' : 'brown'}" class="subtitle">
     Próbálkozások: {{getAttemptsText()}}</div>
-  <div *ngFor="let element of sortingResponse.elements">{{element.content}}</div>
+  <div *ngFor="let element of sortingResponse.elements">
+    <img *ngIf="element.type == 'FILE'" [src]="element.content | secure | async" class="max-height"/>
+    <p *ngIf="element.type == 'TEXT'">{{element.content}}</p>
+  </div>
   <div mat-dialog-actions style="float: right">
     <button (click)="finishExercise()" *ngIf="startedExercise" mat-button style="margin-top: 24px">Feladatsor
       befejezése

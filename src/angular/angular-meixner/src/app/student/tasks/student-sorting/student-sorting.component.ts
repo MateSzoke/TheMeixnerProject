@@ -81,7 +81,11 @@ export class StudentSortingComponent implements OnInit {
   private createTaskRequest(): SortingTaskRequest {
     return {
       attempts: this.attempts,
-      elements: this.sorting.elements.map(element => ({content: element.content}))
+      elements: this.sorting.elements.map(element => {
+        if (element.type == 'FILE')
+          return {mediaItemId: element.mediaItemId}
+        else return {content: element.content}
+      })
     }
   }
 

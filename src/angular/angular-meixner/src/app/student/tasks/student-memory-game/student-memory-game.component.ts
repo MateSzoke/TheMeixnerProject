@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {
   AssignService,
   EvaluateService,
+  MediaItemRequest,
   MediaItemResponse,
   MemoryGameResponse,
   TaskService
@@ -26,7 +27,6 @@ export class StudentMemoryGameComponent implements OnInit {
   memoryRequest: MemoryGameTaskRequest = null
   firstElement: MemoryUI = null
   secondElement: MemoryUI = null
-  correctPairs: number = 0
 
   constructor(
     private route: ActivatedRoute,
@@ -56,7 +56,7 @@ export class StudentMemoryGameComponent implements OnInit {
   }
 
   evaluateTask() {
-    this.evaluateService.evaluateMemoryGameUsingPOST(this.startedExerciseId, this.taskId, this.memoryRequest).subscribe(response => {
+    this.evaluateService.evaluateMemoryGameUsingPOST(this.startedExerciseId, this.taskId, this.getRequest()).subscribe(response => {
       console.log(response.taskResult)
       this.loaded = false
       if (response.taskResult.taskResult == undefined) {
@@ -120,7 +120,26 @@ export class StudentMemoryGameComponent implements OnInit {
     this.elements = this.elements.map(element => new MemoryUI(element.mediaItem, element.correct))
     this.firstElement = null
     this.secondElement = null
-    this.memoryRequest.pairs = []
+  }
+
+  isMediaItem(request: MediaItemRequest): boolean {
+    return request.content?.includes("/files/download")
+  }
+
+  getRequest(): MemoryGameTaskRequest {
+    let request = {...this.memoryRequest}
+    request.pairs = request.pairs.map(pairElement => {
+      return {
+        pair: pairElement.pair.map(element => {
+          if (this.isMediaItem(element)) {
+            return {mediaItemId: element.mediaItemId}
+          } else {
+            return {content: element.content}
+          }
+        })
+      }
+    })
+    return request
   }
 }
 

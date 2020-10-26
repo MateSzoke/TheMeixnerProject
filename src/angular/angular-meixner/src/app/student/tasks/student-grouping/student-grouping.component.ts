@@ -53,7 +53,7 @@ export class StudentGroupingComponent implements OnInit {
   }
 
   isMediaItem(request: MediaItemRequest): boolean {
-    return request.content.includes("/files/download")
+    return request.content?.includes("/files/download")
   }
 
   getSuccess(index: number): Boolean {
@@ -71,7 +71,7 @@ export class StudentGroupingComponent implements OnInit {
   }
 
   evaluateTask() {
-    this.evaluateService.evaluateGroupingUsingPOST(this.startedExerciseId, this.taskId, this.groupingRequest).subscribe(response => {
+    this.evaluateService.evaluateGroupingUsingPOST(this.startedExerciseId, this.taskId, this.getRequest()).subscribe(response => {
       console.log(response.taskResult)
       this.loaded = false
       if (response.taskResult.taskResult == undefined) {
@@ -85,6 +85,23 @@ export class StudentGroupingComponent implements OnInit {
       }
       this.loaded = true
     })
+  }
+
+  getRequest(): GroupingTaskRequest {
+    let request = {...this.groupingRequest}
+    request.groups = request.groups.map(group => {
+      return {
+        name: group.name,
+        elements: group.elements.map(element => {
+          if (this.isMediaItem(element)) {
+            return {mediaItemId: element.mediaItemId}
+          } else {
+            return {content: element.content}
+          }
+        })
+      }
+    })
+    return request
   }
 
 }

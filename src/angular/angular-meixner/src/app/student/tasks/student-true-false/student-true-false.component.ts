@@ -57,7 +57,7 @@ export class StudentTrueFalseComponent implements OnInit {
   }
 
   isMediaItem(request: MediaItemRequest): boolean {
-    return request.content.includes("/files/download")
+    return request.content?.includes("/files/download")
   }
 
   drop(event: CdkDragDrop<Array<any>, any>) {
@@ -69,7 +69,7 @@ export class StudentTrueFalseComponent implements OnInit {
   }
 
   evaluateTask() {
-    this.evaluateService.evaluateTrueFalseUsingPOST(this.startedExerciseId, this.taskId, this.trueFalseRequest).subscribe(response => {
+    this.evaluateService.evaluateTrueFalseUsingPOST(this.startedExerciseId, this.taskId, this.getRequest()).subscribe(response => {
       console.log(response.taskResult)
       this.loaded = false
       if (response.taskResult.taskResult == undefined) {
@@ -83,5 +83,24 @@ export class StudentTrueFalseComponent implements OnInit {
       }
       this.loaded = true
     })
+  }
+
+  getRequest(): TrueFalseTaskRequest {
+    let request = {...this.trueFalseRequest}
+    request.trueItems = request.trueItems.map(mediaItem => {
+      if (this.isMediaItem(mediaItem)) {
+        return {mediaItemId: mediaItem.mediaItemId}
+      } else {
+        return {content: mediaItem.content}
+      }
+    })
+    request.falseItems = request.falseItems.map(mediaItem => {
+      if (this.isMediaItem(mediaItem)) {
+        return {mediaItemId: mediaItem.mediaItemId}
+      } else {
+        return {content: mediaItem.content}
+      }
+    })
+    return request
   }
 }
