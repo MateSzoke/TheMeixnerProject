@@ -4,7 +4,6 @@ import {SortingTaskRequest} from "../../../../swagger-api/model/sortingTaskReque
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {AssignService, EvaluateService} from "../../../../swagger-api";
 import {SortingTask} from "../../../../swagger-api/model/sortingTask";
-import {MyExercisesComponent} from "../../my-exercises/my-exercises.component";
 import {SortingResultComponent} from "../result/sorting-result/sorting-result.component";
 import {MatDialog} from "@angular/material/dialog";
 
@@ -18,6 +17,8 @@ export class StudentSortingComponent implements OnInit {
   startedExerciseId: number = null
   taskId: number = null
   sorting: SortingTask = null
+  currentResult: Array<Boolean> = new Array<Boolean>()
+  attempts: number = 0
 
   constructor(
     private route: ActivatedRoute,
@@ -37,6 +38,24 @@ export class StudentSortingComponent implements OnInit {
     })
   }
 
+  getSuccess(): Boolean {
+    if (this.currentResult.length != 0) {
+      let allSuccess = true
+      this.currentResult.forEach(result => {
+        if (!result) allSuccess = false
+      })
+      return allSuccess
+    } else
+      return false
+  }
+
+  getFail(): Boolean {
+    if (this.currentResult.length != 0)
+      return !this.getSuccess()
+    else
+      return false
+  }
+
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.sorting.elements, event.previousIndex, event.currentIndex);
     console.log(this.sorting.elements)
@@ -44,19 +63,24 @@ export class StudentSortingComponent implements OnInit {
 
   evaluateTask() {
     this.evaluateService.evaluateSortingUsingPOST(this.startedExerciseId, this.taskId, this.createTaskRequest()).subscribe(response => {
-      console.log(response)
-      this.dialog.open(SortingResultComponent, {
-        data: {startedExercise: response}
-      })
-      let subscription = this.dialog.afterAllClosed.subscribe(() => {
-        MyExercisesComponent.navigateNextTask(response, this.router, this.dialog)
-        subscription.unsubscribe()
-      })
+      console.log(response.taskResult)
+      this.loaded = false
+      if (response.taskResult.taskResult == undefined) {
+        this.currentResult = response.taskResult.currentResult
+        this.attempts = response.taskResult.attempts
+      } else {
+        this.dialog.open(SortingResultComponent, {
+          data: {startedExercise: response},
+          disableClose: true
+        })
+      }
+      this.loaded = true
     })
   }
 
   private createTaskRequest(): SortingTaskRequest {
     return {
+      attempts: this.attempts,
       elements: this.sorting.elements.map(element => ({content: element.content}))
     }
   }

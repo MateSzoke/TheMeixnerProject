@@ -2,7 +2,10 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {StartedExercise} from "../../../../../swagger-api/model/startedExercise";
 import {SentenceCompletionResponse} from "../../../../../swagger-api";
 import {Router} from "@angular/router";
-import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
+import {ExerciseResultComponent} from "../../../exercise-result/exercise-result.component";
+import {Path} from "../../../../path";
+import {MyExercisesComponent} from "../../../my-exercises/my-exercises.component";
 
 @Component({
   selector: 'app-sentence-completion-result',
@@ -16,6 +19,7 @@ export class SentenceCompletionResultComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public params: any
   ) {
 
@@ -31,24 +35,34 @@ export class SentenceCompletionResultComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  getPercentageText(): string {
-    if (isNaN(this.getPercentage())) {
+  getAttemptsText(): string {
+    if (isNaN(this.getAttempts())) {
       return ""
     } else {
-      return `${Math.round(this.getPercentage())} %`
+      return `${Math.round(this.getAttempts() * 10) / 10}`
     }
   }
 
-  getPercentage(): number {
+  getAttempts(): number {
     if (this.startedExercise == undefined) {
       return NaN
     } else {
-      return this.startedExercise.taskResult.resultPercentage
+      return this.startedExercise.taskResult.attempts
     }
   }
 
+  navigateToNextTask() {
+    MyExercisesComponent.navigateNextTask(this.startedExercise, this.router, this.dialog)
+  }
+
   finishExercise() {
-    // TODO navigate to exercise-result.component
-    this.router.navigate([])
+    let dialogRef = this.dialog.open(ExerciseResultComponent, {
+      data: {startedExerciseId: this.startedExercise.id}
+    })
+    let subscription = dialogRef.afterClosed().subscribe(() => {
+      this.dialog.closeAll()
+      this.router.navigate([Path.STUDENT_RESULTS])
+      subscription.unsubscribe()
+    })
   }
 }

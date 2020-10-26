@@ -9,6 +9,7 @@ import hu.aut.meixner.dto.task.student.easy.*
 import hu.aut.meixner.mapping.toDomainModel
 
 fun List<MediaItemResponse>.compareResultMediaItems(requestMediaItems: List<MediaItemRequest>): Boolean {
+    if (requestMediaItems.isEmpty()) return false
     requestMediaItems.forEach { requestMediaItem ->
         if (!contains(requestMediaItem.toDomainModel())) {
             return false

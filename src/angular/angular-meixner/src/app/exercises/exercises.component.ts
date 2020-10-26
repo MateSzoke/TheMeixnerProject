@@ -110,16 +110,16 @@ export class ExercisesComponent implements OnInit {
 
   private getMyExercises() {
     this.exerciseService.getMyExercisesUsingGET().subscribe(data => {
-        this.exercises = new Array<ExercisesResponse>();
-        this.exercisesUI = new Array<ExerciseUI>();
-        data.forEach(exercise => {
-          this.exercises.push({
-            id: exercise.id,
-            averageDifficulty: exercise.averageDifficulty,
-            lastModified: exercise.lastModified,
-            owner: exercise.owner,
-            comment: exercise.comment,
-            name: exercise.name,
+      this.exercises = new Array<ExercisesResponse>();
+      this.exercisesUI = new Array<ExerciseUI>();
+      data.forEach(exercise => {
+        this.exercises.push({
+          id: exercise.id,
+          averageDifficulty: exercise.averageDifficulty,
+          lastModified: exercise.lastModified,
+          owner: exercise.owner,
+          comment: exercise.comment,
+          name: exercise.name,
             tasks: exercise.tasks,
           } as ExercisesResponse);
           this.exercisesUI.push({

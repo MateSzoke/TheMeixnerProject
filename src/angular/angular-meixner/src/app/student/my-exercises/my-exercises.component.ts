@@ -42,8 +42,9 @@ export class MyExercisesComponent implements OnInit {
       dialog.open(ExerciseResultComponent, {
         data: {startedExerciseId: response.id}
       })
-      dialog.afterAllClosed.subscribe(() => {
+      let subscription = dialog.afterAllClosed.subscribe(() => {
         router.navigate([Path.STUDENT_RESULTS])
+        subscription.unsubscribe()
       })
     } else {
       router.navigate([ConvertEnum.convertTypeToStudentRouterLink(response.nextTask.type), MyExercisesComponent.getNavigationData(response)])

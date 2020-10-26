@@ -5,6 +5,7 @@ import {RouteSelectorService} from './route-selector.service';
 import {AccountService, UserRequest} from '../../swagger-api';
 import {LoginDTO} from "../model/LoginDTO";
 import {Path} from "../path";
+import {Observable} from "rxjs";
 import RoleEnum = UserRequest.RoleEnum;
 
 @Injectable({
@@ -59,9 +60,10 @@ export class AuthenticationService {
     return !(user === null);
   }
 
-  public login(username: string, password: string) {
+  public login(username: string, password: string): Observable<any> {
     let loginDTO = {username: username, password: password} as LoginDTO;
-    this.service.loginUsingPOST(JSON.stringify(loginDTO), 'response').subscribe(resp => {
+    let observable = this.service.loginUsingPOST(JSON.stringify(loginDTO), 'response')
+    observable.subscribe(resp => {
         sessionStorage.setItem('authenticatedUser', username);
         sessionStorage.setItem('token', resp.headers.get("Authorization"));
         this.saveRole()
@@ -76,6 +78,7 @@ export class AuthenticationService {
       () => {
         this.loginError = true;
       });
+    return observable
   }
 
 

@@ -8,14 +8,43 @@
       <mat-error>A feladatsor neve nem lehet üres</mat-error>
     </mat-form-field>
 
+    <mat-form-field>
+      <mat-label>Tantárgy</mat-label>
+      <mat-select formControlName="subject">
+        <mat-option *ngFor="let subject of subjects" [value]="subject">
+          {{subject}}
+        </mat-option>
+      </mat-select>
+      <mat-error>üres</mat-error>
+    </mat-form-field>
+
+    <div>
+      <mat-form-field>
+        <mat-label>Osztály</mat-label>
+        <mat-select formControlName="classLevel">
+          <mat-option *ngFor="let classLevel of classes" [value]="classLevel">
+            {{classLevel}}
+          </mat-option>
+        </mat-select>
+        <mat-error>üres</mat-error>
+      </mat-form-field>
+
     <mat-form-field class="full-width">
       <mat-label>Megjegyzés</mat-label>
       <textarea formControlName="comment" matInput placeholder="pl.: 2020-as ötödikesek"
                 style="height: 60px"></textarea>
     </mat-form-field>
-
-    <button [mat-dialog-close] class="loginbtn" mat-raised-button style="float: right" type="submit">Feladatsor
-      hozzáadása
-    </button>
+    <div align="end">
+      <button
+        [mat-dialog-close]
+        class="background-color color-white"
+        mat-flat-button
+        style="margin-right: 24px">
+        Mégsem
+      </button>
+      <button [mat-dialog-close] class="loginbtn" mat-raised-button style="float: right" type="submit">
+        Feladatsor hozzáadása
+      </button>
+    </div>
   </form>
 </form>

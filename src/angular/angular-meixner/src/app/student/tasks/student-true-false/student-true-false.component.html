@@ -31,7 +31,7 @@
       [cdkDropListData]="trueFalseRequest.trueItems"
       cdkDropList
       cdkDropListSortingDisabled
-      class="example-list">
+      [ngClass]="{'border-success':getSuccess(0), 'border-fail':getFail(0)}" class="example-list">
       <div *ngFor="let element of trueFalseRequest.trueItems" cdkDrag class="example-box">{{element.content}}</div>
     </div>
 
@@ -41,7 +41,7 @@
       [cdkDropListData]="trueFalseRequest.falseItems"
       cdkDropList
       cdkDropListSortingDisabled
-      class="example-list">
+      [ngClass]="{'border-success':getSuccess(1), 'border-fail':getFail(1)}" class="example-list">
       <div *ngFor="let element of trueFalseRequest.falseItems" cdkDrag class="example-box">{{element.content}}</div>
     </div>
   </div>

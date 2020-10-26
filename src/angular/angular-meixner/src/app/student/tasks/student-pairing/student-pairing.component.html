@@ -29,13 +29,13 @@
       </button>
     </div>
 
-    <div *ngFor="let pair of pairingRequest.pairs" class="example-container">
+    <div *ngFor="let pair of pairingRequest.pairs; index as i" class="example-container">
       <div
         (cdkDropListDropped)="drop($event)"
         [cdkDropListData]="pair.pair"
         cdkDropList
         cdkDropListSortingDisabled
-        class="example-list">
+        [ngClass]="{'border-success':getSuccess(i), 'border-fail':getFail(i)}" class="example-list">
         <div *ngFor="let element of pair.pair" cdkDrag class="example-box">{{element.content}}</div>
       </div>
     </div>

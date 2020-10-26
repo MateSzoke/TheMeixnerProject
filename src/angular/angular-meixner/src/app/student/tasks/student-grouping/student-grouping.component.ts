@@ -3,7 +3,6 @@ import {GroupingTask} from "../../../../swagger-api/model/groupingTask";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AssignService, EvaluateService} from "../../../../swagger-api";
 import {CdkDragDrop, transferArrayItem} from "@angular/cdk/drag-drop";
-import {MyExercisesComponent} from "../../my-exercises/my-exercises.component";
 import {GroupingTaskRequest} from "../../../../swagger-api/model/groupingTaskRequest";
 import {MatDialog} from "@angular/material/dialog";
 import {GroupingResultComponent} from "../result/grouping-result/grouping-result.component";
@@ -19,6 +18,10 @@ export class StudentGroupingComponent implements OnInit {
   taskId: number = null
   grouping: GroupingTask = null
   groupingRequest: GroupingTaskRequest = null
+  currentResult: Array<Boolean> = new Array<Boolean>()
+  success: boolean
+  fail: boolean
+
 
   constructor(
     private route: ActivatedRoute,
@@ -49,16 +52,34 @@ export class StudentGroupingComponent implements OnInit {
     console.log(this.groupingRequest)
   }
 
+  getSuccess(index: number): Boolean {
+    if (this.currentResult.length != 0)
+      return this.currentResult[index]
+    else
+      return false
+  }
+
+  getFail(index: number): Boolean {
+    if (this.currentResult.length != 0)
+      return !this.currentResult[index]
+    else
+      return false
+  }
+
   evaluateTask() {
     this.evaluateService.evaluateGroupingUsingPOST(this.startedExerciseId, this.taskId, this.groupingRequest).subscribe(response => {
-      console.log(response)
-      this.dialog.open(GroupingResultComponent, {
-        data: {startedExercise: response}
-      })
-      let subscription = this.dialog.afterAllClosed.subscribe(() => {
-        MyExercisesComponent.navigateNextTask(response, this.router, this.dialog)
-        subscription.unsubscribe()
-      })
+      console.log(response.taskResult)
+      this.loaded = false
+      if (response.taskResult.taskResult == undefined) {
+        this.currentResult = response.taskResult.currentResult
+        this.groupingRequest.attempts = response.taskResult.attempts
+      } else {
+        this.dialog.open(GroupingResultComponent, {
+          data: {startedExercise: response},
+          disableClose: true
+        })
+      }
+      this.loaded = true
     })
   }
 

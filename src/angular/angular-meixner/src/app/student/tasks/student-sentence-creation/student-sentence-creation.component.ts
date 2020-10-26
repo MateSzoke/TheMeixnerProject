@@ -4,7 +4,6 @@ import {SentenceCreationTaskRequest} from "../../../../swagger-api/model/sentenc
 import {ActivatedRoute, Router} from "@angular/router";
 import {AssignService, EvaluateService} from "../../../../swagger-api";
 import {CdkDragDrop, transferArrayItem} from "@angular/cdk/drag-drop";
-import {MyExercisesComponent} from "../../my-exercises/my-exercises.component";
 import {SentenceCreationResultComponent} from "../result/sentence-creation-result/sentence-creation-result.component";
 import {MatDialog} from "@angular/material/dialog";
 
@@ -19,6 +18,7 @@ export class StudentSentenceCreationComponent implements OnInit {
   taskId: number = null
   sentenceCreation: SentenceCreationTask = null
   sentenceCreationRequest: SentenceCreationTaskRequest = null
+  currentResult: Array<Boolean> = new Array<Boolean>()
 
   constructor(
     private route: ActivatedRoute,
@@ -41,6 +41,20 @@ export class StudentSentenceCreationComponent implements OnInit {
     })
   }
 
+  getSuccess(index: number): Boolean {
+    if (this.currentResult.length != 0)
+      return this.currentResult[index]
+    else
+      return false
+  }
+
+  getFail(index: number): Boolean {
+    if (this.currentResult.length != 0)
+      return !this.currentResult[index]
+    else
+      return false
+  }
+
   drop(event: CdkDragDrop<Array<any>, any>) {
     transferArrayItem(event.previousContainer.data,
       event.container.data,
@@ -51,14 +65,18 @@ export class StudentSentenceCreationComponent implements OnInit {
 
   evaluateTask() {
     this.evaluateService.evaluateSentenceCreationUsingPOST(this.startedExerciseId, this.taskId, this.sentenceCreationRequest).subscribe(response => {
-      console.log(response)
-      this.dialog.open(SentenceCreationResultComponent, {
-        data: {startedExercise: response}
-      })
-      let subscription = this.dialog.afterAllClosed.subscribe(() => {
-        MyExercisesComponent.navigateNextTask(response, this.router, this.dialog)
-        subscription.unsubscribe()
-      })
+      console.log(response.taskResult)
+      this.loaded = false
+      if (response.taskResult.taskResult == undefined) {
+        this.currentResult = response.taskResult.currentResult
+        this.sentenceCreationRequest.attempts = response.taskResult.attempts
+      } else {
+        this.dialog.open(SentenceCreationResultComponent, {
+          data: {startedExercise: response},
+          disableClose: true
+        })
+      }
+      this.loaded = true
     })
   }
 
