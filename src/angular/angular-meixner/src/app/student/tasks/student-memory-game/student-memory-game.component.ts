@@ -48,7 +48,7 @@ export class StudentMemoryGameComponent implements OnInit {
       }
       this.assignService.getStudentTaskByIdUsingGET(this.taskId).subscribe(task => {
         let memoryTask = task as MemoryGameTask
-        memoryTask.elements.forEach(mediaItem => this.elements.push(new MemoryUI(mediaItem)))
+        memoryTask.elements.forEach(mediaItem => this.elements.push(new MemoryUI(mediaItem, false)))
         this.loaded = true
       })
     })
@@ -72,8 +72,11 @@ export class StudentMemoryGameComponent implements OnInit {
   }
 
   elementClicked(element: MemoryUI, index: number) {
-    if (this.secondElement != null || element.clicked) {
+    if (element.clicked) {
       return
+    }
+    if (this.secondElement != null) {
+      this.reset()
     }
     this.elements[index].clicked = true
     if (this.firstElement == null) {
@@ -114,7 +117,7 @@ export class StudentMemoryGameComponent implements OnInit {
   }
 
   reset() {
-    this.elements = this.elements.map(element => new MemoryUI(element.mediaItem))
+    this.elements = this.elements.map(element => new MemoryUI(element.mediaItem, element.correct))
     this.firstElement = null
     this.secondElement = null
     this.memoryRequest.pairs = []
@@ -126,9 +129,9 @@ class MemoryUI {
   correct: boolean
   clicked: boolean
 
-  constructor(mediaItem: MediaItemResponse) {
+  constructor(mediaItem: MediaItemResponse, correct: boolean) {
     this.mediaItem = mediaItem
-    this.correct = false
-    this.clicked = false
+    this.correct = correct
+    this.clicked = correct
   }
 }

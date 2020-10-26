@@ -10,15 +10,17 @@
   <button (click)="evaluateTask()" class="addbtn" mat-raised-button type="button">
     Kész, beküldöm a megoldást
   </button>
-  <div>
-    <button (click)="reset()" class="addbtn" mat-raised-button type="button">Újra</button>
-  </div>
 
-  <div fxFlexAlign="center center" fxLayout="row wrap" fxLayoutGap="grid" style="padding: 240px">
+  <div fxFlexAlign="center center" fxLayout="row wrap" fxLayoutGap="grid"
+       style="padding-left: 240px; padding-right: 240px">
     <div (click)="elementClicked(element, i)" *ngFor="let element of elements; index as i"
          class="example-container-small">
       <div [ngClass]="{'border-success':getSuccess(i), 'border-fail':getFail(i), 'hidden':!element.clicked}"
-           class="example-list text-center noselect">{{element.mediaItem.content}}</div>
+           class="example-list-memory text-center noselect">
+        <img *ngIf="element.mediaItem.type == 'FILE'" [ngStyle]="{'visibility':element.clicked ? 'visible' : 'hidden'}"
+             [src]="element.mediaItem.content | secure | async" class="max-height"/>
+        <p *ngIf="element.mediaItem.type == 'TEXT'">{{element.mediaItem.content}}</p>
+      </div>
     </div>
   </div>
 </div>
