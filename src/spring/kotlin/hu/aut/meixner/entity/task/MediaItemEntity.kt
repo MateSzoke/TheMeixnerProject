@@ -11,7 +11,8 @@ data class MediaItemEntity(
         val content: String = "",
         val fileExtension: String? = null,
         val contentType: String? = null,
-        @Lob
+        @Column(length = 16000000)
+        @Basic(fetch = FetchType.LAZY)
         val file: ByteArray? = null
 )
 
