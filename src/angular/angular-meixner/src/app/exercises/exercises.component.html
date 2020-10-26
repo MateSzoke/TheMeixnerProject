@@ -36,6 +36,8 @@
           <mat-progress-bar class="exerciseProgressbar" mode="determinate"
                             value="{{exercise.difficulty}}"></mat-progress-bar>
         </mat-panel-title>
+        <div style="width: 300px"><b>Osztály: {{exercise.classLevel}}</b></div>
+        <div style="width: 300px"><b>Tantárgy: {{exercise.subject}}</b></div>
         <div class="comment" fxLayout="row wrap">
           {{exercise.comment}}
         </div>

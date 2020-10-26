@@ -8,6 +8,8 @@ import {ExercisesResponse, ExercisesService, TaskResponse} from "../../swagger-a
 import {NewExerciseComponent} from "./new-exercise/new-exercise.component";
 import {ExerciseTaskListComponent} from "../exercise-task-list/exercise-task-list.component";
 import {MatDialog} from "@angular/material/dialog";
+import {SubjectEnumUtil} from "../util/subjectEnumUtil";
+import SubjectEnum = TaskResponse.SubjectEnum;
 
 @Component({
   selector: 'app-exercises',
@@ -16,8 +18,8 @@ import {MatDialog} from "@angular/material/dialog";
 })
 export class ExercisesComponent implements OnInit {
 
-  public subjects: Array<String> = ['történelem', "matematika"];
-  public classes = Array.from({length: (8 - 5) / 1 + 1}, (_, i) => 5 + (i * 1));
+  public subjects: Array<String> = new Array<String>()
+  public classes: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   public exercises: Array<ExercisesResponse> = new Array<ExercisesResponse>();
   public exercisesUI: Array<ExerciseUI> = new Array<ExerciseUI>();
   public exercisesLoaded = false;
@@ -33,6 +35,9 @@ export class ExercisesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    for (let subject in SubjectEnum) {
+      this.subjects.push(SubjectEnumUtil.subjectToString(subject));
+    }
     this.route.params.subscribe(() => {
       this.getAllTasks = true;
       this.getMyExercises();
@@ -126,6 +131,8 @@ export class ExercisesComponent implements OnInit {
             id: exercise.id,
             averageDifficulty: exercise.averageDifficulty,
             lastModified: DateUtils.getFormattedDate(exercise.lastModified),
+            classLevel: exercise.classLevel,
+            subject: SubjectEnumUtil.subjectToString(exercise.subject),
             owner: exercise.owner,
             comment: exercise.comment,
             name: exercise.name,
@@ -145,6 +152,8 @@ class ExerciseUI {
   lastModified: string;
   owner: string;
   comment: string;
+  classLevel: number;
+  subject: string;
   name: string;
   tasks: Array<TaskResponseUI>;
   difficulty: number
