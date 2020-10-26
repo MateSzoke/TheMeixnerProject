@@ -20,25 +20,14 @@
 
     <div>
       <mat-form-field>
-        <mat-label>-tól</mat-label>
-        <mat-select formControlName="classFrom">
-          <mat-option *ngFor="let classFrom of classes" [value]="classFrom">
-            {{classFrom}}
+        <mat-label>Osztály</mat-label>
+        <mat-select formControlName="classLevel">
+          <mat-option *ngFor="let classLevel of classes" [value]="classLevel">
+            {{classLevel}}
           </mat-option>
         </mat-select>
         <mat-error>üres</mat-error>
       </mat-form-field>
-
-      <mat-form-field>
-        <mat-label>-ig</mat-label>
-        <mat-select formControlName="classTo">
-          <mat-option *ngFor="let classTo of classes" [value]="classTo">
-            {{classTo}}
-          </mat-option>
-        </mat-select>
-        <mat-error>üres</mat-error>
-      </mat-form-field>
-    </div>
 
     <mat-form-field class="full-width">
       <mat-label>Megjegyzés</mat-label>

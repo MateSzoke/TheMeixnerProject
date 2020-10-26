@@ -16,8 +16,7 @@ export class NewExerciseComponent implements OnInit {
   exercisesForm: FormGroup = this.formBuilder.group({
     name: ["", [Validators.required, Validators.minLength(3)]],
     subject: [null, [Validators.required]],
-    classFrom: [null, Validators.required],
-    classTo: [null, [Validators.required]],
+    classLevel: [null, Validators.required],
     comment: ["", []],
   });
 
