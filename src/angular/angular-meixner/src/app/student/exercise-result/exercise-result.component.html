@@ -7,12 +7,10 @@
   </div>
 </div>
 <div *ngIf="loaded">
-  <p class="title">{{exerciseResult.exerciseName}} - eredménye</p>
-  <div [ngStyle]="{'color': getPercentage() > 50 ? 'darkgreen' : 'brown'}" class="subtitle">
-    Eredmény: {{getPercentageText()}}</div>
+  <p class="title" style="color: darkgreen">{{exerciseResult.exerciseName}} sikeresen teljesítve!</p>
   <div *ngFor="let task of exerciseResult.taskResults" class="task-element">
     <p>{{task.taskResult.title}} - {{task.taskResult.type}}
-      eredménye: {{getPercentageTextByValue(task.resultPercentage)}}</p>
+      próbálkozások: {{task.attempts}}</p>
   </div>
   <div mat-dialog-actions style="float: right">
     <button *ngIf="resultsButtonVisible" [mat-dialog-close] class="addbtn" mat-button>Eredményeim</button>

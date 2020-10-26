@@ -19,7 +19,7 @@
             - {{getFormattedDateTime(exercise.lastModified)}}</mat-panel-title>
         </div>
         <div class="float-right">
-          <p><b>Eredmény:</b> {{getPercentage(exercise.resultPercentage)}}</p>
+          <p><b>Átlagos próbálkozások:</b> {{getPercentage(exercise.averageAttempts)}}</p>
         </div>
       </mat-expansion-panel-header>
 
@@ -27,7 +27,7 @@
         <div fxLayout="row" fxLayout.xs="column-reverse" fxLayoutGap="8px">
           <div class="float-left">{{task.taskResult.title}}</div>
           <div class="float-right">
-            Eredmény: {{getPercentage(task.resultPercentage)}}
+            Próbálkozások: {{getPercentage(task.attempts)}}
             <button (click)="showExerciseResult(task)" mat-button>Megoldás</button>
           </div>
         </div>

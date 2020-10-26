@@ -19,6 +19,7 @@ export class StudentTrueFalseComponent implements OnInit {
   taskId: number = null
   trueFalse: TrueFalseTask = null
   trueFalseRequest: TrueFalseTaskRequest = null
+  currentResult: Array<Boolean> = new Array<Boolean>()
 
   constructor(
     private route: ActivatedRoute,
@@ -42,6 +43,20 @@ export class StudentTrueFalseComponent implements OnInit {
     })
   }
 
+  getSuccess(index: number): Boolean {
+    if (this.currentResult.length != 0)
+      return this.currentResult[index]
+    else
+      return false
+  }
+
+  getFail(index: number): Boolean {
+    if (this.currentResult.length != 0)
+      return !this.currentResult[index]
+    else
+      return false
+  }
+
   drop(event: CdkDragDrop<Array<any>, any>) {
     transferArrayItem(event.previousContainer.data,
       event.container.data,
@@ -52,14 +67,21 @@ export class StudentTrueFalseComponent implements OnInit {
 
   evaluateTask() {
     this.evaluateService.evaluateTrueFalseUsingPOST(this.startedExerciseId, this.taskId, this.trueFalseRequest).subscribe(response => {
-      console.log(response)
-      this.dialog.open(TrueFalseResultComponent, {
-        data: {startedExercise: response}
-      })
-      let subscription = this.dialog.afterAllClosed.subscribe(() => {
-        MyExercisesComponent.navigateNextTask(response, this.router, this.dialog)
-        subscription.unsubscribe()
-      })
+      console.log(response.taskResult)
+      this.loaded = false
+      if (response.taskResult.taskResult == undefined) {
+        this.currentResult = response.taskResult.currentResult
+        this.trueFalseRequest.attempts = response.taskResult.attempts
+      } else {
+        this.dialog.open(TrueFalseResultComponent, {
+          data: {startedExercise: response}
+        })
+        let subscription = this.dialog.afterAllClosed.subscribe(() => {
+          MyExercisesComponent.navigateNextTask(response, this.router, this.dialog)
+          subscription.unsubscribe()
+        })
+      }
+      this.loaded = true
     })
   }
 }

@@ -7,9 +7,10 @@
 </div>
 <div *ngIf="loaded">
   <p class="title">Mondat készítés - {{sentenceCreation.title}} - megoldás</p>
-  <div *ngIf="startedExercise" [ngStyle]="{'color': getPercentage() > 50 ? 'darkgreen' : 'brown'}" class="subtitle">
-    Eredmény: {{getPercentageText()}}</div>
+  <div *ngIf="startedExercise" [ngStyle]="{'color': getAttempts() <= 3 ? 'darkgreen' : 'brown'}" class="subtitle">
+    Próbálkozások: {{getAttemptsText()}}</div>
   <div *ngFor="let sentence of sentenceCreation.sentences">
+    <p class="subtitle">{{sentence.sentenceTitle}}</p>
     <div *ngFor="let element of sentence.parts">{{element}}</div>
   </div>
   <div mat-dialog-actions style="float: right">

@@ -30,19 +30,19 @@ export class TrueFalseResultComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  getPercentageText(): string {
-    if (isNaN(this.getPercentage())) {
+  getAttemptsText(): string {
+    if (isNaN(this.getAttempts())) {
       return ""
     } else {
-      return `${Math.round(this.getPercentage())} %`
+      return `${Math.round(this.getAttempts() * 10) / 10}`
     }
   }
 
-  getPercentage(): number {
+  getAttempts(): number {
     if (this.startedExercise == undefined) {
       return NaN
     } else {
-      return this.startedExercise.taskResult.resultPercentage
+      return this.startedExercise.taskResult.attempts
     }
   }
 

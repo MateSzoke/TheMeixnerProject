@@ -86,7 +86,7 @@ export class MyResultsComponent implements OnInit {
     if (isNaN(percentage)) {
       return "-"
     } else {
-      return `${Math.round(percentage)} %`
+      return `${Math.round(percentage * 10) / 10}`
     }
   }
 

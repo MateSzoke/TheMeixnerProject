@@ -41,29 +41,4 @@ export class ExerciseResultComponent implements OnInit {
       })
     }
   }
-
-  getPercentage(): number {
-    if (this.exerciseResult == undefined) {
-      return NaN
-    } else {
-      return this.exerciseResult.resultPercentage
-    }
-  }
-
-  getPercentageText(): string {
-    if (isNaN(this.getPercentage())) {
-      return "-"
-    } else {
-      return `${Math.round(this.getPercentage())} %`
-    }
-  }
-
-  getPercentageTextByValue(value: number): string {
-    if (isNaN(value)) {
-      return "-"
-    } else {
-      return `${Math.round(value)} %`
-    }
-  }
-
 }

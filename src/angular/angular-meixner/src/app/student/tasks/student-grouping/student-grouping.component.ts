@@ -19,6 +19,10 @@ export class StudentGroupingComponent implements OnInit {
   taskId: number = null
   grouping: GroupingTask = null
   groupingRequest: GroupingTaskRequest = null
+  currentResult: Array<Boolean> = new Array<Boolean>()
+  success: boolean
+  fail: boolean
+
 
   constructor(
     private route: ActivatedRoute,
@@ -49,16 +53,37 @@ export class StudentGroupingComponent implements OnInit {
     console.log(this.groupingRequest)
   }
 
+  getSuccess(index: number): Boolean {
+    if (this.currentResult.length != 0)
+      return this.currentResult[index]
+    else
+      return false
+  }
+
+  getFail(index: number): Boolean {
+    if (this.currentResult.length != 0)
+      return !this.currentResult[index]
+    else
+      return false
+  }
+
   evaluateTask() {
     this.evaluateService.evaluateGroupingUsingPOST(this.startedExerciseId, this.taskId, this.groupingRequest).subscribe(response => {
-      console.log(response)
-      this.dialog.open(GroupingResultComponent, {
-        data: {startedExercise: response}
-      })
-      let subscription = this.dialog.afterAllClosed.subscribe(() => {
-        MyExercisesComponent.navigateNextTask(response, this.router, this.dialog)
-        subscription.unsubscribe()
-      })
+      console.log(response.taskResult)
+      this.loaded = false
+      if (response.taskResult.taskResult == undefined) {
+        this.currentResult = response.taskResult.currentResult
+        this.groupingRequest.attempts = response.taskResult.attempts
+      } else {
+        this.dialog.open(GroupingResultComponent, {
+          data: {startedExercise: response}
+        })
+        let subscription = this.dialog.afterAllClosed.subscribe(() => {
+          MyExercisesComponent.navigateNextTask(response, this.router, this.dialog)
+          subscription.unsubscribe()
+        })
+      }
+      this.loaded = true
     })
   }
 
