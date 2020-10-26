@@ -40,15 +40,19 @@ export class StudentSortingComponent implements OnInit {
   }
 
   getSuccess(): Boolean {
-    if (this.currentResult.length != 0)
-      return this.currentResult[0]
-    else
+    if (this.currentResult.length != 0) {
+      let allSuccess = true
+      this.currentResult.forEach(result => {
+        if (!result) allSuccess = false
+      })
+      return allSuccess
+    } else
       return false
   }
 
   getFail(): Boolean {
     if (this.currentResult.length != 0)
-      return !this.currentResult[0]
+      return !this.getSuccess()
     else
       return false
   }

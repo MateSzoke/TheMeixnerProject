@@ -99,7 +99,11 @@ export class StudentSentenceCompletionComponent implements OnInit {
   private createTaskRequest(): SentenceCompletionTaskRequest {
     return {
       attempts: this.attempts,
-      options: this.sentenceResult.map(result => result[0].value)
+      options: this.sentenceResult.map(result => {
+        if (result.length > 0)
+          return result[0].value
+        else return ""
+      })
     }
   }
 

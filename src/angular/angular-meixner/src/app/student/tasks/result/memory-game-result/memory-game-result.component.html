@@ -6,6 +6,7 @@
   </div>
 </div>
 <div *ngIf="loaded">
+  <p *ngIf="startedExercise" class="title" style="color: darkgreen">Helyes megoldás!</p>
   <p class="title">Memória - {{memoryGameResult.title}} - megoldás</p>
   <div *ngIf="startedExercise" [ngStyle]="{'color': getAttempts() <= 3 ? 'darkgreen' : 'brown'}" class="subtitle">
     Próbálkozások: {{getAttemptsText()}}</div>
