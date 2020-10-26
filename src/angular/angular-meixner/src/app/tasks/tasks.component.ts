@@ -119,8 +119,12 @@ export class TasksComponent implements OnInit {
     });
 
     this.matDialogRef.afterClosed().subscribe(res => {
-      if ((res == true)) {
-
+      if (res === undefined) {
+        if (this.getAllTasks === true) {
+          this.taskAngularService.getAllTasksFunction();
+        } else {
+          this.getMyTasksFunction();
+        }
       }
     });
   }

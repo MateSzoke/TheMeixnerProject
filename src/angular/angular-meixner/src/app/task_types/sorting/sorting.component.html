@@ -1,28 +1,27 @@
-<div class="container">
-  <mat-card class="mat-card-controls">
-    <mat-card-content>
-      <div class="flex-layout">
-        <button (click)="newItem()" class="plusButton" mat-button>
-          <i class="fa fa-plus"></i>
-        </button>
-      </div>
-    </mat-card-content>
-  </mat-card>
-  <br>
+<html>
+<body>
+<app-task-top-row
+  [title]="this.sortingRequest.title"
+  [type]="'sorrendezés'"
+  (saveDataEmit)="this.saveData()"
+  (newElementEmit)="this.addElement()">
+</app-task-top-row>
+<div *ngIf="!this.loaded">
+  <div class="wrapper">
+    <div class="inner">
+      <mat-spinner diameter="70"></mat-spinner>
+    </div>
+  </div>
 </div>
-<div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-around center" fxLayoutGap="25px">
-  <mat-card *ngFor="let member of members; let i = index" fxFlex="calc(33%-25px)" fxFlex.sm="calc(50%-25px)" >
-    <mat-card-header>
-      <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>Cím</mat-card-title>
-      <button (click)="deleteItem(i)" class="plusButton" mat-button>
-        <i class="fa fa-trash"></i>
-      </button>
-    </mat-card-header>
-    <mat-card-content *ngFor="let member of members; let i = index">
-      <mat-form-field class="full-width">
-        <input matInput [ngModel]="member.content">
-      </mat-form-field>
-    </mat-card-content>
-  </mat-card>
+<div *ngIf="this.loaded" class="mat-card-base">
+  <app-easy-task-card
+    [singleton]="true"
+    [listItemsMedia]="sortingRequest.elements"
+    (deleteBlockElementEmit)="deleteElement($event)"
+    (updateBlockElementEmit)="updateElement($event)"
+    (addBlockElementEmit)="addElement()">
+  </app-easy-task-card>
 </div>
+
+</body>
+</html>

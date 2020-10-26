@@ -11,6 +11,10 @@
   color: white;
 }
 
+.mat-card-list {
+  display: inline-block;
+}
+
 .mat-card-base{
   max-width: 36rem;
   text-align: center;
@@ -40,6 +44,7 @@ mat-grid-list, .mat-card-controls {
 }
 
 mat-card-content {
+  justify-content: space-between;
   margin: 1px;
 }
 
@@ -52,7 +57,20 @@ mat-card-content {
   }
 }
 
-.flex-layout {
+.flex-layout-center {
+  display: flex;
+  align-items: center;
+}
+
+.mat-toolbar-row{
+  justify-content: space-between;
+}
+
+.mat-toolbar-row{
+  justify-content: space-between;
+}
+
+.flex-layout-end {
   display: flex;
   justify-content: flex-end;
 }

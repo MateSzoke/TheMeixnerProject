@@ -1,1 +1,39 @@
-<p>true-false works!</p>
+<html>
+<body>
+<app-task-top-row
+  [title]="this.trueFalseRequest.title"
+  [plusButton]="false"
+  [type]="'sorrendezés'"
+  (saveDataEmit)="this.saveData()">
+</app-task-top-row>
+<div *ngIf="!this.loaded">
+  <div class="wrapper">
+    <div class="inner">
+      <mat-spinner diameter="70"></mat-spinner>
+    </div>
+  </div>
+</div>
+<div *ngIf="this.loaded" class="mat-card-base">
+    <app-easy-task-card
+      [deleteDisable]="true"
+      [titleExists]="true"
+      [title]="'igaz'"
+      [listItemsMedia]="this.trueFalseRequest.trueItems"
+      (deleteBlockElementEmit)="deleteElement($event, true)"
+      (updateBlockElementEmit)="updateTrueFalseRequest($event, true)"
+      (addBlockElementEmit)="addItemRequest($event, true)">
+    </app-easy-task-card>
+    <app-easy-task-card
+      [deleteDisable]="true"
+      [titleExists]="true"
+      [title]="'hamis'"
+      [listItemsMedia]="this.trueFalseRequest.falseItems"
+      (deleteBlockEmit)="deleteElement($event, false)"
+      (deleteBlockElementEmit)="deleteElement($event, false)"
+      (updateBlockElementEmit)="updateTrueFalseRequest($event, false)"
+      (addBlockElementEmit)="addItemRequest($event, false)">
+    </app-easy-task-card>
+</div>
+
+</body>
+</html>

@@ -1,1 +1,58 @@
-<p>sentence-completion works!</p>
+<html>
+<body>
+<app-task-top-row
+  [title]="this.sentenceCompletionRequest.title"
+  [type]="'mondatkiegészítés'"
+  [plusButton]="false"
+  (saveDataEmit)="this.saveData()">
+</app-task-top-row>
+<div *ngIf="!this.loaded">
+  <div class="wrapper">
+    <div class="inner">
+      <mat-spinner diameter="70"></mat-spinner>
+    </div>
+  </div>
+</div>
+<div *ngIf="this.loaded" class="mat-card-base">
+  <ng-container>
+    <mat-card class="mat-card-list mat-width-singleton">
+      <mat-card-content>
+        <mat-toolbar-row>
+          <div class="flex-layout-center">
+          </div>
+        </mat-toolbar-row>
+        <form *ngFor="let sentenceItem of this.sentenceCompletionRequest.sentence; let j = index; trackBy:customTrackBy"
+              class="my-form">
+          <mat-form-field class="width-and-trash">
+            <input [ngModel]="this.sentenceCompletionRequest.sentence[j]"
+                   (ngModelChange)="updateSentencePart(j, $event)" matInput name="mondat">
+          </mat-form-field>
+          <i (click)="this.deleteElement(j)" class="fa fa-trash"></i>&nbsp;
+          <br>
+          <ng-container *ngIf="j < this.sentenceCompletionRequest.options.length">
+            <app-matinput-underline
+              [trashActive]="j === this.sentenceCompletionRequest.options.length - 1
+            && this.sentenceCompletionRequest.options.length === this.sentenceCompletionRequest.sentence.length"
+              [inputData]="this.sentenceCompletionRequest.options[j]"
+              (onChangeEvent)="updateOptionsPart(j, $event)">
+            </app-matinput-underline>
+            <i *ngIf="j === this.sentenceCompletionRequest.options.length - 1
+            && this.sentenceCompletionRequest.options.length === this.sentenceCompletionRequest.sentence.length"
+               (click)="this.deleteLastOptions()" class="fa fa-trash"></i>&nbsp;
+            <br>
+          </ng-container>
+        </form>
+        <button
+          type="submit"
+          mat-flat-button
+          class="color-mat"
+          (click)="addElement()">
+          Új elem
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+</div>
+
+</body>
+</html>

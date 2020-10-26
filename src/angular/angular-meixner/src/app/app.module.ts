@@ -49,6 +49,8 @@ import {ExerciseListComponent} from './users/excercise-list/exercise-list.compon
 import {NotFoundComponent} from './not-found/not-found.component';
 import {MyExercisesComponent} from './student/my-exercises/my-exercises.component';
 import {MyResultsComponent} from './student/my-results/my-results.component';
+import {TypeEnumUtil} from "./util/typeEnumUtil";
+import { EasyTaskCardComponent } from './components/easy-task-card/easy-task-card.component';
 import {TrueFalseComponent} from './task_types/true-false/true-false.component';
 import {StudentPairingComponent} from './student/tasks/student-pairing/student-pairing.component';
 import {StudentGroupingComponent} from './student/tasks/student-grouping/student-grouping.component';
@@ -67,6 +69,12 @@ import {SentenceCreationResultComponent} from './student/tasks/result/sentence-c
 import {TrueFalseResultComponent} from './student/tasks/result/true-false-result/true-false-result.component';
 import {MemoryGameResultComponent} from './student/tasks/result/memory-game-result/memory-game-result.component';
 import {MatProgressBarModule} from "@angular/material/progress-bar";
+import { EasyTaskComponent } from './task_types/easy-task/easy-task.component';
+import { TaskTopRowComponent } from './components/task-top-row/task-top-row.component';
+import { MemoryGameComponent } from './task_types/memory-game/memory-game.component';
+import { MatinputUnderlineComponent } from './components/matinput-underline/matinput-underline.component';
+import {SecurePipe} from "./model/SecurePipe";
+import {TypeofPipe} from "./model/TypeofPipe";
 
 @NgModule({
   declarations: [
@@ -95,6 +103,8 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
     NotFoundComponent,
     MyExercisesComponent,
     MyResultsComponent,
+    EasyTaskCardComponent,
+    MyResultsComponent,
     TrueFalseComponent,
     StudentPairingComponent,
     StudentGroupingComponent,
@@ -104,13 +114,20 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
     StudentTrueFalseComponent,
     StudentMemoryGameComponent,
     ExerciseResultComponent,
+    EasyTaskComponent,
+    ExerciseResultComponent,
     PairingResultComponent,
     GroupingResultComponent,
     SortingResultComponent,
     SentenceCompletionResultComponent,
     SentenceCreationResultComponent,
     TrueFalseResultComponent,
-    MemoryGameResultComponent
+    MemoryGameResultComponent,
+    TaskTopRowComponent,
+    MemoryGameComponent,
+    MatinputUnderlineComponent,
+    SecurePipe,
+    TypeofPipe
   ],
   imports: [
     BrowserModule,
@@ -142,6 +159,7 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
     DomService,
     ModalService,
     ModalComponent,
+    TypeEnumUtil,
     {provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true},
     LoginComponent,
     NewTaskComponent,

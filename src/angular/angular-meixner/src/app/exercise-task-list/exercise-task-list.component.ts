@@ -18,6 +18,7 @@ export class ExerciseTaskListComponent implements OnInit {
   constructor(
     private exerciseService: ExercisesService,
     private taskService: TaskService,
+    public typeEnumUtil: TypeEnumUtil,
     @Inject(MAT_DIALOG_DATA) public params: any
   ) {
     this.exerciseId = params.exerciseId
@@ -57,7 +58,7 @@ class TaskUI {
   constructor(id: number, name: string, type: TypeEnum, lastModified: Date) {
     this.id = id;
     this.name = name;
-    this.type = TypeEnumUtil.taskTypeToString(type);
+    //this.type = new ExerciseTaskListComponent().typeEnumUtil.taskTypeToString(type);
     this.lastModified = DateUtils.getFormattedDate(lastModified);
   }
 }

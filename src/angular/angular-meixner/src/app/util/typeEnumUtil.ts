@@ -1,6 +1,10 @@
 import {TaskResponse} from "../../swagger-api";
 import TypeEnum = TaskResponse.TypeEnum;
+import {Injectable} from "@angular/core";
 
+@Injectable({
+  providedIn: 'root'
+})
 export class TypeEnumUtil {
 
   public static taskTypeToString(type: string): string {

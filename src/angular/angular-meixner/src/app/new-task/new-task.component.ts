@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ComplexTasksService, EasyTasksService, OtherTasksService, TaskResponse} from '../../swagger-api';
 import {ModalComponent} from '../modal/modal.component';
+import {Observable} from 'rxjs';
 import {MatDialogRef} from "@angular/material/dialog";
 import {SubjectEnumUtil} from "../util/subjectEnumUtil";
 import {TypeEnumUtil} from "../util/typeEnumUtil";
@@ -58,7 +59,8 @@ export class NewTaskComponent implements OnInit {
       title: this.newTaskForm.value.title,
       difficulty: this.newTaskForm.value.difficulty,
       recommendedMinClass: this.newTaskForm.value.classFrom,
-      recommendedMaxClass: this.newTaskForm.value.classTo
+      recommendedMaxClass: this.newTaskForm.value.classTo,
+      subject: this.newTaskForm.value.subject
     }
   }
 
@@ -71,6 +73,9 @@ export class NewTaskComponent implements OnInit {
   }
 
   private navigateToTaskTypeComponent(taskType: TypeEnum) {
+    console.log("navigateToTaskTypeComponent");
+    console.log(taskType);
+
     this.router.navigate([ConvertEnum.convertTypeToRouterLink(taskType), this.getTaskParams()])
   }
 }

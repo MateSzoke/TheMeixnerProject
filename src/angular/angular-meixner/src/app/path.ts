@@ -1,4 +1,5 @@
 export class Path {
+  static EASY_TASK = 'egyszeru_feladat'
   static GROUPING = 'csoportositas'
   static PAIRING = 'parositas'
   static SENTENCE_COMPLETION = 'mondatkiegeszites'

@@ -1,1 +1,33 @@
-<p>grouping works!</p>
+<html>
+<body>
+<app-task-top-row
+  [title]="this.groupingRequest.title"
+  [type]="'csoportosítás'"
+  (saveDataEmit)="this.saveData()"
+  (newElementEmit)="this.addGroup()">
+</app-task-top-row>
+<div *ngIf="!this.loaded">
+  <div class="wrapper">
+    <div class="inner">
+      <mat-spinner diameter="70"></mat-spinner>
+    </div>
+  </div>
+</div>
+<div *ngIf="this.loaded" class="mat-card-base">
+  <ng-container *ngFor="let member of this.groupingRequest.groups; let i = index">
+    <app-easy-task-card
+      [titleExists]="true"
+      [title]="member.name"
+      [listItemsMedia]="member.elements"
+      (titleChange)="onTitleChange(i,$event)"
+      (imageId)="addImageId(i, $event)"
+      (deleteBlockEmit)="deleteGroup(i)"
+      (deleteBlockElementEmit)="deleteGroupElement(i, $event)"
+      (updateBlockElementEmit)="updateGroupRequest(i, $event)"
+      (addBlockElementEmit)="addGroupRequest(i)">
+    </app-easy-task-card>
+  </ng-container>
+</div>
+
+</body>
+</html>

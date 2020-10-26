@@ -1,4 +1,14 @@
-import {AfterViewChecked, Component, ElementRef, OnInit, ViewChildren} from '@angular/core';
+import {
+  AfterContentChecked,
+  AfterContentInit,
+  AfterViewChecked,
+  AfterViewInit, ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnInit,
+  QueryList,
+  ViewChildren
+} from '@angular/core';
 import {
   EasyTasksService,
   MediaItemRequest,
@@ -9,10 +19,12 @@ import {
   PairingResponse,
   TaskService
 } from "../../../swagger-api";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {TaskAngularService} from "../../data/task-angular.service";
 import {take} from "rxjs/operators";
 import {SubjectEnumUtil} from "../../util/subjectEnumUtil";
+import {Path} from "../../path";
+import {UpdateBlock} from "../../model/updateBlock";
 
 @Component({
   selector: 'app-pairing',
@@ -24,14 +36,19 @@ export class PairingComponent implements OnInit, AfterViewChecked {
   public pairingRequest: PairingRequest;
   public taskId: number = null
   public selectedMediaItem: MediaItemResponse;
-  @ViewChildren('pairchild') pairs: ElementRef[];
   pairElements: any;
   loaded: boolean = false
+  newPairing = true;
+  pairingId = 0;
+  indexOfPrevFocus = -1;
+  indexOfCurrentFocus = -2;
 
   constructor(public easyTasksService: EasyTasksService,
               public tasksService: TaskService,
-              public taskAngularService: TaskAngularService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private cdRef:ChangeDetectorRef,
+              private router : Router) {
+
   }
 
   ngOnInit(): void {
@@ -39,9 +56,9 @@ export class PairingComponent implements OnInit, AfterViewChecked {
     if (isNaN(this.taskId)) {
       this.initNewPairingRequest()
     } else {
+      this.newPairing = false;
       this.initPairingRequestById()
     }
-    console.log(`TaskId: ${this.taskId}`)
   }
 
   initNewPairingRequest() {
@@ -70,7 +87,7 @@ export class PairingComponent implements OnInit, AfterViewChecked {
           subject: pairingResponse.subject
         }
         this.loaded = true
-        console.log(this.pairingRequest)
+        this.pairingId = pairingResponse.id;
       },
       (error) => {
         console.log(error)
@@ -78,44 +95,42 @@ export class PairingComponent implements OnInit, AfterViewChecked {
     );
   }
 
-  ngAfterViewChecked(): void {
-    this.pairElements = this.pairs.map(pair => {
-      return pair.nativeElement;
-    });
+  ngAfterViewChecked() {
+
   }
 
-  public updatePairElement(newValue, indexService, indexPair) {
-    this.pairingRequest.pairs[indexService].pair[indexPair].content = newValue;
+  public updatePairElement(indexService, event: UpdateBlock) {
+    this.pairingRequest.pairs[indexService].pair[event.id].content = event.content;
   }
 
   public deletePair(indexService) {
-
+    this.pairingRequest.pairs.splice(indexService, 1);
   }
 
-  public addPairElement(indexService) {
+  public addPairElement(indexPair) {
     const newRow: MediaItemRequest = {content: ''};
-    this.pairingRequest.pairs[indexService].pair.push(newRow);
-    this.easyTasksService.createPairingUsingPOST(this.pairingRequest)
-      .subscribe(data => {
-        this.taskAngularService.finishedLoading.pipe(take(1)).subscribe(() => {
-            this.pairElements = this.pairs.map(pair => {
-              return pair.nativeElement;
-            });
-            this.selectPair(indexService, this.pairingRequest.pairs[indexService].pair.length);
-          }
-        );
-      });
+    const lastIndex = this.pairingRequest.pairs[indexPair].pair.length - 1;
+    let jumpToElementIndex = 0;
+    for (let i = 0; i < indexPair + 1; i++) {
+      jumpToElementIndex = jumpToElementIndex + this.pairingRequest.pairs[i].pair.length;
+    }
+    this.pairingRequest.pairs[indexPair].pair.push(newRow);
+    this.indexOfCurrentFocus = jumpToElementIndex;
   }
 
-  public newPair() {
-
+  public addPair() {
+    const newRow: PairElementRequest = {
+      pair: new Array<MediaItemRequest>()
+    };
+    this.pairingRequest.pairs.push(newRow);
   }
 
-  public selectPair(indexPair, mediaId) {
-    this.pairElements[mediaId].focus();
+  public selectPair(jumpToElementIndex) {
+    this.pairElements[jumpToElementIndex].focus();
   }
 
   public elementClicked(indexPair, mediaId) {
+
   }
 
   public deletePairElement(indexService, indexPair) {
@@ -130,8 +145,28 @@ export class PairingComponent implements OnInit, AfterViewChecked {
 
   mediaItemResponseToRequest(response: MediaItemResponse): MediaItemRequest {
     return {
-      mediaItemId: response.id,
       content: response.content
+    }
+  }
+
+  initMediaItemRequest(): MediaItemRequest {
+    return {
+      mediaItemId: 0,
+      content: ''
+    }
+  }
+
+  saveData() {
+    if(this.newPairing) {
+      this.easyTasksService.createPairingUsingPOST(this.pairingRequest)
+        .subscribe(data => {
+          this.router.navigate([Path.TASKS_MY]);
+        });
+    } else {
+      this.easyTasksService.updatePairingByIdUsingPATCH(this.pairingId,this.pairingRequest)
+        .subscribe(data => {
+          this.router.navigate([Path.TASKS_MY]);
+        });
     }
   }
 }
