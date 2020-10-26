@@ -4,7 +4,6 @@ import {TrueFalseTaskRequest} from "../../../../swagger-api/model/trueFalseTaskR
 import {ActivatedRoute, Router} from "@angular/router";
 import {AssignService, EvaluateService} from "../../../../swagger-api";
 import {CdkDragDrop, transferArrayItem} from "@angular/cdk/drag-drop";
-import {MyExercisesComponent} from "../../my-exercises/my-exercises.component";
 import {TrueFalseResultComponent} from "../result/true-false-result/true-false-result.component";
 import {MatDialog} from "@angular/material/dialog";
 
@@ -74,11 +73,8 @@ export class StudentTrueFalseComponent implements OnInit {
         this.trueFalseRequest.attempts = response.taskResult.attempts
       } else {
         this.dialog.open(TrueFalseResultComponent, {
-          data: {startedExercise: response}
-        })
-        let subscription = this.dialog.afterAllClosed.subscribe(() => {
-          MyExercisesComponent.navigateNextTask(response, this.router, this.dialog)
-          subscription.unsubscribe()
+          data: {startedExercise: response},
+          disableClose: true
         })
       }
       this.loaded = true

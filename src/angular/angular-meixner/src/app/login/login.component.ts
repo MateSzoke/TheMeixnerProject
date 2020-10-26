@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {AuthenticationService} from '../service/authentication.service';
@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit {
 
   username = '';
   password = '';
-  errorMessage = 'Invalid Credentials';
+  loading = false
 
   constructor(private router: Router,
               public authenticationService: AuthenticationService,
@@ -23,6 +23,11 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin() {
-    this.authenticationService.login(this.username, this.password);
+    this.loading = true
+    this.authenticationService.login(this.username, this.password).subscribe(
+      () => {
+      },
+      () => this.loading = false
+    );
   }
 }

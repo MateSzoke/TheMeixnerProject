@@ -6,6 +6,7 @@ import hu.aut.meixner.dto.result.TaskResultResponse
 import hu.aut.meixner.dto.task.student.easy.AssignTask
 import hu.aut.meixner.entity.result.SolvedExercise
 import hu.aut.meixner.extensions.toNullable
+import hu.aut.meixner.mapping.toAssignedExercise
 import hu.aut.meixner.repository.result.SolvedExerciseRepository
 import hu.aut.meixner.service.auth.UserService
 import hu.aut.meixner.service.exercises.ExerciseService
@@ -75,12 +76,7 @@ class AssignService(
 
     fun getMyExercises(): List<AssignedExercise>? {
         val student = resultService.getStudentByUserId(userService.getUser()?.id ?: return null) ?: return null
-        return student.exercises.map { exercise ->
-            AssignedExercise(
-                    id = exercise.id,
-                    name = exercise.name
-            )
-        }
+        return student.exercises.map { it.toAssignedExercise() }
     }
 
 }

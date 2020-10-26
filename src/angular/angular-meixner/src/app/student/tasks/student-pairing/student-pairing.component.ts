@@ -4,7 +4,6 @@ import {PairingTaskRequest} from "../../../../swagger-api/model/pairingTaskReque
 import {ActivatedRoute, Router} from "@angular/router";
 import {AssignService, EvaluateService} from "../../../../swagger-api";
 import {CdkDragDrop, transferArrayItem} from "@angular/cdk/drag-drop";
-import {MyExercisesComponent} from "../../my-exercises/my-exercises.component";
 import {PairingResultComponent} from "../result/pairing-result/pairing-result.component";
 import {MatDialog} from "@angular/material/dialog";
 
@@ -77,11 +76,8 @@ export class StudentPairingComponent implements OnInit {
         this.pairingRequest.attempts = response.taskResult.attempts
       } else {
         this.dialog.open(PairingResultComponent, {
-          data: {startedExercise: response}
-        })
-        let subscription = this.dialog.afterAllClosed.subscribe(() => {
-          MyExercisesComponent.navigateNextTask(response, this.router, this.dialog)
-          subscription.unsubscribe()
+          data: {startedExercise: response},
+          disableClose: true
         })
       }
       this.loaded = true

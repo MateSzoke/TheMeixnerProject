@@ -6,6 +6,7 @@
   </div>
 </div>
 <div *ngIf="loaded">
+  <p *ngIf="startedExercise" class="title" style="color: darkgreen">Helyes megoldás!</p>
   <p class="title">Csoportosítás - {{groupingResult.title}} - megoldás</p>
   <div *ngIf="startedExercise" [ngStyle]="{'color': getAttempts() <= 3 ? 'darkgreen' : 'brown'}" class="subtitle">
     Próbálkozások: {{getAttemptsText()}}</div>
@@ -17,7 +18,9 @@
     <button (click)="finishExercise()" *ngIf="startedExercise" mat-button style="margin-top: 24px">Feladatsor
       befejezése
     </button>
-    <button *ngIf="startedExercise" [mat-dialog-close] class="addbtn" mat-button>Következő feladat</button>
+    <button (click)="navigateToNextTask()" *ngIf="startedExercise" [mat-dialog-close] class="addbtn" mat-button>
+      Következő feladat
+    </button>
     <button *ngIf="!startedExercise" [mat-dialog-close] class="addbtn" mat-button>Vissza</button>
   </div>
 </div>
