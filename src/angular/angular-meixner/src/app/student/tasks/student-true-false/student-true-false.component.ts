@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {TrueFalseTask} from "../../../../swagger-api/model/trueFalseTask";
 import {TrueFalseTaskRequest} from "../../../../swagger-api/model/trueFalseTaskRequest";
 import {ActivatedRoute, Router} from "@angular/router";
-import {AssignService, EvaluateService} from "../../../../swagger-api";
+import {AssignService, EvaluateService, MediaItemRequest} from "../../../../swagger-api";
 import {CdkDragDrop, transferArrayItem} from "@angular/cdk/drag-drop";
 import {TrueFalseResultComponent} from "../result/true-false-result/true-false-result.component";
 import {MatDialog} from "@angular/material/dialog";
@@ -54,6 +54,10 @@ export class StudentTrueFalseComponent implements OnInit {
       return !this.currentResult[index]
     else
       return false
+  }
+
+  isMediaItem(request: MediaItemRequest): boolean {
+    return request.content.includes("/files/download")
   }
 
   drop(event: CdkDragDrop<Array<any>, any>) {
