@@ -8,7 +8,6 @@ import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.mapping.toDomainModel
 import hu.aut.meixner.repository.task.MediaItemRepository
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.multipart.MultipartFile
 
 @Service
@@ -30,12 +29,10 @@ class MediaItemService(
                 )).toDomainModel()
     }
 
-    @Transactional
     fun getMediaItemById(id: Long): MediaItemResponse? {
         return mediaItemRepository.findById(id).toNullable?.toDomainModel()
     }
 
-    @Transactional
     fun getMediaItemEntity(id: Long): MediaItemEntity? {
         return mediaItemRepository.findById(id).toNullable
     }
