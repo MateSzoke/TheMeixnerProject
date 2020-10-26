@@ -1,10 +1,14 @@
 import {ChangeDetectorRef, Component, ElementRef, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {
-  EasyTasksService, GroupingRequest, GroupingResponse, GroupRequest, GroupResponse, MediaItemRequest,
+  EasyTasksService,
+  GroupingRequest,
+  GroupingResponse,
+  GroupRequest,
+  GroupResponse,
+  MediaItemRequest,
   MediaItemResponse,
   TaskService
 } from "../../../swagger-api";
-import {TaskAngularService} from "../../data/task-angular.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {SubjectEnumUtil} from "../../util/subjectEnumUtil";
 import {Path} from "../../path";
@@ -116,7 +120,7 @@ export class GroupingComponent implements OnInit {
   mediaItemResponseToRequest(response: MediaItemResponse): MediaItemRequest {
     if(response.type === MediaItemResponse.TypeEnum.FILE) {
       return {
-        mediaItemId: response.id,
+        mediaItemId: response.mediaItemId,
         content: response.content
       }
     } else {

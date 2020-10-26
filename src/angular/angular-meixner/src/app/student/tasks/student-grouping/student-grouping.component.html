@@ -38,8 +38,8 @@
         cdkDropListSortingDisabled
         [ngClass]="{'border-success':getSuccess(i), 'border-fail':getFail(i)}" class="example-list">
         <div *ngFor="let element of group.elements" cdkDrag class="example-box">
-          <img *ngIf="element.mediaItemId != null" [src]="element.content" class="max-height"/>
-          <p *ngIf="element.mediaItemId == null">{{element.content}}</p>
+          <img *ngIf="isMediaItem(element)" [src]="element.content | secure | async" class="max-height"/>
+          <p *ngIf="!isMediaItem(element)">{{element.content}}</p>
         </div>
       </div>
     </div>

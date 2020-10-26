@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {TrueFalseTask} from "../../../../swagger-api/model/trueFalseTask";
 import {TrueFalseTaskRequest} from "../../../../swagger-api/model/trueFalseTaskRequest";
 import {ActivatedRoute, Router} from "@angular/router";
-import {AssignService, EvaluateService} from "../../../../swagger-api";
+import {AssignService, EvaluateService, MediaItemRequest} from "../../../../swagger-api";
 import {CdkDragDrop, transferArrayItem} from "@angular/cdk/drag-drop";
 import {TrueFalseResultComponent} from "../result/true-false-result/true-false-result.component";
 import {MatDialog} from "@angular/material/dialog";
@@ -56,6 +56,10 @@ export class StudentTrueFalseComponent implements OnInit {
       return false
   }
 
+  isMediaItem(request: MediaItemRequest): boolean {
+    return request.content?.includes("/files/download")
+  }
+
   drop(event: CdkDragDrop<Array<any>, any>) {
     transferArrayItem(event.previousContainer.data,
       event.container.data,
@@ -65,7 +69,7 @@ export class StudentTrueFalseComponent implements OnInit {
   }
 
   evaluateTask() {
-    this.evaluateService.evaluateTrueFalseUsingPOST(this.startedExerciseId, this.taskId, this.trueFalseRequest).subscribe(response => {
+    this.evaluateService.evaluateTrueFalseUsingPOST(this.startedExerciseId, this.taskId, this.getRequest()).subscribe(response => {
       console.log(response.taskResult)
       this.loaded = false
       if (response.taskResult.taskResult == undefined) {
@@ -79,5 +83,24 @@ export class StudentTrueFalseComponent implements OnInit {
       }
       this.loaded = true
     })
+  }
+
+  getRequest(): TrueFalseTaskRequest {
+    let request = {...this.trueFalseRequest}
+    request.trueItems = request.trueItems.map(mediaItem => {
+      if (this.isMediaItem(mediaItem)) {
+        return {mediaItemId: mediaItem.mediaItemId}
+      } else {
+        return {content: mediaItem.content}
+      }
+    })
+    request.falseItems = request.falseItems.map(mediaItem => {
+      if (this.isMediaItem(mediaItem)) {
+        return {mediaItemId: mediaItem.mediaItemId}
+      } else {
+        return {content: mediaItem.content}
+      }
+    })
+    return request
   }
 }

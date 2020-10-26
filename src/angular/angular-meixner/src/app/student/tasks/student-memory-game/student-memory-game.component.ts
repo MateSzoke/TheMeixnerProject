@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {
   AssignService,
   EvaluateService,
+  MediaItemRequest,
   MediaItemResponse,
   MemoryGameResponse,
   TaskService
@@ -26,7 +27,6 @@ export class StudentMemoryGameComponent implements OnInit {
   memoryRequest: MemoryGameTaskRequest = null
   firstElement: MemoryUI = null
   secondElement: MemoryUI = null
-  correctPairs: number = 0
 
   constructor(
     private route: ActivatedRoute,
@@ -48,7 +48,7 @@ export class StudentMemoryGameComponent implements OnInit {
       }
       this.assignService.getStudentTaskByIdUsingGET(this.taskId).subscribe(task => {
         let memoryTask = task as MemoryGameTask
-        memoryTask.elements.forEach(mediaItem => this.elements.push(new MemoryUI(mediaItem)))
+        memoryTask.elements.forEach(mediaItem => this.elements.push(new MemoryUI(mediaItem, false)))
         this.loaded = true
       })
     })
@@ -56,7 +56,7 @@ export class StudentMemoryGameComponent implements OnInit {
   }
 
   evaluateTask() {
-    this.evaluateService.evaluateMemoryGameUsingPOST(this.startedExerciseId, this.taskId, this.memoryRequest).subscribe(response => {
+    this.evaluateService.evaluateMemoryGameUsingPOST(this.startedExerciseId, this.taskId, this.getRequest()).subscribe(response => {
       console.log(response.taskResult)
       this.loaded = false
       if (response.taskResult.taskResult == undefined) {
@@ -72,8 +72,11 @@ export class StudentMemoryGameComponent implements OnInit {
   }
 
   elementClicked(element: MemoryUI, index: number) {
-    if (this.secondElement != null || element.clicked) {
+    if (element.clicked) {
       return
+    }
+    if (this.secondElement != null) {
+      this.reset()
     }
     this.elements[index].clicked = true
     if (this.firstElement == null) {
@@ -114,10 +117,29 @@ export class StudentMemoryGameComponent implements OnInit {
   }
 
   reset() {
-    this.elements = this.elements.map(element => new MemoryUI(element.mediaItem))
+    this.elements = this.elements.map(element => new MemoryUI(element.mediaItem, element.correct))
     this.firstElement = null
     this.secondElement = null
-    this.memoryRequest.pairs = []
+  }
+
+  isMediaItem(request: MediaItemRequest): boolean {
+    return request.content?.includes("/files/download")
+  }
+
+  getRequest(): MemoryGameTaskRequest {
+    let request = {...this.memoryRequest}
+    request.pairs = request.pairs.map(pairElement => {
+      return {
+        pair: pairElement.pair.map(element => {
+          if (this.isMediaItem(element)) {
+            return {mediaItemId: element.mediaItemId}
+          } else {
+            return {content: element.content}
+          }
+        })
+      }
+    })
+    return request
   }
 }
 
@@ -126,9 +148,9 @@ class MemoryUI {
   correct: boolean
   clicked: boolean
 
-  constructor(mediaItem: MediaItemResponse) {
+  constructor(mediaItem: MediaItemResponse, correct: boolean) {
     this.mediaItem = mediaItem
-    this.correct = false
-    this.clicked = false
+    this.correct = correct
+    this.clicked = correct
   }
 }

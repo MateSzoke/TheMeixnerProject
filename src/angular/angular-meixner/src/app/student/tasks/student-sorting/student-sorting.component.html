@@ -13,7 +13,10 @@
   <div (cdkDropListDropped)="drop($event)" [ngClass]="{'border-success':getSuccess(), 'border-fail':getFail()}"
        cdkDropList class="example-list">
     <div *ngFor="let element of sorting.elements" cdkDrag class="example-box"
-         fxLayoutAlign="center center">{{element.content}}</div>
+         fxLayoutAlign="center center">
+      <img *ngIf="element.type == 'FILE'" [src]="element.content | secure | async" class="max-height"/>
+      <p *ngIf="element.type == 'TEXT'">{{element.content}}</p>
+    </div>
   </div>
 </div>
 
