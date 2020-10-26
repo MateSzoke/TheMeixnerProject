@@ -38,7 +38,9 @@ export class NewExerciseComponent implements OnInit {
     } else {
       const exercise: ExerciseRequest = {
         name: this.exercisesForm.value.name,
-        comment: this.exercisesForm.value.comment
+        comment: this.exercisesForm.value.comment,
+        classLevel: this.exercisesForm.value.classLevel,
+        subject: SubjectEnumUtil.stringToSubject(this.exercisesForm.value.subject)
       };
       this.exerciseService.createExercisesUsingPOST(exercise).subscribe();
     }

@@ -14,7 +14,7 @@
     <mat-card *ngFor="let exercise of exercises" class="user-card">
       <div fxLayout="row" fxLayoutAlign="center center">
         <div class="float-left">
-          <b>{{exercise.name}}</b>
+          <b>{{exercise.name}} - {{exercise.subject}}</b>
         </div>
         <div class="float-right">
           <a (click)="solveExercise(exercise)" mat-button>Feladatsor kitöltése</a>

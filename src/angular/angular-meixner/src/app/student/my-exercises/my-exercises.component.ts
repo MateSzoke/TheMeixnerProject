@@ -7,6 +7,7 @@ import {StartedExercise} from "../../../swagger-api/model/startedExercise";
 import {Path} from "../../path";
 import {MatDialog} from "@angular/material/dialog";
 import {ExerciseResultComponent} from "../exercise-result/exercise-result.component";
+import {SubjectEnumUtil} from "../../util/subjectEnumUtil";
 
 @Component({
   selector: 'app-my-exercises',
@@ -26,6 +27,10 @@ export class MyExercisesComponent implements OnInit {
   ngOnInit(): void {
     this.assignService.getMyExercisesUsingGET().subscribe(exercises => {
       this.exercises = exercises
+      this.exercises.forEach(exercise => {
+        // @ts-ignore
+        exercise.subject = SubjectEnumUtil.subjectToString(exercise.subject)
+      })
       this.loaded = true
     })
   }
