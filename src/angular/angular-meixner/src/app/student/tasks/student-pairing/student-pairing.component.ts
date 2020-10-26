@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {PairingTask} from "../../../../swagger-api/model/pairingTask";
 import {PairingTaskRequest} from "../../../../swagger-api/model/pairingTaskRequest";
 import {ActivatedRoute, Router} from "@angular/router";
-import {AssignService, EvaluateService} from "../../../../swagger-api";
+import {AssignService, EvaluateService, MediaItemRequest} from "../../../../swagger-api";
 import {CdkDragDrop, transferArrayItem} from "@angular/cdk/drag-drop";
 import {PairingResultComponent} from "../result/pairing-result/pairing-result.component";
 import {MatDialog} from "@angular/material/dialog";
@@ -63,12 +63,16 @@ export class StudentPairingComponent implements OnInit {
     console.log(this.pairingRequest)
   }
 
+  isMediaItem(request: MediaItemRequest): boolean {
+    return request.content?.includes("/files/download")
+  }
+
   addPairElement() {
     this.pairingRequest.pairs.push({pair: []})
   }
 
   evaluateTask() {
-    this.evaluateService.evaluatePairingUsingPOST(this.startedExerciseId, this.taskId, this.pairingRequest).subscribe(response => {
+    this.evaluateService.evaluatePairingUsingPOST(this.startedExerciseId, this.taskId, this.getRequest()).subscribe(response => {
       console.log(response.taskResult)
       this.loaded = false
       if (response.taskResult.taskResult == undefined) {
@@ -82,5 +86,21 @@ export class StudentPairingComponent implements OnInit {
       }
       this.loaded = true
     })
+  }
+
+  getRequest(): PairingTaskRequest {
+    let request = {...this.pairingRequest}
+    request.pairs = request.pairs.map(pairElement => {
+      return {
+        pair: pairElement.pair.map(element => {
+          if (this.isMediaItem(element)) {
+            return {mediaItemId: element.mediaItemId}
+          } else {
+            return {content: element.content}
+          }
+        })
+      }
+    })
+    return request
   }
 }

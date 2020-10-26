@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {GroupingTask} from "../../../../swagger-api/model/groupingTask";
 import {ActivatedRoute, Router} from "@angular/router";
-import {AssignService, EvaluateService} from "../../../../swagger-api";
+import {AssignService, EvaluateService, MediaItemRequest} from "../../../../swagger-api";
 import {CdkDragDrop, transferArrayItem} from "@angular/cdk/drag-drop";
 import {GroupingTaskRequest} from "../../../../swagger-api/model/groupingTaskRequest";
 import {MatDialog} from "@angular/material/dialog";
@@ -52,6 +52,10 @@ export class StudentGroupingComponent implements OnInit {
     console.log(this.groupingRequest)
   }
 
+  isMediaItem(request: MediaItemRequest): boolean {
+    return request.content?.includes("/files/download")
+  }
+
   getSuccess(index: number): Boolean {
     if (this.currentResult.length != 0)
       return this.currentResult[index]
@@ -67,7 +71,7 @@ export class StudentGroupingComponent implements OnInit {
   }
 
   evaluateTask() {
-    this.evaluateService.evaluateGroupingUsingPOST(this.startedExerciseId, this.taskId, this.groupingRequest).subscribe(response => {
+    this.evaluateService.evaluateGroupingUsingPOST(this.startedExerciseId, this.taskId, this.getRequest()).subscribe(response => {
       console.log(response.taskResult)
       this.loaded = false
       if (response.taskResult.taskResult == undefined) {
@@ -81,6 +85,23 @@ export class StudentGroupingComponent implements OnInit {
       }
       this.loaded = true
     })
+  }
+
+  getRequest(): GroupingTaskRequest {
+    let request = {...this.groupingRequest}
+    request.groups = request.groups.map(group => {
+      return {
+        name: group.name,
+        elements: group.elements.map(element => {
+          if (this.isMediaItem(element)) {
+            return {mediaItemId: element.mediaItemId}
+          } else {
+            return {content: element.content}
+          }
+        })
+      }
+    })
+    return request
   }
 
 }

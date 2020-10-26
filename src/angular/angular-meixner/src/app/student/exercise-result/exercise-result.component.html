@@ -7,7 +7,8 @@
   </div>
 </div>
 <div *ngIf="loaded">
-  <p class="title" style="color: darkgreen">{{exerciseResult.exerciseName}} sikeresen teljesítve!</p>
+  <p *ngIf="resultsButtonVisible" class="title" style="color: darkgreen">{{exerciseResult.exerciseName}} sikeresen
+    teljesítve!</p>
   <div *ngFor="let task of exerciseResult.taskResults" class="task-element">
     <p>{{task.taskResult.title}} - {{task.taskResult.type}}
       próbálkozások: {{task.attempts}}</p>

@@ -21,7 +21,10 @@
         cdkDropList
         cdkDropListSortingDisabled
         class="example-list">
-        <div *ngFor="let element of trueFalse.elements" cdkDrag class="example-box">{{element.content}}</div>
+        <div *ngFor="let element of trueFalse.elements" cdkDrag class="example-box">
+          <img *ngIf="element.type == 'FILE'" [src]="element.content | secure | async" class="max-height"/>
+          <p *ngIf="element.type == 'TEXT'">{{element.content}}</p>
+        </div>
       </div>
     </div>
 
@@ -32,7 +35,10 @@
       cdkDropList
       cdkDropListSortingDisabled
       [ngClass]="{'border-success':getSuccess(0), 'border-fail':getFail(0)}" class="example-list">
-      <div *ngFor="let element of trueFalseRequest.trueItems" cdkDrag class="example-box">{{element.content}}</div>
+      <div *ngFor="let element of trueFalseRequest.trueItems" cdkDrag class="example-box">
+        <img *ngIf="isMediaItem(element)" [src]="element.content | secure | async" class="max-height"/>
+        <p *ngIf="!isMediaItem(element)">{{element.content}}</p>
+      </div>
     </div>
 
     <h2 class="subtitle">Hamis állítások</h2>
@@ -42,7 +48,10 @@
       cdkDropList
       cdkDropListSortingDisabled
       [ngClass]="{'border-success':getSuccess(1), 'border-fail':getFail(1)}" class="example-list">
-      <div *ngFor="let element of trueFalseRequest.falseItems" cdkDrag class="example-box">{{element.content}}</div>
+      <div *ngFor="let element of trueFalseRequest.falseItems" cdkDrag class="example-box">
+        <img *ngIf="isMediaItem(element)" [src]="element.content | secure | async" class="max-height"/>
+        <p *ngIf="!isMediaItem(element)">{{element.content}}</p>
+      </div>
     </div>
   </div>
 </div>
