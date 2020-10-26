@@ -5,7 +5,7 @@ import hu.aut.meixner.entity.task.MediaItemType.FILE
 import hu.aut.meixner.entity.task.MediaItemType.TEXT
 
 class MediaItemResponse(
-        val id: Long,
+        val mediaItemId: Long,
         val type: MediaItemType,
         val content: String
 ) {
@@ -15,13 +15,13 @@ class MediaItemResponse(
             is MediaItemResponse -> {
                 when (type) {
                     TEXT -> content == other.content
-                    FILE -> id == other.id
+                    FILE -> mediaItemId == other.mediaItemId
                 }
             }
             is MediaItemRequest -> {
                 when (type) {
                     TEXT -> content == other.content
-                    FILE -> id == other.mediaItemId
+                    FILE -> mediaItemId == other.mediaItemId
                 }
             }
             else -> false
@@ -31,7 +31,7 @@ class MediaItemResponse(
     override fun hashCode(): Int {
         return when (type) {
             TEXT -> content.hashCode()
-            FILE -> id.hashCode()
+            FILE -> mediaItemId.hashCode()
         }
     }
 }

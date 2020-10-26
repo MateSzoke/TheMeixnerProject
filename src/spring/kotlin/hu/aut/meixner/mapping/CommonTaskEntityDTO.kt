@@ -11,7 +11,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 
 fun MediaItemEntity.toDomainModel(): MediaItemResponse {
     return MediaItemResponse(
-            id = id,
+            mediaItemId = id,
             type = type,
             content = when (type) {
                 TEXT -> content
@@ -22,7 +22,7 @@ fun MediaItemEntity.toDomainModel(): MediaItemResponse {
 
 fun MediaItemRequest.toDomainModel(): MediaItemResponse {
     return MediaItemResponse(
-            id = mediaItemId ?: 0,
+            mediaItemId = mediaItemId ?: 0,
             content = content ?: "",
             type = if (mediaItemId != null) FILE else TEXT
     )
