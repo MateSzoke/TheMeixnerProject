@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FilesService, MediaItemRequest, MediaItemResponse} from "../../../swagger-api";
+import {FilesService, MediaItemRequest} from "../../../swagger-api";
 import {UpdateBlock} from "../../model/updateBlock";
-import {strict} from "assert";
 
 @Component({
   selector: 'app-easy-task-card',
@@ -61,7 +60,7 @@ export class EasyTaskCardComponent implements OnInit {
     let file = event.target.files[0];
     if (event.target.files && event.target.files[0]) {
       this.filesService.uploadUsingPOST(file).subscribe(data => {
-        this.imageId.emit({id: j, mediaId: data.id} as UpdateBlock);
+        this.imageId.emit({id: j, mediaId: data.mediaItemId} as UpdateBlock);
       });
     }
   }
