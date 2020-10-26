@@ -4,7 +4,6 @@ import {SortingTaskRequest} from "../../../../swagger-api/model/sortingTaskReque
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {AssignService, EvaluateService} from "../../../../swagger-api";
 import {SortingTask} from "../../../../swagger-api/model/sortingTask";
-import {MyExercisesComponent} from "../../my-exercises/my-exercises.component";
 import {SortingResultComponent} from "../result/sorting-result/sorting-result.component";
 import {MatDialog} from "@angular/material/dialog";
 
@@ -71,11 +70,8 @@ export class StudentSortingComponent implements OnInit {
         this.attempts = response.taskResult.attempts
       } else {
         this.dialog.open(SortingResultComponent, {
-          data: {startedExercise: response}
-        })
-        let subscription = this.dialog.afterAllClosed.subscribe(() => {
-          MyExercisesComponent.navigateNextTask(response, this.router, this.dialog)
-          subscription.unsubscribe()
+          data: {startedExercise: response},
+          disableClose: true
         })
       }
       this.loaded = true

@@ -8,7 +8,6 @@ import {
   TaskService
 } from "../../../../swagger-api";
 import {MatDialog} from "@angular/material/dialog";
-import {MyExercisesComponent} from "../../my-exercises/my-exercises.component";
 import {MemoryGameTask} from "../../../../swagger-api/model/memoryGameTask";
 import {MemoryGameTaskRequest} from "../../../../swagger-api/model/memoryGameTaskRequest";
 import {MemoryGameResultComponent} from "../result/memory-game-result/memory-game-result.component";
@@ -64,11 +63,8 @@ export class StudentMemoryGameComponent implements OnInit {
         this.memoryRequest.attempts = response.taskResult.attempts
       } else {
         this.dialog.open(MemoryGameResultComponent, {
-          data: {startedExercise: response}
-        })
-        let subscription = this.dialog.afterAllClosed.subscribe(() => {
-          MyExercisesComponent.navigateNextTask(response, this.router, this.dialog)
-          subscription.unsubscribe()
+          data: {startedExercise: response},
+          disableClose: true
         })
       }
       this.loaded = true

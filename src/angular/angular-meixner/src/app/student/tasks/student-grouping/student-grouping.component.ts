@@ -3,7 +3,6 @@ import {GroupingTask} from "../../../../swagger-api/model/groupingTask";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AssignService, EvaluateService} from "../../../../swagger-api";
 import {CdkDragDrop, transferArrayItem} from "@angular/cdk/drag-drop";
-import {MyExercisesComponent} from "../../my-exercises/my-exercises.component";
 import {GroupingTaskRequest} from "../../../../swagger-api/model/groupingTaskRequest";
 import {MatDialog} from "@angular/material/dialog";
 import {GroupingResultComponent} from "../result/grouping-result/grouping-result.component";
@@ -76,11 +75,8 @@ export class StudentGroupingComponent implements OnInit {
         this.groupingRequest.attempts = response.taskResult.attempts
       } else {
         this.dialog.open(GroupingResultComponent, {
-          data: {startedExercise: response}
-        })
-        let subscription = this.dialog.afterAllClosed.subscribe(() => {
-          MyExercisesComponent.navigateNextTask(response, this.router, this.dialog)
-          subscription.unsubscribe()
+          data: {startedExercise: response},
+          disableClose: true
         })
       }
       this.loaded = true

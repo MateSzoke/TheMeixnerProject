@@ -4,7 +4,6 @@ import {SentenceCreationTaskRequest} from "../../../../swagger-api/model/sentenc
 import {ActivatedRoute, Router} from "@angular/router";
 import {AssignService, EvaluateService} from "../../../../swagger-api";
 import {CdkDragDrop, transferArrayItem} from "@angular/cdk/drag-drop";
-import {MyExercisesComponent} from "../../my-exercises/my-exercises.component";
 import {SentenceCreationResultComponent} from "../result/sentence-creation-result/sentence-creation-result.component";
 import {MatDialog} from "@angular/material/dialog";
 
@@ -73,11 +72,8 @@ export class StudentSentenceCreationComponent implements OnInit {
         this.sentenceCreationRequest.attempts = response.taskResult.attempts
       } else {
         this.dialog.open(SentenceCreationResultComponent, {
-          data: {startedExercise: response}
-        })
-        let subscription = this.dialog.afterAllClosed.subscribe(() => {
-          MyExercisesComponent.navigateNextTask(response, this.router, this.dialog)
-          subscription.unsubscribe()
+          data: {startedExercise: response},
+          disableClose: true
         })
       }
       this.loaded = true

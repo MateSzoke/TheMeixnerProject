@@ -3,10 +3,9 @@ import {SentenceCompletionTask} from "../../../../swagger-api/model/sentenceComp
 import {ActivatedRoute, Router} from "@angular/router";
 import {AssignService, EvaluateService} from "../../../../swagger-api";
 import {CdkDragDrop, transferArrayItem} from "@angular/cdk/drag-drop";
-import {MyExercisesComponent} from "../../my-exercises/my-exercises.component";
 import {SentenceCompletionTaskRequest} from "../../../../swagger-api/model/sentenceCompletionTaskRequest";
 import {MatDialog} from "@angular/material/dialog";
-import {GroupingResultComponent} from "../result/grouping-result/grouping-result.component";
+import {SentenceCompletionResultComponent} from "../result/sentence-completion-result/sentence-completion-result.component";
 
 @Component({
   selector: 'app-student-sentence-completion',
@@ -84,12 +83,9 @@ export class StudentSentenceCompletionComponent implements OnInit {
         this.currentResult = response.taskResult.currentResult
         this.attempts = response.taskResult.attempts
       } else {
-        this.dialog.open(GroupingResultComponent, {
-          data: {startedExercise: response}
-        })
-        let subscription = this.dialog.afterAllClosed.subscribe(() => {
-          MyExercisesComponent.navigateNextTask(response, this.router, this.dialog)
-          subscription.unsubscribe()
+        this.dialog.open(SentenceCompletionResultComponent, {
+          data: {startedExercise: response},
+          disableClose: true
         })
       }
       this.loaded = true
