@@ -125,21 +125,21 @@ export class ExercisesComponent implements OnInit {
           owner: exercise.owner,
           comment: exercise.comment,
           name: exercise.name,
-            tasks: exercise.tasks,
-          } as ExercisesResponse);
-          this.exercisesUI.push({
-            id: exercise.id,
-            averageDifficulty: exercise.averageDifficulty,
-            lastModified: DateUtils.getFormattedDate(exercise.lastModified),
-            classLevel: exercise.classLevel,
-            subject: SubjectEnumUtil.subjectToString(exercise.subject),
-            owner: exercise.owner,
-            comment: exercise.comment,
-            name: exercise.name,
-            difficulty: exercise.averageDifficulty,
-            tasks: this.mapTaskResponse(exercise.tasks),
-          } as ExerciseUI);
-        });
+          tasks: exercise.tasks,
+        } as ExercisesResponse);
+        this.exercisesUI.push({
+          id: exercise.id,
+          averageDifficulty: exercise.averageDifficulty,
+          lastModified: DateUtils.getFormattedDate(exercise.lastModified),
+          classLevel: exercise.classLevel,
+          subject: SubjectEnumUtil.subjectToString(exercise.subject),
+          owner: exercise.owner,
+          comment: exercise.comment,
+          name: exercise.name,
+          difficulty: exercise.averageDifficulty,
+          tasks: this.mapTaskResponse(exercise.tasks),
+        } as ExerciseUI);
+      });
       this.exercisesLoaded = true;
     })
   }
