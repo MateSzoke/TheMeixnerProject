@@ -23,7 +23,7 @@ export class ExerciseListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.exerciseService.getMyExercisesUsingGET1().subscribe(exercises => {
+    this.exerciseService.getMyExercisesUsingGET().subscribe(exercises => {
         exercises.forEach(exercise => {
           this.exercises.push(new ExerciseUI(exercise.id, exercise.name, exercise.comment, exercise.lastModified));
         });
