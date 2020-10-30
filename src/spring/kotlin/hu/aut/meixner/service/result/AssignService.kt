@@ -3,7 +3,7 @@ package hu.aut.meixner.service.result
 import hu.aut.meixner.dto.result.AssignedExercise
 import hu.aut.meixner.dto.result.StartedExercise
 import hu.aut.meixner.dto.result.TaskResultResponse
-import hu.aut.meixner.dto.task.student.easy.AssignTask
+import hu.aut.meixner.dto.task.student.AssignTask
 import hu.aut.meixner.entity.result.SolvedExercise
 import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.mapping.toAssignedExercise

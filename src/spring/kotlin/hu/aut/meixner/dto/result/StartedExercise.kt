@@ -1,6 +1,6 @@
 package hu.aut.meixner.dto.result
 
-import hu.aut.meixner.dto.task.student.easy.AssignTask
+import hu.aut.meixner.dto.task.student.AssignTask
 
 class StartedExercise(
         val id: Long,

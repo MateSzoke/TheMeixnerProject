@@ -1,6 +1,7 @@
 package hu.aut.meixner.dto.task.student.easy
 
 import hu.aut.meixner.dto.task.common.TaskTypeEnum
+import hu.aut.meixner.dto.task.student.AssignTask
 
 class SentenceCompletionTask(
         override val taskId: Long,
