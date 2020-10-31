@@ -4,10 +4,10 @@ import hu.aut.meixner.dto.task.complex.SentenceCompletionAndGroupingRequest
 import hu.aut.meixner.dto.task.complex.SentenceCompletionAndGroupingResponse
 import hu.aut.meixner.extensions.currentUser
 import hu.aut.meixner.extensions.ownerIsTheCurrentUser
-import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.mapping.toDomainModel
 import hu.aut.meixner.mapping.toEntity
 import hu.aut.meixner.repository.task.complex.SentenceCompletionAndGroupingRepository
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
@@ -19,7 +19,7 @@ class SentenceCompletionAndGroupingService(
     }
 
     fun updateSentenceCompletionAndGrouping(id: Long, request: SentenceCompletionAndGroupingRequest): SentenceCompletionAndGroupingResponse? {
-        val sentenceCompletion = repository.findById(id).toNullable ?: return null
+        val sentenceCompletion = repository.findByIdOrNull(id) ?: return null
         if (!sentenceCompletion.ownerIsTheCurrentUser) return null
         return repository.save(request.toEntity(currentUser).apply { this.id = id }).toDomainModel()
     }
