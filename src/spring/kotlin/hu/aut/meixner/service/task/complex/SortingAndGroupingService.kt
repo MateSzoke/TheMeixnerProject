@@ -6,6 +6,7 @@ import hu.aut.meixner.entity.task.easy.GroupElementEntity
 import hu.aut.meixner.extensions.currentUser
 import hu.aut.meixner.extensions.ownerIsTheCurrentUser
 import hu.aut.meixner.extensions.toNullable
+import hu.aut.meixner.mapping.containsRequests
 import hu.aut.meixner.mapping.toDomainModel
 import hu.aut.meixner.mapping.toEntity
 import hu.aut.meixner.repository.task.complex.SortingAndGroupingRepository
@@ -35,6 +36,7 @@ class SortingAndGroupingService(
         return repository.save(
                 request.toEntity(owner = currentUser, groups = request.groups.map { grouping ->
                     GroupElementEntity(
+                            id = result.groups.find { it.elements.containsRequests(grouping.elements) }?.id ?: 0,
                             name = "",
                             elements = grouping.elements.mapNotNull {
                                 mediaItemService.mediaItemRequestToEntity(it) ?: return@mapNotNull null

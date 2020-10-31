@@ -7,7 +7,5 @@ import java.util.logging.Logger
 inline val <T : Any> Optional<T>.toNullable: T?
     get() = this.orElse(null)
 
-object Log {
-    fun i(message: String) = Logger.getAnonymousLogger().log(Level.INFO, message)
-}
+    fun log(message: String) = Logger.getAnonymousLogger().log(Level.INFO, message)
 

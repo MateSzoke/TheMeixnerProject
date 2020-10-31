@@ -6,6 +6,7 @@ import hu.aut.meixner.entity.task.easy.GroupElementEntity
 import hu.aut.meixner.extensions.currentUser
 import hu.aut.meixner.extensions.ownerIsTheCurrentUser
 import hu.aut.meixner.extensions.toNullable
+import hu.aut.meixner.mapping.containsRequests
 import hu.aut.meixner.mapping.toDomainModel
 import hu.aut.meixner.mapping.toEntity
 import hu.aut.meixner.repository.task.easy.GroupingRepository
@@ -34,6 +35,7 @@ class GroupingService(
         if (!result.ownerIsTheCurrentUser) return null
         return groupingRepository.save(groupingRequest.toEntity(owner = currentUser, groups = groupingRequest.groups.map { grouping ->
             GroupElementEntity(
+                    id = result.groups.find { it.elements.containsRequests(grouping.elements) }?.id ?: 0,
                     name = grouping.name,
                     elements = grouping.elements.mapNotNull {
                         mediaItemService.mediaItemRequestToEntity(it) ?: return@mapNotNull null

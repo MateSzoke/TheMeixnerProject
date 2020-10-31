@@ -6,6 +6,7 @@ import hu.aut.meixner.entity.task.easy.PairEntity
 import hu.aut.meixner.extensions.currentUser
 import hu.aut.meixner.extensions.ownerIsTheCurrentUser
 import hu.aut.meixner.extensions.toNullable
+import hu.aut.meixner.mapping.containsRequests
 import hu.aut.meixner.mapping.toDomainModel
 import hu.aut.meixner.mapping.toEntity
 import hu.aut.meixner.repository.task.easy.MemoryGameRepository
@@ -37,6 +38,7 @@ class MemoryGameService(
         return memoryGameRepository.save(
                 request.toEntity(owner = currentUser, pairs = request.pairs.map { pair ->
                     PairEntity(
+                            id = result.pairs.find { it.pair.containsRequests(pair.pair) }?.id ?: 0,
                             pair = pair.pair.mapNotNull {
                                 mediaItemService.mediaItemRequestToEntity(it) ?: return@mapNotNull null
                             }.toMutableList()
