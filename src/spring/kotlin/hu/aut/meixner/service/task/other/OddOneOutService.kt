@@ -4,11 +4,11 @@ import hu.aut.meixner.dto.task.other.OddOneOutRequest
 import hu.aut.meixner.dto.task.other.OddOneOutResponse
 import hu.aut.meixner.extensions.currentUser
 import hu.aut.meixner.extensions.ownerIsTheCurrentUser
-import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.mapping.toDomainModel
 import hu.aut.meixner.mapping.toEntity
 import hu.aut.meixner.repository.task.other.OddOneOutRepository
 import hu.aut.meixner.service.file.MediaItemService
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
@@ -24,7 +24,7 @@ class OddOneOutService(
     }
 
     fun updateOddOneOut(id: Long, request: OddOneOutRequest): OddOneOutResponse? {
-        val oddOneOutEntity = repository.findById(id).toNullable ?: return null
+        val oddOneOutEntity = repository.findByIdOrNull(id) ?: return null
         if (!oddOneOutEntity.ownerIsTheCurrentUser) return null
         if (request.correctAnswerIndex !in 0..request.options.lastIndex) return null
         return repository.save(

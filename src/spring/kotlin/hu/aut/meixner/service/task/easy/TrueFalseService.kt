@@ -4,11 +4,11 @@ import hu.aut.meixner.dto.task.easy.TrueFalseRequest
 import hu.aut.meixner.dto.task.easy.TrueFalseResponse
 import hu.aut.meixner.extensions.currentUser
 import hu.aut.meixner.extensions.ownerIsTheCurrentUser
-import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.mapping.toDomainModel
 import hu.aut.meixner.mapping.toEntity
 import hu.aut.meixner.repository.task.easy.TrueFalseRepository
 import hu.aut.meixner.service.file.MediaItemService
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
@@ -30,7 +30,7 @@ class TrueFalseService(
     }
 
     fun updateTrueFalse(id: Long, request: TrueFalseRequest): TrueFalseResponse? {
-        val result = trueFalseRepository.findById(id).toNullable ?: return null
+        val result = trueFalseRepository.findByIdOrNull(id) ?: return null
         if (!result.ownerIsTheCurrentUser) return null
         return trueFalseRepository.save(request.toEntity(
                 owner = currentUser,

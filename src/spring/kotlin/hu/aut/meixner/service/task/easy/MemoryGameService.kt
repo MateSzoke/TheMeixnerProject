@@ -5,12 +5,12 @@ import hu.aut.meixner.dto.task.easy.MemoryGameResponse
 import hu.aut.meixner.entity.task.easy.PairEntity
 import hu.aut.meixner.extensions.currentUser
 import hu.aut.meixner.extensions.ownerIsTheCurrentUser
-import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.mapping.containsRequests
 import hu.aut.meixner.mapping.toDomainModel
 import hu.aut.meixner.mapping.toEntity
 import hu.aut.meixner.repository.task.easy.MemoryGameRepository
 import hu.aut.meixner.service.file.MediaItemService
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
@@ -33,7 +33,7 @@ class MemoryGameService(
 
     fun updateMemoryGame(id: Long, request: MemoryGameRequest): MemoryGameResponse? {
         if (request.pairs.any { it.pair.size !in 1..2 }) return null
-        val result = memoryGameRepository.findById(id).toNullable ?: return null
+        val result = memoryGameRepository.findByIdOrNull(id) ?: return null
         if (!result.ownerIsTheCurrentUser) return null
         return memoryGameRepository.save(
                 request.toEntity(owner = currentUser, pairs = request.pairs.map { pair ->

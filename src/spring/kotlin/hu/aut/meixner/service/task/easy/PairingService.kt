@@ -5,19 +5,17 @@ import hu.aut.meixner.dto.task.easy.PairingResponse
 import hu.aut.meixner.entity.task.easy.PairEntity
 import hu.aut.meixner.extensions.currentUser
 import hu.aut.meixner.extensions.ownerIsTheCurrentUser
-import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.mapping.containsRequests
 import hu.aut.meixner.mapping.toDomainModel
 import hu.aut.meixner.mapping.toEntity
-import hu.aut.meixner.repository.task.easy.PairRepository
 import hu.aut.meixner.repository.task.easy.PairingRepository
 import hu.aut.meixner.service.file.MediaItemService
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
 class PairingService(
         private val pairingRepository: PairingRepository,
-        private val pairRepository: PairRepository,
         private val mediaItemService: MediaItemService
 ) {
 
@@ -40,7 +38,7 @@ class PairingService(
     }
 
     fun updatePairing(id: Long, pairingRequest: PairingRequest): PairingResponse? {
-        val result = pairingRepository.findById(id).toNullable ?: return null
+        val result = pairingRepository.findByIdOrNull(id) ?: return null
         if (!result.ownerIsTheCurrentUser) return null
         return pairingRepository.save(
                 pairingRequest.toEntity(owner = currentUser, pairs = pairingRequest.pairs.map { pair ->
