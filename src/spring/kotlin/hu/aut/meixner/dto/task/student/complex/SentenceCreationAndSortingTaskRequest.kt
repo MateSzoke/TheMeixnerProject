@@ -1,4 +1,8 @@
 package hu.aut.meixner.dto.task.student.complex
 
-class SentenceCreationAndSortingTaskRequest {
-}
+import hu.aut.meixner.dto.task.easy.Sentence
+
+class SentenceCreationAndSortingTaskRequest(
+        val attempts: Int,
+        val sentences: List<Sentence>
+)

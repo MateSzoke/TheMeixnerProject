@@ -3,9 +3,11 @@ package hu.aut.meixner.dto.task.student.complex
 import hu.aut.meixner.dto.task.common.TaskTypeEnum
 import hu.aut.meixner.dto.task.student.AssignTask
 
-class SentenceCompletionAndSortingTask(
+class SentenceCreationAndGroupingTask(
         override val taskId: Long,
         override val title: String,
         override val type: TaskTypeEnum = TaskTypeEnum.SentenceCompletionAndSorting,
-        val sentences: List<SentenceTaskItem>
+        val groupTitles: List<String>,
+        val sentenceTitles: List<String>,
+        val parts: List<String>
 ) : AssignTask()
