@@ -4,11 +4,11 @@ import hu.aut.meixner.dto.task.easy.SortingRequest
 import hu.aut.meixner.dto.task.easy.SortingResponse
 import hu.aut.meixner.extensions.currentUser
 import hu.aut.meixner.extensions.ownerIsTheCurrentUser
-import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.mapping.toDomainModel
 import hu.aut.meixner.mapping.toEntity
 import hu.aut.meixner.repository.task.easy.SortingRepository
 import hu.aut.meixner.service.file.MediaItemService
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
@@ -24,7 +24,7 @@ class SortingService(
     }
 
     fun updateSorting(id: Long, sortingRequest: SortingRequest): SortingResponse? {
-        val sorting = sortingRepository.findById(id).toNullable ?: return null
+        val sorting = sortingRepository.findByIdOrNull(id) ?: return null
         if (!sorting.ownerIsTheCurrentUser) return null
         return sortingRepository.save(
                 sortingRequest.toEntity(owner = currentUser, elements = sortingRequest.elements.mapNotNull {

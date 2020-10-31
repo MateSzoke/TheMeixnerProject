@@ -5,11 +5,12 @@ import hu.aut.meixner.dto.task.easy.GroupingResponse
 import hu.aut.meixner.entity.task.easy.GroupElementEntity
 import hu.aut.meixner.extensions.currentUser
 import hu.aut.meixner.extensions.ownerIsTheCurrentUser
-import hu.aut.meixner.extensions.toNullable
+import hu.aut.meixner.mapping.containsRequests
 import hu.aut.meixner.mapping.toDomainModel
 import hu.aut.meixner.mapping.toEntity
 import hu.aut.meixner.repository.task.easy.GroupingRepository
 import hu.aut.meixner.service.file.MediaItemService
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
@@ -30,10 +31,11 @@ class GroupingService(
     }
 
     fun updateGrouping(id: Long, groupingRequest: GroupingRequest): GroupingResponse? {
-        val result = groupingRepository.findById(id).toNullable ?: return null
+        val result = groupingRepository.findByIdOrNull(id) ?: return null
         if (!result.ownerIsTheCurrentUser) return null
         return groupingRepository.save(groupingRequest.toEntity(owner = currentUser, groups = groupingRequest.groups.map { grouping ->
             GroupElementEntity(
+                    id = result.groups.find { it.elements.containsRequests(grouping.elements) }?.id ?: 0,
                     name = grouping.name,
                     elements = grouping.elements.mapNotNull {
                         mediaItemService.mediaItemRequestToEntity(it) ?: return@mapNotNull null

@@ -5,11 +5,12 @@ import hu.aut.meixner.dto.task.complex.SortingAndGroupingResponse
 import hu.aut.meixner.entity.task.easy.GroupElementEntity
 import hu.aut.meixner.extensions.currentUser
 import hu.aut.meixner.extensions.ownerIsTheCurrentUser
-import hu.aut.meixner.extensions.toNullable
+import hu.aut.meixner.mapping.containsRequests
 import hu.aut.meixner.mapping.toDomainModel
 import hu.aut.meixner.mapping.toEntity
 import hu.aut.meixner.repository.task.complex.SortingAndGroupingRepository
 import hu.aut.meixner.service.file.MediaItemService
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
@@ -30,11 +31,12 @@ class SortingAndGroupingService(
     }
 
     fun updateSortingAndGrouping(id: Long, request: SortingAndGroupingRequest): SortingAndGroupingResponse? {
-        val result = repository.findById(id).toNullable ?: return null
+        val result = repository.findByIdOrNull(id) ?: return null
         if (!result.ownerIsTheCurrentUser) return null
         return repository.save(
                 request.toEntity(owner = currentUser, groups = request.groups.map { grouping ->
                     GroupElementEntity(
+                            id = result.groups.find { it.elements.containsRequests(grouping.elements) }?.id ?: 0,
                             name = "",
                             elements = grouping.elements.mapNotNull {
                                 mediaItemService.mediaItemRequestToEntity(it) ?: return@mapNotNull null

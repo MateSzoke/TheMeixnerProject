@@ -2,12 +2,12 @@ package hu.aut.meixner.service.task
 
 import hu.aut.meixner.dto.task.common.TaskResponse
 import hu.aut.meixner.extensions.currentUser
-import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.mapping.toDomainModel
 import hu.aut.meixner.repository.task.complex.*
 import hu.aut.meixner.repository.task.easy.*
 import hu.aut.meixner.repository.task.other.*
 import org.springframework.dao.EmptyResultDataAccessException
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
@@ -33,24 +33,24 @@ class TaskService(
 ) {
 
     fun getTaskById(taskId: Long): TaskResponse? {
-        return pairingRepository.findById(taskId).toNullable?.toDomainModel()
-                ?: groupingRepository.findById(taskId).toNullable?.toDomainModel()
-                ?: sentenceCompletionRepository.findById(taskId).toNullable?.toDomainModel()
-                ?: sentenceCreationRepository.findById(taskId).toNullable?.toDomainModel()
-                ?: sortingRepository.findById(taskId).toNullable?.toDomainModel()
-                ?: trueFalseRepository.findById(taskId).toNullable?.toDomainModel()
-                ?: memoryGameRepository.findById(taskId).toNullable?.toDomainModel()
-                ?: groupingAndSortingRepository.findById(taskId).toNullable?.toDomainModel()
-                ?: sentenceCreationAndSortingRepository.findById(taskId).toNullable?.toDomainModel()
-                ?: sentenceCreationAndGroupingRepository.findById(taskId).toNullable?.toDomainModel()
-                ?: sentenceCompletionAndSortingRepository.findById(taskId).toNullable?.toDomainModel()
-                ?: sentenceCompletionAndGroupingRepository.findById(taskId).toNullable?.toDomainModel()
-                ?: sortingAndGroupingRepository.findById(taskId).toNullable?.toDomainModel()
-                ?: blindMapRepository.findById(taskId).toNullable?.toDomainModel()
-                ?: timelineRepository.findById(taskId).toNullable?.toDomainModel()
-                ?: oddOneOutRepository.findById(taskId).toNullable?.toDomainModel()
-                ?: freeTextRepository.findById(taskId).toNullable?.toDomainModel()
-                ?: tableRepository.findById(taskId).toNullable?.toDomainModel()
+        return pairingRepository.findByIdOrNull(taskId)?.toDomainModel()
+                ?: groupingRepository.findByIdOrNull(taskId)?.toDomainModel()
+                ?: sentenceCompletionRepository.findByIdOrNull(taskId)?.toDomainModel()
+                ?: sentenceCreationRepository.findByIdOrNull(taskId)?.toDomainModel()
+                ?: sortingRepository.findByIdOrNull(taskId)?.toDomainModel()
+                ?: trueFalseRepository.findByIdOrNull(taskId)?.toDomainModel()
+                ?: memoryGameRepository.findByIdOrNull(taskId)?.toDomainModel()
+                ?: groupingAndSortingRepository.findByIdOrNull(taskId)?.toDomainModel()
+                ?: sentenceCreationAndSortingRepository.findByIdOrNull(taskId)?.toDomainModel()
+                ?: sentenceCreationAndGroupingRepository.findByIdOrNull(taskId)?.toDomainModel()
+                ?: sentenceCompletionAndSortingRepository.findByIdOrNull(taskId)?.toDomainModel()
+                ?: sentenceCompletionAndGroupingRepository.findByIdOrNull(taskId)?.toDomainModel()
+                ?: sortingAndGroupingRepository.findByIdOrNull(taskId)?.toDomainModel()
+                ?: blindMapRepository.findByIdOrNull(taskId)?.toDomainModel()
+                ?: timelineRepository.findByIdOrNull(taskId)?.toDomainModel()
+                ?: oddOneOutRepository.findByIdOrNull(taskId)?.toDomainModel()
+                ?: freeTextRepository.findByIdOrNull(taskId)?.toDomainModel()
+                ?: tableRepository.findByIdOrNull(taskId)?.toDomainModel()
     }
 
     fun getAllTasks(): List<TaskResponse> {
