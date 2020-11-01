@@ -12,6 +12,6 @@
 
 
 export interface Sentence { 
-    parts: Array<string>;
     sentenceTitle: string;
+    parts: Array<string>;
 }

@@ -1,49 +1,28 @@
 <div class="container_row">
-  <mat-slider
-    #matSlider1
-    class="layer1"
-    [disabled]="false"
-    [invert]="invert"
-    [max]="max"
-    [min]="min"
-    [step]="step"
-    [thumbLabel]="thumbLabel"
-    [(ngModel)]="value2"
-    [vertical]="vertical"
-  >
-  </mat-slider>
-  <mat-slider
-    #matSlider2
-    class="layer1 thumbred"
-    [disabled]="false"
-    [invert]="invert"
-    [max]="max"
-    [min]="min"
-    [step]="step"
-    [thumbLabel]="thumbLabel"
-    [(ngModel)]="value1"
-    [vertical]="vertical"
-  >
-  </mat-slider>
-  <mat-slider
-    #matSlider3
-    class="layer1"
-    [disabled]="false"
-    [invert]="invert"
-    [max]="max"
-    [min]="min"
-    [step]="step"
-    [thumbLabel]="thumbLabel"
-    [(ngModel)]="value3"
-    [vertical]="vertical"
+  <mat-slider *ngFor="let slider of sliders"
+              class="layer1"
+              [ngClass]="slider.color"
+              [disabled]="false"
+              [invert]="invert"
+              [max]="max"
+              [min]="min"
+              [step]="step"
+              [thumbLabel]="thumbLabel"
+              [(ngModel)]="slider.value"
+              [vertical]="vertical"
   >
   </mat-slider>
 </div>
+<div class="dot"></div>
+<div *ngFor="let slider of sliders" class="dot" [ngStyle]="{'background-color': slider.color2}">
+  {{slider.value}}
+</div>
+
 
 <button
   type="submit"
   mat-flat-button
   class="color-mat"
-  (click)="rotate()">
-  Toggle
+  (click)="ujElem()">
+  Új elem
 </button>

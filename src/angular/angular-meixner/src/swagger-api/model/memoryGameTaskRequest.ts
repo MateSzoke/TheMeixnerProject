@@ -9,10 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import {PairElementRequest} from './pairElementRequest';
+import { PairElementRequest } from './pairElementRequest';
 
 
-export interface MemoryGameTaskRequest {
-  attempts?: number;
-  pairs: Array<PairElementRequest>;
+export interface MemoryGameTaskRequest { 
+    attempts?: number;
+    pairs: Array<PairElementRequest>;
 }

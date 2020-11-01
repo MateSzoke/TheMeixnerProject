@@ -9,10 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import {GroupRequest} from './groupRequest';
+import { GroupRequest } from './groupRequest';
 
 
-export interface GroupingTaskRequest {
-  attempts?: number;
-  groups: Array<GroupRequest>;
+export interface GroupingTaskRequest { 
+    attempts?: number;
+    groups: Array<GroupRequest>;
 }

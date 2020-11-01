@@ -1,24 +1,24 @@
-import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
-import {Configuration} from './configuration';
-import {HttpClient} from '@angular/common/http';
+import { NgModule, ModuleWithProviders, SkipSelf, Optional } from '@angular/core';
+import { Configuration } from './configuration';
+import { HttpClient } from '@angular/common/http';
 
 
-import {AccountService} from './api/account.service';
-import {AssignService} from './api/assign.service';
-import {BasicErrorControllerService} from './api/basicErrorController.service';
-import {ComplexTasksService} from './api/complexTasks.service';
-import {EasyTasksService} from './api/easyTasks.service';
-import {EvaluateService} from './api/evaluate.service';
-import {ExercisesService} from './api/exercises.service';
-import {FilesService} from './api/files.service';
-import {OtherTasksService} from './api/otherTasks.service';
-import {ResultsService} from './api/results.service';
-import {TaskService} from './api/task.service';
+import { AccountService } from './api/account.service';
+import { AssignService } from './api/assign.service';
+import { BasicErrorControllerService } from './api/basicErrorController.service';
+import { ComplexTasksService } from './api/complexTasks.service';
+import { EasyTasksService } from './api/easyTasks.service';
+import { EvaluateService } from './api/evaluate.service';
+import { ExercisesService } from './api/exercises.service';
+import { FilesService } from './api/files.service';
+import { OtherTasksService } from './api/otherTasks.service';
+import { ResultsService } from './api/results.service';
+import { TaskService } from './api/task.service';
 
 @NgModule({
-  imports: [],
+  imports:      [],
   declarations: [],
-  exports: [],
+  exports:      [],
   providers: [
     AccountService,
     AssignService,
@@ -30,7 +30,7 @@ import {TaskService} from './api/task.service';
     FilesService,
     OtherTasksService,
     ResultsService,
-    TaskService]
+    TaskService ]
 })
 export class ApiModule {
     public static forRoot(configurationFactory: () => Configuration): ModuleWithProviders {

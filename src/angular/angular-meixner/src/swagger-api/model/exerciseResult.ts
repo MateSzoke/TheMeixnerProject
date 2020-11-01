@@ -9,13 +9,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import {TaskResultResponse} from './taskResultResponse';
+import { TaskResultResponse } from './taskResultResponse';
 
 
-export interface ExerciseResult {
-  averageAttempts: number;
-  exerciseName: string;
-  lastModified: Date;
-  taskResults: Array<TaskResultResponse>;
-  resultPercentage: number;
+export interface ExerciseResult { 
+    averageAttempts: number;
+    exerciseName: string;
+    lastModified: Date;
+    taskResults: Array<TaskResultResponse>;
 }

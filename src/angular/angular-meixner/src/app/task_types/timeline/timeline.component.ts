@@ -34,11 +34,14 @@ export class TimelineComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.sliders.push({value: 20, color: 'red'});
+    this.sliders.push({value: 20, color: 'thumbred', color2: 'red'});
+    this.sliders.push({value: 40, color: 'thumbyellow', color2: 'yellow'});
+    this.sliders.push({value: 44, color: 'thumbyellowgreen', color2: 'yellowgreen'});
+    this.sliders.push({value: 66, color: 'thumborange', color2: 'orange'});
   }
 
-  rotate() {
-    this._slider3._elementRef.nativeElement.focus();
+  ujElem() {
+    this.sliders.push({value: 42, color: 'thumbblue', color2: 'blue'});
   }
 
 }
