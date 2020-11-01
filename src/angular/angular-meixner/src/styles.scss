@@ -46,6 +46,30 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
 }
 
+.thumbyellow {
+  .mat-slider-thumb {
+    background-color: yellow !important;
+  }
+}
+
+.thumbyellowgreen {
+  .mat-slider-thumb {
+    background-color: yellowgreen !important;
+  }
+}
+
+.thumbblue {
+  .mat-slider-thumb {
+    background-color: blue !important;
+  }
+}
+
+.thumborange {
+  .mat-slider-thumb {
+    background-color: orange !important;
+  }
+}
+
 .mat-slider-thumb {
   background-color: #90a4ae !important;
 }
