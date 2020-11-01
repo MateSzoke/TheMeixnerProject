@@ -17,8 +17,13 @@
           Mentés
         </button>
       </div>
-      <div class="flex-layout-center">
-        {{this.title}}&nbsp;-&nbsp;{{this.type}}
+      <div>
+        <div class="flex-layout-center">
+          {{this.title}}&nbsp;-&nbsp;
+        </div>
+        <div class="flex-layout-center">
+          {{this.type}}
+        </div>
       </div>
       <div *ngIf="plusButton" class="flex-layout-end">
         <button (click)="newElement()" class="plusButton" mat-button>

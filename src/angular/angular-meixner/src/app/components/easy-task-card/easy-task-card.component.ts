@@ -17,9 +17,10 @@ export class EasyTaskCardComponent implements OnInit {
   @Output() imageId = new EventEmitter<UpdateBlock>();
 
   @Input() listItemsMedia: MediaItemRequest[];
-  @Input() listItemsString: string[];
+  @Input() listItemsStringArray = new Array<string>();
   @Input() isMediaList = true;
   @Input() singleton = false;
+  @Input() smallBlock = false;
   @Input() deleteDisable = false;
   @Input() titleExists = false;
   @Input() title = '';
@@ -52,6 +53,8 @@ export class EasyTaskCardComponent implements OnInit {
   }
 
   onTitleChange($event: string) {
+    console.log("title change");
+    console.log(this.isMediaList);
     this.titleChange.emit($event);
   }
 

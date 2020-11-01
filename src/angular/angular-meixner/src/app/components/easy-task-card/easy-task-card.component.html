@@ -1,4 +1,4 @@
-<mat-card class="mat-card-list" [ngClass]="singleton ? 'mat-width-singleton' : 'mat-width'">
+<mat-card [ngClass]="singleton ? 'mat-width-singleton mat-card-list' : smallBlock ? 'mat-width-small' : 'mat-width mat-card-list'">
   <mat-card-content>
     <mat-toolbar-row>
       <div class="flex-layout-center">
@@ -36,7 +36,7 @@
       </form>
     </ng-container>
     <ng-template #listItemsString>
-      <form *ngFor="let mediaItem of listItemsString; let j = index; trackBy:customTrackBy" class="my-form">
+      <form *ngFor="let mediaItem of listItemsStringArray; let j = index; trackBy:customTrackBy" class="my-form">
         <mat-form-field class="width-and-trash">
           <input [ngModel]="mediaItem"
                  (ngModelChange)="updateBlockElement($event, j)" matInput name="username">

@@ -31,6 +31,11 @@ import {StudentTrueFalseComponent} from "./student/tasks/student-true-false/stud
 import {ExerciseResultComponent} from "./student/exercise-result/exercise-result.component";
 import {EasyTaskComponent} from "./task_types/easy-task/easy-task.component";
 import {MemoryGameComponent} from "./task_types/memory-game/memory-game.component";
+import {SentencecreationGroupingComponent} from "./task_types/sentencecreation-grouping/sentencecreation-grouping.component";
+import {BlindmapComponent} from "./task_types/blindmap/blindmap.component";
+import {FreetextComponent} from "./task_types/freetext/freetext.component";
+import {OddOneOutComponent} from "./task_types/odd-one-out/odd-one-out.component";
+import {TimelineComponent} from "./task_types/timeline/timeline.component";
 
 
 const routes: Routes = [
@@ -55,11 +60,6 @@ const routes: Routes = [
     canActivate: [RouteGuardService]
   },
   {
-    path: Path.SENTENCE_CREATION,
-    component: SentenceCreationComponent,
-    canActivate: [RouteGuardService]
-  },
-  {
     path: Path.SORTING,
     component: SortingComponent,
     canActivate: [RouteGuardService]
@@ -70,8 +70,18 @@ const routes: Routes = [
     canActivate: [RouteGuardService]
   },
   {
+    path: Path.SENTENCE_CREATION,
+    component: SentenceCreationComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
     path: Path.GROUPING_SORTING,
     component: GroupingSortingComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: Path.SORTING_GROUPING,
+    component: SortingGroupingComponent,
     canActivate: [RouteGuardService]
   },
   {
@@ -80,8 +90,13 @@ const routes: Routes = [
     canActivate: [RouteGuardService]
   },
   {
-    path: Path.SENTENCE_CREATION_SORTING,
+    path: Path.SENTENCE_COMPLETION_SORTING,
     component: SentencecompletionSortingComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: Path.SENTENCE_CREATION_GROUPING,
+    component: SentencecreationGroupingComponent,
     canActivate: [RouteGuardService]
   },
   {
@@ -90,8 +105,23 @@ const routes: Routes = [
     canActivate: [RouteGuardService]
   },
   {
-    path: Path.SORTING_GROUPING,
-    component: SortingGroupingComponent,
+    path: Path.BLINDMAP,
+    component: BlindmapComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: Path.FREE_TEXT,
+    component: FreetextComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: Path.ODD_ONE_OUT,
+    component: OddOneOutComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: Path.TIMELINE,
+    component: TimelineComponent,
     canActivate: [RouteGuardService]
   },
   {
@@ -180,7 +210,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { enableTracing: false })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

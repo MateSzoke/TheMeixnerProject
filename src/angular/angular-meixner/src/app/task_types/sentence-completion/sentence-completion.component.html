@@ -24,7 +24,7 @@
         <form *ngFor="let sentenceItem of this.sentenceCompletionRequest.sentence; let j = index; trackBy:customTrackBy"
               class="my-form">
           <mat-form-field class="width-and-trash">
-            <input [ngModel]="this.sentenceCompletionRequest.sentence[j]"
+            <input [ngModel]="this.sentenceCompletionRequest.sentence[j]" (click)="getSelection($event)"
                    (ngModelChange)="updateSentencePart(j, $event)" matInput name="mondat">
           </mat-form-field>
           <i (click)="this.deleteElement(j)" class="fa fa-trash"></i>&nbsp;

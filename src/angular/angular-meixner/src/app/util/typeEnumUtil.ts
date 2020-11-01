@@ -30,11 +30,11 @@ export class TypeEnumUtil {
       case "SentenceCompletionAndSorting":
         return "Mondat kiegészítés és sorrendezés"
       case "SentenceCreationAndGrouping":
-        return "Mondat kiegészítés és csoportosítás"
+        return "Mondatkészítés és csoportosítás"
       case "SentenceCompletionAndGrouping":
-        return "Sorrendezés és csoportosítás"
+        return "Mondat kiegészítés és csoportosítás"
       case "SortingAndGrouping":
-        return "Párosítás"
+        return "Sorrendezés és csoportosítás"
       case "BlindMap":
         return "Ágrajz/Vaktérkép"
       case "TimeLine":
@@ -50,38 +50,40 @@ export class TypeEnumUtil {
 
   public static stringToTaskType(type: string): TypeEnum {
     switch (type) {
-      case "Párosítás":
-        return TypeEnum.Pairing
       case "Csoportosítás":
         return TypeEnum.Grouping
-      case "Sorrendezés":
-        return TypeEnum.Sorting
-      case "Mondat készítés":
-        return TypeEnum.SentenceCreation
+      case "Párosítás":
+        return TypeEnum.Pairing
       case "Mondat kiegészítés":
         return TypeEnum.SentenceCompletion
+      case "Mondat készítés":
+        return TypeEnum.SentenceCreation
+      case "Sorrendezés":
+        return TypeEnum.Sorting
       case "Igaz/Hamis":
         return TypeEnum.TrueFalse
       case "Memóriajáték":
         return TypeEnum.MemoryGame
       case "Csoportosítás és sorrendezés":
         return TypeEnum.GroupingAndSorting
-      case "Mondatkészítés és sorrendezés ":
-        return TypeEnum.SentenceCreationAndSorting
-      case "Mondat kiegészítés és sorrendezés":
-        return TypeEnum.SentenceCompletionAndSorting
       case "Mondat kiegészítés és csoportosítás":
         return TypeEnum.SentenceCompletionAndGrouping
+      case "Mondat kiegészítés és sorrendezés":
+        return TypeEnum.SentenceCompletionAndSorting
+      case "Mondatkészítés és csoportosítás":
+        return TypeEnum.SentenceCreationAndGrouping
+      case "Mondatkészítés és sorrendezés":
+        return TypeEnum.SentenceCreationAndSorting
       case "Sorrendezés és csoportosítás":
         return TypeEnum.SortingAndGrouping
       case "Ágrajz/Vaktérkép":
         return TypeEnum.BlindMap
-      case "Időszalag":
-        return TypeEnum.TimeLine
-      case "Kakukktojás":
-        return TypeEnum.OddOneOut
       case "Szabadszöveges":
         return TypeEnum.FreeText
+      case "Kakukktojás":
+        return TypeEnum.OddOneOut
+      case "Időszalag":
+        return TypeEnum.TimeLine
       case "Táblázat":
         return TypeEnum.Table
     }

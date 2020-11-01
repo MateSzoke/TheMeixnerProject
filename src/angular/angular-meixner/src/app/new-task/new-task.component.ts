@@ -68,6 +68,7 @@ export class NewTaskComponent implements OnInit {
     if (!this.newTaskForm.valid) {
       return
     }
+    console.log(this.newTaskForm.value);
     this.navigateToTaskTypeComponent(TypeEnumUtil.stringToTaskType(this.newTaskForm.value.type))
     this.dialogRef.close()
   }

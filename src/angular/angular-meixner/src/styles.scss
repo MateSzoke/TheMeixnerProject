@@ -40,12 +40,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   opacity: 0.5;
 }
 
+.thumbred {
+  .mat-slider-thumb {
+    background-color: red !important;
+  }
+}
+
 .mat-slider-thumb {
   background-color: #90a4ae !important;
 }
 
 .mat-slider-thumb-label {
-  background-color: #90a4ae  !important;
+  background-color: red  !important;
 }
 
 .mat-slider-ticks {

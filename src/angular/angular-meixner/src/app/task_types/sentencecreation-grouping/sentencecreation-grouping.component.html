@@ -1,1 +1,63 @@
-<p>sentencecreation-grouping works!</p>
+<html>
+<body>
+<app-task-top-row
+  [title]="this.sentenceCreationAndGroupingRequest.title"
+  [type]="'mondatkészítés csoportosítás'"
+  (saveDataEmit)="this.saveData()"
+  (newElementEmit)="this.addSentenceGroup()">
+</app-task-top-row>
+<div *ngIf="!this.loaded">
+  <div class="wrapper">
+    <div class="inner">
+      <mat-spinner diameter="70"></mat-spinner>
+    </div>
+  </div>
+</div>
+<div *ngIf="this.loaded" class="mat-card-base">
+  <ng-container *ngFor="let member of this.sentenceCreationAndGroupingRequest.sentenceGroups; let i = index">
+    <mat-card>
+      <mat-card-content>
+        <mat-toolbar-row>
+          <div class="flex-layout-center">
+          </div>
+          <ng-container>
+            <div class="flex-layout-end">
+              <i (click)="this.deleteSentenceGroup(i)" class="fa fa-trash fa-lg"></i>&nbsp;
+            </div>
+          </ng-container>
+        </mat-toolbar-row>
+        <div>
+          <mat-form-field class="width-and-trash">
+            <input [ngModel]="member.groupTitle"
+                   (ngModelChange)="changeGroupTitle(i, $event)" matInput name="title">
+          </mat-form-field>
+        </div>
+        <div *ngFor="let mediaItem of member.sentences; let j = index" class="my-form">
+            <app-easy-task-card
+              [titleExists]="true"
+              [title]="mediaItem.sentenceTitle"
+              [listItemsStringArray]="member.sentences[j].parts"
+              [isMediaList]="false"
+              [smallBlock]="true"
+              (titleChange)="changeSentenceTitle(i,j,$event)"
+              (deleteBlockEmit)="deleteSentence(i,j)"
+              (deleteBlockElementEmit)="deleteSentencePart(i,j, $event)"
+              (updateBlockElementEmit)="updateSentencePart(i, j, $event)"
+              (addBlockElementEmit)="addSentencePart(i, j)">
+            </app-easy-task-card>
+          <br>
+        </div>
+        <button
+          type="submit"
+          mat-flat-button
+          class="color-mat"
+          (click)="addSentence(i)">
+          Új elem
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+</div>
+
+</body>
+</html>

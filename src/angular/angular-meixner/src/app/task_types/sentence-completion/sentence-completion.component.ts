@@ -1,20 +1,12 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {
   EasyTasksService,
-  MediaItemRequest,
-  MediaItemResponse,
-  MemoryGameRequest,
-  MemoryGameResponse,
-  PairElementRequest,
-  PairElementResponse,
   SentenceCompletionRequest,
   SentenceCompletionResponse,
-  SentenceCreationResponse,
   TaskService
 } from "../../../swagger-api";
 import {ActivatedRoute, Router} from "@angular/router";
 import {SubjectEnumUtil} from "../../util/subjectEnumUtil";
-import {UpdateBlock} from "../../model/updateBlock";
 import {Path} from "../../path";
 
 @Component({
@@ -127,5 +119,10 @@ export class SentenceCompletionComponent implements OnInit {
 
   customTrackBy(index: number, obj: any): any {
     return index;
+  }
+
+  getSelection($event) {
+    console.log("getSelection");
+    console.log(window.getSelection().toString());
   }
 }

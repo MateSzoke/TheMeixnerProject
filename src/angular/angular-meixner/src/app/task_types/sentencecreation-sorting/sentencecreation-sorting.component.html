@@ -18,7 +18,7 @@
     <app-easy-task-card
       [titleExists]="true"
       [title]="member.sentenceTitle"
-      [listItemsString]="member.parts"
+      [listItemsStringArray]="member.parts"
       [isMediaList]="false"
       (titleChange)="onTitleChange(i,$event)"
       (deleteBlockEmit)="deleteSentence(i)"

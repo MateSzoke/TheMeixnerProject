@@ -75,6 +75,10 @@ import { MemoryGameComponent } from './task_types/memory-game/memory-game.compon
 import { MatinputUnderlineComponent } from './components/matinput-underline/matinput-underline.component';
 import {SecurePipe} from "./model/SecurePipe";
 import {TypeofPipe} from "./model/TypeofPipe";
+import { BlindmapComponent } from './task_types/blindmap/blindmap.component';
+import { FreetextComponent } from './task_types/freetext/freetext.component';
+import { OddOneOutComponent } from './task_types/odd-one-out/odd-one-out.component';
+import { TimelineComponent } from './task_types/timeline/timeline.component';
 
 @NgModule({
   declarations: [
@@ -127,7 +131,11 @@ import {TypeofPipe} from "./model/TypeofPipe";
     MemoryGameComponent,
     MatinputUnderlineComponent,
     SecurePipe,
-    TypeofPipe
+    TypeofPipe,
+    BlindmapComponent,
+    FreetextComponent,
+    OddOneOutComponent,
+    TimelineComponent
   ],
   imports: [
     BrowserModule,
