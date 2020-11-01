@@ -3,7 +3,6 @@ package hu.aut.meixner.mapping
 import hu.aut.meixner.dto.task.complex.*
 import hu.aut.meixner.entity.task.complex.*
 import hu.aut.meixner.entity.task.easy.GroupElementEntity
-import hu.aut.meixner.entity.task.easy.SentenceEntity
 import java.time.OffsetDateTime
 
 //region GroupingAndSorting
@@ -93,14 +92,14 @@ fun SentenceCreationAndGroupingEntity.toDomainModel(): SentenceCreationAndGroupi
     )
 }
 
-fun SentenceCreationList.toEntity(): SentenceListEntity {
-    return SentenceListEntity(
+fun SentenceCreationList.toEntity(): SentenceCreationListEntity {
+    return SentenceCreationListEntity(
             groupTitle = groupTitle,
             sentences = sentences.map { it.toEntity() }
     )
 }
 
-fun SentenceListEntity.toDomainModel(): SentenceCreationList {
+fun SentenceCreationListEntity.toDomainModel(): SentenceCreationList {
     return SentenceCreationList(
             groupTitle = groupTitle,
             sentences = sentences.map { it.toDomainModel() }
@@ -136,17 +135,17 @@ fun SentenceCompletionAndSortingEntity.toDomainModel(): SentenceCompletionAndSor
     )
 }
 
-fun SentenceCompletionItem.toEntity(): SentenceEntity {
-    return SentenceEntity(
-            sentenceTitle = sentence,
-            parts = options.toMutableList()
+fun SentenceCompletionItem.toEntity(): SentenceCompletionItemEntity {
+    return SentenceCompletionItemEntity(
+            sentence = sentence.toMutableList(),
+            options = options.toMutableList()
     )
 }
 
-fun SentenceEntity.toSentenceCompletionItem(): SentenceCompletionItem {
+fun SentenceCompletionItemEntity.toSentenceCompletionItem(): SentenceCompletionItem {
     return SentenceCompletionItem(
-            sentence = sentenceTitle,
-            options = parts
+            sentence = sentence,
+            options = options
     )
 }
 //endregion
@@ -179,17 +178,24 @@ fun SentenceCompletionAndGroupingEntity.toDomainModel(): SentenceCompletionAndGr
     )
 }
 
-fun SentenceCompletionList.toEntity(): SentenceListEntity {
-    return SentenceListEntity(
+fun SentenceCompletionList.toEntity(): SentenceCompletionListEntity {
+    return SentenceCompletionListEntity(
             groupTitle = groupTitle,
             sentences = sentences.map { it.toEntity() }
     )
 }
 
-fun SentenceListEntity.toSentenceCompletionList(): SentenceCompletionList {
+fun SentenceCompletionListEntity.toSentenceCompletionList(): SentenceCompletionList {
     return SentenceCompletionList(
             groupTitle = groupTitle,
             sentences = sentences.map { it.toDomainModel() }
+    )
+}
+
+fun SentenceCompletionItemEntity.toDomainModel(): SentenceCompletionItem {
+    return SentenceCompletionItem(
+            sentence = sentence,
+            options = options
     )
 }
 //endregion

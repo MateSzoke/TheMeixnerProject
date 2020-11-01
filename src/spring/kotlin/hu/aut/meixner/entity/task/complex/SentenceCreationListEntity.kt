@@ -6,7 +6,7 @@ import org.hibernate.annotations.CascadeType
 import javax.persistence.*
 
 @Entity
-data class SentenceListEntity(
+data class SentenceCreationListEntity(
         @Id @GeneratedValue(strategy = GenerationType.AUTO)
         val id: Long = 0,
         val groupTitle: String = "",

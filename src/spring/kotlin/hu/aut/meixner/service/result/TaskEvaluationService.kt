@@ -2,7 +2,9 @@ package hu.aut.meixner.service.result
 
 import hu.aut.meixner.dto.result.TaskResultResponse
 import hu.aut.meixner.dto.task.common.TaskResponse
+import hu.aut.meixner.dto.task.complex.*
 import hu.aut.meixner.dto.task.easy.*
+import hu.aut.meixner.dto.task.student.complex.*
 import hu.aut.meixner.dto.task.student.easy.*
 import hu.aut.meixner.entity.result.StudentEntity
 import hu.aut.meixner.entity.result.TaskResultEntity
@@ -15,7 +17,7 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
-class EasyTaskEvaluationService(
+class TaskEvaluationService(
         private val taskService: TaskService,
         private val taskResultRepository: TaskResultRepository,
         private val studentRepository: StudentRepository,
@@ -142,6 +144,112 @@ class EasyTaskEvaluationService(
                 currentResult = currentResult,
                 attempts = taskRequest.attempts,
                 resultPercentage = calculateResultPercentage(taskRequest.pairs, taskResult.pairs, currentResult)
+        )
+    }
+
+    fun evaluateGroupingAndSorting(taskId: Long, taskRequest: GroupingAndSortingTaskRequest): TaskResultResponse? {
+        val (student, taskResult) = getStudentAndTask<GroupingAndSortingResponse>(taskId) ?: return null
+        val currentResult = mutableListOf<Boolean>()
+        taskRequest.groups.forEach { groupRequest ->
+            var found = false
+            taskResult.groups.find { it.name == groupRequest.name }?.let {
+                if (it.elements.equalsSortedResultMediaItems(groupRequest.elements)) found = true
+            }
+            currentResult.add(found)
+        }
+        return saveTaskRequest(
+                student = student,
+                taskId = taskId,
+                taskResult = taskResult,
+                currentResult = currentResult,
+                attempts = taskRequest.attempts,
+                resultPercentage = calculateResultPercentage(taskRequest.groups, taskResult.groups, currentResult)
+        )
+    }
+
+    fun evaluateSentenceCompletionAndSorting(taskId: Long, taskRequest: SentenceCompletionAndSortingTaskRequest): TaskResultResponse? {
+        val (student, taskResult) = getStudentAndTask<SentenceCompletionAndSortingResponse>(taskId) ?: return null
+        val currentResult = mutableListOf<Boolean>()
+        taskRequest.sentences.zip(taskResult.sentences).forEach { (requestSentence, resultSentence) ->
+            currentResult.add(requestSentence.options == resultSentence.options)
+        }
+        return saveTaskRequest(
+                student = student,
+                taskId = taskId,
+                taskResult = taskResult,
+                currentResult = currentResult,
+                attempts = taskRequest.attempts,
+                resultPercentage = calculateResultPercentage(taskRequest.sentences, taskResult.sentences, currentResult)
+        )
+    }
+
+    fun evaluateSentenceCompletionAndGrouping(taskId: Long, taskRequest: SentenceCompletionAndGroupingTaskRequest): TaskResultResponse? {
+        val (student, taskResult) = getStudentAndTask<SentenceCompletionAndGroupingResponse>(taskId) ?: return null
+        val currentResult = mutableListOf<Boolean>()
+        taskRequest.sentenceGroups.forEach { sentenceList ->
+            taskResult.sentenceGroups.find { it.groupTitle == sentenceList.groupTitle }?.sentences?.zip(sentenceList.sentences)
+                    ?.forEach { (requestSentence, resultSentence) ->
+                        currentResult.add(requestSentence.options == resultSentence.options)
+                    } ?: currentResult.add(false)
+        }
+        return saveTaskRequest(
+                student = student,
+                taskId = taskId,
+                taskResult = taskResult,
+                currentResult = currentResult,
+                attempts = taskRequest.attempts,
+                resultPercentage = calculateResultPercentage(taskRequest.sentenceGroups, taskResult.sentenceGroups, currentResult)
+        )
+    }
+
+    fun evaluateSentenceCreationAndGrouping(taskId: Long, taskRequest: SentenceCreationAndGroupingTaskRequest): TaskResultResponse? {
+        val (student, taskResult) = getStudentAndTask<SentenceCreationAndGroupingResponse>(taskId) ?: return null
+        val currentResult = mutableListOf<Boolean>()
+        taskRequest.sentenceGroups.forEach { sentenceList ->
+            taskResult.sentenceGroups.find { it.groupTitle == sentenceList.groupTitle }?.sentences?.zip(sentenceList.sentences)
+                    ?.forEach { (requestSentence, resultSentence) ->
+                        currentResult.add(requestSentence.parts == resultSentence.parts)
+                    } ?: currentResult.add(false)
+        }
+        return saveTaskRequest(
+                student = student,
+                taskId = taskId,
+                taskResult = taskResult,
+                currentResult = currentResult,
+                attempts = taskRequest.attempts,
+                resultPercentage = calculateResultPercentage(taskRequest.sentenceGroups, taskResult.sentenceGroups, currentResult)
+        )
+    }
+
+    fun evaluateSentenceCreationAndSorting(taskId: Long, taskRequest: SentenceCreationAndSortingTaskRequest): TaskResultResponse? {
+        val (student, taskResult) = getStudentAndTask<SentenceCreationAndSortingResponse>(taskId) ?: return null
+        val currentResult = mutableListOf<Boolean>()
+        taskRequest.sentences.zip(taskResult.sentences).forEach { (requestSentence, resultSentence) ->
+            currentResult.add(requestSentence.parts == resultSentence.parts)
+        }
+        return saveTaskRequest(
+                student = student,
+                taskId = taskId,
+                taskResult = taskResult,
+                currentResult = currentResult,
+                attempts = taskRequest.attempts,
+                resultPercentage = calculateResultPercentage(taskRequest.sentences, taskResult.sentences, currentResult)
+        )
+    }
+
+    fun evaluateSortingAndGrouping(taskId: Long, taskRequest: SortingAndGroupingTaskRequest): TaskResultResponse? {
+        val (student, taskResult) = getStudentAndTask<SortingAndGroupingResponse>(taskId) ?: return null
+        val currentResult = mutableListOf<Boolean>()
+        taskRequest.groups.forEach { groupRequest ->
+            currentResult.add(taskResult.groups.any { it.elements.equalsSortedResultMediaItems(groupRequest.elements) })
+        }
+        return saveTaskRequest(
+                student = student,
+                taskId = taskId,
+                taskResult = taskResult,
+                currentResult = currentResult,
+                attempts = taskRequest.attempts,
+                resultPercentage = calculateResultPercentage(taskRequest.groups, taskResult.groups, currentResult)
         )
     }
 

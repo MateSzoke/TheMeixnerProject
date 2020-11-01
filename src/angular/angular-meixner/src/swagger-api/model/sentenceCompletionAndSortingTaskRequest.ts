@@ -12,7 +12,7 @@
 import {SentenceCompletionItem} from './sentenceCompletionItem';
 
 
-export interface SentenceCompletionList {
-  groupTitle: string;
+export interface SentenceCompletionAndSortingTaskRequest {
+  attempts?: number;
   sentences: Array<SentenceCompletionItem>;
 }

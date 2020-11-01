@@ -2,7 +2,6 @@ package hu.aut.meixner.entity.task.complex
 
 import hu.aut.meixner.dto.SubjectEnum
 import hu.aut.meixner.entity.task.TaskEntity
-import hu.aut.meixner.entity.task.easy.SentenceEntity
 import org.hibernate.annotations.Cascade
 import org.hibernate.annotations.CascadeType
 import java.time.OffsetDateTime
@@ -13,7 +12,7 @@ import javax.persistence.OneToMany
 data class SentenceCompletionAndSortingEntity(
         @OneToMany
         @Cascade(CascadeType.ALL)
-        val sentences: List<SentenceEntity> = emptyList(),
+        val sentences: List<SentenceCompletionItemEntity> = emptyList(),
         override val title: String = "",
         override val owner: String = "",
         override val difficulty: Int = 0,

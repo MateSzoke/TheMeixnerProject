@@ -12,7 +12,7 @@ import javax.persistence.OneToMany
 data class SentenceCreationAndGroupingEntity(
         @OneToMany
         @Cascade(CascadeType.ALL)
-        val sentenceGroups: List<SentenceListEntity> = emptyList(),
+        val sentenceGroups: List<SentenceCreationListEntity> = emptyList(),
         override val title: String = "",
         override val owner: String = "",
         override val difficulty: Int = 0,

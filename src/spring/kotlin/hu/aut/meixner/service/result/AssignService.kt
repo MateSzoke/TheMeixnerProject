@@ -3,7 +3,7 @@ package hu.aut.meixner.service.result
 import hu.aut.meixner.dto.result.AssignedExercise
 import hu.aut.meixner.dto.result.StartedExercise
 import hu.aut.meixner.dto.result.TaskResultResponse
-import hu.aut.meixner.dto.task.student.easy.AssignTask
+import hu.aut.meixner.dto.task.student.AssignTask
 import hu.aut.meixner.entity.result.SolvedExercise
 import hu.aut.meixner.mapping.toAssignedExercise
 import hu.aut.meixner.repository.result.SolvedExerciseRepository
@@ -54,16 +54,19 @@ class AssignService(
     fun getStartedExercise(startedExerciseId: Long, solvedTaskId: Long, taskResult: TaskResultResponse): StartedExercise? {
         val solvedExercise = solvedExerciseRepository.findByIdOrNull(startedExerciseId) ?: return null
         val exercise = exerciseService.getExercisesById(solvedExercise.exerciseId) ?: return null
+        val success = taskResult.currentResult.all { it }
         with(solvedExercise) {
-            solvedTaskIds += solvedTaskId
+            if (success) {
+                solvedTaskIds += solvedTaskId
+                taskResultIds += taskResult.id
+            }
             attempts += taskResult.attempts
-            taskResultIds += taskResult.id
             lastModified = OffsetDateTime.now()
         }
         solvedExerciseRepository.save(solvedExercise)
         val taskIds = exercise.tasks.map { it.id }
         val nextTaskIds = taskIds - solvedExercise.solvedTaskIds
-        val nextTaskId = if (nextTaskIds.isNotEmpty()) nextTaskIds.random() else null
+        val nextTaskId = if (nextTaskIds.isNotEmpty() && success) nextTaskIds.random() else null
         return StartedExercise(
                 id = solvedExercise.id,
                 exerciseId = exercise.id,
