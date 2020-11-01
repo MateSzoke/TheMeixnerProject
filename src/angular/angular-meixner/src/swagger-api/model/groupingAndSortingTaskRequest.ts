@@ -9,10 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import {SentenceCompletionItem} from './sentenceCompletionItem';
+import {GroupRequest} from './groupRequest';
 
 
-export interface SentenceCompletionList {
-  groupTitle: string;
-  sentences: Array<SentenceCompletionItem>;
+export interface GroupingAndSortingTaskRequest {
+  attempts?: number;
+  groups: Array<GroupRequest>;
 }

@@ -11,24 +11,28 @@
  */
 /* tslint:disable:no-unused-variable member-ordering */
 
-import { Inject, Injectable, Optional }                      from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams,
-         HttpResponse, HttpEvent }                           from '@angular/common/http';
-import { CustomHttpUrlEncodingCodec }                        from '../encoder';
+import {Inject, Injectable, Optional} from '@angular/core';
+import {HttpClient, HttpEvent, HttpHeaders, HttpResponse} from '@angular/common/http';
 
-import { Observable }                                        from 'rxjs';
+import {Observable} from 'rxjs';
 
-import { GroupingTaskRequest } from '../model/groupingTaskRequest';
-import { MemoryGameTaskRequest } from '../model/memoryGameTaskRequest';
-import { PairingTaskRequest } from '../model/pairingTaskRequest';
-import { SentenceCompletionTaskRequest } from '../model/sentenceCompletionTaskRequest';
-import { SentenceCreationTaskRequest } from '../model/sentenceCreationTaskRequest';
-import { SortingTaskRequest } from '../model/sortingTaskRequest';
-import { StartedExercise } from '../model/startedExercise';
-import { TrueFalseTaskRequest } from '../model/trueFalseTaskRequest';
+import {GroupingAndSortingTaskRequest} from '../model/groupingAndSortingTaskRequest';
+import {GroupingTaskRequest} from '../model/groupingTaskRequest';
+import {MemoryGameTaskRequest} from '../model/memoryGameTaskRequest';
+import {PairingTaskRequest} from '../model/pairingTaskRequest';
+import {SentenceCompletionAndGroupingTaskRequest} from '../model/sentenceCompletionAndGroupingTaskRequest';
+import {SentenceCompletionAndSortingTaskRequest} from '../model/sentenceCompletionAndSortingTaskRequest';
+import {SentenceCompletionTaskRequest} from '../model/sentenceCompletionTaskRequest';
+import {SentenceCreationAndGroupingTaskRequest} from '../model/sentenceCreationAndGroupingTaskRequest';
+import {SentenceCreationAndSortingTaskRequest} from '../model/sentenceCreationAndSortingTaskRequest';
+import {SentenceCreationTaskRequest} from '../model/sentenceCreationTaskRequest';
+import {SortingAndGroupingTaskRequest} from '../model/sortingAndGroupingTaskRequest';
+import {SortingTaskRequest} from '../model/sortingTaskRequest';
+import {StartedExercise} from '../model/startedExercise';
+import {TrueFalseTaskRequest} from '../model/trueFalseTaskRequest';
 
-import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
-import { Configuration }                                     from '../configuration';
+import {BASE_PATH} from '../variables';
+import {Configuration} from '../configuration';
 
 
 @Injectable({
@@ -36,9 +40,9 @@ import { Configuration }                                     from '../configurat
 })
 export class EvaluateService {
 
+  protected basePath = 'https://meixner.herokuapp.com';
   public defaultHeaders = new HttpHeaders();
   public configuration = new Configuration();
-  protected basePath = 'https://meixner.herokuapp.com';
 
     constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
 
@@ -56,25 +60,79 @@ export class EvaluateService {
      * @return true: consumes contains 'multipart/form-data', false: otherwise
      */
     private canConsumeForm(consumes: string[]): boolean {
-        const form = 'multipart/form-data';
-        for (const consume of consumes) {
-            if (form === consume) {
-                return true;
-            }
+      const form = 'multipart/form-data';
+      for (const consume of consumes) {
+        if (form === consume) {
+          return true;
         }
-        return false;
+      }
+      return false;
     }
 
 
-    /**
-     * Evaluate grouping request by taskId to a student by user id
-     *
-     * @param startedExerciseId startedExerciseId
-     * @param taskId taskId
-     * @param groupingTaskRequest taskRequest
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
+  /**
+   * Evaluate Grouping and Sorting request by taskId to a student by user id
+   *
+   * @param startedExerciseId startedExerciseId
+   * @param taskId taskId
+   * @param groupingAndSortingTaskRequest taskRequest
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public evaluateGroupingAndSortingUsingPOST(startedExerciseId: number, taskId: number, groupingAndSortingTaskRequest: GroupingAndSortingTaskRequest, observe?: 'body', reportProgress?: boolean): Observable<StartedExercise>;
+  public evaluateGroupingAndSortingUsingPOST(startedExerciseId: number, taskId: number, groupingAndSortingTaskRequest: GroupingAndSortingTaskRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<StartedExercise>>;
+  public evaluateGroupingAndSortingUsingPOST(startedExerciseId: number, taskId: number, groupingAndSortingTaskRequest: GroupingAndSortingTaskRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<StartedExercise>>;
+  public evaluateGroupingAndSortingUsingPOST(startedExerciseId: number, taskId: number, groupingAndSortingTaskRequest: GroupingAndSortingTaskRequest, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    if (startedExerciseId === null || startedExerciseId === undefined) {
+      throw new Error('Required parameter startedExerciseId was null or undefined when calling evaluateGroupingAndSortingUsingPOST.');
+    }
+    if (taskId === null || taskId === undefined) {
+      throw new Error('Required parameter taskId was null or undefined when calling evaluateGroupingAndSortingUsingPOST.');
+    }
+    if (groupingAndSortingTaskRequest === null || groupingAndSortingTaskRequest === undefined) {
+      throw new Error('Required parameter groupingAndSortingTaskRequest was null or undefined when calling evaluateGroupingAndSortingUsingPOST.');
+    }
+
+    let headers = this.defaultHeaders;
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [
+      '*/*'
+    ];
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = [
+      'application/json'
+    ];
+    const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected !== undefined) {
+      headers = headers.set('Content-Type', httpContentTypeSelected);
+    }
+
+    return this.httpClient.post<StartedExercise>(`${this.configuration.basePath}/evaluate/groupingAndSorting/${encodeURIComponent(String(startedExerciseId))}/${encodeURIComponent(String(taskId))}`,
+      groupingAndSortingTaskRequest,
+      {
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress
+      }
+    );
+  }
+
+  /**
+   * Evaluate grouping request by taskId to a student by user id
+   *
+   * @param startedExerciseId startedExerciseId
+   * @param taskId taskId
+   * @param groupingTaskRequest taskRequest
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
     public evaluateGroupingUsingPOST(startedExerciseId: number, taskId: number, groupingTaskRequest: GroupingTaskRequest, observe?: 'body', reportProgress?: boolean): Observable<StartedExercise>;
     public evaluateGroupingUsingPOST(startedExerciseId: number, taskId: number, groupingTaskRequest: GroupingTaskRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<StartedExercise>>;
     public evaluateGroupingUsingPOST(startedExerciseId: number, taskId: number, groupingTaskRequest: GroupingTaskRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<StartedExercise>>;
@@ -217,26 +275,134 @@ export class EvaluateService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.post<StartedExercise>(`${this.configuration.basePath}/evaluate/pairing/${encodeURIComponent(String(startedExerciseId))}/${encodeURIComponent(String(taskId))}`,
-            pairingTaskRequest,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
+      return this.httpClient.post<StartedExercise>(`${this.configuration.basePath}/evaluate/pairing/${encodeURIComponent(String(startedExerciseId))}/${encodeURIComponent(String(taskId))}`,
+        pairingTaskRequest,
+        {
+          withCredentials: this.configuration.withCredentials,
+          headers: headers,
+          observe: observe,
+          reportProgress: reportProgress
+        }
+      );
     }
 
-    /**
-     * Evaluate sentence completion request by taskId to a student by user id
-     *
-     * @param startedExerciseId startedExerciseId
-     * @param taskId taskId
-     * @param sentenceCompletionTaskRequest taskRequest
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
+  /**
+   * Evaluate Sentence completion and Grouping request by taskId to a student by user id
+   *
+   * @param startedExerciseId startedExerciseId
+   * @param taskId taskId
+   * @param sentenceCompletionAndGroupingTaskRequest taskRequest
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public evaluateSentenceCompletionAndGroupingUsingPOST(startedExerciseId: number, taskId: number, sentenceCompletionAndGroupingTaskRequest: SentenceCompletionAndGroupingTaskRequest, observe?: 'body', reportProgress?: boolean): Observable<StartedExercise>;
+  public evaluateSentenceCompletionAndGroupingUsingPOST(startedExerciseId: number, taskId: number, sentenceCompletionAndGroupingTaskRequest: SentenceCompletionAndGroupingTaskRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<StartedExercise>>;
+  public evaluateSentenceCompletionAndGroupingUsingPOST(startedExerciseId: number, taskId: number, sentenceCompletionAndGroupingTaskRequest: SentenceCompletionAndGroupingTaskRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<StartedExercise>>;
+  public evaluateSentenceCompletionAndGroupingUsingPOST(startedExerciseId: number, taskId: number, sentenceCompletionAndGroupingTaskRequest: SentenceCompletionAndGroupingTaskRequest, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    if (startedExerciseId === null || startedExerciseId === undefined) {
+      throw new Error('Required parameter startedExerciseId was null or undefined when calling evaluateSentenceCompletionAndGroupingUsingPOST.');
+    }
+    if (taskId === null || taskId === undefined) {
+      throw new Error('Required parameter taskId was null or undefined when calling evaluateSentenceCompletionAndGroupingUsingPOST.');
+    }
+    if (sentenceCompletionAndGroupingTaskRequest === null || sentenceCompletionAndGroupingTaskRequest === undefined) {
+      throw new Error('Required parameter sentenceCompletionAndGroupingTaskRequest was null or undefined when calling evaluateSentenceCompletionAndGroupingUsingPOST.');
+    }
+
+    let headers = this.defaultHeaders;
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [
+      '*/*'
+    ];
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = [
+      'application/json'
+    ];
+    const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected !== undefined) {
+      headers = headers.set('Content-Type', httpContentTypeSelected);
+    }
+
+    return this.httpClient.post<StartedExercise>(`${this.configuration.basePath}/evaluate/sentenceCompletionAndGrouping/${encodeURIComponent(String(startedExerciseId))}/${encodeURIComponent(String(taskId))}`,
+      sentenceCompletionAndGroupingTaskRequest,
+      {
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress
+      }
+    );
+  }
+
+  /**
+   * Evaluate Sentence completion and Sorting request by taskId to a student by user id
+   *
+   * @param startedExerciseId startedExerciseId
+   * @param taskId taskId
+   * @param sentenceCompletionAndSortingTaskRequest taskRequest
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public evaluateSentenceCompletionAndSortingUsingPOST(startedExerciseId: number, taskId: number, sentenceCompletionAndSortingTaskRequest: SentenceCompletionAndSortingTaskRequest, observe?: 'body', reportProgress?: boolean): Observable<StartedExercise>;
+  public evaluateSentenceCompletionAndSortingUsingPOST(startedExerciseId: number, taskId: number, sentenceCompletionAndSortingTaskRequest: SentenceCompletionAndSortingTaskRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<StartedExercise>>;
+  public evaluateSentenceCompletionAndSortingUsingPOST(startedExerciseId: number, taskId: number, sentenceCompletionAndSortingTaskRequest: SentenceCompletionAndSortingTaskRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<StartedExercise>>;
+  public evaluateSentenceCompletionAndSortingUsingPOST(startedExerciseId: number, taskId: number, sentenceCompletionAndSortingTaskRequest: SentenceCompletionAndSortingTaskRequest, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    if (startedExerciseId === null || startedExerciseId === undefined) {
+      throw new Error('Required parameter startedExerciseId was null or undefined when calling evaluateSentenceCompletionAndSortingUsingPOST.');
+    }
+    if (taskId === null || taskId === undefined) {
+      throw new Error('Required parameter taskId was null or undefined when calling evaluateSentenceCompletionAndSortingUsingPOST.');
+    }
+    if (sentenceCompletionAndSortingTaskRequest === null || sentenceCompletionAndSortingTaskRequest === undefined) {
+      throw new Error('Required parameter sentenceCompletionAndSortingTaskRequest was null or undefined when calling evaluateSentenceCompletionAndSortingUsingPOST.');
+    }
+
+    let headers = this.defaultHeaders;
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [
+      '*/*'
+    ];
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = [
+      'application/json'
+    ];
+    const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected !== undefined) {
+      headers = headers.set('Content-Type', httpContentTypeSelected);
+    }
+
+    return this.httpClient.post<StartedExercise>(`${this.configuration.basePath}/evaluate/sentenceCompletionAndSorting/${encodeURIComponent(String(startedExerciseId))}/${encodeURIComponent(String(taskId))}`,
+      sentenceCompletionAndSortingTaskRequest,
+      {
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress
+      }
+    );
+  }
+
+  /**
+   * Evaluate sentence completion request by taskId to a student by user id
+   *
+   * @param startedExerciseId startedExerciseId
+   * @param taskId taskId
+   * @param sentenceCompletionTaskRequest taskRequest
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
     public evaluateSentenceCompletionUsingPOST(startedExerciseId: number, taskId: number, sentenceCompletionTaskRequest: SentenceCompletionTaskRequest, observe?: 'body', reportProgress?: boolean): Observable<StartedExercise>;
     public evaluateSentenceCompletionUsingPOST(startedExerciseId: number, taskId: number, sentenceCompletionTaskRequest: SentenceCompletionTaskRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<StartedExercise>>;
     public evaluateSentenceCompletionUsingPOST(startedExerciseId: number, taskId: number, sentenceCompletionTaskRequest: SentenceCompletionTaskRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<StartedExercise>>;
@@ -272,25 +438,133 @@ export class EvaluateService {
         }
 
         return this.httpClient.post<StartedExercise>(`${this.configuration.basePath}/evaluate/sentenceCompletion/${encodeURIComponent(String(startedExerciseId))}/${encodeURIComponent(String(taskId))}`,
-            sentenceCompletionTaskRequest,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
+          sentenceCompletionTaskRequest,
+          {
+            withCredentials: this.configuration.withCredentials,
+            headers: headers,
+            observe: observe,
+            reportProgress: reportProgress
+          }
         );
     }
 
-    /**
-     * Evaluate sentence creation request by taskId to a student by user id
-     *
-     * @param startedExerciseId startedExerciseId
-     * @param taskId taskId
-     * @param sentenceCreationTaskRequest taskRequest
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
+  /**
+   * Evaluate Sentence creation and Grouping request by taskId to a student by user id
+   *
+   * @param startedExerciseId startedExerciseId
+   * @param taskId taskId
+   * @param sentenceCreationAndGroupingTaskRequest taskRequest
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public evaluateSentenceCreationAndGroupingUsingPOST(startedExerciseId: number, taskId: number, sentenceCreationAndGroupingTaskRequest: SentenceCreationAndGroupingTaskRequest, observe?: 'body', reportProgress?: boolean): Observable<StartedExercise>;
+  public evaluateSentenceCreationAndGroupingUsingPOST(startedExerciseId: number, taskId: number, sentenceCreationAndGroupingTaskRequest: SentenceCreationAndGroupingTaskRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<StartedExercise>>;
+  public evaluateSentenceCreationAndGroupingUsingPOST(startedExerciseId: number, taskId: number, sentenceCreationAndGroupingTaskRequest: SentenceCreationAndGroupingTaskRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<StartedExercise>>;
+  public evaluateSentenceCreationAndGroupingUsingPOST(startedExerciseId: number, taskId: number, sentenceCreationAndGroupingTaskRequest: SentenceCreationAndGroupingTaskRequest, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    if (startedExerciseId === null || startedExerciseId === undefined) {
+      throw new Error('Required parameter startedExerciseId was null or undefined when calling evaluateSentenceCreationAndGroupingUsingPOST.');
+    }
+    if (taskId === null || taskId === undefined) {
+      throw new Error('Required parameter taskId was null or undefined when calling evaluateSentenceCreationAndGroupingUsingPOST.');
+    }
+    if (sentenceCreationAndGroupingTaskRequest === null || sentenceCreationAndGroupingTaskRequest === undefined) {
+      throw new Error('Required parameter sentenceCreationAndGroupingTaskRequest was null or undefined when calling evaluateSentenceCreationAndGroupingUsingPOST.');
+    }
+
+    let headers = this.defaultHeaders;
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [
+      '*/*'
+    ];
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = [
+      'application/json'
+    ];
+    const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected !== undefined) {
+      headers = headers.set('Content-Type', httpContentTypeSelected);
+    }
+
+    return this.httpClient.post<StartedExercise>(`${this.configuration.basePath}/evaluate/sentenceCreationAndGrouping/${encodeURIComponent(String(startedExerciseId))}/${encodeURIComponent(String(taskId))}`,
+      sentenceCreationAndGroupingTaskRequest,
+      {
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress
+      }
+    );
+  }
+
+  /**
+   * Evaluate Sentence completion and Sorting request by taskId to a student by user id
+   *
+   * @param startedExerciseId startedExerciseId
+   * @param taskId taskId
+   * @param sentenceCreationAndSortingTaskRequest taskRequest
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public evaluateSentenceCreationAndSortingUsingPOST(startedExerciseId: number, taskId: number, sentenceCreationAndSortingTaskRequest: SentenceCreationAndSortingTaskRequest, observe?: 'body', reportProgress?: boolean): Observable<StartedExercise>;
+  public evaluateSentenceCreationAndSortingUsingPOST(startedExerciseId: number, taskId: number, sentenceCreationAndSortingTaskRequest: SentenceCreationAndSortingTaskRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<StartedExercise>>;
+  public evaluateSentenceCreationAndSortingUsingPOST(startedExerciseId: number, taskId: number, sentenceCreationAndSortingTaskRequest: SentenceCreationAndSortingTaskRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<StartedExercise>>;
+  public evaluateSentenceCreationAndSortingUsingPOST(startedExerciseId: number, taskId: number, sentenceCreationAndSortingTaskRequest: SentenceCreationAndSortingTaskRequest, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    if (startedExerciseId === null || startedExerciseId === undefined) {
+      throw new Error('Required parameter startedExerciseId was null or undefined when calling evaluateSentenceCreationAndSortingUsingPOST.');
+    }
+    if (taskId === null || taskId === undefined) {
+      throw new Error('Required parameter taskId was null or undefined when calling evaluateSentenceCreationAndSortingUsingPOST.');
+    }
+    if (sentenceCreationAndSortingTaskRequest === null || sentenceCreationAndSortingTaskRequest === undefined) {
+      throw new Error('Required parameter sentenceCreationAndSortingTaskRequest was null or undefined when calling evaluateSentenceCreationAndSortingUsingPOST.');
+    }
+
+    let headers = this.defaultHeaders;
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [
+      '*/*'
+    ];
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = [
+      'application/json'
+    ];
+    const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected !== undefined) {
+      headers = headers.set('Content-Type', httpContentTypeSelected);
+    }
+
+    return this.httpClient.post<StartedExercise>(`${this.configuration.basePath}/evaluate/sentenceCreationAndSorting/${encodeURIComponent(String(startedExerciseId))}/${encodeURIComponent(String(taskId))}`,
+      sentenceCreationAndSortingTaskRequest,
+      {
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress
+      }
+    );
+  }
+
+  /**
+   * Evaluate sentence creation request by taskId to a student by user id
+   *
+   * @param startedExerciseId startedExerciseId
+   * @param taskId taskId
+   * @param sentenceCreationTaskRequest taskRequest
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
     public evaluateSentenceCreationUsingPOST(startedExerciseId: number, taskId: number, sentenceCreationTaskRequest: SentenceCreationTaskRequest, observe?: 'body', reportProgress?: boolean): Observable<StartedExercise>;
     public evaluateSentenceCreationUsingPOST(startedExerciseId: number, taskId: number, sentenceCreationTaskRequest: SentenceCreationTaskRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<StartedExercise>>;
     public evaluateSentenceCreationUsingPOST(startedExerciseId: number, taskId: number, sentenceCreationTaskRequest: SentenceCreationTaskRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<StartedExercise>>;
@@ -325,26 +599,80 @@ export class EvaluateService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.post<StartedExercise>(`${this.configuration.basePath}/evaluate/sentenceCreation/${encodeURIComponent(String(startedExerciseId))}/${encodeURIComponent(String(taskId))}`,
-            sentenceCreationTaskRequest,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
+      return this.httpClient.post<StartedExercise>(`${this.configuration.basePath}/evaluate/sentenceCreation/${encodeURIComponent(String(startedExerciseId))}/${encodeURIComponent(String(taskId))}`,
+        sentenceCreationTaskRequest,
+        {
+          withCredentials: this.configuration.withCredentials,
+          headers: headers,
+          observe: observe,
+          reportProgress: reportProgress
+        }
+      );
     }
 
-    /**
-     * Evaluate sorting request by taskId to a student by user id
-     *
-     * @param startedExerciseId startedExerciseId
-     * @param taskId taskId
-     * @param sortingTaskRequest taskRequest
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
+  /**
+   * Evaluate Sorting and Grouping request by taskId to a student by user id
+   *
+   * @param startedExerciseId startedExerciseId
+   * @param taskId taskId
+   * @param sortingAndGroupingTaskRequest taskRequest
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public evaluateSortingAndGroupingUsingPOST(startedExerciseId: number, taskId: number, sortingAndGroupingTaskRequest: SortingAndGroupingTaskRequest, observe?: 'body', reportProgress?: boolean): Observable<StartedExercise>;
+  public evaluateSortingAndGroupingUsingPOST(startedExerciseId: number, taskId: number, sortingAndGroupingTaskRequest: SortingAndGroupingTaskRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<StartedExercise>>;
+  public evaluateSortingAndGroupingUsingPOST(startedExerciseId: number, taskId: number, sortingAndGroupingTaskRequest: SortingAndGroupingTaskRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<StartedExercise>>;
+  public evaluateSortingAndGroupingUsingPOST(startedExerciseId: number, taskId: number, sortingAndGroupingTaskRequest: SortingAndGroupingTaskRequest, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    if (startedExerciseId === null || startedExerciseId === undefined) {
+      throw new Error('Required parameter startedExerciseId was null or undefined when calling evaluateSortingAndGroupingUsingPOST.');
+    }
+    if (taskId === null || taskId === undefined) {
+      throw new Error('Required parameter taskId was null or undefined when calling evaluateSortingAndGroupingUsingPOST.');
+    }
+    if (sortingAndGroupingTaskRequest === null || sortingAndGroupingTaskRequest === undefined) {
+      throw new Error('Required parameter sortingAndGroupingTaskRequest was null or undefined when calling evaluateSortingAndGroupingUsingPOST.');
+    }
+
+    let headers = this.defaultHeaders;
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [
+      '*/*'
+    ];
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = [
+      'application/json'
+    ];
+    const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected !== undefined) {
+      headers = headers.set('Content-Type', httpContentTypeSelected);
+    }
+
+    return this.httpClient.post<StartedExercise>(`${this.configuration.basePath}/evaluate/sortingAndGrouping/${encodeURIComponent(String(startedExerciseId))}/${encodeURIComponent(String(taskId))}`,
+      sortingAndGroupingTaskRequest,
+      {
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress
+      }
+    );
+  }
+
+  /**
+   * Evaluate sorting request by taskId to a student by user id
+   *
+   * @param startedExerciseId startedExerciseId
+   * @param taskId taskId
+   * @param sortingTaskRequest taskRequest
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
     public evaluateSortingUsingPOST(startedExerciseId: number, taskId: number, sortingTaskRequest: SortingTaskRequest, observe?: 'body', reportProgress?: boolean): Observable<StartedExercise>;
     public evaluateSortingUsingPOST(startedExerciseId: number, taskId: number, sortingTaskRequest: SortingTaskRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<StartedExercise>>;
     public evaluateSortingUsingPOST(startedExerciseId: number, taskId: number, sortingTaskRequest: SortingTaskRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<StartedExercise>>;
