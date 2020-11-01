@@ -7,11 +7,11 @@ import hu.aut.meixner.entity.auth.UserRoleEnum.ADMIN
 import hu.aut.meixner.entity.auth.UserRoleEnum.STUDENT
 import hu.aut.meixner.entity.result.StudentEntity
 import hu.aut.meixner.extensions.currentUser
-import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.mapping.toDomainModel
 import hu.aut.meixner.mapping.toEntity
 import hu.aut.meixner.repository.auth.UserRepository
 import hu.aut.meixner.repository.result.StudentRepository
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -42,7 +42,7 @@ class UserService(
     }
 
     fun getUserById(userId: Long): UserResponse? {
-        return userRepository.findById(userId).toNullable?.toDomainModel()
+        return userRepository.findByIdOrNull(userId)?.toDomainModel()
     }
 
     override fun loadUserByUsername(userName: String): UserDetails? {
@@ -51,7 +51,7 @@ class UserService(
     }
 
     fun deleteUser(userId: Long) {
-        val user = userRepository.findById(userId).toNullable ?: return
+        val user = userRepository.findByIdOrNull(userId) ?: return
         when (user.role) {
             ADMIN -> userRepository.deleteById(userId)
             STUDENT -> studentRepository.deleteById(userId)

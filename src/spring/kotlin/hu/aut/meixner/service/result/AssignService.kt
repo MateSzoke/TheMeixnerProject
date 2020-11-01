@@ -5,12 +5,12 @@ import hu.aut.meixner.dto.result.StartedExercise
 import hu.aut.meixner.dto.result.TaskResultResponse
 import hu.aut.meixner.dto.task.student.AssignTask
 import hu.aut.meixner.entity.result.SolvedExercise
-import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.mapping.toAssignedExercise
 import hu.aut.meixner.repository.result.SolvedExerciseRepository
 import hu.aut.meixner.service.auth.UserService
 import hu.aut.meixner.service.exercises.ExerciseService
 import hu.aut.meixner.service.task.TaskService
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import java.time.OffsetDateTime
 
@@ -52,7 +52,7 @@ class AssignService(
     }
 
     fun getStartedExercise(startedExerciseId: Long, solvedTaskId: Long, taskResult: TaskResultResponse): StartedExercise? {
-        val solvedExercise = solvedExerciseRepository.findById(startedExerciseId).toNullable ?: return null
+        val solvedExercise = solvedExerciseRepository.findByIdOrNull(startedExerciseId) ?: return null
         val exercise = exerciseService.getExercisesById(solvedExercise.exerciseId) ?: return null
         val success = taskResult.currentResult.all { it }
         with(solvedExercise) {

@@ -8,12 +8,12 @@ import hu.aut.meixner.dto.task.student.complex.*
 import hu.aut.meixner.dto.task.student.easy.*
 import hu.aut.meixner.entity.result.StudentEntity
 import hu.aut.meixner.entity.result.TaskResultEntity
-import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.mapping.toDomainModel
 import hu.aut.meixner.repository.result.StudentRepository
 import hu.aut.meixner.repository.result.TaskResultRepository
 import hu.aut.meixner.service.auth.UserService
 import hu.aut.meixner.service.task.TaskService
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
@@ -255,7 +255,7 @@ class TaskEvaluationService(
 
     private fun <T : TaskResponse> getStudentAndTask(taskId: Long): Pair<StudentEntity, T>? {
         val user = userService.getUser() ?: return null
-        val student = studentRepository.findById(user.id).toNullable ?: return null
+        val student = studentRepository.findByIdOrNull(user.id) ?: return null
         val taskResult = taskService.getTaskById(taskId) as? T ?: return null
         return Pair(student, taskResult)
     }

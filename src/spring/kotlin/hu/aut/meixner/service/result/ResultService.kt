@@ -4,7 +4,6 @@ import hu.aut.meixner.dto.auth.UserResponse
 import hu.aut.meixner.dto.result.ExerciseResult
 import hu.aut.meixner.dto.result.StudentResponse
 import hu.aut.meixner.entity.result.StudentEntity
-import hu.aut.meixner.extensions.toNullable
 import hu.aut.meixner.mapping.toDomainModel
 import hu.aut.meixner.repository.auth.UserRepository
 import hu.aut.meixner.repository.result.SolvedExerciseRepository
@@ -13,6 +12,7 @@ import hu.aut.meixner.repository.result.TaskResultRepository
 import hu.aut.meixner.service.auth.UserService
 import hu.aut.meixner.service.exercises.ExerciseService
 import hu.aut.meixner.service.task.TaskService
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
@@ -37,14 +37,14 @@ class ResultService(
     }
 
     fun getStudentByUserId(userId: Long): StudentResponse? {
-        val user = userRepository.findById(userId).toNullable ?: return null
-        val studentEntity = studentRepository.findById(userId).toNullable ?: return null
+        val user = userRepository.findByIdOrNull(userId) ?: return null
+        val studentEntity = studentRepository.findByIdOrNull(userId) ?: return null
         return studentEntity.toDomainModel(user = user, exercises = studentEntity.getExercises())
     }
 
     fun changeExercisesToStudent(userId: Long, exerciseId: Long, isAdd: Boolean): StudentResponse? {
-        val user = userRepository.findById(userId).toNullable ?: return null
-        val studentEntity = studentRepository.findById(userId).toNullable ?: return null
+        val user = userRepository.findByIdOrNull(userId) ?: return null
+        val studentEntity = studentRepository.findByIdOrNull(userId) ?: return null
         if (isAdd && studentEntity.exerciseIds.contains(exerciseId).not())
             studentEntity.exerciseIds += exerciseId
         else
@@ -57,8 +57,8 @@ class ResultService(
     }
 
     fun changeClassLevelByUserId(userId: Long, classLevel: Int): StudentResponse? {
-        val student = studentRepository.findById(userId).toNullable ?: return null
-        val user = userRepository.findById(userId).toNullable ?: return null
+        val student = studentRepository.findByIdOrNull(userId) ?: return null
+        val user = userRepository.findByIdOrNull(userId) ?: return null
         return studentRepository.save(student.copy(classLevel = classLevel))
                 .toDomainModel(user = user, exercises = student.getExercises())
     }
@@ -72,9 +72,9 @@ class ResultService(
     }
 
     fun getSolvedExerciseResults(solvedExerciseId: Long): ExerciseResult? {
-        val solvedExercise = solvedExerciseRepository.findById(solvedExerciseId).toNullable ?: return null
+        val solvedExercise = solvedExerciseRepository.findByIdOrNull(solvedExerciseId) ?: return null
         val taskResults = solvedExercise.taskResultIds.mapNotNull {
-            val task = taskResultRepository.findById(it).toNullable
+            val task = taskResultRepository.findByIdOrNull(it)
             task?.toDomainModel(
                     taskResult = taskService.getTaskById(task.resultTaskId) ?: return@mapNotNull null,
                     currentResult = task.currentResults,

@@ -35,3 +35,6 @@ private fun ByteArray?.toContent(mediaItemId: Long): String {
             .path(mediaItemId.toString())
             .toUriString()
 }
+
+fun List<MediaItemEntity>.containsRequests(request: List<MediaItemRequest>): Boolean =
+        any { mediaItemEntity -> request.map { mediaItemRequest -> mediaItemRequest.mediaItemId }.contains(mediaItemEntity.id) }
