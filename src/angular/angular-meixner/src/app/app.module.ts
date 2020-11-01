@@ -75,12 +75,6 @@ import {MemoryGameComponent} from './task_types/memory-game/memory-game.componen
 import {MatinputUnderlineComponent} from './components/matinput-underline/matinput-underline.component';
 import {SecurePipe} from "./model/SecurePipe";
 import {TypeofPipe} from "./model/TypeofPipe";
-import {GroupingAndSortingComponent} from './student/tasks/grouping-and-sorting/grouping-and-sorting.component';
-import {SortingAndGroupingComponent} from './student/tasks/sorting-and-grouping/sorting-and-grouping.component';
-import {SentenceCreationAndGroupingComponent} from './student/tasks/sentence-creation-and-grouping/sentence-creation-and-grouping.component';
-import {SentenceCreationAndSortingComponent} from './student/tasks/sentence-creation-and-sorting/sentence-creation-and-sorting.component';
-import {SentenceCompletionAndSortingComponent} from './student/tasks/sentence-completion-and-sorting/sentence-completion-and-sorting.component';
-import {SentenceCompletionAndGroupingComponent} from './student/tasks/sentence-completion-and-grouping/sentence-completion-and-grouping.component';
 import {StudentGroupingAndSortingComponent} from './student/tasks/student-grouping-and-sorting/student-grouping-and-sorting.component';
 import {StudentSortingAndGroupingComponent} from './student/tasks/student-sorting-and-grouping/student-sorting-and-grouping.component';
 import {StudentSentenceCreationAndGroupingComponent} from './student/tasks/student-sentence-creation-and-grouping/student-sentence-creation-and-grouping.component';
@@ -140,12 +134,6 @@ import {StudentSentenceCompletionAndGroupingComponent} from './student/tasks/stu
     MatinputUnderlineComponent,
     SecurePipe,
     TypeofPipe,
-    GroupingAndSortingComponent,
-    SortingAndGroupingComponent,
-    SentenceCreationAndGroupingComponent,
-    SentenceCreationAndSortingComponent,
-    SentenceCompletionAndSortingComponent,
-    SentenceCompletionAndGroupingComponent,
     StudentGroupingAndSortingComponent,
     StudentSortingAndGroupingComponent,
     StudentSentenceCreationAndGroupingComponent,

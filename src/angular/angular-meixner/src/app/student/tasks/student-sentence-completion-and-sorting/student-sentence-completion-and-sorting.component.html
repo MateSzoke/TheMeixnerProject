@@ -1,1 +1,47 @@
-<p>student-sentence-completion-and-sorting works!</p>
+<div *ngIf="!loaded">
+  <div class="wrapper">
+    <div class="center">
+      <mat-spinner diameter="70"></mat-spinner>
+    </div>
+  </div>
+</div>
+<div *ngIf="loaded">
+  <p class="title"><b>Mondat kiegészítés</b> - {{sentenceCompletion.title}}</p>
+  <button (click)="evaluateTask()" class="addbtn" mat-raised-button type="button">
+    Kész, beküldöm a megoldást
+  </button>
+  <div cdkDropListGroup>
+    <div fxLayout="row wrap" fxLayoutAlign="center center" style="padding: 24px">
+      <div *ngFor="let sentence of sentenceCompletion.sentences">
+        <div *ngFor="let sentenceItem of sentence; index as i" fxLayout="row" fxLayoutAlign="start center">
+          <h2 class="subtitle">{{sentenceItem}}</h2>
+
+          <div class="example-container-small">
+            <div (cdkDropListDropped)="drop($event, false)"
+                 *ngIf="i < sentence.length -1"
+                 [cdkDropListData]="sentenceResult[i]"
+                 [ngClass]="{'border-success':getSuccess(i), 'border-fail':getFail(i)}"
+                 cdkDropList
+                 cdkDropListSortingDisabled class="example-list">
+              <div *ngFor="let element of sentenceResult[i]" cdkDrag class="example-box">{{element}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="example-container-small">
+      <h2 class="subtitle">Elérhető elemek</h2>
+
+      <div
+        (cdkDropListDropped)="drop($event, true)"
+        [cdkDropListData]="options"
+        cdkDropList
+        cdkDropListSortingDisabled
+        class="example-list">
+        <div *ngFor="let element of options" cdkDrag class="example-box">{{element}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
