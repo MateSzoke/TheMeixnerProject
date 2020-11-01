@@ -50,7 +50,7 @@ import {NotFoundComponent} from './not-found/not-found.component';
 import {MyExercisesComponent} from './student/my-exercises/my-exercises.component';
 import {MyResultsComponent} from './student/my-results/my-results.component';
 import {TypeEnumUtil} from "./util/typeEnumUtil";
-import { EasyTaskCardComponent } from './components/easy-task-card/easy-task-card.component';
+import {EasyTaskCardComponent} from './components/easy-task-card/easy-task-card.component';
 import {TrueFalseComponent} from './task_types/true-false/true-false.component';
 import {StudentPairingComponent} from './student/tasks/student-pairing/student-pairing.component';
 import {StudentGroupingComponent} from './student/tasks/student-grouping/student-grouping.component';
@@ -69,12 +69,24 @@ import {SentenceCreationResultComponent} from './student/tasks/result/sentence-c
 import {TrueFalseResultComponent} from './student/tasks/result/true-false-result/true-false-result.component';
 import {MemoryGameResultComponent} from './student/tasks/result/memory-game-result/memory-game-result.component';
 import {MatProgressBarModule} from "@angular/material/progress-bar";
-import { EasyTaskComponent } from './task_types/easy-task/easy-task.component';
-import { TaskTopRowComponent } from './components/task-top-row/task-top-row.component';
-import { MemoryGameComponent } from './task_types/memory-game/memory-game.component';
-import { MatinputUnderlineComponent } from './components/matinput-underline/matinput-underline.component';
+import {EasyTaskComponent} from './task_types/easy-task/easy-task.component';
+import {TaskTopRowComponent} from './components/task-top-row/task-top-row.component';
+import {MemoryGameComponent} from './task_types/memory-game/memory-game.component';
+import {MatinputUnderlineComponent} from './components/matinput-underline/matinput-underline.component';
 import {SecurePipe} from "./model/SecurePipe";
 import {TypeofPipe} from "./model/TypeofPipe";
+import {GroupingAndSortingComponent} from './student/tasks/grouping-and-sorting/grouping-and-sorting.component';
+import {SortingAndGroupingComponent} from './student/tasks/sorting-and-grouping/sorting-and-grouping.component';
+import {SentenceCreationAndGroupingComponent} from './student/tasks/sentence-creation-and-grouping/sentence-creation-and-grouping.component';
+import {SentenceCreationAndSortingComponent} from './student/tasks/sentence-creation-and-sorting/sentence-creation-and-sorting.component';
+import {SentenceCompletionAndSortingComponent} from './student/tasks/sentence-completion-and-sorting/sentence-completion-and-sorting.component';
+import {SentenceCompletionAndGroupingComponent} from './student/tasks/sentence-completion-and-grouping/sentence-completion-and-grouping.component';
+import {StudentGroupingAndSortingComponent} from './student/tasks/student-grouping-and-sorting/student-grouping-and-sorting.component';
+import {StudentSortingAndGroupingComponent} from './student/tasks/student-sorting-and-grouping/student-sorting-and-grouping.component';
+import {StudentSentenceCreationAndGroupingComponent} from './student/tasks/student-sentence-creation-and-grouping/student-sentence-creation-and-grouping.component';
+import {StudentSentenceCreationAndSortingComponent} from './student/tasks/student-sentence-creation-and-sorting/student-sentence-creation-and-sorting.component';
+import {StudentSentenceCompletionAndSortingComponent} from './student/tasks/student-sentence-completion-and-sorting/student-sentence-completion-and-sorting.component';
+import {StudentSentenceCompletionAndGroupingComponent} from './student/tasks/student-sentence-completion-and-grouping/student-sentence-completion-and-grouping.component';
 
 @NgModule({
   declarations: [
@@ -127,7 +139,19 @@ import {TypeofPipe} from "./model/TypeofPipe";
     MemoryGameComponent,
     MatinputUnderlineComponent,
     SecurePipe,
-    TypeofPipe
+    TypeofPipe,
+    GroupingAndSortingComponent,
+    SortingAndGroupingComponent,
+    SentenceCreationAndGroupingComponent,
+    SentenceCreationAndSortingComponent,
+    SentenceCompletionAndSortingComponent,
+    SentenceCompletionAndGroupingComponent,
+    StudentGroupingAndSortingComponent,
+    StudentSortingAndGroupingComponent,
+    StudentSentenceCreationAndGroupingComponent,
+    StudentSentenceCreationAndSortingComponent,
+    StudentSentenceCompletionAndSortingComponent,
+    StudentSentenceCompletionAndGroupingComponent
   ],
   imports: [
     BrowserModule,
