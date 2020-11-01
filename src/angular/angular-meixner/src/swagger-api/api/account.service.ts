@@ -11,18 +11,16 @@
  */
 /* tslint:disable:no-unused-variable member-ordering */
 
-import { Inject, Injectable, Optional }                      from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams,
-         HttpResponse, HttpEvent }                           from '@angular/common/http';
-import { CustomHttpUrlEncodingCodec }                        from '../encoder';
+import {Inject, Injectable, Optional} from '@angular/core';
+import {HttpClient, HttpEvent, HttpHeaders, HttpResponse} from '@angular/common/http';
 
-import { Observable }                                        from 'rxjs';
+import {Observable} from 'rxjs';
 
-import { UserRequest } from '../model/userRequest';
-import { UserResponse } from '../model/userResponse';
+import {UserRequest} from '../model/userRequest';
+import {UserResponse} from '../model/userResponse';
 
-import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
-import { Configuration }                                     from '../configuration';
+import {BASE_PATH} from '../variables';
+import {Configuration} from '../configuration';
 
 
 @Injectable({
@@ -30,19 +28,19 @@ import { Configuration }                                     from '../configurat
 })
 export class AccountService {
 
-    protected basePath = 'http://localhost:3000';
-    public defaultHeaders = new HttpHeaders();
-    public configuration = new Configuration();
+  protected basePath = 'https://meixner.herokuapp.com';
+  public defaultHeaders = new HttpHeaders();
+  public configuration = new Configuration();
 
-    constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+  constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
 
-        if (configuration) {
-            this.configuration = configuration;
-            this.configuration.basePath = configuration.basePath || basePath || this.basePath;
+    if (configuration) {
+      this.configuration = configuration;
+      this.configuration.basePath = configuration.basePath || basePath || this.basePath;
 
-        } else {
-            this.configuration.basePath = basePath || this.basePath;
-        }
+    } else {
+      this.configuration.basePath = basePath || this.basePath;
+    }
     }
 
     /**
@@ -50,72 +48,65 @@ export class AccountService {
      * @return true: consumes contains 'multipart/form-data', false: otherwise
      */
     private canConsumeForm(consumes: string[]): boolean {
-        const form = 'multipart/form-data';
-        for (const consume of consumes) {
-            if (form === consume) {
-                return true;
-            }
+      const form = 'multipart/form-data';
+      for (const consume of consumes) {
+        if (form === consume) {
+          return true;
         }
-        return false;
+      }
+      return false;
     }
 
-
-    /**
-     * Delete user by user id
-     *
-     * @param userId userId
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public deleteUserByIdUsingDELETE1(userId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deleteUserByIdUsingDELETE1(userId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deleteUserByIdUsingDELETE1(userId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deleteUserByIdUsingDELETE1(userId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-        if (userId === null || userId === undefined) {
-            throw new Error('Required parameter userId was null or undefined when calling deleteUserByIdUsingDELETE1.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // authentication (apiKey) required
-
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.delete<any>(`${this.configuration.basePath}/account/${encodeURIComponent(String(userId))}`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
+  /**
+   * Delete user by user id
+   *
+   * @param userId userId
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public deleteUserByIdUsingDELETE1(userId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+  public deleteUserByIdUsingDELETE1(userId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+  public deleteUserByIdUsingDELETE1(userId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+  public deleteUserByIdUsingDELETE1(userId: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    if (userId === null || userId === undefined) {
+      throw new Error('Required parameter userId was null or undefined when calling deleteUserByIdUsingDELETE1.');
     }
 
-    /**
-     * Get current logged in user
-     *
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public getCurrentUserUsingGET(observe?: 'body', reportProgress?: boolean): Observable<UserResponse>;
-    public getCurrentUserUsingGET(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserResponse>>;
-    public getCurrentUserUsingGET(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserResponse>>;
+    let headers = this.defaultHeaders;
+
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [];
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = [];
+
+    return this.httpClient.delete<any>(`${this.configuration.basePath}/account/${encodeURIComponent(String(userId))}`,
+      {
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress
+      }
+    );
+  }
+
+  /**
+   * Get current logged in user
+   *
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getCurrentUserUsingGET(observe?: 'body', reportProgress?: boolean): Observable<UserResponse>;
+  public getCurrentUserUsingGET(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserResponse>>;
+  public getCurrentUserUsingGET(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserResponse>>;
     public getCurrentUserUsingGET(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
-
-        // authentication (apiKey) required
 
 
         // to determine the Accept header
@@ -201,9 +192,6 @@ export class AccountService {
         }
 
         let headers = this.defaultHeaders;
-
-        // authentication (apiKey) required
-
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [

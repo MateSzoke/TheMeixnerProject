@@ -11,26 +11,24 @@
  */
 /* tslint:disable:no-unused-variable member-ordering */
 
-import { Inject, Injectable, Optional }                      from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams,
-         HttpResponse, HttpEvent }                           from '@angular/common/http';
-import { CustomHttpUrlEncodingCodec }                        from '../encoder';
+import {Inject, Injectable, Optional} from '@angular/core';
+import {HttpClient, HttpEvent, HttpHeaders, HttpResponse} from '@angular/common/http';
 
-import { Observable }                                        from 'rxjs';
+import {Observable} from 'rxjs';
 
-import { BlindMapRequest } from '../model/blindMapRequest';
-import { BlindMapResponse } from '../model/blindMapResponse';
-import { FreeTextRequest } from '../model/freeTextRequest';
-import { FreeTextResponse } from '../model/freeTextResponse';
-import { OddOneOutRequest } from '../model/oddOneOutRequest';
-import { OddOneOutResponse } from '../model/oddOneOutResponse';
-import { TableRequest } from '../model/tableRequest';
-import { TableResponse } from '../model/tableResponse';
-import { TimelineRequest } from '../model/timelineRequest';
-import { TimelineResponse } from '../model/timelineResponse';
+import {BlindMapRequest} from '../model/blindMapRequest';
+import {BlindMapResponse} from '../model/blindMapResponse';
+import {FreeTextRequest} from '../model/freeTextRequest';
+import {FreeTextResponse} from '../model/freeTextResponse';
+import {OddOneOutRequest} from '../model/oddOneOutRequest';
+import {OddOneOutResponse} from '../model/oddOneOutResponse';
+import {TableRequest} from '../model/tableRequest';
+import {TableResponse} from '../model/tableResponse';
+import {TimelineRequest} from '../model/timelineRequest';
+import {TimelineResponse} from '../model/timelineResponse';
 
-import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
-import { Configuration }                                     from '../configuration';
+import {BASE_PATH} from '../variables';
+import {Configuration} from '../configuration';
 
 
 @Injectable({
@@ -38,9 +36,9 @@ import { Configuration }                                     from '../configurat
 })
 export class OtherTasksService {
 
-    protected basePath = 'http://localhost:3000';
-    public defaultHeaders = new HttpHeaders();
-    public configuration = new Configuration();
+  protected basePath = 'https://meixner.herokuapp.com';
+  public defaultHeaders = new HttpHeaders();
+  public configuration = new Configuration();
 
     constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
 

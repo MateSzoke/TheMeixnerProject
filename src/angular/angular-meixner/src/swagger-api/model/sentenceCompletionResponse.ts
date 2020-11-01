@@ -11,7 +11,7 @@
  */
 
 
-export interface SentenceCompletionResponse { 
+export interface SentenceCompletionResponse {
     difficulty: number;
     id: number;
     lastModified: Date;

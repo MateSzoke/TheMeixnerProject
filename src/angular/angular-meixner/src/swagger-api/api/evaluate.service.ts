@@ -36,9 +36,9 @@ import { Configuration }                                     from '../configurat
 })
 export class EvaluateService {
 
-    protected basePath = 'http://localhost:3000';
-    public defaultHeaders = new HttpHeaders();
-    public configuration = new Configuration();
+  public defaultHeaders = new HttpHeaders();
+  public configuration = new Configuration();
+  protected basePath = 'https://meixner.herokuapp.com';
 
     constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
 
@@ -90,9 +90,6 @@ export class EvaluateService {
         }
 
         let headers = this.defaultHeaders;
-
-        // authentication (apiKey) required
-
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -148,9 +145,6 @@ export class EvaluateService {
 
         let headers = this.defaultHeaders;
 
-        // authentication (apiKey) required
-
-
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -204,9 +198,6 @@ export class EvaluateService {
         }
 
         let headers = this.defaultHeaders;
-
-        // authentication (apiKey) required
-
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -262,9 +253,6 @@ export class EvaluateService {
 
         let headers = this.defaultHeaders;
 
-        // authentication (apiKey) required
-
-
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -318,9 +306,6 @@ export class EvaluateService {
         }
 
         let headers = this.defaultHeaders;
-
-        // authentication (apiKey) required
-
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -376,9 +361,6 @@ export class EvaluateService {
 
         let headers = this.defaultHeaders;
 
-        // authentication (apiKey) required
-
-
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -432,9 +414,6 @@ export class EvaluateService {
         }
 
         let headers = this.defaultHeaders;
-
-        // authentication (apiKey) required
-
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [

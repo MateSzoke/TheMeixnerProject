@@ -11,10 +11,10 @@
  */
 
 
-export interface MediaItemResponse { 
-    content: string;
-    mediaItemId: number;
-    type: MediaItemResponse.TypeEnum;
+export interface MediaItemResponse {
+  content: string;
+  mediaItemId: number;
+  type: MediaItemResponse.TypeEnum;
 }
 export namespace MediaItemResponse {
     export type TypeEnum = 'TEXT' | 'FILE';

@@ -9,15 +9,16 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { TaskResponse } from './taskResponse';
-import { UserResponse } from './userResponse';
+import {TaskResponse} from './taskResponse';
+import {UserResponse} from './userResponse';
 
 
-export interface TaskResultResponse { 
-    attempts: number;
-    currentResult: Array<boolean>;
-    id: number;
-    lastModified: Date;
-    taskResult?: TaskResponse;
-    user: UserResponse;
+export interface TaskResultResponse {
+  attempts: number;
+  currentResult: Array<boolean>;
+  id: number;
+  lastModified: Date;
+  taskResult?: TaskResponse;
+  user: UserResponse;
+  resultPercentage: number;
 }

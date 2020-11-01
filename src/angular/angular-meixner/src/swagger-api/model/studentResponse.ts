@@ -9,13 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { ExercisesResponse } from './exercisesResponse';
-import { UserResponse } from './userResponse';
+import {ExercisesResponse} from './exercisesResponse';
+import {UserResponse} from './userResponse';
 
 
-export interface StudentResponse { 
-    classLevel: number;
-    exercises: Array<ExercisesResponse>;
-    id: number;
-    user: UserResponse;
+export interface StudentResponse {
+  classLevel: number;
+  exercises: Array<ExercisesResponse>;
+  id: number;
+  user: UserResponse;
 }

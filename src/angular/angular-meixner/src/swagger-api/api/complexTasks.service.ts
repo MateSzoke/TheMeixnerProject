@@ -40,7 +40,7 @@ import { Configuration }                                     from '../configurat
 })
 export class ComplexTasksService {
 
-    protected basePath = 'http://localhost:3000';
+    protected basePath = 'http://meixner.herokuapp.com';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
