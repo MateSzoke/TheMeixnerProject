@@ -1,9 +1,10 @@
 package hu.aut.meixner.controller.result
 
 import hu.aut.meixner.dto.result.StartedExercise
+import hu.aut.meixner.dto.task.student.complex.*
 import hu.aut.meixner.dto.task.student.easy.*
 import hu.aut.meixner.service.result.AssignService
-import hu.aut.meixner.service.result.EasyTaskEvaluationService
+import hu.aut.meixner.service.result.TaskEvaluationService
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import org.springframework.http.ResponseEntity
@@ -15,7 +16,7 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("/evaluate")
 class EvaluateController(
-        private val easyTaskEvaluationService: EasyTaskEvaluationService,
+        private val taskEvaluationService: TaskEvaluationService,
         private val assignService: AssignService
 ) {
 
@@ -26,7 +27,7 @@ class EvaluateController(
             @PathVariable("taskId") taskId: Long,
             @RequestBody @Valid taskRequest: PairingTaskRequest
     ): ResponseEntity<StartedExercise> {
-        val taskResult = easyTaskEvaluationService.evaluatePairing(taskId = taskId, taskRequest = taskRequest)
+        val taskResult = taskEvaluationService.evaluatePairing(taskId = taskId, taskRequest = taskRequest)
                 ?: return ResponseEntity.badRequest().build()
         val result = assignService.getStartedExercise(startedExerciseId = startedExerciseId, solvedTaskId = taskId, taskResult = taskResult)
                 ?: return ResponseEntity.badRequest().build()
@@ -40,7 +41,7 @@ class EvaluateController(
             @PathVariable("taskId") taskId: Long,
             @RequestBody @Valid taskRequest: GroupingTaskRequest
     ): ResponseEntity<StartedExercise> {
-        val taskResult = easyTaskEvaluationService.evaluateGrouping(taskId = taskId, taskRequest = taskRequest)
+        val taskResult = taskEvaluationService.evaluateGrouping(taskId = taskId, taskRequest = taskRequest)
                 ?: return ResponseEntity.badRequest().build()
         val result = assignService.getStartedExercise(startedExerciseId = startedExerciseId, solvedTaskId = taskId, taskResult = taskResult)
                 ?: return ResponseEntity.badRequest().build()
@@ -54,7 +55,7 @@ class EvaluateController(
             @PathVariable("taskId") taskId: Long,
             @RequestBody @Valid taskRequest: SortingTaskRequest
     ): ResponseEntity<StartedExercise> {
-        val taskResult = easyTaskEvaluationService.evaluateSorting(taskId = taskId, taskRequest = taskRequest)
+        val taskResult = taskEvaluationService.evaluateSorting(taskId = taskId, taskRequest = taskRequest)
                 ?: return ResponseEntity.badRequest().build()
         val result = assignService.getStartedExercise(startedExerciseId = startedExerciseId, solvedTaskId = taskId, taskResult = taskResult)
                 ?: return ResponseEntity.badRequest().build()
@@ -68,7 +69,7 @@ class EvaluateController(
             @PathVariable("taskId") taskId: Long,
             @RequestBody @Valid taskRequest: SentenceCreationTaskRequest
     ): ResponseEntity<StartedExercise> {
-        val taskResult = easyTaskEvaluationService.evaluateSentenceCreation(taskId = taskId, taskRequest = taskRequest)
+        val taskResult = taskEvaluationService.evaluateSentenceCreation(taskId = taskId, taskRequest = taskRequest)
                 ?: return ResponseEntity.badRequest().build()
         val result = assignService.getStartedExercise(startedExerciseId = startedExerciseId, solvedTaskId = taskId, taskResult = taskResult)
                 ?: return ResponseEntity.badRequest().build()
@@ -82,7 +83,7 @@ class EvaluateController(
             @PathVariable("taskId") taskId: Long,
             @RequestBody @Valid taskRequest: SentenceCompletionTaskRequest
     ): ResponseEntity<StartedExercise> {
-        val taskResult = easyTaskEvaluationService.evaluateSentenceCompletion(taskId = taskId, taskRequest = taskRequest)
+        val taskResult = taskEvaluationService.evaluateSentenceCompletion(taskId = taskId, taskRequest = taskRequest)
                 ?: return ResponseEntity.badRequest().build()
 
         val result = assignService.getStartedExercise(startedExerciseId = startedExerciseId, solvedTaskId = taskId, taskResult = taskResult)
@@ -97,7 +98,7 @@ class EvaluateController(
             @PathVariable("taskId") taskId: Long,
             @RequestBody @Valid taskRequest: TrueFalseTaskRequest
     ): ResponseEntity<StartedExercise> {
-        val taskResult = easyTaskEvaluationService.evaluateTrueFalse(taskId = taskId, taskRequest = taskRequest)
+        val taskResult = taskEvaluationService.evaluateTrueFalse(taskId = taskId, taskRequest = taskRequest)
                 ?: return ResponseEntity.badRequest().build()
         val result = assignService.getStartedExercise(startedExerciseId = startedExerciseId, solvedTaskId = taskId, taskResult = taskResult)
                 ?: return ResponseEntity.badRequest().build()
@@ -111,7 +112,91 @@ class EvaluateController(
             @PathVariable("taskId") taskId: Long,
             @RequestBody @Valid taskRequest: MemoryGameTaskRequest
     ): ResponseEntity<StartedExercise> {
-        val taskResult = easyTaskEvaluationService.evaluateMemoryGame(taskId = taskId, taskRequest = taskRequest)
+        val taskResult = taskEvaluationService.evaluateMemoryGame(taskId = taskId, taskRequest = taskRequest)
+                ?: return ResponseEntity.badRequest().build()
+        val result = assignService.getStartedExercise(startedExerciseId = startedExerciseId, solvedTaskId = taskId, taskResult = taskResult)
+                ?: return ResponseEntity.badRequest().build()
+        return ResponseEntity.ok(result)
+    }
+
+    @PostMapping("/groupingAndSorting/{startedExerciseId}/{taskId}")
+    @ApiOperation("Evaluate Grouping and Sorting request by taskId to a student by user id")
+    fun evaluateGroupingAndSorting(
+            @PathVariable("startedExerciseId") startedExerciseId: Long,
+            @PathVariable("taskId") taskId: Long,
+            @RequestBody @Valid taskRequest: GroupingAndSortingTaskRequest
+    ): ResponseEntity<StartedExercise> {
+        val taskResult = taskEvaluationService.evaluateGroupingAndSorting(taskId = taskId, taskRequest = taskRequest)
+                ?: return ResponseEntity.badRequest().build()
+        val result = assignService.getStartedExercise(startedExerciseId = startedExerciseId, solvedTaskId = taskId, taskResult = taskResult)
+                ?: return ResponseEntity.badRequest().build()
+        return ResponseEntity.ok(result)
+    }
+
+    @PostMapping("/sentenceCompletionAndSorting/{startedExerciseId}/{taskId}")
+    @ApiOperation("Evaluate Sentence completion and Sorting request by taskId to a student by user id")
+    fun evaluateSentenceCompletionAndSorting(
+            @PathVariable("startedExerciseId") startedExerciseId: Long,
+            @PathVariable("taskId") taskId: Long,
+            @RequestBody @Valid taskRequest: SentenceCompletionAndSortingTaskRequest
+    ): ResponseEntity<StartedExercise> {
+        val taskResult = taskEvaluationService.evaluateSentenceCompletionAndSorting(taskId = taskId, taskRequest = taskRequest)
+                ?: return ResponseEntity.badRequest().build()
+        val result = assignService.getStartedExercise(startedExerciseId = startedExerciseId, solvedTaskId = taskId, taskResult = taskResult)
+                ?: return ResponseEntity.badRequest().build()
+        return ResponseEntity.ok(result)
+    }
+
+    @PostMapping("/sentenceCompletionAndGrouping/{startedExerciseId}/{taskId}")
+    @ApiOperation("Evaluate Sentence completion and Grouping request by taskId to a student by user id")
+    fun evaluateSentenceCompletionAndGrouping(
+            @PathVariable("startedExerciseId") startedExerciseId: Long,
+            @PathVariable("taskId") taskId: Long,
+            @RequestBody @Valid taskRequest: SentenceCompletionAndGroupingTaskRequest
+    ): ResponseEntity<StartedExercise> {
+        val taskResult = taskEvaluationService.evaluateSentenceCompletionAndGrouping(taskId = taskId, taskRequest = taskRequest)
+                ?: return ResponseEntity.badRequest().build()
+        val result = assignService.getStartedExercise(startedExerciseId = startedExerciseId, solvedTaskId = taskId, taskResult = taskResult)
+                ?: return ResponseEntity.badRequest().build()
+        return ResponseEntity.ok(result)
+    }
+
+    @PostMapping("/sentenceCreationAndGrouping/{startedExerciseId}/{taskId}")
+    @ApiOperation("Evaluate Sentence creation and Grouping request by taskId to a student by user id")
+    fun evaluateSentenceCreationAndGrouping(
+            @PathVariable("startedExerciseId") startedExerciseId: Long,
+            @PathVariable("taskId") taskId: Long,
+            @RequestBody @Valid taskRequest: SentenceCreationAndGroupingTaskRequest
+    ): ResponseEntity<StartedExercise> {
+        val taskResult = taskEvaluationService.evaluateSentenceCreationAndGrouping(taskId = taskId, taskRequest = taskRequest)
+                ?: return ResponseEntity.badRequest().build()
+        val result = assignService.getStartedExercise(startedExerciseId = startedExerciseId, solvedTaskId = taskId, taskResult = taskResult)
+                ?: return ResponseEntity.badRequest().build()
+        return ResponseEntity.ok(result)
+    }
+
+    @PostMapping("/sentenceCreationAndSorting/{startedExerciseId}/{taskId}")
+    @ApiOperation("Evaluate Sentence completion and Sorting request by taskId to a student by user id")
+    fun evaluateSentenceCreationAndSorting(
+            @PathVariable("startedExerciseId") startedExerciseId: Long,
+            @PathVariable("taskId") taskId: Long,
+            @RequestBody @Valid taskRequest: SentenceCreationAndSortingTaskRequest
+    ): ResponseEntity<StartedExercise> {
+        val taskResult = taskEvaluationService.evaluateSentenceCreationAndSorting(taskId = taskId, taskRequest = taskRequest)
+                ?: return ResponseEntity.badRequest().build()
+        val result = assignService.getStartedExercise(startedExerciseId = startedExerciseId, solvedTaskId = taskId, taskResult = taskResult)
+                ?: return ResponseEntity.badRequest().build()
+        return ResponseEntity.ok(result)
+    }
+
+    @PostMapping("/sortingAndGrouping/{startedExerciseId}/{taskId}")
+    @ApiOperation("Evaluate Sorting and Grouping request by taskId to a student by user id")
+    fun evaluateSortingAndGrouping(
+            @PathVariable("startedExerciseId") startedExerciseId: Long,
+            @PathVariable("taskId") taskId: Long,
+            @RequestBody @Valid taskRequest: SortingAndGroupingTaskRequest
+    ): ResponseEntity<StartedExercise> {
+        val taskResult = taskEvaluationService.evaluateSortingAndGrouping(taskId = taskId, taskRequest = taskRequest)
                 ?: return ResponseEntity.badRequest().build()
         val result = assignService.getStartedExercise(startedExerciseId = startedExerciseId, solvedTaskId = taskId, taskResult = taskResult)
                 ?: return ResponseEntity.badRequest().build()

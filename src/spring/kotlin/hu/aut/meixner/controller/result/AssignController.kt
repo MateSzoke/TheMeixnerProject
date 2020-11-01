@@ -2,7 +2,7 @@ package hu.aut.meixner.controller.result
 
 import hu.aut.meixner.dto.result.AssignedExercise
 import hu.aut.meixner.dto.result.StartedExercise
-import hu.aut.meixner.dto.task.student.easy.AssignTask
+import hu.aut.meixner.dto.task.student.AssignTask
 import hu.aut.meixner.service.result.AssignService
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
