@@ -4,8 +4,10 @@ import hu.aut.meixner.dto.task.common.MediaItemRequest
 import hu.aut.meixner.dto.task.common.MediaItemResponse
 import hu.aut.meixner.dto.task.common.TaskResponse
 import hu.aut.meixner.dto.task.common.TaskTypeEnum.*
+import hu.aut.meixner.dto.task.complex.*
 import hu.aut.meixner.dto.task.easy.*
 import hu.aut.meixner.dto.task.student.AssignTask
+import hu.aut.meixner.dto.task.student.complex.*
 import hu.aut.meixner.dto.task.student.easy.*
 import hu.aut.meixner.mapping.toDomainModel
 
@@ -96,12 +98,61 @@ fun TaskResponse.toAssignTask(): AssignTask? {
                     elements = task.pairs.flatMap { it.pair }.shuffled()
             )
         }
-        GroupingAndSorting -> TODO()
-        SentenceCompletionAndGrouping -> TODO()
-        SentenceCompletionAndSorting -> TODO()
-        SentenceCreationAndGrouping -> TODO()
-        SentenceCreationAndSorting -> TODO()
-        SortingAndGrouping -> TODO()
+        GroupingAndSorting -> {
+            val task = this as? GroupingAndSortingResponse ?: return null
+            GroupingAndSortingTask(
+                    taskId = id,
+                    title = title,
+                    groups = task.groups.map { it.name }.shuffled(),
+                    elements = task.groups.flatMap { it.elements }.shuffled()
+            )
+        }
+        SentenceCompletionAndGrouping -> {
+            val task = this as? SentenceCompletionAndGroupingResponse ?: return null
+            SentenceCompletionAndGroupingTask(
+                    taskId = id,
+                    title = title,
+                    groupTitles = task.sentenceGroups.map { it.groupTitle },
+                    sentences = task.sentenceGroups.map { it.sentences.flatMap { it.sentence } }.shuffled(),
+                    options = task.sentenceGroups.flatMap { it.sentences.flatMap { it.options } }.shuffled()
+            )
+        }
+        SentenceCompletionAndSorting -> {
+            val task = this as? SentenceCompletionAndSortingResponse ?: return null
+            SentenceCompletionAndSortingTask(
+                    taskId = id,
+                    title = title,
+                    sentences = task.sentences.map { it.sentence }.shuffled(),
+                    options = task.sentences.flatMap { it.options }.shuffled()
+            )
+        }
+        SentenceCreationAndGrouping -> {
+            val task = this as? SentenceCreationAndGroupingResponse ?: return null
+            SentenceCreationAndGroupingTask(
+                    taskId = id,
+                    title = title,
+                    groupTitles = task.sentenceGroups.map { it.groupTitle },
+                    sentenceTitles = task.sentenceGroups.flatMap { it.sentences.map { it.sentenceTitle } },
+                    parts = task.sentenceGroups.flatMap { it.sentences.flatMap { it.parts } }.shuffled()
+            )
+        }
+        SentenceCreationAndSorting -> {
+            val task = this as? SentenceCreationAndSortingResponse ?: return null
+            SentenceCreationAndSortingTask(
+                    taskId = id,
+                    title = title,
+                    sentence = task.sentences.map { it.sentenceTitle }.shuffled(),
+                    options = task.sentences.flatMap { it.parts }.shuffled()
+            )
+        }
+        SortingAndGrouping -> {
+            val task = this as? SortingAndGroupingResponse ?: return null
+            SortingAndGroupingTask(
+                    taskId = id,
+                    title = title,
+                    elements = task.groups.flatMap { it.elements }.shuffled()
+            )
+        }
         BlindMap -> TODO()
         FreeText -> TODO()
         OddOneOut -> TODO()

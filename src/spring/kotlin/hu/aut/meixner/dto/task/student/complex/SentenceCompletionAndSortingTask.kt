@@ -7,5 +7,6 @@ class SentenceCompletionAndSortingTask(
         override val taskId: Long,
         override val title: String,
         override val type: TaskTypeEnum = TaskTypeEnum.SentenceCompletionAndSorting,
-        val sentences: List<SentenceTaskItem>
+        val sentences: List<List<String>>,
+        val options: List<String>
 ) : AssignTask()

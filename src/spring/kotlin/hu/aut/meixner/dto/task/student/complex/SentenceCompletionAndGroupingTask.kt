@@ -8,5 +8,6 @@ class SentenceCompletionAndGroupingTask(
         override val title: String,
         override val type: TaskTypeEnum = TaskTypeEnum.SentenceCompletionAndGrouping,
         val groupTitles: List<String>,
-        val sentences: List<SentenceTaskItem>,
+        val sentences: List<List<String>>,
+        val options: List<String>
 ) : AssignTask()

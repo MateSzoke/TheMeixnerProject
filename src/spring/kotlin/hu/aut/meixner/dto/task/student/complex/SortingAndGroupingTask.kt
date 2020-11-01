@@ -7,6 +7,6 @@ import hu.aut.meixner.dto.task.student.AssignTask
 class SortingAndGroupingTask(
         override val taskId: Long,
         override val title: String,
-        override val type: TaskTypeEnum = TaskTypeEnum.GroupingAndSorting,
+        override val type: TaskTypeEnum = TaskTypeEnum.SortingAndGrouping,
         val elements: List<MediaItemResponse>
 ) : AssignTask()
