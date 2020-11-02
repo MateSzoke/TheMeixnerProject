@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {AssignService, EvaluateService} from "../../../../swagger-api";
+import {AssignService, EvaluateService, SentenceCompletionItem} from "../../../../swagger-api";
 import {MatDialog} from "@angular/material/dialog";
-import {CdkDragDrop, transferArrayItem} from "@angular/cdk/drag-drop";
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
 import {SentenceCompletionResultComponent} from "../result/sentence-completion-result/sentence-completion-result.component";
 import {SentenceCompletionAndSortingTask} from "../../../../swagger-api/model/sentenceCompletionAndSortingTask";
 import {SentenceCompletionAndSortingTaskRequest} from "../../../../swagger-api/model/sentenceCompletionAndSortingTaskRequest";
+import {MatSelectChange} from "@angular/material/select";
 
 @Component({
   selector: 'app-student-sentence-completion-and-sorting',
@@ -20,8 +21,10 @@ export class StudentSentenceCompletionAndSortingComponent implements OnInit {
   taskRequest: SentenceCompletionAndSortingTaskRequest = null
   currentResult: Array<Boolean> = new Array<Boolean>()
   attempts: number = 0
-  sentenceResult: Array<Array<string>> = new Array<Array<string>>()
   options: Array<string> = new Array<string>()
+  sentenceResult: Array<Array<Array<string>>> = new Array<Array<Array<string>>>()
+  sorting: Array<number> = new Array<number>()
+  sortingView: Array<number> = new Array<number>()
 
   constructor(
     private route: ActivatedRoute,
@@ -40,8 +43,20 @@ export class StudentSentenceCompletionAndSortingComponent implements OnInit {
       this.sentenceCompletion.options.forEach(option => {
         this.options.push(option)
       })
-      this.sentenceCompletion.options.forEach(() => {
-        this.sentenceResult.push([])
+      this.taskRequest = {
+        attempts: 0,
+        sentences: new Array<SentenceCompletionItem>()
+      }
+      let i = 1
+      this.sentenceCompletion.sentences.forEach(sentence => {
+        this.sorting.push(i)
+        this.sortingView.push(i)
+        i++
+        this.sentenceResult.push(sentence.map(() => []))
+        this.taskRequest.sentences.push({
+          sentence: sentence,
+          options: new Array<string>()
+        })
       })
       this.loaded = true
     })
@@ -61,9 +76,13 @@ export class StudentSentenceCompletionAndSortingComponent implements OnInit {
       return false
   }
 
+  dropSentence(event: CdkDragDrop<Array<Array<string>>>) {
+    moveItemInArray(this.sentenceCompletion.sentences, event.previousIndex, event.currentIndex);
+    console.log(this.sentenceCompletion)
+    console.log(this.taskRequest)
+  }
+
   drop(event: CdkDragDrop<Array<string>>, isFromAvailable: boolean) {
-    console.log(event)
-    console.log(isFromAvailable)
     let fromData = event.previousContainer.data
     let toData = event.container.data
     let fromIndex = event.previousIndex
@@ -74,9 +93,18 @@ export class StudentSentenceCompletionAndSortingComponent implements OnInit {
     } else {
       transferArrayItem(fromData, toData, fromIndex, toIndex);
     }
+    this.taskRequest.sentences = this.sentenceResult.map(sentence => ({
+      sentence: [],
+      options: sentence.map(result => {
+        if (result.length > 0)
+          return result[0]
+      }).filter(element => element != undefined)
+    }))
+    console.log(this.taskRequest)
   }
 
   evaluateTask() {
+    this.getTaskRequest()
     this.evaluateService.evaluateSentenceCompletionAndSortingUsingPOST(this.startedExerciseId, this.taskId, this.taskRequest).subscribe(response => {
       console.log(response.taskResult)
       this.loaded = false
@@ -91,5 +119,30 @@ export class StudentSentenceCompletionAndSortingComponent implements OnInit {
       }
       this.loaded = true
     })
+  }
+
+  getTaskRequest() {
+    let sentences = this.taskRequest.sentences
+    let i = 0
+    console.log(sentences)
+    sentences.forEach(() => {
+      this.taskRequest.sentences[i] = sentences[this.sorting[i] - 1]
+      i++
+    })
+  }
+
+  sortingChange(event: MatSelectChange, index: number) {
+    this.sorting[index] = event.value
+  }
+
+  getResult(): string {
+    let i = 1
+    let result = ""
+    this.currentResult.forEach(success => {
+      if (success)
+        result += `${i}, `
+      i++
+    })
+    return result
   }
 }

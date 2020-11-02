@@ -6,24 +6,32 @@
   </div>
 </div>
 <div *ngIf="loaded">
-  <p class="title"><b>Mondat kiegészítés</b> - {{sentenceCompletion.title}}</p>
+  <p class="title"><b>Mondat kiegészítés és sorrendezés</b> - {{sentenceCompletion.title}}</p>
   <button (click)="evaluateTask()" class="addbtn" mat-raised-button type="button">
     Kész, beküldöm a megoldást
   </button>
+  <p *ngIf="currentResult.length > 0">Helyes sorrendek: {{getResult()}}</p>
   <div cdkDropListGroup>
-    <div fxLayout="row wrap" fxLayoutAlign="center center" style="padding: 24px">
-      <div *ngFor="let sentence of sentenceCompletion.sentences">
-        <div *ngFor="let sentenceItem of sentence; index as i" fxLayout="row" fxLayoutAlign="start center">
+    <div *ngFor="let sentence of sentenceCompletion.sentences; index as i">
+      <div fxLayout="row wrap" fxLayoutAlign="center center">
+        <mat-label>Sorrend:</mat-label>
+        <mat-select (selectionChange)="this.sortingChange($event, i)" style="width: 60px; margin-right: 36px">
+          <mat-option *ngFor="let sort of sortingView" [value]="sort">
+            {{sort}}
+          </mat-option>
+        </mat-select>
+        <cdk-drop-list></cdk-drop-list>
+        <div *ngFor="let sentenceItem of sentence; index as j" fxLayout="row" fxLayoutAlign="start center">
           <h2 class="subtitle">{{sentenceItem}}</h2>
 
           <div class="example-container-small">
             <div (cdkDropListDropped)="drop($event, false)"
-                 *ngIf="i < sentence.length -1"
-                 [cdkDropListData]="sentenceResult[i]"
-                 [ngClass]="{'border-success':getSuccess(i), 'border-fail':getFail(i)}"
+                 *ngIf="j < sentence.length -1"
+                 [cdkDropListData]="sentenceResult[i][j]"
                  cdkDropList
                  cdkDropListSortingDisabled class="example-list">
-              <div *ngFor="let element of sentenceResult[i]" cdkDrag class="example-box">{{element}}</div>
+              <div *ngFor="let element of sentenceResult[i][j]" cdkDrag
+                   class="example-box">{{element}}</div>
             </div>
           </div>
         </div>
