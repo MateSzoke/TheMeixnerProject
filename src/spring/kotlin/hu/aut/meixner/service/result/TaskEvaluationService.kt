@@ -240,8 +240,8 @@ class TaskEvaluationService(
     fun evaluateSortingAndGrouping(taskId: Long, taskRequest: SortingAndGroupingTaskRequest): TaskResultResponse? {
         val (student, taskResult) = getStudentAndTask<SortingAndGroupingResponse>(taskId) ?: return null
         val currentResult = mutableListOf<Boolean>()
-        taskRequest.groups.forEach { groupRequest ->
-            currentResult.add(taskResult.groups.any { it.elements.equalsSortedResultMediaItems(groupRequest.elements) })
+        taskRequest.groups.zip(taskResult.groups).forEach { (requestGroup, resultGroup) ->
+            currentResult.add(resultGroup.elements.equalsResultMediaItems(requestGroup.elements))
         }
         return saveTaskRequest(
                 student = student,
