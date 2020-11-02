@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {AssignService, EvaluateService} from "../../../../swagger-api";
+import {AssignService, EvaluateService, Sentence} from "../../../../swagger-api";
 import {MatDialog} from "@angular/material/dialog";
-import {CdkDragDrop, transferArrayItem} from "@angular/cdk/drag-drop";
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
 import {SentenceCreationResultComponent} from "../result/sentence-creation-result/sentence-creation-result.component";
 import {SentenceCreationAndSortingTask} from "../../../../swagger-api/model/sentenceCreationAndSortingTask";
 import {SentenceCreationAndSortingTaskRequest} from "../../../../swagger-api/model/sentenceCreationAndSortingTaskRequest";
@@ -46,18 +46,13 @@ export class StudentSentenceCreationAndSortingComponent implements OnInit {
     this.sortingAvailable = available
   }
 
-  getSuccess(index: number): Boolean {
-    if (this.currentResult.length != 0)
-      return this.currentResult[index]
+  getSuccess(index: number): string {
+    if (this.currentResult.length != 0 && this.currentResult[index])
+      return 'green'
+    else if (this.currentResult.length != 0 && !this.currentResult[index])
+      return 'red'
     else
-      return false
-  }
-
-  getFail(index: number): Boolean {
-    if (this.currentResult.length != 0)
-      return !this.currentResult[index]
-    else
-      return false
+      return 'white'
   }
 
   drop(event: CdkDragDrop<Array<any>, any>) {
@@ -83,5 +78,14 @@ export class StudentSentenceCreationAndSortingComponent implements OnInit {
       }
       this.loaded = true
     })
+  }
+
+  addSentence() {
+    this.taskRequest.sentences.push({parts: [], sentenceTitle: ""})
+  }
+
+  dropSentence(event: CdkDragDrop<Array<Sentence>, any>) {
+    moveItemInArray(this.taskRequest.sentences, event.previousIndex, event.currentIndex)
+    console.log(this.taskRequest.sentences)
   }
 }

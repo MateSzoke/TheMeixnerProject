@@ -8,14 +8,14 @@
 <div *ngIf="loaded">
   <p class="title"><b>Mondat készítés és sorrendezés</b> - {{sentenceCreationAndSortingTask.title}}</p>
   <button (click)="setSortingAvailable(false)" *ngIf="sortingAvailable" class="addbtn" mat-raised-button type="button">
-    Vissza a csoportok szerkesztéséhez
+    Vissza a mondatok szerkesztéséhez
   </button>
   <button (click)="evaluateTask()" *ngIf="sortingAvailable" class="addbtn" mat-raised-button style="margin-left: 24px"
           type="button">
     Kész, beküldöm a megoldást
   </button>
   <button (click)="setSortingAvailable(true)" *ngIf="!sortingAvailable" class="addbtn" mat-raised-button type="button">
-    Csoportok létrehozva, jöhet a sorrendezés
+    Mondatok létrehozva, jöhet a sorrendezés
   </button>
 
   <div *ngIf="!sortingAvailable" cdkDropListGroup>
@@ -31,6 +31,9 @@
         <div *ngFor="let element of sentenceCreationAndSortingTask.options" cdkDrag
              class="example-box">{{element}}</div>
       </div>
+      <button (click)="addSentence()" class="addbtn" mat-raised-button type="button">
+        Új mondat hozzáadása
+      </button>
     </div>
 
     <div *ngFor="let sentence of taskRequest.sentences; index as i" class="example-container">
@@ -39,9 +42,21 @@
       <div
         (cdkDropListDropped)="drop($event)"
         [cdkDropListData]="sentence.parts"
-        [ngClass]="{'border-success':getSuccess(i), 'border-fail':getFail(i)}"
         cdkDropList class="example-list">
         <div *ngFor="let element of sentence.parts" cdkDrag class="example-box">{{element}}</div>
+      </div>
+    </div>
+  </div>
+
+  <div (cdkDropListDropped)="dropSentence($event)" *ngIf="sortingAvailable"
+       cdkDropList
+       class="example-list">
+    <div *ngFor="let sentence of taskRequest.sentences; index as i" [ngStyle]="{'background':getSuccess(i)}"
+         cdkDrag class="example-box">
+      <div fxLayout="row wrap" fxLayoutAlign="center center">
+        <div *ngFor="let sentenceItem of sentence.parts; index as j" fxLayout="row" fxLayoutAlign="start center">
+          <div>&nbsp;{{sentenceItem}}&nbsp;</div>
+        </div>
       </div>
     </div>
   </div>
