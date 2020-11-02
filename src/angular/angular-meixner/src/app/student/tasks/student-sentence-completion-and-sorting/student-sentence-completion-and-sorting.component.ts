@@ -6,7 +6,6 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag
 import {SentenceCompletionResultComponent} from "../result/sentence-completion-result/sentence-completion-result.component";
 import {SentenceCompletionAndSortingTask} from "../../../../swagger-api/model/sentenceCompletionAndSortingTask";
 import {SentenceCompletionAndSortingTaskRequest} from "../../../../swagger-api/model/sentenceCompletionAndSortingTaskRequest";
-import {MatSelectChange} from "@angular/material/select";
 
 @Component({
   selector: 'app-student-sentence-completion-and-sorting',
@@ -23,8 +22,7 @@ export class StudentSentenceCompletionAndSortingComponent implements OnInit {
   attempts: number = 0
   options: Array<string> = new Array<string>()
   sentenceResult: Array<Array<Array<string>>> = new Array<Array<Array<string>>>()
-  sorting: Array<number> = new Array<number>()
-  sortingView: Array<number> = new Array<number>()
+  sortingAvailable: boolean = false
 
   constructor(
     private route: ActivatedRoute,
@@ -47,11 +45,7 @@ export class StudentSentenceCompletionAndSortingComponent implements OnInit {
         attempts: 0,
         sentences: new Array<SentenceCompletionItem>()
       }
-      let i = 1
       this.sentenceCompletion.sentences.forEach(sentence => {
-        this.sorting.push(i)
-        this.sortingView.push(i)
-        i++
         this.sentenceResult.push(sentence.map(() => []))
         this.taskRequest.sentences.push({
           sentence: sentence,
@@ -62,24 +56,23 @@ export class StudentSentenceCompletionAndSortingComponent implements OnInit {
     })
   }
 
-  getSuccess(index: number): Boolean {
-    if (this.currentResult.length != 0)
-      return this.currentResult[index]
-    else
-      return false
+  setSortingAvailable(available: boolean) {
+    this.sortingAvailable = available
   }
 
-  getFail(index: number): Boolean {
-    if (this.currentResult.length != 0)
-      return !this.currentResult[index]
+  getSuccess(index: number): string {
+    if (this.currentResult.length != 0 && this.currentResult[index])
+      return 'green'
+    else if (this.currentResult.length != 0 && !this.currentResult[index])
+      return 'red'
     else
-      return false
+      return 'white'
   }
 
   dropSentence(event: CdkDragDrop<Array<Array<string>>>) {
     moveItemInArray(this.sentenceCompletion.sentences, event.previousIndex, event.currentIndex);
-    console.log(this.sentenceCompletion)
-    console.log(this.taskRequest)
+    moveItemInArray(this.sentenceResult, event.previousIndex, event.currentIndex);
+    this.refreshTaskRequest()
   }
 
   drop(event: CdkDragDrop<Array<string>>, isFromAvailable: boolean) {
@@ -93,6 +86,10 @@ export class StudentSentenceCompletionAndSortingComponent implements OnInit {
     } else {
       transferArrayItem(fromData, toData, fromIndex, toIndex);
     }
+    this.refreshTaskRequest()
+  }
+
+  refreshTaskRequest() {
     this.taskRequest.sentences = this.sentenceResult.map(sentence => ({
       sentence: [],
       options: sentence.map(result => {
@@ -104,7 +101,7 @@ export class StudentSentenceCompletionAndSortingComponent implements OnInit {
   }
 
   evaluateTask() {
-    this.getTaskRequest()
+    console.log(this.taskRequest)
     this.evaluateService.evaluateSentenceCompletionAndSortingUsingPOST(this.startedExerciseId, this.taskId, this.taskRequest).subscribe(response => {
       console.log(response.taskResult)
       this.loaded = false
@@ -119,30 +116,5 @@ export class StudentSentenceCompletionAndSortingComponent implements OnInit {
       }
       this.loaded = true
     })
-  }
-
-  getTaskRequest() {
-    let sentences = this.taskRequest.sentences
-    let i = 0
-    console.log(sentences)
-    sentences.forEach(() => {
-      this.taskRequest.sentences[i] = sentences[this.sorting[i] - 1]
-      i++
-    })
-  }
-
-  sortingChange(event: MatSelectChange, index: number) {
-    this.sorting[index] = event.value
-  }
-
-  getResult(): string {
-    let i = 1
-    let result = ""
-    this.currentResult.forEach(success => {
-      if (success)
-        result += `${i}, `
-      i++
-    })
-    return result
   }
 }

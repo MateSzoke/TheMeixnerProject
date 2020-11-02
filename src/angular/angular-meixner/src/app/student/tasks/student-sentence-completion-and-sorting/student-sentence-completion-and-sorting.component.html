@@ -7,21 +7,20 @@
 </div>
 <div *ngIf="loaded">
   <p class="title"><b>Mondat kiegészítés és sorrendezés</b> - {{sentenceCompletion.title}}</p>
-  <button (click)="evaluateTask()" class="addbtn" mat-raised-button type="button">
+  <button (click)="setSortingAvailable(false)" *ngIf="sortingAvailable" class="addbtn" mat-raised-button type="button">
+    Vissza a mondat kiegészítéshez
+  </button>
+  <button (click)="evaluateTask()" *ngIf="sortingAvailable" class="addbtn" mat-raised-button style="margin-left: 24px"
+          type="button">
     Kész, beküldöm a megoldást
   </button>
-  <p *ngIf="currentResult.length > 0">Helyes sorrendek: {{getResult()}}</p>
-  <div cdkDropListGroup>
+  <button (click)="setSortingAvailable(true)" *ngIf="!sortingAvailable" class="addbtn" mat-raised-button type="button">
+    Mondatok kiegészítve, jöhet a sorrendezés
+  </button>
+  <div *ngIf="!sortingAvailable" cdkDropListGroup>
     <div *ngFor="let sentence of sentenceCompletion.sentences; index as i">
       <div fxLayout="row wrap" fxLayoutAlign="center center">
-        <mat-label>Sorrend:</mat-label>
-        <mat-select (selectionChange)="this.sortingChange($event, i)" style="width: 60px; margin-right: 36px">
-          <mat-option *ngFor="let sort of sortingView" [value]="sort">
-            {{sort}}
-          </mat-option>
-        </mat-select>
-        <cdk-drop-list></cdk-drop-list>
-        <div *ngFor="let sentenceItem of sentence; index as j" fxLayout="row" fxLayoutAlign="start center">
+        <div *ngFor="let sentenceItem of sentence; index as j" fxLayout="row wrap" fxLayoutAlign="center center">
           <h2 class="subtitle">{{sentenceItem}}</h2>
 
           <div class="example-container-small">
@@ -48,6 +47,20 @@
         cdkDropListSortingDisabled
         class="example-list">
         <div *ngFor="let element of options" cdkDrag class="example-box">{{element}}</div>
+      </div>
+    </div>
+  </div>
+
+  <div (cdkDropListDropped)="dropSentence($event)" *ngIf="sortingAvailable"
+       cdkDropList
+       class="example-list">
+    <div *ngFor="let sentence of sentenceCompletion.sentences; index as i" [ngStyle]="{'background':getSuccess(i)}"
+         cdkDrag class="example-box">
+      <div fxLayout="row wrap" fxLayoutAlign="center center">
+        <div *ngFor="let sentenceItem of sentence; index as j" fxLayout="row" fxLayoutAlign="start center">
+          <div class="subtitle">{{sentenceItem}}</div>
+          <div *ngFor="let element of sentenceResult[i][j]" class="subtitle">&nbsp;{{element}}&nbsp;</div>
+        </div>
       </div>
     </div>
   </div>
