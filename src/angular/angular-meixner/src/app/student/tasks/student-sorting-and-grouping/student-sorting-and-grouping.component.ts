@@ -60,18 +60,13 @@ export class StudentSortingAndGroupingComponent implements OnInit {
     return request.content?.includes("/files/download")
   }
 
-  getSuccess(index: number): Boolean {
-    if (this.currentResult.length != 0)
-      return this.currentResult[index]
+  getSuccess(index: number): string {
+    if (this.currentResult.length != 0 && this.currentResult[index])
+      return 'green'
+    else if (this.currentResult.length != 0 && !this.currentResult[index])
+      return 'red'
     else
-      return false
-  }
-
-  getFail(index: number): Boolean {
-    if (this.currentResult.length != 0)
-      return !this.currentResult[index]
-    else
-      return false
+      return 'white'
   }
 
   addPairElement() {

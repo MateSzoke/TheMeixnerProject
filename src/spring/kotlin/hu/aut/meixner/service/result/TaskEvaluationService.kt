@@ -249,7 +249,7 @@ class TaskEvaluationService(
                 taskResult = taskResult,
                 currentResult = currentResult,
                 attempts = taskRequest.attempts,
-                resultPercentage = calculateResultPercentage(taskRequest.groups, taskResult.groups, currentResult)
+                resultPercentage = calculateResultPercentage(taskRequest.groups.filter { it.elements.isNotEmpty() }, taskResult.groups, currentResult)
         )
     }
 

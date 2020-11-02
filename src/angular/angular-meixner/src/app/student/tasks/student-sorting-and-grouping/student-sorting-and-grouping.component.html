@@ -43,7 +43,6 @@
       <div
         (cdkDropListDropped)="drop($event)"
         [cdkDropListData]="group.elements"
-        [ngClass]="{'border-success':getSuccess(i), 'border-fail':getFail(i)}"
         cdkDropList
         cdkDropListSortingDisabled class="example-list">
         <div *ngFor="let element of group.elements" cdkDrag class="example-box">
@@ -56,7 +55,8 @@
 
   <div (cdkDropListDropped)="dropGroup($event)" *ngIf="sortingAvailable"
        cdkDropList class="example-list">
-    <div *ngFor="let group of taskRequest.groups" cdkDrag class="example-box"
+    <div *ngFor="let group of taskRequest.groups; index as i" [ngStyle]="{'background':getSuccess(i)}" cdkDrag
+         class="example-box"
          fxLayoutAlign="center center">
       <div *ngFor="let element of group.elements">
         <img *ngIf="isMediaItem(element)" [src]="element.content | secure | async" class="max-height"/>
