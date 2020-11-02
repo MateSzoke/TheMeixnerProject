@@ -1,1 +1,67 @@
-<p>student-sorting-and-grouping works!</p>
+<div *ngIf="!loaded">
+  <div class="wrapper">
+    <div class="center">
+      <mat-spinner diameter="70"></mat-spinner>
+    </div>
+  </div>
+</div>
+<div *ngIf="loaded">
+  <p class="title"><b>Sorrendezés és csoportosítás</b> - {{sortingAndGroupingTask.title}}</p>
+  <button (click)="setSortingAvailable(false)" *ngIf="sortingAvailable" class="addbtn" mat-raised-button type="button">
+    Vissza a csoportok szerkesztéséhez
+  </button>
+  <button (click)="evaluateTask()" *ngIf="sortingAvailable" class="addbtn" mat-raised-button style="margin-left: 24px"
+          type="button">
+    Kész, beküldöm a megoldást
+  </button>
+  <button (click)="setSortingAvailable(true)" *ngIf="!sortingAvailable" class="addbtn" mat-raised-button type="button">
+    Csoportok létrehozva, jöhet a sorrendezés
+  </button>
+
+  <div *ngIf="!sortingAvailable" cdkDropListGroup>
+    <div class="example-container">
+      <h2 class="subtitle">Elérhető elemek</h2>
+
+      <div
+        (cdkDropListDropped)="drop($event)"
+        [cdkDropListData]="sortingAndGroupingTask.elements"
+        cdkDropList
+        cdkDropListSortingDisabled
+        class="example-list">
+        <div *ngFor="let element of sortingAndGroupingTask.elements" cdkDrag class="example-box">
+          <img *ngIf="element.type == 'FILE'" [src]="element.content | secure | async" class="max-height"/>
+          <p *ngIf="element.type == 'TEXT'">{{element.content}}</p>
+        </div>
+      </div>
+
+      <button (click)="addPairElement()" class="addbtn" mat-raised-button type="button">
+        Új csoport hozzáadása
+      </button>
+    </div>
+
+    <div *ngFor="let group of taskRequest.groups; index as i" class="example-container">
+      <div
+        (cdkDropListDropped)="drop($event)"
+        [cdkDropListData]="group.elements"
+        [ngClass]="{'border-success':getSuccess(i), 'border-fail':getFail(i)}"
+        cdkDropList
+        cdkDropListSortingDisabled class="example-list">
+        <div *ngFor="let element of group.elements" cdkDrag class="example-box">
+          <img *ngIf="isMediaItem(element)" [src]="element.content | secure | async" class="max-height"/>
+          <p *ngIf="!isMediaItem(element)">{{element.content}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div (cdkDropListDropped)="dropGroup($event)" *ngIf="sortingAvailable"
+       cdkDropList class="example-list">
+    <div *ngFor="let group of taskRequest.groups" cdkDrag class="example-box"
+         fxLayoutAlign="center center">
+      <div *ngFor="let element of group.elements">
+        <img *ngIf="isMediaItem(element)" [src]="element.content | secure | async" class="max-height"/>
+        <p *ngIf="!isMediaItem(element)">{{element.content}}</p>
+      </div>
+    </div>
+  </div>
+</div>
