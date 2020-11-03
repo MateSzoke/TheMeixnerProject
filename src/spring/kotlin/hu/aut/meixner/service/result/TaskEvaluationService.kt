@@ -8,6 +8,7 @@ import hu.aut.meixner.dto.task.student.complex.*
 import hu.aut.meixner.dto.task.student.easy.*
 import hu.aut.meixner.entity.result.StudentEntity
 import hu.aut.meixner.entity.result.TaskResultEntity
+import hu.aut.meixner.extensions.log
 import hu.aut.meixner.mapping.toDomainModel
 import hu.aut.meixner.repository.result.StudentRepository
 import hu.aut.meixner.repository.result.TaskResultRepository
@@ -190,7 +191,7 @@ class TaskEvaluationService(
             var found = false
             taskResult.sentenceGroups.find { it.groupTitle == sentenceList.groupTitle }?.sentences?.zip(sentenceList.sentences)
                     ?.forEach { (requestSentence, resultSentence) ->
-                        if (requestSentence.options == resultSentence.options) found = true
+                        if (requestSentence.options.equalsTo(resultSentence.options)) found = true
                     }
             currentResult.add(found)
         }
@@ -211,7 +212,9 @@ class TaskEvaluationService(
             var found = false
             taskResult.sentenceGroups.find { it.groupTitle == sentenceList.groupTitle }?.sentences?.zip(sentenceList.sentences)
                     ?.forEach { (requestSentence, resultSentence) ->
-                        if (requestSentence.parts == resultSentence.parts) found = true
+                        log("request: $requestSentence, result: $resultSentence")
+                        log("request: ${requestSentence.parts}, result: ${resultSentence.parts} equals: ${requestSentence.parts == resultSentence.parts}")
+                        if (requestSentence.parts.equalsTo(resultSentence.parts)) found = true
                     }
             currentResult.add(found)
         }
@@ -237,7 +240,7 @@ class TaskEvaluationService(
                 taskResult = taskResult,
                 currentResult = currentResult,
                 attempts = taskRequest.attempts,
-                resultPercentage = calculateResultPercentage(taskRequest.sentences.filter { it.parts.isNotEmpty() }, taskResult.sentences, currentResult)
+                resultPercentage = calculateResultPercentage(taskRequest.sentences, taskResult.sentences, currentResult)
         )
     }
 
@@ -253,7 +256,7 @@ class TaskEvaluationService(
                 taskResult = taskResult,
                 currentResult = currentResult,
                 attempts = taskRequest.attempts,
-                resultPercentage = calculateResultPercentage(taskRequest.groups.filter { it.elements.isNotEmpty() }, taskResult.groups, currentResult)
+                resultPercentage = calculateResultPercentage(taskRequest.groups, taskResult.groups, currentResult)
         )
     }
 
