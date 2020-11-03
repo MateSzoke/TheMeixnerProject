@@ -191,7 +191,7 @@ class TaskEvaluationService(
             var found = false
             taskResult.sentenceGroups.find { it.groupTitle == sentenceList.groupTitle }?.sentences?.zip(sentenceList.sentences)
                     ?.forEach { (requestSentence, resultSentence) ->
-                        if (requestSentence.options == resultSentence.options) found = true
+                        if (requestSentence.options.equalsTo(resultSentence.options)) found = true
                     }
             currentResult.add(found)
         }
@@ -214,7 +214,7 @@ class TaskEvaluationService(
                     ?.forEach { (requestSentence, resultSentence) ->
                         log("request: $requestSentence, result: $resultSentence")
                         log("request: ${requestSentence.parts}, result: ${resultSentence.parts} equals: ${requestSentence.parts == resultSentence.parts}")
-                        if (requestSentence.parts == resultSentence.parts) found = true
+                        if (requestSentence.parts.equalsTo(resultSentence.parts)) found = true
                     }
             currentResult.add(found)
         }
