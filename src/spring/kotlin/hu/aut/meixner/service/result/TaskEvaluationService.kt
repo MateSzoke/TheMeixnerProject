@@ -187,10 +187,12 @@ class TaskEvaluationService(
         val (student, taskResult) = getStudentAndTask<SentenceCompletionAndGroupingResponse>(taskId) ?: return null
         val currentResult = mutableListOf<Boolean>()
         taskRequest.sentenceGroups.forEach { sentenceList ->
+            var found = false
             taskResult.sentenceGroups.find { it.groupTitle == sentenceList.groupTitle }?.sentences?.zip(sentenceList.sentences)
                     ?.forEach { (requestSentence, resultSentence) ->
-                        currentResult.add(requestSentence.options == resultSentence.options)
-                    } ?: currentResult.add(false)
+                        if (requestSentence.options == resultSentence.options) found = true
+                    }
+            currentResult.add(found)
         }
         return saveTaskRequest(
                 student = student,
@@ -206,10 +208,12 @@ class TaskEvaluationService(
         val (student, taskResult) = getStudentAndTask<SentenceCreationAndGroupingResponse>(taskId) ?: return null
         val currentResult = mutableListOf<Boolean>()
         taskRequest.sentenceGroups.forEach { sentenceList ->
+            var found = false
             taskResult.sentenceGroups.find { it.groupTitle == sentenceList.groupTitle }?.sentences?.zip(sentenceList.sentences)
                     ?.forEach { (requestSentence, resultSentence) ->
-                        currentResult.add(requestSentence.parts == resultSentence.parts)
-                    } ?: currentResult.add(false)
+                        if (requestSentence.parts == resultSentence.parts) found = true
+                    }
+            currentResult.add(found)
         }
         return saveTaskRequest(
                 student = student,
