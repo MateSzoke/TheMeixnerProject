@@ -37,6 +37,10 @@ fun List<MediaItemResponse>.equalsSortedResultMediaItems(requestMediaItems: List
     return this == requestMediaItems.map { it.toDomainModel() }
 }
 
+fun List<String>.equalsTo(other: List<String>): Boolean {
+    return zip(other).map { (first, second) -> first == second }.all { it }
+}
+
 fun TaskResponse.toAssignTask(): AssignTask? {
     return when (type) {
         Grouping -> {
