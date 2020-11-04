@@ -1,1 +1,84 @@
-<p>student-sentence-completion-and-grouping works!</p>
+<div *ngIf="!loaded">
+  <div class="wrapper">
+    <div class="center">
+      <mat-spinner diameter="70"></mat-spinner>
+    </div>
+  </div>
+</div>
+<div *ngIf="loaded">
+  <p class="title"><b>Mondat kiegészítés és csoportosítás</b> - {{sentenceCompletion.title}}</p>
+  <button (click)="setGroupingAvailable(false)" *ngIf="groupingAvailable" class="addbtn" mat-raised-button
+          type="button">
+    Vissza a mondat kiegészítéshez
+  </button>
+  <button (click)="evaluateTask()" *ngIf="groupingAvailable" class="addbtn" mat-raised-button style="margin-left: 24px"
+          type="button">
+    Kész, beküldöm a megoldást
+  </button>
+  <button (click)="setGroupingAvailable(true)" *ngIf="!groupingAvailable" class="addbtn" mat-raised-button
+          type="button">
+    Mondatok kiegészítve, jöhet a csoportosítás
+  </button>
+  <div *ngIf="!groupingAvailable" cdkDropListGroup>
+    <div *ngFor="let sentence of sentenceCompletion.sentences; index as i">
+      <div fxLayout="row wrap" fxLayoutAlign="center center">
+        <div *ngFor="let sentenceItem of sentence; index as j" fxLayout="row wrap" fxLayoutAlign="center center">
+          <h2 class="subtitle">{{sentenceItem}}</h2>
+
+          <div class="example-container-small">
+            <div (cdkDropListDropped)="drop($event, false)"
+                 *ngIf="j < sentence.length -1"
+                 [cdkDropListData]="sentenceResult[i][j]"
+                 cdkDropList
+                 cdkDropListSortingDisabled class="example-list">
+              <div *ngFor="let element of sentenceResult[i][j]" cdkDrag
+                   class="example-box">{{element}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="example-container-small">
+      <h2 class="subtitle">Elérhető elemek</h2>
+
+      <div
+        (cdkDropListDropped)="drop($event, true)"
+        [cdkDropListData]="sentenceCompletion.options"
+        cdkDropList
+        cdkDropListSortingDisabled
+        class="example-list">
+        <div *ngFor="let element of sentenceCompletion.options" cdkDrag class="example-box">{{element}}</div>
+      </div>
+    </div>
+  </div>
+
+
+  <div *ngIf="groupingAvailable" cdkDropListGroup>
+    <div class="example-container">
+      <h2 class="subtitle">Elérhető elemek</h2>
+
+      <div
+        (cdkDropListDropped)="dropSentence($event)"
+        [cdkDropListData]="sentenceItems"
+        cdkDropList
+        cdkDropListSortingDisabled
+        class="example-list">
+        <div *ngFor="let sentence of sentenceItems" cdkDrag class="example-box">{{getSentence(sentence)}}</div>
+      </div>
+    </div>
+
+    <div *ngFor="let group of taskRequest.sentenceGroups; index as i" class="example-container">
+      <h2 class="subtitle">{{group.groupTitle}}</h2>
+
+      <div
+        (cdkDropListDropped)="dropSentence($event)"
+        [cdkDropListData]="group.sentences"
+        [ngClass]="{'border-success':getSuccess(i), 'border-fail':getFail(i)}"
+        cdkDropList
+        cdkDropListSortingDisabled class="example-list">
+        <div *ngFor="let sentence of group.sentences" cdkDrag class="example-box">{{getSentence(sentence)}}</div>
+      </div>
+    </div>
+  </div>
+</div>

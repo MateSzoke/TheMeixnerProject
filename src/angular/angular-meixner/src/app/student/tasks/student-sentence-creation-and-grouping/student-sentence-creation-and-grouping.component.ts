@@ -86,8 +86,4 @@ export class StudentSentenceCreationAndGroupingComponent implements OnInit {
       this.loaded = true
     })
   }
-
-  dropSentence(event: CdkDragDrop<Array<Sentence>, any>) {
-
-  }
 }
