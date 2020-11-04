@@ -60,17 +60,17 @@ export class MyResultsComponent implements OnInit {
       case TypeEnum.TrueFalse.toString():
         return TrueFalseResultComponent;
       case TypeEnum.GroupingAndSorting.toString():
-        return null;
+        return SortingResultComponent;
       case TypeEnum.SentenceCompletionAndGrouping.toString():
-        return null;
+        return SentenceCompletionResultComponent;
       case TypeEnum.SentenceCompletionAndSorting.toString():
-        return null;
+        return SentenceCompletionResultComponent;
       case TypeEnum.SentenceCreationAndGrouping.toString():
-        return null;
+        return SentenceCreationResultComponent;
       case TypeEnum.SentenceCreationAndSorting.toString():
-        return null;
+        return SentenceCreationResultComponent;
       case TypeEnum.SortingAndGrouping.toString():
-        return null;
+        return GroupingResultComponent;
       case TypeEnum.BlindMap.toString():
         return null;
       case TypeEnum.FreeText.toString():

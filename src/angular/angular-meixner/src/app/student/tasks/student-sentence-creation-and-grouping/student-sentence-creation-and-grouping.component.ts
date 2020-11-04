@@ -46,6 +46,13 @@ export class StudentSentenceCreationAndGroupingComponent implements OnInit {
 
   setGroupingAvailable(available: boolean) {
     this.groupingAvailable = available
+    if (available) {
+      this.currentResult = []
+      this.taskRequest.sentenceGroups.forEach(group => group.sentences = [])
+    }
+    if (!available) {
+      this.taskRequest.sentenceGroups.forEach(group => group.sentences.forEach(sentence => this.sentences.push(sentence)))
+    }
   }
 
   getSuccess(index: number): Boolean {
@@ -68,6 +75,12 @@ export class StudentSentenceCreationAndGroupingComponent implements OnInit {
       event.previousIndex,
       event.currentIndex);
     console.log(this.taskRequest)
+  }
+
+  getSentence(sentence: Sentence): string {
+    let result = ""
+    sentence.parts.map(part => result += ` ${part}`)
+    return result
   }
 
   evaluateTask() {

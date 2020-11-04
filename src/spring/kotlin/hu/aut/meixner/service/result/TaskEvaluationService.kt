@@ -211,7 +211,7 @@ class TaskEvaluationService(
             var found = false
             taskResult.sentenceGroups.find { it.groupTitle == sentenceList.groupTitle }?.sentences?.zip(sentenceList.sentences)
                     ?.forEach { (requestSentence, resultSentence) ->
-                        if (requestSentence.parts.equalsTo(resultSentence.parts)) found = true
+                        if (requestSentence.parts.containsAll(resultSentence.parts)) found = true
                     }
             currentResult.add(found)
         }

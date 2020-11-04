@@ -50,6 +50,7 @@ export class StudentSentenceCompletionAndGroupingComponent implements OnInit {
   setGroupingAvailable(available: boolean) {
     this.groupingAvailable = available
     if (available) {
+      this.taskRequest.sentenceGroups.forEach(group => group.sentences.forEach(item => this.sentenceItems.push(item)))
       this.taskRequest.sentenceGroups.forEach(group => group.sentences = [])
       this.currentResult = []
     }

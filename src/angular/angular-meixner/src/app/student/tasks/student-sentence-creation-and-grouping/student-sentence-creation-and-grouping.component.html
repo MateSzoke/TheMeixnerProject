@@ -58,7 +58,7 @@
         cdkDropListSortingDisabled
         class="example-list">
         <div *ngFor="let sentence of sentences" cdkDrag class="example-box">
-          <div *ngFor="let part of sentence.parts">&nbsp;{{part}}</div>
+          {{getSentence(sentence)}}
         </div>
       </div>
     </div>
@@ -73,7 +73,7 @@
         cdkDropList
         cdkDropListSortingDisabled class="example-list">
         <div *ngFor="let element of group.sentences" cdkDrag class="example-box">
-          <div *ngFor="let part of element.parts">&nbsp;{{part}}</div>
+          {{getSentence(element)}}
         </div>
       </div>
     </div>
