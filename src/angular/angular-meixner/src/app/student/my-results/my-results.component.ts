@@ -64,7 +64,7 @@ export class MyResultsComponent implements OnInit {
       case TypeEnum.SentenceCompletionAndGrouping.toString():
         return SentenceCompletionResultComponent;
       case TypeEnum.SentenceCompletionAndSorting.toString():
-        return SentenceCompletionResultComponent;
+        return SentenceCreationResultComponent;
       case TypeEnum.SentenceCreationAndGrouping.toString():
         return SentenceCreationResultComponent;
       case TypeEnum.SentenceCreationAndSorting.toString():

@@ -42,7 +42,7 @@ export class StudentSentenceCompletionAndSortingComponent implements OnInit {
         this.options.push(option)
       })
       this.taskRequest = {
-        attempts: 0,
+        attempts: this.attempts,
         sentences: new Array<SentenceCompletionItem>()
       }
       this.sentenceCompletion.sentences.forEach(sentence => {
