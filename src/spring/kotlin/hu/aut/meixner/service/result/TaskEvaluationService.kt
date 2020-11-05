@@ -208,12 +208,11 @@ class TaskEvaluationService(
         val (student, taskResult) = getStudentAndTask<SentenceCreationAndGroupingResponse>(taskId) ?: return null
         val currentResult = mutableListOf<Boolean>()
         taskRequest.sentenceGroups.forEach { sentenceList ->
-            var found = false
-            taskResult.sentenceGroups.find { it.groupTitle == sentenceList.groupTitle }?.sentences?.zip(sentenceList.sentences)
-                    ?.forEach { (requestSentence, resultSentence) ->
-                        if (requestSentence.parts.containsAll(resultSentence.parts)) found = true
-                    }
-            currentResult.add(found)
+            taskResult.sentenceGroups.find { it.groupTitle == sentenceList.groupTitle }?.sentences?.forEach { resultSentence ->
+                val allMatch = sentenceList.sentences.find { it.parts.containsAll(resultSentence.parts) }?.parts
+                        ?.zip(resultSentence.parts)?.all { (first, second) -> first == second } ?: false
+                currentResult.add(allMatch)
+            }
         }
         return saveTaskRequest(
                 student = student,
