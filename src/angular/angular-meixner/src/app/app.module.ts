@@ -81,6 +81,7 @@ import {StudentSentenceCreationAndGroupingComponent} from './student/tasks/stude
 import {StudentSentenceCreationAndSortingComponent} from './student/tasks/student-sentence-creation-and-sorting/student-sentence-creation-and-sorting.component';
 import {StudentSentenceCompletionAndSortingComponent} from './student/tasks/student-sentence-completion-and-sorting/student-sentence-completion-and-sorting.component';
 import {StudentSentenceCompletionAndGroupingComponent} from './student/tasks/student-sentence-completion-and-grouping/student-sentence-completion-and-grouping.component';
+import {StudentBlindmapComponent} from './student/tasks/student-blindmap/student-blindmap.component';
 
 @NgModule({
   declarations: [
@@ -139,7 +140,8 @@ import {StudentSentenceCompletionAndGroupingComponent} from './student/tasks/stu
     StudentSentenceCreationAndGroupingComponent,
     StudentSentenceCreationAndSortingComponent,
     StudentSentenceCompletionAndSortingComponent,
-    StudentSentenceCompletionAndGroupingComponent
+    StudentSentenceCompletionAndGroupingComponent,
+    StudentBlindmapComponent
   ],
   imports: [
     BrowserModule,

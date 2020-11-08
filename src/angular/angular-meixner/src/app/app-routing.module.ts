@@ -35,6 +35,7 @@ import {StudentSentenceCompletionAndGroupingComponent} from "./student/tasks/stu
 import {StudentSentenceCreationAndGroupingComponent} from "./student/tasks/student-sentence-creation-and-grouping/student-sentence-creation-and-grouping.component";
 import {StudentSentenceCompletionAndSortingComponent} from "./student/tasks/student-sentence-completion-and-sorting/student-sentence-completion-and-sorting.component";
 import {StudentSentenceCreationAndSortingComponent} from "./student/tasks/student-sentence-creation-and-sorting/student-sentence-creation-and-sorting.component";
+import {StudentBlindmapComponent} from "./student/tasks/student-blindmap/student-blindmap.component";
 
 
 const routes: Routes = [
@@ -191,6 +192,11 @@ const routes: Routes = [
   {
     path: Path.STUDENT_SENTENCE_CREATION_SORTING,
     component: StudentSentenceCreationAndSortingComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: Path.STUDENT_BLINDMAP,
+    component: StudentBlindmapComponent,
     canActivate: [RouteGuardService]
   },
   {
