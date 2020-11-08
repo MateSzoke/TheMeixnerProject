@@ -36,9 +36,9 @@
           <mat-progress-bar class="exerciseProgressbar" mode="determinate"
                             value="{{exercise.difficulty}}"></mat-progress-bar>
         </mat-panel-title>
-        <div style="width: 300px"><b>Osztály: {{exercise.classLevel}}</b></div>
-        <div style="width: 300px"><b>Tantárgy: {{exercise.subject}}</b></div>
         <div class="comment" fxLayout="row wrap">
+          <div><b>Osztály: {{exercise.classLevel}}</b></div>
+          <div style="width: 300px"><b>Tantárgy: {{exercise.subject}}</b></div>
           {{exercise.comment}}
         </div>
       </div>
@@ -51,10 +51,10 @@
       </div>
     </mat-expansion-panel-header>
 
-    <mat-card *ngFor="let task of exercise.tasks" class="right-aligned-header" style="margin-top: 8px">
+    <mat-card *ngFor="let task of exercise.tasks" class="mat-card-small" style="margin-top: 8px">
       <div fxLayout="row" fxLayout.xs="column-reverse" fxLayoutGap="8px">
         <div class="float-left">
-          {{task.title}}
+          {{task.title}} - {{task.type}}
           <mat-progress-bar mode="determinate" style="width: 100px" value="{{task.difficulty}}"></mat-progress-bar>
         </div>
         <div class="float-right">

@@ -9,6 +9,7 @@ import {NewExerciseComponent} from "./new-exercise/new-exercise.component";
 import {ExerciseTaskListComponent} from "../exercise-task-list/exercise-task-list.component";
 import {MatDialog} from "@angular/material/dialog";
 import {SubjectEnumUtil} from "../util/subjectEnumUtil";
+import {ConvertEnum} from "../model/ConvertEnum";
 import SubjectEnum = TaskResponse.SubjectEnum;
 
 @Component({
@@ -26,12 +27,10 @@ export class ExercisesComponent implements OnInit {
   public getAllTasks = false;
 
   constructor(private modal: ModalService, private dom: DomService,
-              private modComponent: ModalComponent,
               private exerciseService: ExercisesService,
               private dialog: MatDialog,
               public router: Router,
               private route: ActivatedRoute) {
-    modComponent.ngOnInit();
   }
 
   ngOnInit(): void {
@@ -59,6 +58,7 @@ export class ExercisesComponent implements OnInit {
       new TaskResponseUI(
         task.id,
         task.title,
+        ConvertEnum.convertType(task.type),
         DateUtils.getFormattedDate(task.lastModified),
         task.difficulty
       )
@@ -162,12 +162,14 @@ class ExerciseUI {
 class TaskResponseUI {
   id: number;
   title: string;
+  type: string;
   formattedLastModified: string;
   difficulty: number
 
-  constructor(id: number, title: string, formattedLastModified: string, difficulty: number) {
+  constructor(id: number, title: string, type: string, formattedLastModified: string, difficulty: number) {
     this.id = id;
     this.title = title;
+    this.type = type;
     this.formattedLastModified = formattedLastModified
     this.difficulty = difficulty
   }

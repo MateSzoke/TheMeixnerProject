@@ -19,8 +19,8 @@ export class StudentSentenceCompletionComponent implements OnInit {
   sentenceCompletion: SentenceCompletionTask = null
   currentResult: Array<Boolean> = new Array<Boolean>()
   attempts: number = 0
-  sentenceResult: Array<Array<ElementUI>> = new Array<Array<ElementUI>>()
-  options: Array<ElementUI> = new Array<ElementUI>()
+  sentenceResult: Array<Array<string>> = new Array<Array<string>>()
+  options: Array<string> = new Array<string>()
 
   constructor(
     private route: ActivatedRoute,
@@ -37,7 +37,7 @@ export class StudentSentenceCompletionComponent implements OnInit {
     this.assignService.getStudentTaskByIdUsingGET(this.taskId).subscribe(task => {
       this.sentenceCompletion = task as SentenceCompletionTask
       this.sentenceCompletion.options.forEach(option => {
-        this.options.push(new ElementUI(true, option))
+        this.options.push(option)
       })
       this.sentenceCompletion.options.forEach(() => {
         this.sentenceResult.push([])
@@ -60,7 +60,7 @@ export class StudentSentenceCompletionComponent implements OnInit {
       return false
   }
 
-  drop(event: CdkDragDrop<Array<ElementUI>>, isFromAvailable: boolean) {
+  drop(event: CdkDragDrop<Array<string>>, isFromAvailable: boolean) {
     console.log(event)
     console.log(isFromAvailable)
     let fromData = event.previousContainer.data
@@ -97,7 +97,7 @@ export class StudentSentenceCompletionComponent implements OnInit {
       attempts: this.attempts,
       options: this.sentenceResult.map(result => {
         if (result.length > 0)
-          return result[0].value
+          return result[0]
         else return ""
       })
     }
@@ -105,12 +105,3 @@ export class StudentSentenceCompletionComponent implements OnInit {
 
 }
 
-class ElementUI {
-  isAvailable: boolean
-  value: string
-
-  constructor(isAvailable: boolean, value: string) {
-    this.isAvailable = isAvailable
-    this.value = value
-  }
-}
