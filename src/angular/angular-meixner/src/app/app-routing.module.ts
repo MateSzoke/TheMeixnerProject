@@ -10,7 +10,6 @@ import {SentenceCompletionComponent} from "./task_types/sentence-completion/sent
 import {SentenceCreationComponent} from "./task_types/sentence-creation/sentence-creation.component";
 import {GroupingSortingComponent} from "./task_types/grouping-sorting/grouping-sorting.component";
 import {SentencecompletionGroupingComponent} from "./task_types/sentencecompletion-grouping/sentencecompletion-grouping.component";
-import {SentencecompletionSortingComponent} from "./task_types/sentencecompletion-sorting/sentencecompletion-sorting.component";
 import {SentencecreationSortingComponent} from "./task_types/sentencecreation-sorting/sentencecreation-sorting.component";
 import {SortingGroupingComponent} from "./task_types/sorting-grouping/sorting-grouping.component";
 import {PairingComponent} from './task_types/pairing/pairing.component';
@@ -28,9 +27,15 @@ import {StudentSentenceCompletionComponent} from "./student/tasks/student-senten
 import {StudentSentenceCreationComponent} from "./student/tasks/student-sentence-creation/student-sentence-creation.component";
 import {StudentSortingComponent} from "./student/tasks/student-sorting/student-sorting.component";
 import {StudentTrueFalseComponent} from "./student/tasks/student-true-false/student-true-false.component";
-import {ExerciseResultComponent} from "./student/exercise-result/exercise-result.component";
 import {EasyTaskComponent} from "./task_types/easy-task/easy-task.component";
 import {MemoryGameComponent} from "./task_types/memory-game/memory-game.component";
+import {StudentGroupingAndSortingComponent} from "./student/tasks/student-grouping-and-sorting/student-grouping-and-sorting.component";
+import {StudentSortingAndGroupingComponent} from "./student/tasks/student-sorting-and-grouping/student-sorting-and-grouping.component";
+import {StudentSentenceCompletionAndGroupingComponent} from "./student/tasks/student-sentence-completion-and-grouping/student-sentence-completion-and-grouping.component";
+import {StudentSentenceCreationAndGroupingComponent} from "./student/tasks/student-sentence-creation-and-grouping/student-sentence-creation-and-grouping.component";
+import {StudentSentenceCompletionAndSortingComponent} from "./student/tasks/student-sentence-completion-and-sorting/student-sentence-completion-and-sorting.component";
+import {StudentSentenceCreationAndSortingComponent} from "./student/tasks/student-sentence-creation-and-sorting/student-sentence-creation-and-sorting.component";
+import {StudentBlindmapComponent} from "./student/tasks/student-blindmap/student-blindmap.component";
 
 
 const routes: Routes = [
@@ -77,11 +82,6 @@ const routes: Routes = [
   {
     path: Path.SENTENCE_COMPLETION_GROUPING,
     component: SentencecompletionGroupingComponent,
-    canActivate: [RouteGuardService]
-  },
-  {
-    path: Path.SENTENCE_CREATION_SORTING,
-    component: SentencecompletionSortingComponent,
     canActivate: [RouteGuardService]
   },
   {
@@ -162,6 +162,41 @@ const routes: Routes = [
   {
     path: Path.STUDENT_TRUEFALSE,
     component: StudentTrueFalseComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: Path.STUDENT_GROUPING_SORTING,
+    component: StudentGroupingAndSortingComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: Path.STUDENT_SORTING_GROUPING,
+    component: StudentSortingAndGroupingComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: Path.STUDENT_SENTENCE_COMPLETION_GROUPING,
+    component: StudentSentenceCompletionAndGroupingComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: Path.STUDENT_SENTENCE_CREATION_GROUPING,
+    component: StudentSentenceCreationAndGroupingComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: Path.STUDENT_SENTENCE_COMPLETION_SORTING,
+    component: StudentSentenceCompletionAndSortingComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: Path.STUDENT_SENTENCE_CREATION_SORTING,
+    component: StudentSentenceCreationAndSortingComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: Path.STUDENT_BLINDMAP,
+    component: StudentBlindmapComponent,
     canActivate: [RouteGuardService]
   },
   {

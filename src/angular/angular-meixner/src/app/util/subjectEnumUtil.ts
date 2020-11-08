@@ -9,31 +9,31 @@ export class SubjectEnumUtil {
 
   public static subjectToString(subject: string): string {
     switch (subject) {
-      case SubjectEnum.Biology.toString():
+      case "Biology":
         return "Biológia"
-      case SubjectEnum.History.toString():
+      case "History":
         return "Történelem"
-      case SubjectEnum.ForeignLanguage.toString():
+      case "ForeignLanguage":
         return "Idegen nyelv"
-      case SubjectEnum.Mathematics.toString():
+      case "Mathematics":
         return "Matematika"
-      case SubjectEnum.Physics.toString():
+      case "Physics":
         return "Fizika"
-      case SubjectEnum.HungarianGrammarAndLiterature.toString():
+      case "HungarianGrammarAndLiterature":
         return "Magyar nyelv és irodalom"
-      case SubjectEnum.Sport.toString():
+      case "Sport":
         return "Testnevelés"
-      case SubjectEnum.Music.toString():
+      case "Music":
         return "Ének-zene"
-      case SubjectEnum.Technique.toString():
+      case "Technique":
         return "Technika, életvitel és gyakorlat"
-      case SubjectEnum.EthicsReligion.toString():
+      case "EthicsReligion":
         return "Erkölcstan/hittan"
-      case SubjectEnum.KnowledgeEnvironment.toString():
+      case "KnowledgeEnvironment":
         return "Környezetismeret"
-      case SubjectEnum.VisualCulture.toString():
+      case "VisualCulture":
         return "Mozgókép és médiaismeret"
-      case SubjectEnum.None.toString():
+      case "None":
         return "Egyéb"
     }
   }
