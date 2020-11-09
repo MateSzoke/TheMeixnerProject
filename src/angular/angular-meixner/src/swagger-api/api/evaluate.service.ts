@@ -56,46 +56,18 @@ export class EvaluateService {
     }
   }
 
-  public evaluateGroupingUsingPOST(startedExerciseId: number, taskId: number, groupingTaskRequest: GroupingTaskRequest, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-    if (startedExerciseId === null || startedExerciseId === undefined) {
-      throw new Error('Required parameter startedExerciseId was null or undefined when calling evaluateGroupingUsingPOST.');
-    }
-    if (taskId === null || taskId === undefined) {
-      throw new Error('Required parameter taskId was null or undefined when calling evaluateGroupingUsingPOST.');
-    }
-    if (groupingTaskRequest === null || groupingTaskRequest === undefined) {
-      throw new Error('Required parameter groupingTaskRequest was null or undefined when calling evaluateGroupingUsingPOST.');
-    }
-
-    let headers = this.defaultHeaders;
-
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = [
-      '*/*'
-    ];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
-    }
-
-    // to determine the Content-Type header
-    const consumes: string[] = [
-      'application/json'
-    ];
-    const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-    if (httpContentTypeSelected !== undefined) {
-      headers = headers.set('Content-Type', httpContentTypeSelected);
-    }
-
-    return this.httpClient.post<StartedExercise>(`${this.configuration.basePath}/evaluate/grouping/${encodeURIComponent(String(startedExerciseId))}/${encodeURIComponent(String(taskId))}`,
-      groupingTaskRequest,
-      {
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress
+  /**
+   * @param consumes string[] mime-types
+   * @return true: consumes contains 'multipart/form-data', false: otherwise
+   */
+  private canConsumeForm(consumes: string[]): boolean {
+    const form = 'multipart/form-data';
+    for (const consume of consumes) {
+      if (form === consume) {
+        return true;
       }
-    );
+    }
+    return false;
   }
 
 
@@ -219,8 +191,47 @@ export class EvaluateService {
   public evaluateGroupingUsingPOST(startedExerciseId: number, taskId: number, groupingTaskRequest: GroupingTaskRequest, observe?: 'body', reportProgress?: boolean): Observable<StartedExercise>;
   public evaluateGroupingUsingPOST(startedExerciseId: number, taskId: number, groupingTaskRequest: GroupingTaskRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<StartedExercise>>;
   public evaluateGroupingUsingPOST(startedExerciseId: number, taskId: number, groupingTaskRequest: GroupingTaskRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<StartedExercise>>;
+  public evaluateGroupingUsingPOST(startedExerciseId: number, taskId: number, groupingTaskRequest: GroupingTaskRequest, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    if (startedExerciseId === null || startedExerciseId === undefined) {
+      throw new Error('Required parameter startedExerciseId was null or undefined when calling evaluateGroupingUsingPOST.');
+    }
+    if (taskId === null || taskId === undefined) {
+      throw new Error('Required parameter taskId was null or undefined when calling evaluateGroupingUsingPOST.');
+    }
+    if (groupingTaskRequest === null || groupingTaskRequest === undefined) {
+      throw new Error('Required parameter groupingTaskRequest was null or undefined when calling evaluateGroupingUsingPOST.');
+    }
 
-  public evaluatePairingUsingPOST(startedExerciseId: number, taskId: number, pairingTaskRequest: PairingTaskRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<StartedExercise>>;
+    let headers = this.defaultHeaders;
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [
+      '*/*'
+    ];
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = [
+      'application/json'
+    ];
+    const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected !== undefined) {
+      headers = headers.set('Content-Type', httpContentTypeSelected);
+    }
+
+    return this.httpClient.post<StartedExercise>(`${this.configuration.basePath}/evaluate/grouping/${encodeURIComponent(String(startedExerciseId))}/${encodeURIComponent(String(taskId))}`,
+      groupingTaskRequest,
+      {
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress
+      }
+    );
+  }
 
   /**
    * Evaluate memory game request by taskId to a student by user id
@@ -286,48 +297,7 @@ export class EvaluateService {
    * @param reportProgress flag to report request and response progress.
    */
   public evaluatePairingUsingPOST(startedExerciseId: number, taskId: number, pairingTaskRequest: PairingTaskRequest, observe?: 'body', reportProgress?: boolean): Observable<StartedExercise>;
-
-  public evaluateSentenceCompletionUsingPOST(startedExerciseId: number, taskId: number, sentenceCompletionTaskRequest: SentenceCompletionTaskRequest, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-    if (startedExerciseId === null || startedExerciseId === undefined) {
-      throw new Error('Required parameter startedExerciseId was null or undefined when calling evaluateSentenceCompletionUsingPOST.');
-    }
-    if (taskId === null || taskId === undefined) {
-      throw new Error('Required parameter taskId was null or undefined when calling evaluateSentenceCompletionUsingPOST.');
-    }
-    if (sentenceCompletionTaskRequest === null || sentenceCompletionTaskRequest === undefined) {
-      throw new Error('Required parameter sentenceCompletionTaskRequest was null or undefined when calling evaluateSentenceCompletionUsingPOST.');
-    }
-
-    let headers = this.defaultHeaders;
-
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = [
-      '*/*'
-    ];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
-    }
-
-    // to determine the Content-Type header
-    const consumes: string[] = [
-      'application/json'
-    ];
-    const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-    if (httpContentTypeSelected !== undefined) {
-      headers = headers.set('Content-Type', httpContentTypeSelected);
-    }
-
-    return this.httpClient.post<StartedExercise>(`${this.configuration.basePath}/evaluate/sentenceCompletion/${encodeURIComponent(String(startedExerciseId))}/${encodeURIComponent(String(taskId))}`,
-      sentenceCompletionTaskRequest,
-      {
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress
-      }
-    );
-  }
+  public evaluatePairingUsingPOST(startedExerciseId: number, taskId: number, pairingTaskRequest: PairingTaskRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<StartedExercise>>;
   public evaluatePairingUsingPOST(startedExerciseId: number, taskId: number, pairingTaskRequest: PairingTaskRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<StartedExercise>>;
   public evaluatePairingUsingPOST(startedExerciseId: number, taskId: number, pairingTaskRequest: PairingTaskRequest, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
     if (startedExerciseId === null || startedExerciseId === undefined) {
@@ -491,16 +461,15 @@ export class EvaluateService {
   public evaluateSentenceCompletionUsingPOST(startedExerciseId: number, taskId: number, sentenceCompletionTaskRequest: SentenceCompletionTaskRequest, observe?: 'body', reportProgress?: boolean): Observable<StartedExercise>;
   public evaluateSentenceCompletionUsingPOST(startedExerciseId: number, taskId: number, sentenceCompletionTaskRequest: SentenceCompletionTaskRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<StartedExercise>>;
   public evaluateSentenceCompletionUsingPOST(startedExerciseId: number, taskId: number, sentenceCompletionTaskRequest: SentenceCompletionTaskRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<StartedExercise>>;
-
-  public evaluateSortingUsingPOST(startedExerciseId: number, taskId: number, sortingTaskRequest: SortingTaskRequest, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+  public evaluateSentenceCompletionUsingPOST(startedExerciseId: number, taskId: number, sentenceCompletionTaskRequest: SentenceCompletionTaskRequest, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
     if (startedExerciseId === null || startedExerciseId === undefined) {
-      throw new Error('Required parameter startedExerciseId was null or undefined when calling evaluateSortingUsingPOST.');
+      throw new Error('Required parameter startedExerciseId was null or undefined when calling evaluateSentenceCompletionUsingPOST.');
     }
     if (taskId === null || taskId === undefined) {
-      throw new Error('Required parameter taskId was null or undefined when calling evaluateSortingUsingPOST.');
+      throw new Error('Required parameter taskId was null or undefined when calling evaluateSentenceCompletionUsingPOST.');
     }
-    if (sortingTaskRequest === null || sortingTaskRequest === undefined) {
-      throw new Error('Required parameter sortingTaskRequest was null or undefined when calling evaluateSortingUsingPOST.');
+    if (sentenceCompletionTaskRequest === null || sentenceCompletionTaskRequest === undefined) {
+      throw new Error('Required parameter sentenceCompletionTaskRequest was null or undefined when calling evaluateSentenceCompletionUsingPOST.');
     }
 
     let headers = this.defaultHeaders;
@@ -523,8 +492,8 @@ export class EvaluateService {
       headers = headers.set('Content-Type', httpContentTypeSelected);
     }
 
-    return this.httpClient.post<StartedExercise>(`${this.configuration.basePath}/evaluate/sorting/${encodeURIComponent(String(startedExerciseId))}/${encodeURIComponent(String(taskId))}`,
-      sortingTaskRequest,
+    return this.httpClient.post<StartedExercise>(`${this.configuration.basePath}/evaluate/sentenceCompletion/${encodeURIComponent(String(startedExerciseId))}/${encodeURIComponent(String(taskId))}`,
+      sentenceCompletionTaskRequest,
       {
         withCredentials: this.configuration.withCredentials,
         headers: headers,
@@ -762,19 +731,46 @@ export class EvaluateService {
   public evaluateSortingUsingPOST(startedExerciseId: number, taskId: number, sortingTaskRequest: SortingTaskRequest, observe?: 'body', reportProgress?: boolean): Observable<StartedExercise>;
   public evaluateSortingUsingPOST(startedExerciseId: number, taskId: number, sortingTaskRequest: SortingTaskRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<StartedExercise>>;
   public evaluateSortingUsingPOST(startedExerciseId: number, taskId: number, sortingTaskRequest: SortingTaskRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<StartedExercise>>;
-
-  /**
-   * @param consumes string[] mime-types
-   * @return true: consumes contains 'multipart/form-data', false: otherwise
-   */
-  private canConsumeForm(consumes: string[]): boolean {
-    const form = 'multipart/form-data';
-    for (const consume of consumes) {
-      if (form === consume) {
-        return true;
-      }
+  public evaluateSortingUsingPOST(startedExerciseId: number, taskId: number, sortingTaskRequest: SortingTaskRequest, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    if (startedExerciseId === null || startedExerciseId === undefined) {
+      throw new Error('Required parameter startedExerciseId was null or undefined when calling evaluateSortingUsingPOST.');
     }
-    return false;
+    if (taskId === null || taskId === undefined) {
+      throw new Error('Required parameter taskId was null or undefined when calling evaluateSortingUsingPOST.');
+    }
+    if (sortingTaskRequest === null || sortingTaskRequest === undefined) {
+      throw new Error('Required parameter sortingTaskRequest was null or undefined when calling evaluateSortingUsingPOST.');
+    }
+
+    let headers = this.defaultHeaders;
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [
+      '*/*'
+    ];
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = [
+      'application/json'
+    ];
+    const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected !== undefined) {
+      headers = headers.set('Content-Type', httpContentTypeSelected);
+    }
+
+    return this.httpClient.post<StartedExercise>(`${this.configuration.basePath}/evaluate/sorting/${encodeURIComponent(String(startedExerciseId))}/${encodeURIComponent(String(taskId))}`,
+      sortingTaskRequest,
+      {
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress
+      }
+    );
   }
 
   /**
