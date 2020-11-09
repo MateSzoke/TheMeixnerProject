@@ -220,6 +220,8 @@ export class EvaluateService {
   public evaluateGroupingUsingPOST(startedExerciseId: number, taskId: number, groupingTaskRequest: GroupingTaskRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<StartedExercise>>;
   public evaluateGroupingUsingPOST(startedExerciseId: number, taskId: number, groupingTaskRequest: GroupingTaskRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<StartedExercise>>;
 
+  public evaluatePairingUsingPOST(startedExerciseId: number, taskId: number, pairingTaskRequest: PairingTaskRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<StartedExercise>>;
+
   /**
    * Evaluate memory game request by taskId to a student by user id
    *
@@ -230,11 +232,8 @@ export class EvaluateService {
    * @param reportProgress flag to report request and response progress.
    */
   public evaluateMemoryGameUsingPOST(startedExerciseId: number, taskId: number, memoryGameTaskRequest: MemoryGameTaskRequest, observe?: 'body', reportProgress?: boolean): Observable<StartedExercise>;
-
   public evaluateMemoryGameUsingPOST(startedExerciseId: number, taskId: number, memoryGameTaskRequest: MemoryGameTaskRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<StartedExercise>>;
-
   public evaluateMemoryGameUsingPOST(startedExerciseId: number, taskId: number, memoryGameTaskRequest: MemoryGameTaskRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<StartedExercise>>;
-
   public evaluateMemoryGameUsingPOST(startedExerciseId: number, taskId: number, memoryGameTaskRequest: MemoryGameTaskRequest, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
     if (startedExerciseId === null || startedExerciseId === undefined) {
       throw new Error('Required parameter startedExerciseId was null or undefined when calling evaluateMemoryGameUsingPOST.');
@@ -276,8 +275,6 @@ export class EvaluateService {
       }
     );
   }
-
-  public evaluatePairingUsingPOST(startedExerciseId: number, taskId: number, pairingTaskRequest: PairingTaskRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<StartedExercise>>;
 
   /**
    * Evaluate pairing request by taskId to a student by user id
@@ -767,6 +764,20 @@ export class EvaluateService {
   public evaluateSortingUsingPOST(startedExerciseId: number, taskId: number, sortingTaskRequest: SortingTaskRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<StartedExercise>>;
 
   /**
+   * @param consumes string[] mime-types
+   * @return true: consumes contains 'multipart/form-data', false: otherwise
+   */
+  private canConsumeForm(consumes: string[]): boolean {
+    const form = 'multipart/form-data';
+    for (const consume of consumes) {
+      if (form === consume) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
    * Evaluate true false request by taskId to a student by user id
    *
    * @param startedExerciseId startedExerciseId
@@ -776,11 +787,8 @@ export class EvaluateService {
    * @param reportProgress flag to report request and response progress.
    */
   public evaluateTrueFalseUsingPOST(startedExerciseId: number, taskId: number, trueFalseTaskRequest: TrueFalseTaskRequest, observe?: 'body', reportProgress?: boolean): Observable<StartedExercise>;
-
   public evaluateTrueFalseUsingPOST(startedExerciseId: number, taskId: number, trueFalseTaskRequest: TrueFalseTaskRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<StartedExercise>>;
-
   public evaluateTrueFalseUsingPOST(startedExerciseId: number, taskId: number, trueFalseTaskRequest: TrueFalseTaskRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<StartedExercise>>;
-
   public evaluateTrueFalseUsingPOST(startedExerciseId: number, taskId: number, trueFalseTaskRequest: TrueFalseTaskRequest, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
     if (startedExerciseId === null || startedExerciseId === undefined) {
       throw new Error('Required parameter startedExerciseId was null or undefined when calling evaluateTrueFalseUsingPOST.');
@@ -821,20 +829,6 @@ export class EvaluateService {
         reportProgress: reportProgress
       }
     );
-  }
-
-  /**
-   * @param consumes string[] mime-types
-   * @return true: consumes contains 'multipart/form-data', false: otherwise
-   */
-  private canConsumeForm(consumes: string[]): boolean {
-    const form = 'multipart/form-data';
-    for (const consume of consumes) {
-      if (form === consume) {
-        return true;
-      }
-    }
-    return false;
   }
 
 }
