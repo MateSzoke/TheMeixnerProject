@@ -6,9 +6,11 @@ import hu.aut.meixner.dto.task.common.TaskResponse
 import hu.aut.meixner.dto.task.common.TaskTypeEnum.*
 import hu.aut.meixner.dto.task.complex.*
 import hu.aut.meixner.dto.task.easy.*
+import hu.aut.meixner.dto.task.other.BlindMapResponse
 import hu.aut.meixner.dto.task.student.AssignTask
 import hu.aut.meixner.dto.task.student.complex.*
 import hu.aut.meixner.dto.task.student.easy.*
+import hu.aut.meixner.dto.task.student.other.BlindMapTask
 import hu.aut.meixner.mapping.toDomainModel
 
 fun List<MediaItemResponse>.compareResultMediaItems(requestMediaItems: List<MediaItemRequest>): Boolean {
@@ -157,7 +159,15 @@ fun TaskResponse.toAssignTask(): AssignTask? {
                     elements = task.groups.flatMap { it.elements }.shuffled()
             )
         }
-        BlindMap -> TODO()
+        BlindMap -> {
+            val task = this as? BlindMapResponse ?: return null
+            BlindMapTask(
+                    taskId = id,
+                    title = title,
+                    image = image,
+                    tags = task.tags.shuffled()
+            )
+        }
         FreeText -> TODO()
         OddOneOut -> TODO()
         TimeLine -> TODO()

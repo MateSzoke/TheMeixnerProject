@@ -4,8 +4,10 @@ import hu.aut.meixner.dto.result.TaskResultResponse
 import hu.aut.meixner.dto.task.common.TaskResponse
 import hu.aut.meixner.dto.task.complex.*
 import hu.aut.meixner.dto.task.easy.*
+import hu.aut.meixner.dto.task.other.BlindMapResponse
 import hu.aut.meixner.dto.task.student.complex.*
 import hu.aut.meixner.dto.task.student.easy.*
+import hu.aut.meixner.dto.task.student.other.BlindMapTaskRequest
 import hu.aut.meixner.entity.result.StudentEntity
 import hu.aut.meixner.entity.result.TaskResultEntity
 import hu.aut.meixner.mapping.toDomainModel
@@ -255,6 +257,22 @@ class TaskEvaluationService(
                 currentResult = currentResult,
                 attempts = taskRequest.attempts,
                 resultPercentage = calculateResultPercentage(taskRequest.groups, taskResult.groups, currentResult)
+        )
+    }
+
+    fun evaluateBlindMap(taskId: Long, taskRequest: BlindMapTaskRequest): TaskResultResponse? {
+        val (student, taskResult) = getStudentAndTask<BlindMapResponse>(taskId) ?: return null
+        val currentResult = mutableListOf<Boolean>()
+        taskRequest.tags.zip(taskResult.tags).forEach { (tagRequest, tagResult) ->
+            currentResult.add(tagRequest.text == tagResult.text)
+        }
+        return saveTaskRequest(
+                student = student,
+                taskId = taskId,
+                taskResult = taskResult,
+                currentResult = currentResult,
+                attempts = taskRequest.attempts,
+                resultPercentage = calculateResultPercentage(taskRequest.tags, taskResult.tags, currentResult)
         )
     }
 
