@@ -3,6 +3,7 @@ package hu.aut.meixner.controller.result
 import hu.aut.meixner.dto.result.StartedExercise
 import hu.aut.meixner.dto.task.student.complex.*
 import hu.aut.meixner.dto.task.student.easy.*
+import hu.aut.meixner.dto.task.student.other.BlindMapTaskRequest
 import hu.aut.meixner.service.result.AssignService
 import hu.aut.meixner.service.result.TaskEvaluationService
 import io.swagger.annotations.Api
@@ -197,6 +198,20 @@ class EvaluateController(
             @RequestBody @Valid taskRequest: SortingAndGroupingTaskRequest
     ): ResponseEntity<StartedExercise> {
         val taskResult = taskEvaluationService.evaluateSortingAndGrouping(taskId = taskId, taskRequest = taskRequest)
+                ?: return ResponseEntity.badRequest().build()
+        val result = assignService.getStartedExercise(startedExerciseId = startedExerciseId, solvedTaskId = taskId, taskResult = taskResult)
+                ?: return ResponseEntity.badRequest().build()
+        return ResponseEntity.ok(result)
+    }
+
+    @PostMapping("/blindMap/{startedExerciseId}/{taskId}")
+    @ApiOperation("Evaluate Blind map request by taskId to a student by user id")
+    fun evaluateBlindMap(
+            @PathVariable("startedExerciseId") startedExerciseId: Long,
+            @PathVariable("taskId") taskId: Long,
+            @RequestBody @Valid taskRequest: BlindMapTaskRequest
+    ): ResponseEntity<StartedExercise> {
+        val taskResult = taskEvaluationService.evaluateBlindMap(taskId = taskId, taskRequest = taskRequest)
                 ?: return ResponseEntity.badRequest().build()
         val result = assignService.getStartedExercise(startedExerciseId = startedExerciseId, solvedTaskId = taskId, taskResult = taskResult)
                 ?: return ResponseEntity.badRequest().build()
