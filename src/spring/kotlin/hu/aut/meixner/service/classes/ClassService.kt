@@ -45,9 +45,18 @@ class ClassService(
     }
 
     fun changeStudentToClass(studentId: Long, classId: Long, isAdd: Boolean): ClassResponse? {
-        if (studentRepository.findByIdOrNull(studentId) == null) return null
+        val student = studentRepository.findByIdOrNull(studentId) ?: return null
         val currentClass = classRepository.findByIdOrNull(classId) ?: return null
-        if(isAdd)currentClass.studentIds += studentId else currentClass.studentIds += studentId
+        if (isAdd) {
+            currentClass.studentIds += studentId
+            currentClass.exerciseIds.forEach { exerciseId ->
+                if (!student.exerciseIds.contains(exerciseId))
+                    student.exerciseIds += exerciseId
+            }
+        } else {
+            currentClass.studentIds -= studentId
+            student.exerciseIds -= currentClass.exerciseIds
+        }
         return classRepository.save(currentClass).toDomainModel(students = getStudents(classId), exercises = getExercises(classId))
     }
 

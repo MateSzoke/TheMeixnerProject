@@ -47,7 +47,7 @@ class ClassController(
         return ResponseEntity.ok(result)
     }
 
-    @PostMapping("/{classId}/{exerciseId}")
+    @PostMapping("/exercise/{classId}/{exerciseId}")
     @ApiOperation("Add exercise to a class by id")
     fun addExerciseToClass(
             @PathVariable("classId") classId: Long,
@@ -58,7 +58,7 @@ class ClassController(
         return ResponseEntity.ok(result)
     }
 
-    @DeleteMapping("/{classId}/{exerciseId}")
+    @DeleteMapping("/exercise/{classId}/{exerciseId}")
     @ApiOperation("Remove exercise from a class by id")
     fun removeExerciseFromClass(
             @PathVariable("classId") classId: Long,
@@ -69,7 +69,7 @@ class ClassController(
         return ResponseEntity.ok(result)
     }
 
-    @PostMapping("/{classId}/{studentId}")
+    @PostMapping("/student/{classId}/{studentId}")
     @ApiOperation("Add student to a class by id")
     fun addStudentToClass(
             @PathVariable("classId") classId: Long,
@@ -80,7 +80,7 @@ class ClassController(
         return ResponseEntity.ok(result)
     }
 
-    @DeleteMapping("/{classId}/{studentId}")
+    @DeleteMapping("/student/{classId}/{studentId}")
     @ApiOperation("Remove student from a class by id")
     fun removeStudentFromClass(
             @PathVariable("classId") classId: Long,
