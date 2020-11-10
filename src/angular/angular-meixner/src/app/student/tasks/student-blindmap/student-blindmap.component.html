@@ -6,7 +6,7 @@
   </div>
 </div>
 <div *ngIf="loaded">
-  <p class="title"><b>Vaktérkép</b> - {{grouping.title}}</p>
+  <p class="title"><b>Vaktérkép</b> - {{blindMap.title}}</p>
   <button (click)="evaluateTask()" class="addbtn" mat-raised-button type="button">
     Kész, beküldöm a megoldást
   </button>
@@ -16,30 +16,30 @@
       <h2 class="subtitle">Elérhető elemek</h2>
 
       <div
-        (cdkDropListDropped)="drop($event)"
-        [cdkDropListData]="grouping.elements"
+        (cdkDropListDropped)="drop($event, true)"
+        [cdkDropListData]="options"
         cdkDropList
         cdkDropListSortingDisabled
         class="example-list">
-        <div *ngFor="let element of grouping.elements" cdkDrag class="example-box">
-          <img *ngIf="element.type == 'FILE'" [src]="element.content | secure | async" class="max-height"/>
-          <p *ngIf="element.type == 'TEXT'">{{element.content}}</p>
-        </div>
+        <div *ngFor="let element of options" cdkDrag class="example-box">{{element}}</div>
       </div>
     </div>
 
-    <div *ngFor="let group of groupingRequest.groups; index as i" class="example-container">
-      <h2 class="subtitle">{{group.name}}</h2>
+    <div class="container">
 
-      <div
-        (cdkDropListDropped)="drop($event)"
-        [cdkDropListData]="group.elements"
-        [ngClass]="{'border-success':getSuccess(i), 'border-fail':getFail(i)}"
-        cdkDropList
-        cdkDropListSortingDisabled class="example-list">
-        <div *ngFor="let element of group.elements" cdkDrag class="example-box">
-          <img *ngIf="isMediaItem(element)" [src]="element.content | secure | async" class="max-height"/>
-          <p *ngIf="!isMediaItem(element)">{{element.content}}</p>
+      <img [src]="blindMap.image.content | secure | async" class="fixed-top"
+           style="width: 1000px; margin-top: 24px; padding-bottom: 240px; position: absolute; top: 50px; left: 50px">
+
+      <div *ngFor="let option of tagResult; index as i" class="example-container-small fixed-top">
+
+        <div
+          (cdkDropListDropped)="drop($event, false)"
+          [cdkDropListData]="tagResult[i]"
+          [ngStyle]="{'top': getSize(positions[i].x), 'left' : getSize(positions[i].y)}"
+          cdkDropList
+          cdkDropListSortingDisabled
+          style="position: absolute;">
+          <div [ngStyle]="{'background':getSuccess(i)}" cdkDrag class="example-box">{{option[0]}}</div>
         </div>
       </div>
     </div>
