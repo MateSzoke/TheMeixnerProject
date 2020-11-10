@@ -26,5 +26,6 @@ fun UserRole.toDomainModel(): UserRoleEnum {
     return when (this) {
         UserRole.STUDENT -> UserRoleEnum.STUDENT
         UserRole.ADMIN -> UserRoleEnum.ADMIN
+        UserRole.TEACHER -> UserRoleEnum.TEACHER
     }
 }
