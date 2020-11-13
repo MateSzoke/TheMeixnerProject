@@ -10,20 +10,23 @@ import hu.aut.meixner.dto.task.student.easy.*
 import hu.aut.meixner.dto.task.student.other.BlindMapTaskRequest
 import hu.aut.meixner.entity.result.StudentEntity
 import hu.aut.meixner.entity.result.TaskResultEntity
+import hu.aut.meixner.extensions.updateDifficulty
 import hu.aut.meixner.mapping.toDomainModel
 import hu.aut.meixner.repository.result.StudentRepository
 import hu.aut.meixner.repository.result.TaskResultRepository
+import hu.aut.meixner.repository.task.TaskRepository
 import hu.aut.meixner.service.auth.UserService
 import hu.aut.meixner.service.task.TaskService
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
-class TaskEvaluationService(
+class EvaluationService(
         private val taskService: TaskService,
+        private val taskRepository: TaskRepository,
         private val taskResultRepository: TaskResultRepository,
         private val studentRepository: StudentRepository,
-        private val userService: UserService
+        private val userService: UserService,
 ) {
 
     fun evaluatePairing(taskId: Long, taskRequest: PairingTaskRequest): TaskResultResponse? {
@@ -296,6 +299,7 @@ class TaskEvaluationService(
             resultPercentage: Double,
             attempts: Int
     ): TaskResultResponse {
+        updateTaskDifficulty(taskId, attempts)
         val taskResultEntity = TaskResultEntity(
                 student = student,
                 resultTaskId = taskId,
@@ -306,5 +310,10 @@ class TaskEvaluationService(
             taskResultRepository.save(taskResultEntity)
         }
         return taskResultEntity.toDomainModel(taskResult = taskResult, currentResult = currentResult, user = student.user.toDomainModel())
+    }
+
+    private fun updateTaskDifficulty(taskId: Long, attempts: Int) {
+        val task = taskRepository.findByIdOrNull(taskId) ?: return
+        taskRepository.save(task.updateDifficulty(attempts))
     }
 }

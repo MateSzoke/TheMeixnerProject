@@ -1,7 +1,6 @@
 package hu.aut.meixner.controller.task
 
 import hu.aut.meixner.dto.task.common.TaskResponse
-import hu.aut.meixner.entity.task.easy.PairingEntity
 import hu.aut.meixner.service.task.TaskService
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
@@ -31,9 +30,6 @@ class TaskController(
     @ApiOperation("Returns the specific task by it's taskId.")
     fun getTaskById(@PathVariable("taskId") taskId: Long): ResponseEntity<TaskResponse> {
         val task = taskService.getTaskById(taskId) ?: return ResponseEntity.notFound().build()
-        println("getTaskById")
-        println(task.difficulty)
-        //println((task as PairingEntity).pairs[0].pair[0].content)
         return ResponseEntity.ok(task)
     }
 
