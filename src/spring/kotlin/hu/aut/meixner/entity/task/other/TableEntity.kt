@@ -15,7 +15,7 @@ class TableEntity(
         val cols: MutableList<TableRowEntity> = mutableListOf(),
         override val title: String = "",
         override val owner: String = "",
-        override val difficulty: Int = 0,
+        override var difficulty: Int = 0,
         override val subject: SubjectEnum = SubjectEnum.None,
         override val recommendedMinClass: Int = 1,
         override val recommendedMaxClass: Int = 8,
