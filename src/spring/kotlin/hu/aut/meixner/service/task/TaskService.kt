@@ -1,7 +1,11 @@
 package hu.aut.meixner.service.task
 
 import hu.aut.meixner.dto.task.common.TaskResponse
+import hu.aut.meixner.entity.task.complex.*
+import hu.aut.meixner.entity.task.easy.*
+import hu.aut.meixner.entity.task.other.*
 import hu.aut.meixner.extensions.currentUser
+import hu.aut.meixner.extensions.updateDifficulty
 import hu.aut.meixner.mapping.toDomainModel
 import hu.aut.meixner.repository.task.complex.*
 import hu.aut.meixner.repository.task.easy.*
@@ -22,8 +26,8 @@ class TaskService(
         private val groupingAndSortingRepository: GroupingAndSortingRepository,
         private val sentenceCreationAndSortingRepository: SentenceCreationAndSortingRepository,
         private val sentenceCreationAndGroupingRepository: SentenceCreationAndGroupingRepository,
-        private val sentenceCompletionAndSortingRepository: SentenceCompletionAndGroupingRepository,
-        private val sentenceCompletionAndGroupingRepository: SentenceCompletionAndSortingRepository,
+        private val sentenceCompletionAndGroupingRepository: SentenceCompletionAndGroupingRepository,
+        private val sentenceCompletionAndSortingRepository: SentenceCompletionAndSortingRepository,
         private val sortingAndGroupingRepository: SortingAndGroupingRepository,
         private val blindMapRepository: BlindMapRepository,
         private val timelineRepository: TimelineRepository,
@@ -111,4 +115,64 @@ class TaskService(
         tryDelete { tableRepository.deleteById(taskId) }
     }
 
+
+    fun updateDifficulty(taskId: Long, attempts: Int) {
+        val task = pairingRepository.findByIdOrNull(taskId)
+                ?: groupingRepository.findByIdOrNull(taskId)
+                ?: sentenceCompletionRepository.findByIdOrNull(taskId)
+                ?: sentenceCreationRepository.findByIdOrNull(taskId)
+                ?: sortingRepository.findByIdOrNull(taskId)
+                ?: trueFalseRepository.findByIdOrNull(taskId)
+                ?: memoryGameRepository.findByIdOrNull(taskId)
+                ?: groupingAndSortingRepository.findByIdOrNull(taskId)
+                ?: sentenceCreationAndSortingRepository.findByIdOrNull(taskId)
+                ?: sentenceCreationAndGroupingRepository.findByIdOrNull(taskId)
+                ?: sentenceCompletionAndSortingRepository.findByIdOrNull(taskId)
+                ?: sentenceCompletionAndGroupingRepository.findByIdOrNull(taskId)
+                ?: sortingAndGroupingRepository.findByIdOrNull(taskId)
+                ?: blindMapRepository.findByIdOrNull(taskId)
+                ?: timelineRepository.findByIdOrNull(taskId)
+                ?: oddOneOutRepository.findByIdOrNull(taskId)
+                ?: freeTextRepository.findByIdOrNull(taskId)
+                ?: tableRepository.findByIdOrNull(taskId) ?: return
+
+        task.updateDifficulty(attempts)
+
+        if (task as? PairingEntity != null)
+            pairingRepository.save(task)
+        if (task as? GroupingEntity != null)
+            groupingRepository.save(task)
+        if (task as? SentenceCompletionEntity != null)
+            sentenceCompletionRepository.save(task)
+        if (task as? SentenceCreationEntity != null)
+            sentenceCreationRepository.save(task)
+        if (task as? SortingEntity != null)
+            sortingRepository.save(task)
+        if (task as? TrueFalseEntity != null)
+            trueFalseRepository.save(task)
+        if (task as? MemoryGameEntity != null)
+            memoryGameRepository.save(task)
+        if (task as? GroupingAndSortingEntity != null)
+            groupingAndSortingRepository.save(task)
+        if (task as? SentenceCreationAndSortingEntity != null)
+            sentenceCreationAndSortingRepository.save(task)
+        if (task as? SentenceCreationAndGroupingEntity != null)
+            sentenceCreationAndGroupingRepository.save(task)
+        if (task as? SentenceCompletionAndSortingEntity != null)
+            sentenceCompletionAndSortingRepository.save(task)
+        if (task as? SentenceCompletionAndGroupingEntity != null)
+            sentenceCompletionAndGroupingRepository.save(task)
+        if (task as? SortingAndGroupingEntity != null)
+            sortingAndGroupingRepository.save(task)
+        if (task as? BlindMapEntity != null)
+            blindMapRepository.save(task)
+        if (task as? TimelineEntity != null)
+            timelineRepository.save(task)
+        if (task as? OddOneOutEntity != null)
+            oddOneOutRepository.save(task)
+        if (task as? FreeTextEntity != null)
+            freeTextRepository.save(task)
+        if (task as? TableEntity != null)
+            tableRepository.save(task)
+    }
 }
