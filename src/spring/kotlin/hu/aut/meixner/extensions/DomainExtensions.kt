@@ -3,7 +3,6 @@ package hu.aut.meixner.extensions
 import hu.aut.meixner.entity.task.TaskEntity
 import org.springframework.security.authentication.AnonymousAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
-import kotlin.math.roundToInt
 
 val TaskEntity.ownerIsTheCurrentUser: Boolean
     get() = currentUser == owner
@@ -17,9 +16,4 @@ fun calculateCurrentUser(): String {
         !is AnonymousAuthenticationToken -> authentication.name
         else -> ""
     }
-}
-
-fun TaskEntity.updateDifficulty(attempts: Int): TaskEntity {
-    difficulty -= (difficulty / 10.0).roundToInt() - attempts
-    return this
 }

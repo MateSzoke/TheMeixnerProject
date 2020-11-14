@@ -296,7 +296,7 @@ class EvaluationService(
             resultPercentage: Double,
             attempts: Int
     ): TaskResultResponse {
-        taskService.updateDifficulty(taskId, attempts)
+        taskService.updateDifficulty(taskId, attempts + 1)
         val taskResultEntity = TaskResultEntity(
                 student = student,
                 resultTaskId = taskId,
