@@ -5,7 +5,6 @@ import hu.aut.meixner.entity.task.complex.*
 import hu.aut.meixner.entity.task.easy.*
 import hu.aut.meixner.entity.task.other.*
 import hu.aut.meixner.extensions.currentUser
-import hu.aut.meixner.extensions.log
 import hu.aut.meixner.mapping.toDomainModel
 import hu.aut.meixner.repository.task.complex.*
 import hu.aut.meixner.repository.task.easy.*
@@ -137,9 +136,7 @@ class TaskService(
                 ?: freeTextRepository.findByIdOrNull(taskId)
                 ?: tableRepository.findByIdOrNull(taskId) ?: return
 
-        log("difficulty: ${task.difficulty}, attempts: $attempts, difference: ${(task.difficulty / 10.0).roundToInt() - attempts}")
         task.difficulty -= (task.difficulty / 10.0).roundToInt() - attempts
-        log("new difficulty: ${task.difficulty}")
 
         if (task as? PairingEntity != null)
             pairingRepository.save(task)
