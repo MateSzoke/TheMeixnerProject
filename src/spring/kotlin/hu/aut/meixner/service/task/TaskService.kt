@@ -5,7 +5,6 @@ import hu.aut.meixner.entity.task.complex.*
 import hu.aut.meixner.entity.task.easy.*
 import hu.aut.meixner.entity.task.other.*
 import hu.aut.meixner.extensions.currentUser
-import hu.aut.meixner.extensions.updateDifficulty
 import hu.aut.meixner.mapping.toDomainModel
 import hu.aut.meixner.repository.task.complex.*
 import hu.aut.meixner.repository.task.easy.*
@@ -13,6 +12,7 @@ import hu.aut.meixner.repository.task.other.*
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import kotlin.math.roundToInt
 
 @Service
 class TaskService(
@@ -136,7 +136,7 @@ class TaskService(
                 ?: freeTextRepository.findByIdOrNull(taskId)
                 ?: tableRepository.findByIdOrNull(taskId) ?: return
 
-        task.updateDifficulty(attempts)
+        task.difficulty -= (task.difficulty / 10.0).roundToInt() - attempts
 
         if (task as? PairingEntity != null)
             pairingRepository.save(task)
