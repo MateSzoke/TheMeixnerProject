@@ -13,6 +13,7 @@ import hu.aut.meixner.service.task.TaskService
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import java.time.OffsetDateTime
+import kotlin.math.roundToInt
 
 @Service
 class AssignService(
@@ -22,6 +23,10 @@ class AssignService(
         private val solvedExerciseRepository: SolvedExerciseRepository,
         private val taskService: TaskService
 ) {
+
+    companion object {
+        const val ASSIGN_RESULT_THRESHOLD = 2
+    }
 
     fun getTasksByExerciseId(exerciseId: Long): List<AssignTask>? {
         val exercise = exerciseService.getExercisesById(exerciseId) ?: return null
@@ -65,8 +70,12 @@ class AssignService(
         }
         solvedExerciseRepository.save(solvedExercise)
         val taskIds = exercise.tasks.map { it.id }
-        val nextTaskIds = taskIds - solvedExercise.solvedTaskIds
-        val nextTaskId = if (nextTaskIds.isNotEmpty() && success) nextTaskIds.random() else null
+        val nextTaskId = getNextTaskId(
+                nextTaskIds = taskIds - solvedExercise.solvedTaskIds,
+                attempts = taskResult.attempts,
+                currentDifficulty = taskResult.taskResult?.difficulty,
+                success = success
+        )
         return StartedExercise(
                 id = solvedExercise.id,
                 exerciseId = exercise.id,
@@ -80,6 +89,18 @@ class AssignService(
     fun getMyExercises(): List<AssignedExercise>? {
         val student = resultService.getStudentByUserId(userService.getUser()?.id ?: return null) ?: return null
         return student.exercises.map { it.toAssignedExercise() }
+    }
+
+    private fun getNextTaskId(nextTaskIds: List<Long>, attempts: Int, currentDifficulty: Int?, success: Boolean): Long? {
+        return if (nextTaskIds.isNotEmpty() && success && currentDifficulty != null) {
+            val tasks = nextTaskIds.mapNotNull { taskService.getTaskById(it) }.sortedBy { it.difficulty }
+            val currentResult = (currentDifficulty / 10.0).roundToInt() - attempts
+            when {
+                currentResult < -ASSIGN_RESULT_THRESHOLD -> tasks.firstOrNull()?.id
+                currentResult > ASSIGN_RESULT_THRESHOLD -> tasks.lastOrNull()?.id
+                else -> nextTaskIds.random()
+            }
+        } else null
     }
 
 }
