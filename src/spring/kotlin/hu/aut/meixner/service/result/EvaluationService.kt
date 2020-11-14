@@ -296,7 +296,6 @@ class EvaluationService(
             resultPercentage: Double,
             attempts: Int
     ): TaskResultResponse {
-        taskService.updateDifficulty(taskId, attempts + 1)
         val taskResultEntity = TaskResultEntity(
                 student = student,
                 resultTaskId = taskId,
@@ -304,6 +303,7 @@ class EvaluationService(
                 resultPercentage = resultPercentage,
         )
         if (resultPercentage == 1.0) {
+            taskService.updateDifficulty(taskId, attempts + 1)
             taskResultRepository.save(taskResultEntity)
         }
         return taskResultEntity.toDomainModel(taskResult = taskResult, currentResult = currentResult, user = student.user.toDomainModel())
