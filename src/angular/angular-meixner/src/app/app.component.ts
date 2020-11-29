@@ -29,9 +29,8 @@ export class AppComponent {
       }
     );
     this.authenticationService.userRole.subscribe(role => {
-      console.log(role)
-      this.userRole = role
-    })
+      this.userRole = role;
+    });
     this.authenticationService.emitCurrentData();
   }
 
@@ -40,10 +39,10 @@ export class AppComponent {
   }
 
   isAdmin(): boolean {
-    if (this.userRole == null) {
-      return false
+    if (this.userRole === null) {
+      return false;
     }
-    return this.userRole == RoleEnum.ADMIN
+    return this.userRole === RoleEnum.ADMIN;
   }
 
 }

@@ -8,5 +8,4 @@ export class TypeofPipe implements PipeTransform {
   transform(value: any): any {
     return typeof value;
   }
-
 }
