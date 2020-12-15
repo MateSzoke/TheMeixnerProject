@@ -13,7 +13,6 @@ import hu.aut.meixner.service.task.TaskService
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import java.time.OffsetDateTime
-import kotlin.math.roundToInt
 
 @Service
 class AssignService(
@@ -94,7 +93,7 @@ class AssignService(
     private fun getNextTaskId(nextTaskIds: List<Long>, attempts: Int, currentDifficulty: Int?, success: Boolean): Long? {
         return if (nextTaskIds.isNotEmpty() && success && currentDifficulty != null) {
             val tasks = nextTaskIds.mapNotNull { taskService.getTaskById(it) }.sortedBy { it.difficulty }
-            val currentResult = (currentDifficulty / 10.0).roundToInt() - attempts
+            val currentResult = (currentDifficulty / 10.0) - attempts
             when {
                 currentResult < -ASSIGN_RESULT_THRESHOLD -> tasks.firstOrNull()?.id
                 currentResult > ASSIGN_RESULT_THRESHOLD -> tasks.lastOrNull()?.id
