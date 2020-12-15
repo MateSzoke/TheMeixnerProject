@@ -47,8 +47,9 @@ class ResultService(
         val studentEntity = studentRepository.findByIdOrNull(userId) ?: return null
         if (isAdd && studentEntity.exerciseIds.contains(exerciseId).not())
             studentEntity.exerciseIds += exerciseId
-        else
+        else if (!isAdd) {
             studentEntity.exerciseIds -= exerciseId
+        }
         return studentRepository.save(studentEntity).toDomainModel(user = user, exercises = studentEntity.getExercises())
     }
 

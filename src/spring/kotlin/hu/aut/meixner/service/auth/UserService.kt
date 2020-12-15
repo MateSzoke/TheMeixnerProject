@@ -3,7 +3,6 @@ package hu.aut.meixner.service.auth
 import hu.aut.meixner.dto.auth.UserRequest
 import hu.aut.meixner.dto.auth.UserResponse
 import hu.aut.meixner.dto.auth.UserRole
-import hu.aut.meixner.entity.auth.UserRoleEnum.ADMIN
 import hu.aut.meixner.entity.auth.UserRoleEnum.STUDENT
 import hu.aut.meixner.entity.result.StudentEntity
 import hu.aut.meixner.extensions.currentUser
@@ -23,7 +22,7 @@ import org.springframework.stereotype.Service
 class UserService(
         private val userRepository: UserRepository,
         private val studentRepository: StudentRepository,
-        private val bCryptPasswordEncoder: BCryptPasswordEncoder
+        private val bCryptPasswordEncoder: BCryptPasswordEncoder,
 ) : UserDetailsService {
 
     fun registerUser(userRequest: UserRequest): UserResponse {
@@ -53,8 +52,8 @@ class UserService(
     fun deleteUser(userId: Long) {
         val user = userRepository.findByIdOrNull(userId) ?: return
         when (user.role) {
-            ADMIN -> userRepository.deleteById(userId)
             STUDENT -> studentRepository.deleteById(userId)
+            else -> userRepository.deleteById(userId)
         }
     }
 
