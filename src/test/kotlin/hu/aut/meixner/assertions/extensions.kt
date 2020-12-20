@@ -10,6 +10,8 @@ infix fun Int.equals(other: Int) = assertEquals(this, other)
 
 infix fun Long.equals(other: Long) = assertEquals(this, other)
 
+infix fun <T> List<T>.equals(other: List<T>) = assertEquals(this, other)
+
 fun <T : Any?> T.isNotNull(): Boolean {
 
     return this != null
